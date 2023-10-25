@@ -1,0 +1,27 @@
+{
+  "name": "isupplier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./compiled/Manager.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc -w",
+    "start": "nodemon compiled/Manager.js -e js,ejs,css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "date-and-time": "^3.0.3",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.4",
+    "@types/express": "^4.17.20",
+    "@types/uuid": "^9.0.6"
+  }
+}
