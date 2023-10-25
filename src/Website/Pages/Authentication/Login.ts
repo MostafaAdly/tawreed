@@ -10,7 +10,7 @@ export default class Login extends Page {
 
     public run() {
         this.router.get("/", (req, res) => {
-            res.render('Login/index', { username: "test" });
+            res.render('Login/index', { project_name: this.data.project_name });
         });
     }
 }

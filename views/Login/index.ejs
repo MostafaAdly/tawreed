@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= project_name %> - Login</title>
+        <link rel="stylesheet" href="./css/style.css" />
+    </head>
+    <body>
+        <main class="container">
+            <div class="login-container">
+                <form action="/login" class="login">
+                    <div class="label">Email Address</div>
+                    <div class="email">
+                        <input
+                            name="emailInput"
+                            type="email"
+                            class="emailInput"
+                        />
+                    </div>
+                    <div class="label">Password</div>
+                    <div class="password">
+                        <input
+                            name="passwordInput"
+                            type="password"
+                            class="passwordInput"
+                        />
+                    </div>
+                    <div class="submit">
+                        <button class="submitButton" type="submit">
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

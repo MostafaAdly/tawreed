@@ -2,7 +2,7 @@ import BootLoader from "./Loader";
 import { config as dotenvConfig } from 'dotenv'
 
 export default class Manager {
-    private data: any = {};
+    private data: any = { project_name: "iSupplier" };
     private loader: BootLoader = new BootLoader(this.data);
     constructor() {
         dotenvConfig();

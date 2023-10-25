@@ -7,7 +7,7 @@ const Loader_1 = __importDefault(require("./Loader"));
 const dotenv_1 = require("dotenv");
 class Manager {
     constructor() {
-        this.data = {};
+        this.data = { project_name: "iSupplier" };
         this.loader = new Loader_1.default(this.data);
         (0, dotenv_1.config)();
     }

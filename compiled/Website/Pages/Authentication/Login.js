@@ -12,7 +12,7 @@ class Login extends Page_1.default {
     }
     run() {
         this.router.get("/", (req, res) => {
-            res.render('Login/index', { username: "test" });
+            res.render('Login/index', { project_name: this.data.project_name });
         });
     }
 }

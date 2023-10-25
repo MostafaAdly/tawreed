@@ -15,7 +15,7 @@ export default class Server {
         this.app = express();
         this.app.set('view engine', 'ejs');
         this.app.use(bodyParser.json());
-        // this.app.use(express.static('public'));
+        this.app.use(express.static('views'));
     }
     load_Middleware() {
         // throw new Error("Method not implemented.");
