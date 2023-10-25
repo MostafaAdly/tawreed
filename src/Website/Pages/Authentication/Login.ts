@@ -11,6 +11,6 @@ export default class Login extends Page {
     public run() {
         this.router.get("/", (req, res) => {
             res.render('Login/index', { username: "test" });
-        })
+        });
     }
 }

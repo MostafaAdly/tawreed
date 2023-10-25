@@ -2,6 +2,7 @@ import express from 'express';
 import ejs from 'ejs'
 import Login from './Pages/Authentication/Login';
 import Page from './Pages/Page';
+import bodyParser from 'body-parser';
 
 export default class Server {
     private data: any;
@@ -13,6 +14,7 @@ export default class Server {
     initialize() {
         this.app = express();
         this.app.set('view engine', 'ejs');
+        this.app.use(bodyParser.json());
         // this.app.use(express.static('public'));
     }
     load_Middleware() {

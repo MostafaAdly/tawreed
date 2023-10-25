@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Login_1 = __importDefault(require("./Pages/Authentication/Login"));
+const body_parser_1 = __importDefault(require("body-parser"));
 class Server {
     constructor(data) {
         this.port = 3000;
@@ -14,6 +15,7 @@ class Server {
     initialize() {
         this.app = (0, express_1.default)();
         this.app.set('view engine', 'ejs');
+        this.app.use(body_parser_1.default.json());
         // this.app.use(express.static('public'));
     }
     load_Middleware() {
