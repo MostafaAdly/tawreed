@@ -16,6 +16,7 @@ class Server {
         this.app = (0, express_1.default)();
         this.app.set('view engine', 'ejs');
         this.app.use(body_parser_1.default.json());
+        this.app.use(body_parser_1.default.urlencoded({ extended: true }));
         this.app.use(express_1.default.static('views'));
     }
     load_Middleware() {

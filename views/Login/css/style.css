@@ -1,3 +1,89 @@
 body {
     font-family: "Cairo", sans-serif, Arial;
+    /* background-color: rgba(209, 209, 209, 0.282); */
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    background-image: url("../imgs/universal_background.jpg");
+    /* Add the blur effect */
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+}
+
+.login-container {
+    height: 400px;
+    width: 480px;
+    border: 0.9px solid rgba(150, 150, 150, 0.5);
+    border-radius: 35px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.label {
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.input {
+    background-color: white;
+    margin-bottom: 8px;
+    font-size: 16px;
+    width: 280px;
+    padding-left: 10px;
+    border: 0.5px solid rgba(150, 150, 150, 0.7);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+}
+.input input {
+    height: 20px;
+    width: 85%;
+    border: none;
+    border-radius: 10px;
+}
+
+.input input:focus {
+    outline: none;
+}
+
+.submit {
+    margin-top: 5%;
+    text-align: center;
+}
+
+.submit button {
+    padding: 3px 18px;
+    font-size: 17px;
+    font-weight: 500;
+    border: 0.5px solid rgb(94, 94, 94);
+    border-radius: 4px;
+    font-family: inherit;
 }

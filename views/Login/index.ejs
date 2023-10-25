@@ -5,31 +5,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title><%= project_name %> - Login</title>
         <link rel="stylesheet" href="./css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin=""
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&amp;display=swap"
+            rel="stylesheet"
+        />
     </head>
     <body>
-        <main class="container">
-            <div class="login-container">
-                <form action="/login" class="login">
+        <div class="background"></div>
+        <main class="container center">
+            <div class="login-container center">
+                <form
+                    action="/login"
+                    method="post"
+                    target="_parent"
+                    class="login"
+                >
                     <div class="label">Email Address</div>
-                    <div class="email">
-                        <input
-                            name="emailInput"
-                            type="email"
-                            class="emailInput"
-                        />
+                    <div class="input">
+                        &#64;<input name="email" type="email" />
                     </div>
                     <div class="label">Password</div>
-                    <div class="password">
-                        <input
-                            name="passwordInput"
-                            type="password"
-                            class="passwordInput"
-                        />
+                    <div class="input">
+                        &#x1F512;<input name="password" type="password" />
                     </div>
                     <div class="submit">
-                        <button class="submitButton" type="submit">
-                            Login
-                        </button>
+                        <button type="submit">Login</button>
                     </div>
                 </form>
             </div>
