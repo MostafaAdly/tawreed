@@ -14,37 +14,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = __importDefault(require("../../../Instances/User"));
 const Page_1 = __importDefault(require("../Page"));
-class Login extends Page_1.default {
+const Login_1 = __importDefault(require("./Login"));
+class Register extends Page_1.default {
     constructor(data, base_url) {
-        super(base_url || Login.base_url);
+        super(base_url || Register.base_url);
         this.data = data;
         this.run();
     }
     run() {
         this.router.get("/", (req, res) => {
-            res.render('Authentication/login', { project_name: this.data.project_name });
+            res.render('Authentication/register', { project_name: this.data.project_name });
         });
         this.router.post("/", (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const credentials = req.body;
-            const validatedUser = yield this.validateCredentialsToUser(credentials);
-            var reason = "Email address or password is incorrect.";
-            if (validatedUser)
-                this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
-            res.redirect(validatedUser ? `/home` : `/login?error=${reason}`);
+            var { name, email, password } = req.body;
+            var failed = !name || !email || !password;
+            var reason = "Email address or password is not valid.";
+            if (!failed) {
+                email = email.toLowerCase();
+                if (!(yield Login_1.default.validateCredentials({ email, password }))) {
+                    const promisedCreatedUser = yield this.createUser(name, email, password);
+                    if (promisedCreatedUser) {
+                        failed = false;
+                        this.data.utils.print(`Created new user with name of ${name["yellow"]} and email of ${email["green"]}`);
+                        this.data.server.sessionHandler.validateSessionWithUser(req, promisedCreatedUser);
+                    }
+                }
+            }
+            res.redirect(failed ? `/register?error=${reason}` : `/home`);
         }));
     }
-    static validateCredentials(credentials) {
-        var _a;
+    createUser(name, email, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield User_1.default.schema().findOne({ 'credentials.email': credentials.email.toLowerCase() });
-            return ((_a = user === null || user === void 0 ? void 0 : user.credentials) === null || _a === void 0 ? void 0 : _a.password) == credentials.password;
-        });
-    }
-    validateCredentialsToUser(credentials) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield User_1.default.schema().findOne({ 'credentials.email': credentials.email.toLowerCase(), 'credentials.password': credentials.password });
+            return yield new User_1.default({
+                name, credentials: { email: email.toLowerCase(), password }
+            }).save();
         });
     }
 }
-Login.base_url = "/login";
-exports.default = Login;
+Register.base_url = "/register";
+exports.default = Register;

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= project_name %> - Register</title>
+        <link rel="stylesheet" href="/Authentication/css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin=""
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&amp;display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="background"></div>
+        <main class="container center">
+            <div class="auth-container center">
+                <div class="title center">Authentication » Register</div>
+                <form
+                    action="/register"
+                    method="post"
+                    target="_parent"
+                    class="auth"
+                >
+                    <div class="label">Full Name</div>
+                    <div class="input">
+                        &#128100;<input name="name" type="text" required />
+                    </div>
+                    <div class="label">Email Address</div>
+                    <div class="input">
+                        &#128231;<input name="email" type="email" required />
+                    </div>
+                    <div class="label">Password</div>
+                    <div class="input">
+                        &#x1F512;<input
+                            name="password"
+                            type="password"
+                            required
+                        />
+                    </div>
+                    <div class="submit">
+                        <button type="submit">Sign up</button>
+                    </div>
+                </form>
+                <div class="check-account">
+                    Already have an account? <a href="/login">Log in</a>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

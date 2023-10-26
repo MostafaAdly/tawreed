@@ -37,12 +37,19 @@ body {
     top: 0;
 }
 
-.login-container {
+.auth-container {
     height: 400px;
     width: 480px;
     border: 0.9px solid rgba(150, 150, 150, 0.5);
     border-radius: 35px;
     background-color: rgba(0, 0, 0, 0.05);
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 700;
+    font-family: inherit;
+    margin-bottom: 30px;
 }
 
 .label {
@@ -86,4 +93,12 @@ body {
     border: 0.5px solid rgb(94, 94, 94);
     border-radius: 4px;
     font-family: inherit;
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    margin-bottom: 20px;
+}
+
+.submit button:hover {
+    opacity: 0.7;
 }

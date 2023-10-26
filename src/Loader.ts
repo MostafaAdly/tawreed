@@ -19,9 +19,6 @@ export default class BootLoader {
         server.listen();
         this.data.server = server;
     }
-    start_database() {
-        throw new Error("Method not implemented.");
-    }
     load_GraphQl() {
     }
     async load_Database() {
