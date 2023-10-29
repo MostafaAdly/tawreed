@@ -34,6 +34,7 @@ class Product {
                     id: { type: String, unique: true },
                     name: String,
                     companyId: String,
+                    department: String,
                     createdAt: Date
                 }));
             return this.model;
@@ -42,6 +43,7 @@ class Product {
             this.id = product.id;
         this.name = product.name;
         this.companyId = product.companyId;
+        this.department = product.department;
         this.createdAt = product.createdAt || new Date();
     }
 }

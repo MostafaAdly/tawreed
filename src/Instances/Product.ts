@@ -7,6 +7,7 @@ export default class Product {
     public id: string = uuid();
     public name: string;
     public companyId: string;
+    public department: string;
     public createdAt: Date;
 
     constructor(product: any) {
@@ -14,6 +15,7 @@ export default class Product {
             this.id = product.id;
         this.name = product.name;
         this.companyId = product.companyId;
+        this.department = product.department;
         this.createdAt = product.createdAt || new Date();
     }
 
@@ -23,6 +25,7 @@ export default class Product {
             id: { type: String, unique: true },
             name: String,
             companyId: String,
+            department: String,
             createdAt: Date
         }));
         return this.model;

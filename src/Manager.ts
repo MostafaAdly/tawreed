@@ -17,6 +17,9 @@ export default class Manager {
     }
     async startDatabase() {
         await this.mongodb.connect();
+        await this.mongodb.deleteAllDepartments();
+        await this.mongodb.import_departments_intoMySQL();
+        // await this.mongodb.deleteAllUsers();
     }
 }
 

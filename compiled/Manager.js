@@ -32,6 +32,9 @@ class Manager {
     startDatabase() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.mongodb.connect();
+            yield this.mongodb.deleteAllDepartments();
+            yield this.mongodb.import_departments_intoMySQL();
+            // await this.mongodb.deleteAllUsers();
         });
     }
 }

@@ -15,17 +15,19 @@ export default class Register extends Page {
         this.router.get("/", (req, res) => {
             res.render('Authentication/register', { project_name: this.data.project_name });
         });
-        this.router.post("/", async (req, res) => {
-            var { name, email, password } = req.body;
-            var failed = !name || !email || !password;
+        this.router.post("/", this.data.server.multer.single("profilePicture"), async (req, res) => {
+            var auth = req.body;
+            var failed = false;
             var reason = "Email address or password is not valid.";
             if (!failed) {
-                email = email.toLowerCase();
-                if (!(await Login.validateCredentials({ email, password }))) {
-                    const promisedCreatedUser = await this.createUser(name, email, password);
+                auth.email = auth.email.toLowerCase();
+                auth.imageURL = req.file?.path;
+                if (!(await Login.validateCredentials({ email: auth.email, password: auth.password }))) {
+                    const promisedCreatedUser = await this.createUser(auth);
+                    await this.handleUserImage(auth.imageURL)
                     if (promisedCreatedUser) {
                         failed = false;
-                        this.data.utils.print(`Created new user with name of ${name["yellow"]} and email of ${email["green"]}`)
+                        this.data.utils.print(`Created new user with name of ${auth.englishName} and email of ${auth.email}`)
                         this.data.server.sessionHandler.validateSessionWithUser(req, promisedCreatedUser);
                     }
                 }
@@ -34,9 +36,11 @@ export default class Register extends Page {
         });
     }
 
-    private async createUser(name: string, email: string, password: string): Promise<User> {
-        return await new User({
-            name, credentials: { email: email.toLowerCase(), password }
-        }).save()
+    private async handleUserImage(url: string) {
+
+    }
+
+    private async createUser(auth: any): Promise<User> {
+        return await new User(auth).save()
     }
 }

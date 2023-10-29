@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>iSupplier - Home</title>
+        <link rel="stylesheet" href="/Home/css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link href="https://css.gg/css" rel="stylesheet" />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin=""
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&amp;display=swap"
+            rel="stylesheet"
+        />
+        <script
+            src="https://kit.fontawesome.com/e6c13277a1.js"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="background"></div>
+        <main class="container">
+            <header class="header">
+                <div class="logo-side">
+                    <img src="/Home/imgs/supplier-logo.png" alt="" />
+                </div>
+                <nav class="nav-bar">
+                    <a class="nav-item nav-active">
+                        أقسام التوريدات المتوفرة
+                        <div class="nav-active-dot"></div>
+                    </a>
+                    <a class="nav-item" href="/companies">جميع الشركات</a>
+                    <a class="nav-item" href="/team">فريق العمل</a>
+                    <a class="nav-item" href="about">حول الشركة</a>
+                </nav>
+                <div class="profile-side-container">
+                    <div class="profile-side">
+                        <div class="profile-username">
+                            <%= user.arabicName %>
+                        </div>
+                        <img
+                            class="profile-image"
+                            src="<%= user.imageURL %>"
+                            alt=""
+                        />
+                    </div>
+                </div>
+            </header>
+            <section class="content">
+                <div class="content-title"><p>أقسام التوريدات المتوفرة</p></div>
+                <div class="center"><div class="divider"></div></div>
+                <div class="cards-container">
+                    <div class="cards">
+                        <% for(var department of departments) {%>
+                        <div class="card">
+                            <div class="card-logo">
+                                <img src="<%= department.imageURL %>" alt="" />
+                            </div>
+                            <p class="card-name"><%= department.name %></p>
+                            <div class="card-details">
+                                <button>Details</button>
+                            </div>
+                        </div>
+                        <% } %>
+                        <div class="add-card">+</div>
+                    </div>
+                </div>
+            </section>
+            <section class="help">
+                <div class="floating-icon">
+                    <i class="material-icons">message</i>
+                </div>
+            </section>
+            <footer class="footer">
+                <div class="logo-side rem-margin">
+                    <img src="/Home/imgs/supplier-logo.png" alt="" />
+                </div>
+            </footer>
+        </main>
+    </body>
+</html>

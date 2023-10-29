@@ -11,8 +11,9 @@ class Home extends Page_1.default {
         this.run();
     }
     run() {
-        this.router.get('/', (req, res) => {
-            res.render('Home/index', { project_name: this.data.project_name });
+        this.router.get(['/', '/home'], (req, res) => {
+            // res.render('Home/departments', { project_name: this.data.project_name });
+            res.status(200).redirect('/departments');
         });
     }
 }

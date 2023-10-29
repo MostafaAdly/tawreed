@@ -19,9 +19,6 @@ export default class BootLoader {
         server.listen();
         this.data.server = server;
     }
-    load_GraphQl() {
-    }
-    async load_Database() {
-    }
     load_utils = () => new Global(this.data).initialize();
+
 }

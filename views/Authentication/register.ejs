@@ -21,27 +21,66 @@
         <main class="container center">
             <div class="auth-container center">
                 <div class="title center">Authentication » Register</div>
+
                 <form
                     action="/register"
                     method="post"
                     target="_parent"
                     class="auth"
+                    enctype="multipart/form-data"
                 >
-                    <div class="label">Full Name</div>
+                    <div class="image-input">
+                        <div class="label">Profile Picture</div>
+
+                        <input
+                            type="file"
+                            name="profilePicture"
+                            id="image-upload"
+                            accept="image/png,image/jpeg,image/jpg"
+                        />
+                        <label for="image-upload"
+                            ><div class="upload-icon">
+                                <img
+                                    src="/Authentication/icons/upload.png"
+                                    alt=""
+                                />
+                            </div>
+                            <img
+                                src="https://i.pinimg.com/originals/73/17/a5/7317a548844e0d0cccd211002e0abc45.jpg"
+                                id="uploaded-image"
+                                alt=""
+                        /></label>
+                    </div>
+                    <!-- <input
+                        type="text"
+                        name="imageURL"
+                        id="form-image-url"
+                        hidden
+                    /> -->
+                    <div class="label">Full Name (Arabic)</div>
                     <div class="input">
-                        &#128100;<input name="name" type="text" required />
+                        <i class="fa-solid fa-user"></i>
+                        <input name="arabicName" type="text" required />
+                    </div>
+                    <div class="label">Full Name (English)</div>
+                    <div class="input">
+                        <i class="fa-solid fa-user"></i>
+                        <input name="englishName" type="text" required />
+                    </div>
+                    <div class="label">Phone Number</div>
+                    <div class="input">
+                        <i class="fa-solid fa-phone"></i>
+                        <input name="phoneNumber" type="number" required />
                     </div>
                     <div class="label">Email Address</div>
                     <div class="input">
-                        &#128231;<input name="email" type="email" required />
+                        <i class="fa-solid fa-envelope"></i>
+                        <input name="email" type="email" required />
                     </div>
                     <div class="label">Password</div>
                     <div class="input">
-                        &#x1F512;<input
-                            name="password"
-                            type="password"
-                            required
-                        />
+                        <i class="fa-solid fa-lock"></i>
+                        <input name="password" type="password" required />
                     </div>
                     <div class="submit">
                         <button type="submit">Sign up</button>
@@ -53,4 +92,9 @@
             </div>
         </main>
     </body>
+    <script
+        src="https://kit.fontawesome.com/e6c13277a1.js"
+        crossorigin="anonymous"
+    ></script>
+    <script src="/Authentication/js/script.js"></script>
 </html>

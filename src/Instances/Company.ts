@@ -8,15 +8,16 @@ export default class Company {
     public field: string;
     public description: string;
     public products: string[];
+    public departments: string[];
     public addedAt: Date;
 
     constructor(company: any) {
-        if (company.id)
-            this.id = company.id;
+        this.id = company.id || uuid();
         this.name = company.name;
         this.field = company.field;
         this.description = company.description;
         this.products = company.products;
+        this.departments = company.departments;
         this.addedAt = company.addedAt || new Date();
     }
 
@@ -28,6 +29,7 @@ export default class Company {
             field: String,
             description: String,
             products: Array,
+            departments: Array,
             addedAt: Date
         }));
         return this.model;

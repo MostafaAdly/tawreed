@@ -25,17 +25,20 @@ class Register extends Page_1.default {
         this.router.get("/", (req, res) => {
             res.render('Authentication/register', { project_name: this.data.project_name });
         });
-        this.router.post("/", (req, res) => __awaiter(this, void 0, void 0, function* () {
-            var { name, email, password } = req.body;
-            var failed = !name || !email || !password;
+        this.router.post("/", this.data.server.multer.single("profilePicture"), (req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            var auth = req.body;
+            var failed = false;
             var reason = "Email address or password is not valid.";
             if (!failed) {
-                email = email.toLowerCase();
-                if (!(yield Login_1.default.validateCredentials({ email, password }))) {
-                    const promisedCreatedUser = yield this.createUser(name, email, password);
+                auth.email = auth.email.toLowerCase();
+                auth.imageURL = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+                if (!(yield Login_1.default.validateCredentials({ email: auth.email, password: auth.password }))) {
+                    const promisedCreatedUser = yield this.createUser(auth);
+                    yield this.handleUserImage(auth.imageURL);
                     if (promisedCreatedUser) {
                         failed = false;
-                        this.data.utils.print(`Created new user with name of ${name["yellow"]} and email of ${email["green"]}`);
+                        this.data.utils.print(`Created new user with name of ${auth.englishName} and email of ${auth.email}`);
                         this.data.server.sessionHandler.validateSessionWithUser(req, promisedCreatedUser);
                     }
                 }
@@ -43,11 +46,13 @@ class Register extends Page_1.default {
             res.redirect(failed ? `/register?error=${reason}` : `/home`);
         }));
     }
-    createUser(name, email, password) {
+    handleUserImage(url) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield new User_1.default({
-                name, credentials: { email: email.toLowerCase(), password }
-            }).save();
+        });
+    }
+    createUser(auth) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new User_1.default(auth).save();
         });
     }
 }

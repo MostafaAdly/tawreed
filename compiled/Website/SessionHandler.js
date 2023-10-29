@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Login_1 = __importDefault(require("./Pages/Authentication/Login"));
 const Register_1 = __importDefault(require("./Pages/Authentication/Register"));
 const Home_1 = __importDefault(require("./Pages/Home/Home"));
+const Server_1 = __importDefault(require("./Server"));
 class SessionHandler {
     constructor(data) {
         this.data = data;
@@ -21,7 +22,7 @@ class SessionHandler {
             next();
     }
     isAuthURL(url) {
-        return url != null && [Login_1.default.base_url, Register_1.default.base_url].filter(auth => url.toLowerCase().startsWith(auth.toLowerCase())).length != 0;
+        return url != null && [Login_1.default.base_url, Register_1.default.base_url, Server_1.default.api_base_url].filter(auth => url.toLowerCase().startsWith(auth.toLowerCase())).length != 0;
     }
     isSessionRegistered(req) {
         var _a;
@@ -36,7 +37,7 @@ class SessionHandler {
         if (!(req === null || req === void 0 ? void 0 : req.session) || !user || this.isSessionRegistered(req))
             return;
         req.session.auth = true;
-        req.session.user = { id: user.id, email: user.credentials.email };
+        req.session.user = user;
     }
 }
 exports.default = SessionHandler;

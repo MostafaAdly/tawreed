@@ -36,16 +36,17 @@ class Company {
                     field: String,
                     description: String,
                     products: Array,
+                    departments: Array,
                     addedAt: Date
                 }));
             return this.model;
         };
-        if (company.id)
-            this.id = company.id;
+        this.id = company.id || (0, uuid_1.v4)();
         this.name = company.name;
         this.field = company.field;
         this.description = company.description;
         this.products = company.products;
+        this.departments = company.departments;
         this.addedAt = company.addedAt || new Date();
     }
 }
