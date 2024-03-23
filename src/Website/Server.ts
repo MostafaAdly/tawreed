@@ -90,7 +90,7 @@ export default class Server {
 
             // AUTHENTICATION
             new Login(this.data),
-            new Logout(this.data),
+            new Logout(this.data), // API CALL
 
             // PERSONA SELECTOR
             new PersonaSelector(this.data),

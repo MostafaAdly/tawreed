@@ -5,6 +5,7 @@ import EntityRole from "./Personas/EntityRole";
 import User from "./User";
 import { Permission } from "./Personas/Permission";
 import Utils from "../Utils";
+import Category from "./Category";
 
 export default class Entity {
 
@@ -12,7 +13,8 @@ export default class Entity {
     public details: { displayName: string, logo: string, banner: string, description?: string, categories: string[] };
     public personas: { supplier: SupplierType, customer: CustomerType };
     public users: User[] = [];
-    public roles: EntityRole[];
+    public roles: EntityRole[] = [];
+    public categories: Category[] = [];
 
     constructor({ });
     constructor({ details, personas, roles }:
@@ -44,6 +46,7 @@ export default class Entity {
         this.details = entity.details;
         this.personas = entity.personas;
         this.roles = entity.roles;
+        this.categories = entity.categories;
 
         await this.afterLoad();
         return this;
@@ -71,7 +74,8 @@ export default class Entity {
             id: { type: String, unique: true },
             details: { type: Object },
             personas: { type: Object },
-            roles: { type: Array<EntityRole> }
+            roles: { type: Array<EntityRole> },
+            categories: { type: Array<Category> }
         }));
         return this.model;
     }

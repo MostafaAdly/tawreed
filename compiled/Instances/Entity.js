@@ -43,6 +43,8 @@ class Entity {
     constructor(input) {
         this.id = Utils_1.default.entityId_prefix + Utils_1.default.createId();
         this.users = [];
+        this.roles = [];
+        this.categories = [];
         this.load = (id) => __awaiter(this, void 0, void 0, function* () {
             this.id = id;
             if (!this.id)
@@ -53,6 +55,7 @@ class Entity {
             this.details = entity.details;
             this.personas = entity.personas;
             this.roles = entity.roles;
+            this.categories = entity.categories;
             yield this.afterLoad();
             return this;
         });
@@ -87,7 +90,8 @@ Entity.schema = () => {
             id: { type: String, unique: true },
             details: { type: Object },
             personas: { type: Object },
-            roles: { type: (Array) }
+            roles: { type: (Array) },
+            categories: { type: (Array) }
         }));
     return _a.model;
 };

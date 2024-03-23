@@ -2,6 +2,8 @@ import React from 'react'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyProducts/css/SupplierProductsPage.module.css'
+import { _css } from '../../../public/Assets/Helpers';
+
 
 const SupplierProductsPage = ({ user, entity }) => {
 
@@ -9,7 +11,7 @@ const SupplierProductsPage = ({ user, entity }) => {
         <>
             <S_HeaderComponent user={user} entity={entity} />
             <S_SidebarComponent />
-            <div className="supplier-body">
+            <div className={_css(styles, 'supplier-body')}>
                 <_self user={user} entity={entity} />
             </div>
         </>
@@ -26,8 +28,6 @@ const _self = ({ user, entity }) => {
         const productsSection = document.getElementById("section_products");
         const tabsSection = document.getElementById("section_tabs");
         if (!productsSection || !descriptionSection || !tabsSection) return;
-
-        console.log(e);
 
         for (const tab of tabsSection.children)
             tab.classList.remove("current-tab");
@@ -47,25 +47,25 @@ const _self = ({ user, entity }) => {
             <section className={styles.categories}>
                 <div className={styles.path}>
                     <p>جميع المنتجات</p>
-                    <i className="fa-solid fa-angles-left"></i>
+                    <i className={_css(styles, 'fa-solid fa-angles-left')}></i>
                     <p className={styles['current-path']}>المجموعة 1</p>
                 </div>
                 <div className={styles['categories-self']}>
                     <div className={styles.category}>
                         <div className={styles.icon}>
-                            <i className="fa-solid fa-screwdriver-wrench"></i>
+                            <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
                         </div>
                         <p>category 1</p>
                     </div>
                     <div className={styles.category}>
                         <div className={styles.icon}>
-                            <i className="fa-solid fa-screwdriver-wrench"></i>
+                            <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
                         </div>
                         <p>category 1</p>
                     </div>
                     <div className={styles.category}>
                         <div className={styles.icon}>
-                            <i className="fa-solid fa-screwdriver-wrench"></i>
+                            <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
                         </div>
                         <p>category 1</p>
                     </div>
@@ -92,7 +92,7 @@ const _self = ({ user, entity }) => {
                 <div className={styles.label}>
                     <p>اكتب ملخص عن المجموعة</p>
                     <button>
-                        <i className="fa-solid fa-pen"></i>
+                        <i className={_css(styles, 'fa-solid fa-pen')}></i>
                         <p>SAVE</p>
                     </button>
                 </div>
@@ -101,8 +101,7 @@ const _self = ({ user, entity }) => {
                         name="description"
                         id="description"
                         placeholder="اكتب ملخص عن هذه المجموعة"
-                    >
-                        لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا
+                        defaultValue={`لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا
                         يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت
                         لابوري ات دولار ماجنا أليكيوا لوريم ايبسوم دولار سيت
                         أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو
@@ -119,24 +118,25 @@ const _self = ({ user, entity }) => {
                         أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور
                         أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا لوريم
                         ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج
-                        أليايت,سيت دو أيوسمود تيمبور</textarea
+                        أليايت,سيت دو أيوسمود تيمبور`}
                     >
+                    </textarea>
                 </div>
             </section>
             <section className={styles.products} id="section_products">
                 <div className={styles.filters} >
                     <div className={styles.icon + " box-shadow-hover center"}>
-                        <i className="fa-solid fa-filter"></i>
+                        <i className={_css(styles, 'fa-solid fa-filter')}></i>
                     </div>
                     <div className={styles.self}>
                         <div className={styles.filter + " " + styles.checked + " box-shadow-hover"}>
                             <p>جميع المنتجات</p>
                             <div className={styles.control}>
                                 <div className={styles.check}>
-                                    <i className="fa-solid fa-circle-check"></i>
+                                    <i className={_css(styles, 'fa-solid fa-circle-check')}></i>
                                 </div>
                                 <div className={styles.exit}>
-                                    <i className="fa-solid fa-circle-xmark"></i>
+                                    <i className={_css(styles, 'fa-solid fa-circle-xmark')}></i>
                                 </div>
                             </div>
                         </div>
@@ -144,10 +144,10 @@ const _self = ({ user, entity }) => {
                             <p>منتجات مفعلة</p>
                             <div className={styles.control}>
                                 <div className={styles.check}>
-                                    <i className="fa-solid fa-circle-check"></i>
+                                    <i className={_css(styles, 'fa-solid fa-circle-check')}></i>
                                 </div>
                                 <div className={styles.exit}>
-                                    <i className="fa-solid fa-circle-xmark"></i>
+                                    <i className={_css(styles, 'fa-solid fa-circle-xmark')}></i>
                                 </div>
                             </div>
                         </div>
@@ -155,10 +155,10 @@ const _self = ({ user, entity }) => {
                             <p>منتجات غير مفعلة</p>
                             <div className={styles.control}>
                                 <div className={styles.check}>
-                                    <i className="fa-solid fa-circle-check"></i>
+                                    <i className={_css(styles, 'fa-solid fa-circle-check')}></i>
                                 </div>
                                 <div className={styles.exit}>
-                                    <i className="fa-solid fa-circle-xmark"></i>
+                                    <i className={_css(styles, 'fa-solid fa-circle-xmark')}></i>
                                 </div>
                             </div>
                         </div>
@@ -166,11 +166,11 @@ const _self = ({ user, entity }) => {
                 </div>
                 <div className={styles['upload-controls']}>
                     <button className={"center box-shadow-hover"}>
-                        <i className="fa-solid fa-arrow-up-from-bracket"></i>
+                        <i className={_css(styles, 'fa-solid fa-arrow-up-from-bracket')}></i>
                         <p>تحميل مجمع</p>
                     </button>
                     <button className={"center box-shadow-hover " + styles['single-upload']}>
-                        <i className="fa-solid fa-plus"></i>
+                        <i className={_css(styles, 'fa-solid fa-plus')}></i>
                         <p>اضافة منتجات</p>
                     </button>
                 </div>
