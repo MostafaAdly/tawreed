@@ -5,7 +5,6 @@ import EntityRole from "./Personas/EntityRole";
 import User from "./User";
 import { Permission } from "./Personas/Permission";
 import Utils from "../Utils";
-import Category from "./Category";
 
 export default class Entity {
 
@@ -14,7 +13,7 @@ export default class Entity {
     public personas: { supplier: SupplierType, customer: CustomerType };
     public users: User[] = [];
     public roles: EntityRole[] = [];
-    public categories: Category[] = [];
+    public categories: string[] = [];
 
     constructor({ });
     constructor({ details, personas, roles }:
@@ -75,7 +74,7 @@ export default class Entity {
             details: { type: Object },
             personas: { type: Object },
             roles: { type: Array<EntityRole> },
-            categories: { type: Array<Category> }
+            categories: { type: Array<String> }
         }));
         return this.model;
     }
