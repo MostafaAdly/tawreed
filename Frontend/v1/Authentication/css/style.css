@@ -1,0 +1,123 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* import */
+
+* {
+  font-family: 'Cairo', sans-serif;
+  font-weight: 500;
+  color: #626262;
+}
+
+:root {
+  --standardcolor: var("#fff");
+  --secoundcolor: var("#EFEFEF");
+  --thirdcolor: var("#DDDDDD");
+  --forthcolor: var("#DDDDDD");
+}
+
+body {
+  background-color: #FFFFFF;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+.login-background {
+  align-items: center;
+  justify-content: center;
+  background-color: #EFEFEF;
+  width: 50rem;
+  height: 30rem;
+  border-radius: 0px 12% 0px 12%;
+  display: flex;
+  box-shadow: -3px 3px 10px 1px #21212170;
+}
+
+.leftbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-left: 225px;
+}
+
+.username, .password {
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin: 0;
+  padding: 0;
+  color: #191919;
+}
+
+.username-input, .password-input {
+  background-color: #DDDDDD;
+  border-radius: 10px;
+  width: 300px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: -3px 2px 3px -0.01px #21212170;
+  margin-bottom: 14px;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  text-align: center;
+}
+.username-input:focus, .password-input:focus {
+  outline: none;
+}
+
+.login {
+  background: gold;
+  border: none;
+  border-radius: 15px;
+  width: 200px;
+  height: 45px;
+  box-shadow: -1px 3px 0px 2px #21212170;
+  font-size: 16px;
+  margin-top: 40px;
+  letter-spacing: 2px;
+}
+.login:hover {
+  width: 201px;
+  height: 46px;
+  font-size: 17px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.rightbar {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom ,#F9A528, #FFE500);
+  align-items: center;
+  text-align: center;
+  margin: 0;
+  margin-left: 150px;
+  height: 100%;
+  width: 125px;
+  border-radius: 0px 50px 0px 50px;
+  box-shadow: -2px 0px 3px -0.01px #21212170;
+}
+
+.company {
+  
+  rotate: 90deg;
+  margin-top: 150px;
+  width: 400px;
+  letter-spacing: 7px;
+  font-weight: 600;
+}
+
+.logo {
+  width: 86px;
+  height: 86px;
+  margin-top: 20px;
+}
+
+.error {
+  color: crimson;
+}

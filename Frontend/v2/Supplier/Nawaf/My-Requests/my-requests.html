@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My-Requests</title>
+        <link rel="stylesheet" href="style/sidebar.css" />
+        <link rel="stylesheet" href="style/header.css" />
+        <link rel="stylesheet" href="style/style.css" />
+        <script
+            src="https://kit.fontawesome.com/03ae5e40d3.js"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <body>
+        <header class="h-company">
+            <div class="container">
+                <img class="logo-img" src="/My-Requests/Images/logo.png" />
+                <div class="tag">
+                    <h1 class="title">
+                        <i class="fa-solid fa-building" id="icon-building"></i>
+                        شركتي
+                    </h1>
+                </div>
+                <div class="search center">
+                    <div class="symbol">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div class="field">
+                        <input
+                            type="text"
+                            name="search"
+                            id="search"
+                            placeholder="اكتب أي شيء للبحث"
+                        />
+                    </div>
+                    <div class="image-provider center">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                </div>
+                <div class="notifications-profile">
+                    <button>
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                    <button>
+                        <img src="/Images/cocacola.png" />
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="right-bar">
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                </div>
+                <p>الرئيسية</p></a
+            >
+            <a href="/logout"
+                ><div class="icons">
+                    <i id="fix" class="fa-solid fa-building"></i>
+                </div>
+                <p>شركتي</p></a
+            >
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <p>منتجاتي</p></a
+            >
+            <a class="active"
+                ><div class="icons">
+                    <i id="active" class="fa-solid fa-bell-concierge"></i>
+                </div>
+                <p class="active">طلباتي</p></a
+            >
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-money-bill-1"></i>
+                </div>
+                <p>المدفوعات</p></a
+            >
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+                <p>التحليل</p></a
+            >
+            <div class="nav-container">
+                <a href="/logout"
+                    ><div class="icons">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                    <p>الرسائل</p></a
+                >
+                <a href="/logout"
+                    ><div class="icons"><i class="fa-solid fa-gear"></i></div>
+                    <p>الاعدادات</p></a
+                >
+                <a href="/logout"
+                    ><div class="icons">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </div>
+                    <p>تسجيل الخروج</p></a
+                >
+            </div>
+        </nav>
+
+        <div class="body-content">
+            <div class="top-buttons">
+                <button class="orders"><p>أوردرات</p></button>
+                <button class="request-amount"><p>طلبات التسعير</p></button>
+            </div>
+            <div class="mid-buttons">
+                <button class="filter">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                <button class="border">
+                    جميع الأوردرات<i class="fa-solid fa-circle-xmark"></i>
+                </button>
+                <button class="border">
+                    طلب جديد<i class="fa-solid fa-circle-check"></i>
+                </button>
+                <button class="border">
+                    قيد التنفيذ<i class="fa-solid fa-circle-check"></i>
+                </button>
+                <button class="border">
+                    جاهز للشحن<i class="fa-solid fa-circle-check"></i>
+                </button>
+                <button class="border">
+                    في انتظار التحميل<i class="fa-solid fa-circle-check"></i>
+                </button>
+                <button class="border">
+                    في الإتجاه الى العميل<i
+                        class="fa-solid fa-circle-check"
+                    ></i>
+                </button>
+            </div>
+            <div class="tables">
+                <table>
+                    <tr>
+                        <th>رقم العملية</th>
+                        <th>التاريخ</th>
+                        <th>الحالة</th>
+                        <th>الإجرائات</th>
+                    </tr>
+                    <tr>
+                        <td>TE1234C</td>
+                        <td>11/1/24</td>
+                        <td class="status1">طلب جديد</td>
+                        <td>
+                            <button class="trash">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="pen">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="eye">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>TE1234C</td>
+                        <td>11/1/24</td>
+                        <td class="status2">طلب جديد</td>
+                        <td>
+                            <button class="trash">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="pen">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="eye">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>TE1234C</td>
+                        <td>11/1/24</td>
+                        <td class="status3">طلب جديد</td>
+                        <td>
+                            <button class="trash">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="pen">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="eye">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>TE1234C</td>
+                        <td>11/1/24</td>
+                        <td class="status4">طلب جديد</td>
+                        <td>
+                            <button class="trash">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="pen">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="eye">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

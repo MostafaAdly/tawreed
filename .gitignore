@@ -3,3 +3,8 @@
 package-lock.json
 # /Frontend
 /views/LocalDatabase
+/Test
+/out
+/dist
+/public/Assets/FontAwesome
+/.next

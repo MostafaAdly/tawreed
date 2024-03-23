@@ -2,6 +2,7 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 // ========================================================= [ Libraries ]
 const colors_1 = __importDefault(require("colors"));
@@ -35,4 +36,13 @@ class Global {
         return whiteSpaces;
     }
 }
+_a = Global;
+Global.id_suffix = "";
+Global.productId_prefix = "PID" + _a.id_suffix;
+Global.userId_prefix = "UID" + _a.id_suffix;
+Global.entityId_prefix = "EID" + _a.id_suffix;
+Global.departmentId_prefix = "DID" + _a.id_suffix;
+Global.roleId_prefix = "RID" + _a.id_suffix;
+Global.personaId_prefix = "PSID" + _a.id_suffix;
+Global.createId = () => (0, uuid_1.v4)().split("-")[0];
 exports.default = Global;

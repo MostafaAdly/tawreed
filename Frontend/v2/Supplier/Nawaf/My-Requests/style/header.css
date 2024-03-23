@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Cairo", sans-serif;
+    box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    height: 12vh;
+    background-color: #f2f3f3;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    text-align: right;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    transition: 1s;
+}
+
+
+.logo-img {
+    width: 7.5em;
+    height: 7.5em;
+    margin-right: 20px;
+}
+
+.icon-building {
+    color: #003366;
+}
+.title {
+    color: #003366;
+    font-size: 35px;
+    padding: 10px;
+    font-weight: 900;
+    margin: 50px;
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 12vh;
+    justify-content: space-between;
+}
+.search {
+    background-color: #f2f3f3;
+    border: 2px solid #003366;
+    border-radius: 16px;
+    padding: 2px 15px;
+    column-gap: 10px;
+    min-width: 30%;
+    height: 60px;
+    font-size: 30px;
+    color: #003366;
+}
+
+.search .field {
+    flex: 1;
+}
+
+.search input {
+    width: 100%;
+    outline: none;
+    border: none;
+    min-width: 100px;
+    font-size: 19px;
+    background-color: #f2f3f3;
+    text-align: center;
+    align-items: center;
+}
+
+.search .image-provider {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity 0.15s, background-color 0.2s, color 0.15s;
+}
+
+.search .image-provider:hover {
+    background-color: rgb(115, 119, 124, 0.25);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notifications-profile{
+    display: flex;
+    width: 64px;
+    height: 64px;
+    margin-left: 150px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+
+}
+
+.notifications-profile button{
+    width: 8vh;
+    height: 8vh;
+    font-size: 36px;
+    margin: 0px 0px 0px 40px;
+    border: none;
+    color: #73777c;
+}
+
+.notifications-profile button img{
+    width: 8vh;
+    height: 8vh;
+    position: relative;
+    align-items: center;
+    border-radius: 100%;
+    background-color: red;
+}

@@ -1,8 +1,8 @@
 import Login from "./Pages/Authentication/Login";
-import Register from "./Pages/Authentication/Register";
 import User from '../Instances/User';
-import Home from "./Pages/Home/Home";
+import Home from "./Pages/Personas/Customer/Home/Home";
 import Server from "./Server";
+import PersonaSelector from "./Pages/Personas/Selector/PersonaSelector";
 
 export default class SessionHandler {
     private data: any;
@@ -11,16 +11,21 @@ export default class SessionHandler {
     }
 
     public runMiddleware(req: any, res: any, next: any) {
-        if (req.method.toLowerCase() == 'get' && !this.isSessionRegistered(req) && !this.isAuthURL(req.url)) {
+        // console.log(req.method, req.url, this.isSessionRegistered(req), this.isAuthURL(req.url))
+        if (req.url.startsWith('/_next')) {
+            next();
+        } else if (req.method.toLowerCase() == 'get' && !this.isSessionRegistered(req) && !this.isAuthURL(req.url)) {
             res.redirect(Login.base_url);
+            // console.log("------")
         } else if (this.isSessionRegistered(req) && this.isAuthURL(req.url)) {
-            res.redirect(Home.base_url);
+            res.redirect(PersonaSelector.base_url);
+            // console.log("----=========-")
         } else
             next();
     }
 
     public isAuthURL(url: string) {
-        return url != null && [Login.base_url, Register.base_url, Server.api_base_url].filter(auth => url.toLowerCase().startsWith(auth.toLowerCase())).length != 0
+        return url != null && [Login.base_url, Server.api_base_url].filter(auth => url.toLowerCase().startsWith(auth.toLowerCase())).length != 0
     }
 
     public isSessionRegistered(req: any): boolean {

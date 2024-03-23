@@ -1,151 +1,128 @@
-body {
-    font-family: "Cairo", sans-serif, Arial;
-    /* background-color: rgba(209, 209, 209, 0.282); */
-}
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+/* import */
 
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    top: 0;
-    background-image: url("../imgs/universal_background.jpg");
-    /* Add the blur effect */
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    top: 0;
-}
-
-.auth-container {
-    min-height: 400px;
-    width: 480px;
-    border: 0.9px solid rgba(150, 150, 150, 0.5);
-    border-radius: 35px;
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.title {
-    font-size: 25px;
-    font-weight: 700;
-    font-family: inherit;
-    margin-bottom: 30px;
-}
-
-.label {
-    font-size: 19px;
+* {
+    font-family: "Cairo", sans-serif;
     font-weight: 500;
+    color: #626262;
 }
 
-.input {
-    background-color: white;
-    margin-bottom: 8px;
-    font-size: 16px;
-    width: 280px;
-    padding-left: 10px;
-    border: 0.5px solid rgba(150, 150, 150, 0.7);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
+:root {
+    --standardcolor: var("#fff");
+    --secoundcolor: var("#EFEFEF");
+    --thirdcolor: var("#DDDDDD");
+    --forthcolor: var("#DDDDDD");
+}
+
+body {
+    background-color: #ffffff;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
+.login-background {
     align-items: center;
-    column-gap: 10px;
-}
-.input input {
-    height: 30px;
-    width: 85%;
-    border: none;
-    border-radius: 10px;
+    justify-content: center;
+    background-color: #efefef;
+    width: 50rem;
+    height: 30rem;
+    border-radius: 0px 12% 0px 12%;
+    display: flex;
+    box-shadow: -3px 3px 10px 1px #21212170;
 }
 
-.input input:focus {
+.leftbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-left: 225px;
+}
+
+.username,
+.password {
+    font-size: 20px;
+    letter-spacing: 3px;
+    margin: 0;
+    padding: 0;
+    color: #191919;
+}
+
+.username-input,
+.password-input {
+    background-color: #dddddd;
+    border-radius: 10px;
+    width: 300px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: -3px 2px 3px -0.01px #21212170;
+    margin-bottom: 14px;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    text-align: center;
+}
+.username-input:focus,
+.password-input:focus {
     outline: none;
 }
 
-.submit {
-    margin-top: 5%;
-    text-align: center;
+.login {
+    background: gold;
+    border: none;
+    border-radius: 15px;
+    width: 200px;
+    height: 45px;
+    box-shadow: -1px 3px 0px 2px #21212170;
+    font-size: 16px;
+    margin-top: 40px;
+    letter-spacing: 2px;
 }
-
-.submit button {
-    padding: 3px 18px;
+.login:hover {
+    width: 201px;
+    height: 46px;
     font-size: 17px;
-    font-weight: 500;
-    border: 0.5px solid rgb(94, 94, 94);
-    border-radius: 4px;
-    font-family: inherit;
-    opacity: 1;
     cursor: pointer;
-    transition: opacity 0.2s;
-    margin-bottom: 20px;
+    font-weight: 600;
 }
 
-.submit button:hover {
-    opacity: 0.7;
-}
-
-.image-input input {
-    display: none;
-}
-
-.image-input {
+.rightbar {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-}
-.image-input label {
-    --diameter: 150px;
-    height: var(--diameter);
-    width: var(--diameter);
-    border-radius: 100%;
-    border: 2px solid rgb(180, 180, 180);
-    overflow: hidden;
-    display: flex;
+    background: linear-gradient(to bottom, #f9a528, #ffe500);
     align-items: center;
-    justify-content: center;
-    transition: opacity 0.3s;
-    cursor: pointer;
+    text-align: center;
+    margin: 0;
+    margin-left: 150px;
+    height: 100%;
+    width: 125px;
+    border-radius: 0px 50px 0px 50px;
+    box-shadow: -2px 0px 3px -0.01px #21212170;
 }
 
-.image-input .upload-icon {
-    position: absolute;
+.company {
+    rotate: 90deg;
+    margin-top: 150px;
+    width: 400px;
+    letter-spacing: 7px;
+    font-weight: 600;
 }
 
-.image-input .upload-icon img {
-    height: 50px;
-    opacity: 0;
-    transition: opacity 0.3s;
+.logo {
+    width: 86px;
+    height: 86px;
+    margin-top: 20px;
 }
 
-.image-input:hover .upload-icon img {
-    opacity: 1;
-}
-
-.image-input label:hover {
-    opacity: 0.7;
-}
-
-.image-input label img {
-    height: 105%;
-    background-size: cover;
+.error {
+    color: crimson;
 }

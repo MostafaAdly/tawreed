@@ -1,18 +1,35 @@
 {
-  "name": "isupplier",
+  "name": "tawreed",
+  "productName": "Tawreed",
   "version": "1.0.0",
-  "description": "",
+  "description": "Supplier to Customer linking program made by MostafaAdly for Tawreed company.",
+  "author": "Tawreed",
   "main": "./compiled/Manager.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon compiled/Manager.js -e js --watch"
+    "start": "electron .",
+    "dev": "nodemon . -e js env --watch",
+    "electron": "nodemon -e js --exec \"electron .\" --watch",
+    "dist": "electron-builder",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "ts": "tsc -w"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.1",
+    "@fortawesome/free-regular-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@types/body-parser": "^1.19.5",
     "@types/connect-mongo": "^3.1.3",
-    "@types/express-session": "^1.17.9",
+    "@types/express-session": "^1.17.10",
+    "@types/mysql": "^2.15.24",
+    "@types/react": "18.2.45",
+    "@types/uuid": "^9.0.7",
+    "@zeit/next-typescript": "^1.1.1",
     "axios": "^1.6.0",
     "body-parser": "^1.20.2",
     "colors": "^1.4.0",
@@ -20,19 +37,77 @@
     "date-and-time": "^3.0.3",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
+    "electron-squirrel-startup": "^1.0.0",
     "express": "^4.18.2",
     "express-fileupload": "^1.4.1",
     "express-session": "^1.17.3",
+    "fontawesome": "^5.6.3",
+    "mongodb": "^6.3.0",
     "mongoose": "^7.6.3",
     "multer": "^1.4.5-lts.1",
+    "next": "^14.0.4",
     "node-fetch": "^3.3.2",
+    "react-icons": "^5.0.1",
+    "typescript": "^5.3.3",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@types/ejs": "^3.1.4",
-    "@types/express": "^4.17.20",
-    "@types/express-fileupload": "^1.4.3",
-    "@types/multer": "^1.4.9",
-    "@types/uuid": "^9.0.6"
+    "@types/express": "^4.17.21",
+    "@types/multer": "^1.4.11",
+    "@types/react": "18.2.45",
+    "@types/uuid": "^9.0.6",
+    "@zeit/next-css": "^1.0.1",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.35",
+    "postcss-import": "^16.0.1",
+    "postcss-nesting": "^12.1.0",
+    "tailwindcss": "^3.4.1"
+  },
+  "build": {
+    "appId": "com.mostafa.tawreed",
+    "productName": "Tawreed",
+    "copyright": "Copyright © 2018 Tawreed",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "assets/icon.icns",
+      "target": [
+        "zip",
+        "dmg"
+      ],
+      "publish": [
+        "github"
+      ]
+    },
+    "win": {
+      "publisherName": "Tawreed",
+      "publish": [
+        "github"
+      ],
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "tar.gz"
+      ]
+    },
+    "dmg": {
+      "background": "assets/background.png",
+      "icon": "assets/icon.icns",
+      "title": "Accurate Installer"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "installerSidebar": "assets/sidebar.bmp",
+      "uninstallerSidebar": "assets/sidebar.bmp",
+      "license": "assets/agreement.html",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
   }
 }

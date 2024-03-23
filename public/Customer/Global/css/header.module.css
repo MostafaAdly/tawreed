@@ -1,0 +1,115 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    height: 80px;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #fefefe;
+    padding: 10px;
+    user-select: none;
+    border-bottom: 0.5px solid var(--inactive-font);
+}
+
+.darkBackground {
+    background-color: #262d3449;
+}
+
+.header .logo {
+    margin-right: 10px;
+}
+
+.header .logo img {
+    height: 100px;
+}
+
+.header .tabs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 70%;
+    width: auto;
+    column-gap: 25px;
+    margin-right: 30px;
+    font-size: 18px;
+}
+
+.header .tabs .tab a {
+    text-decoration: none;
+    color: var(--inactive-font);
+    transition: opacity, color 0.15s;
+}
+.header .tabs .tab a:hover {
+    opacity: 0.9;
+    color: var(--standardcolor);
+}
+
+.header .tabs .activeTab a {
+    color: var(--standardcolor);
+    font-weight: 700;
+    border-bottom: 1px solid var(--standardcolor);
+}
+
+.header .controls {
+    width: 30%;
+    column-gap: 35px;
+}
+.header .controls .notifications {
+    height: 35px;
+    width: 35px;
+    position: relative;
+    cursor: pointer;
+}
+.header .controls .notifications i {
+    transition: opacity, color 0.15s;
+}
+
+.header .controls .notifications i:hover {
+    color: var(--standardcolor);
+}
+
+.header .controls .notifications i {
+    position: absolute;
+    font-size: 28px;
+    color: var(--inactive-font);
+}
+.header .controls .notifications .notificationsCount {
+    position: absolute;
+    background-color: red;
+    height: 18px;
+    width: 18px;
+    font-size: 14px;
+    top: -10px;
+    right: -5px;
+    border-radius: 50%;
+}
+.header .controls .notifications p {
+    color: white;
+}
+
+.header .controls .profile {
+    flex-direction: column;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.header .controls .profile:hover {
+    opacity: 0.9;
+}
+
+.header .controls .profile .profileImage img {
+    height: 40px;
+}
+
+.header .controls .profile .profileUsername {
+    font-size: 14px;
+    white-space: nowrap;
+    column-gap: 10px;
+}

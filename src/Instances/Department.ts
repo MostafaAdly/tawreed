@@ -1,27 +1,24 @@
 import mongoose, { Schema } from "mongoose";
 import { v4 as uuid } from 'uuid';
+import Utils from '../Utils';
 
 export default class Department {
 
-    public id: string = uuid();
+    public id: string = Utils.departmentId_prefix + Utils.createId();
     public name: string;
-    public imageURL: string;
-    public createdAt: Date;
+    public images: string[];
 
-    constructor(department: any) {
-        this.id = department.id || uuid();
-        this.name = department.name;
-        this.imageURL = department.imageURL;
-        this.createdAt = department.createdAt || new Date();
+    constructor(name: string, images: string[]) {
+        this.name = name;
+        this.images = images;
     }
 
     private static model: any;
     public static schema = () => {
         if (!this.model) this.model = mongoose.model('departments', new Schema({
             id: { type: String, unique: true },
-            name: String,
-            imageURL: String,
-            createdAt: Date
+            name: { type: String },
+            images: { type: Array<String> }
         }));
         return this.model;
     }

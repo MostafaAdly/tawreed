@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tawreed</title>
+        <link rel="stylesheet" href="Customer/Home/css/style.css" />
+    </head>
+    <body>
+        <header class="header">
+            <div class="logo">
+                <img src="Customer/Home/imgs/logo.png" alt="" />
+            </div>
+            <div class="title"><p>Tawreed</p></div>
+            <div class="profile">
+                <div class="profile-picture">
+                    <img
+                        src="Customer/Home/imgs/defaultProfilePicture.jpg"
+                        alt=""
+                    />
+                </div>
+            </div>
+        </header>
+        <div class="header-divider"></div>
+        <main class="container">
+            <nav>
+                <button>الشركات</button>
+                <button>الأقسام</button>
+                <button>الدعم الفني</button>
+            </nav>
+            <div class="divider"></div>
+            <div class="cards">
+                <% for(var department of departments){ %>
+
+                <div class="card">
+                    <div class="card-row">
+                        <div class="card-image">
+                            <img src="<%= department.images[0] %>" alt="" />
+                        </div>
+                        <div class="subcard">
+                            <div class="card-title">
+                                <p>
+                                    <%= department.name.length > 15 ?
+                                    department.name.substring(0, 15) :
+                                    department.name %>
+                                </p>
+                            </div>
+                            <div class="info-card">
+                                <div class="card-row">
+                                    <div class="info-data">
+                                        <p>43</p>
+                                        <p>203</p>
+                                        <p>592</p>
+                                    </div>
+                                    <div class="info-titles">
+                                        <p>الموردين</p>
+                                        <p>الطلبات</p>
+                                        <p>المنتجات</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% } %>
+            </div>
+        </main>
+    </body>
+</html>

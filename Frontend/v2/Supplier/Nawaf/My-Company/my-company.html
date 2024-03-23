@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My-Company</title>
+        <link rel="stylesheet" href="style/sidebar.css" />
+        <link rel="stylesheet" href="style/header.css" />
+        <link rel="stylesheet" href="style/style.css" />
+        <script
+            src="https://kit.fontawesome.com/03ae5e40d3.js"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <body>
+        <header class="h-company">
+            <div class="container">
+                <img class="logo-img" src="Images/logo.png" />
+                <div class="tag">
+                    <h1 class="title">
+                        <i class="fa-solid fa-building"></i> شركتي
+                    </h1>
+                </div>
+                <div class="search center">
+                    <div class="symbol">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div class="field">
+                        <input
+                            type="text"
+                            name="search"
+                            id="search"
+                            placeholder="اكتب أي شيء للبحث"
+                        />
+                    </div>
+                    <div class="image-provider center">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                </div>
+                <div class="notifications-profile">
+                    <button>
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                    <button>
+                        <img src="Images/cocacola.png" />
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="right-bar">
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                </div>
+                <p>الرئيسية</p></a
+            >
+            <a class="active"
+                ><div class="icons"><i class="fa-solid fa-building"></i></div>
+                <p class="active">شركتي</p></a
+            >
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <p>منتجاتي</p></a
+            >
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-bell-concierge"></i>
+                </div>
+                <p>طلباتي</p></a
+            >
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-money-bill-1"></i>
+                </div>
+                <p>المدفوعات</p></a
+            >
+            <a href="/logout"
+                ><div class="icons">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+                <p>التحليل</p></a
+            >
+            <div class="nav-container">
+                <a href="/logout"
+                    ><div class="icons">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                    <p>الرسائل</p></a
+                >
+                <a href="/logout"
+                    ><div class="icons"><i class="fa-solid fa-gear"></i></div>
+                    <p>الاعدادات</p></a
+                >
+                <a href="/logout"
+                    ><div class="icons">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </div>
+                    <p>تسجيل الخروج</p></a
+                >
+            </div>
+        </nav>
+
+        <div class="body-content">
+            <div class="top-content">
+                <label class="top-right-content" for="file-wallpaper">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    <p>تحميل صورة الغلاف</p>
+                    <div class="need">
+                        <p>المقاس المطلوب:</p>
+                        <p>1440x384</p>
+                    </div>
+                    <div class="need">
+                        <p>الصيغة المدعومة:</p>
+                        <p>Png, Jpg, Svg</p>
+                    </div>
+                </label>
+                <input
+                    type="file"
+                    class="upload-wallpaper"
+                    id="file-wallpaper"
+                />
+                <label class="top-left-content" for="file-logo">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    <p>تحميل اللوقو</p>
+                    <div class="need">
+                        <p>المقاس المطلوب:</p>
+                        <p>256X256</p>
+                    </div>
+                    <div class="need">
+                        <p>الصيغة المدعومة:</p>
+                        <p>Png, Jpg, Svg</p>
+                    </div>
+                </label>
+                <input type="file" class="upload-logo" id="file-logo" />
+            </div>
+            <div class="bottom-container">
+                <h1>المستخدمين</h1>
+                <table>
+                    <tr>
+                        <th>الإسم</th>
+                        <th>اللقب</th>
+                        <th>الوظيفة</th>
+                        <th>الإجرائات</th>
+                    </tr>
+                    <tr>
+                        <td>مصطفى محمد</td>
+                        <td>مدير مشتريات</td>
+                        <td>مشتريات</td>
+                        <td class="button-container">
+                            <button class="delete-table">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="edit-table">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>على إبراهيم</td>
+                        <td>مدير حسابات</td>
+                        <td>حسابات</td>
+                        <td class="button-container">
+                            <button class="delete-table">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="edit-table">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>محمود حمدي</td>
+                        <td>مدخل بيانات</td>
+                        <td>إدخال بيانات</td>
+                        <td class="button-container">
+                            <button class="delete-table">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <button class="edit-table">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <button class="add-person">
+            <i class="fa-solid fa-user-plus"></i>
+        </button>
+        <button class="products">
+            <i class="fa-solid fa-arrow-right"></i>
+            <p>المنتجات</p>
+        </button>
+    </body>
+</html>

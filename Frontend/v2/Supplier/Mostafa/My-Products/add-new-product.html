@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Add new product</title>
+        <link rel="stylesheet" href="../../Global/css/header.css" />
+        <link rel="stylesheet" href="../../Global/css/sidebar.css" />
+        <link rel="stylesheet" href="add-new-product.css" />
+        <script
+            src="https://kit.fontawesome.com/e6c13277a1.js"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <body>
+        <header>
+            <div class="logo-section">
+                <img src="../../Global/imgs/logo.png" alt="" />
+            </div>
+            <div class="title center">
+                <div class="icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <p>شركتي</p>
+            </div>
+            <div class="search-section center">
+                <div class="icon center">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <input type="text" placeholder="اكتب أي شيئ للبحث" />
+                <div class="search-by-image center">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+            </div>
+            <div class="profile-section">
+                <div class="notifications">
+                    <div class="count center">
+                        <!-- <p>3</p> -->
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                </div>
+                <div class="profile box-shadow">
+                    <img src="../../Global/imgs/profile.png" alt="" />
+                </div>
+            </div>
+        </header>
+        <nav>
+            <div class="top-section">
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                    <div class="title">
+                        <p>الرئيسية</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div class="title">
+                        <p>شركتي</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <div class="title">
+                        <p>منتجاتي</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                    <div class="title">
+                        <p>طلباتي</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-money-bill-1-wave"></i>
+                    </div>
+                    <div class="title">
+                        <p>المدفوعات</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </div>
+                    <div class="title">
+                        <p>التحليل</p>
+                    </div>
+                </a>
+            </div>
+            <div class="bottom-section">
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                    <div class="title">
+                        <p>الرسائل</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                    <div class="title">
+                        <p>تسجيل الخروج</p>
+                    </div>
+                </a>
+            </div>
+        </nav>
+        <main class="dashboard-container">
+            <div class="container-title"><p>أدخل صنف جديد</p></div>
+            <form
+                class="product"
+                method="post"
+                action="/create-product"
+                enctype="multipart/form-data"
+                target="_parent"
+            >
+                <div class="fields">
+                    <div class="field">
+                        <div class="info">
+                            <p>اكتب كود الصنف لمعرفة إذا كان مسجلاً</p>
+                        </div>
+                        <div class="input center">
+                            <div class="title"><p>كود الصنف</p></div>
+                            <input
+                                type="text"
+                                placeholder="أدخل كود الصنف"
+                                disabled
+                                value=""
+                            />
+                            <!-- <div class="text"><p>TE1234c</p></div> -->
+                            <!-- <div class="icon center">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div> -->
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="info">
+                            <p>اكتب اسم المنتج</p>
+                        </div>
+                        <div class="input center">
+                            <div class="title"><p>أسم المنتج</p></div>
+                            <input
+                                type="text"
+                                placeholder="خوذة ذهبية بجودة خورافية"
+                                disabled
+                                value=""
+                            />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="info">
+                            <p>اختر المجموعة</p>
+                        </div>
+                        <div class="input center">
+                            <div class="title"><p>المجموعة</p></div>
+                            <input
+                                type="text"
+                                placeholder="المجموعة النهائية 3"
+                                disabled
+                                value=""
+                            />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="info">
+                            <p>اختر وحدة الطلب</p>
+                        </div>
+                        <div class="input center">
+                            <div class="title"><p>وحدة الطلب</p></div>
+                            <input
+                                type="text"
+                                placeholder="دستة"
+                                disabled
+                                value=""
+                            />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="info">
+                            <p>حدد أقل كمية للطلب</p>
+                        </div>
+                        <div class="input center">
+                            <div class="title"><p>أقل كمية للطلب</p></div>
+                            <input
+                                type="text"
+                                placeholder="100"
+                                disabled
+                                value=""
+                            />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="info">
+                            <p>حدد سعر البيع لأقل كمية طلب</p>
+                        </div>
+                        <div class="input center">
+                            <div class="title"><p>سعر البيع</p></div>
+                            <input
+                                type="text"
+                                placeholder="السعر المقترح 1,500 ج.م"
+                                disabled
+                                value=""
+                            />
+                        </div>
+                    </div>
+                </div>
+                <section class="images">
+                    <div class="container-title">
+                        <p>تحميل ملفات الوسائط</p>
+                    </div>
+                    <div class="self">
+                        <label
+                            class="image box-shadow-hover"
+                            for="product_image_1"
+                        >
+                            <div class="product-image center">
+                                <!-- <img
+                                    src="../../Global/imgs/background.jpeg"
+                                    alt=""
+                                /> -->
+                                <i class="fa-solid fa-image"></i>
+                            </div>
+                            <div class="info center">
+                                <input
+                                    type="checkbox"
+                                    name="product_image_1"
+                                    id="product_image_1"
+                                />
+                                <p>الصورة الرئيسية</p>
+                            </div>
+                        </label>
+                        <label
+                            class="add-image center box-shadow-hover"
+                            for="add-image"
+                        >
+                            <input
+                                type="file"
+                                name="add-image"
+                                id="add-image"
+                                accept=".png"
+                                multiple
+                                hidden
+                            />
+                            <i class="fa-solid fa-plus"></i>
+                        </label>
+                    </div>
+                </section>
+                <section class="description">
+                    <div class="container-title">
+                        <p>الوصف التفصيلي للمنتج</p>
+                    </div>
+                    <div class="self">
+                        <textarea
+                            name="description"
+                            id="description"
+                            placeholder="أكتب وصف تفصيلي للمنتج لتعريف المشتري بمميزاته"
+                        ></textarea>
+                    </div>
+                </section>
+                <section class="submit center">
+                    <button class="center box-shadow-hover" type="submit">
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                        <p>أضف المنتج</p>
+                    </button>
+                </section>
+            </form>
+        </main>
+        <script>
+            const addImage = document.getElementById("add-image");
+
+            addImage.addEventListener("change", () => {
+                console.log(addImage.files);
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Select Persona</title>
+        <link rel="stylesheet" href="css/select-personas.css" />
+        <script
+            src="https://kit.fontawesome.com/e6c13277a1.js"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <body>
+        <div class="tw-container tw-center">
+            <div class="tw-logo tw-center">
+                <img src="imgs/logo.png" alt="" />
+            </div>
+            <div class="tw-title"><p>الرجاء اختيار نوع الحساب</p></div>
+            <div class="tw-personas">
+                <div class="tw-persona tw-box-shadow-hover">
+                    <div class="tw-image tw-center">
+                        <i class="tw-fa-solid tw-fa-user"></i>
+                    </div>
+                    <div class="tw-info">
+                        <p>Customer - زبون</p>
+                    </div>
+                </div>
+                <div class="tw-persona tw-box-shadow-hover">
+                    <div class="tw-image tw-center">
+                        <i class="tw-fa-solid tw-fa-building"></i>
+                    </div>
+                    <div class="tw-info">
+                        <p>Supplier - مورد</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        const inputString = 'class="container center"';
+        const replacedString = inputString.replace(
+            /class="([^"]+)"/g,
+            "className={[styles['$1']].join(\" \")}"
+        );
+        console.log(replacedString);
+    </script>
+</html>

@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --standardcolor: #003366;
+    --secondcolor: #fefefe;
+    --font-color: #262d34;
+    --font2-color: #002447;
+    --greycolor: #e5e6e7;
+    --inactive-font: #73777c;
+    --thirdcolor: rgb(255, 165, 0);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    height: 300px;
+    background-color: #002447;
+    flex-direction: column;
+    color: white;
+    row-gap: 25px;
+}
+
+footer .logo {
+    width: 120px;
+}
+
+footer .logo img {
+    height: 100%;
+    width: 100%;
+}
+
+footer .company-info {
+    column-gap: 25px;
+}
+
+footer .company-info a {
+    color: var(--secondcolor);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+footer .company-info a:hover {
+    opacity: 0.5;
+    color: white;
+}
+
+.social-links {
+    position: relative;
+}
+
+.social-links .links {
+    width: 100%;
+    position: absolute;
+    column-gap: 20px;
+}
+
+.social-links .divider {
+    /* position: absolute; */
+    height: 1.3px;
+    width: 40em;
+    background-color: #4d5258;
+}
+
+.social-links .link i {
+    font-size: 25px;
+    color: var(--secondcolor);
+    background-color: var(--standardcolor);
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: opacity 0.15s, background-color 0.2s, color 0.2s;
+    cursor: pointer;
+}
+
+.social-links .link i:hover {
+    background-color: var(--secondcolor);
+    opacity: 0.9;
+    color: var(--standardcolor);
+}

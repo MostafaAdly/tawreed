@@ -2,7 +2,7 @@
 
 import Global from "./Utils";
 import Server from './Website/Server'
-
+import departments from './DefaultData/departments.json'
 
 // ====================================================== [ Boot Loader ]
 export default class BootLoader {
@@ -16,9 +16,11 @@ export default class BootLoader {
         server.initialize();
         server.load_Middleware();
         server.load();
-        server.listen();
         this.data.server = server;
     }
     load_utils = () => new Global(this.data).initialize();
+    load_departments = () => {
+        this.data.departments = Object.keys(departments);
+    }
 
 }

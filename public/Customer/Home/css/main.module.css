@@ -1,0 +1,233 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero {
+    height: 55em;
+    width: 100%;
+    position: relative;
+}
+
+.hero .background {
+    filter: blur(2px);
+    height: 80%;
+    width: 100%;
+    background: linear-gradient(
+            to top,
+            rgba(0, 149, 255, 0.5),
+            rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0)
+        ),
+        url("../imgs/background.jpeg");
+    background-size: cover;
+    background-position: center;
+    border-bottom: 2px solid var(--inactive-font);
+}
+
+.companyQualities {
+    position: absolute;
+    bottom: 5%;
+    margin: 0 100px;
+    justify-content: space-between;
+    column-gap: 40px;
+}
+
+.quality {
+    background: rgba(102, 204, 153, 0.85);
+    min-height: 200px;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 24px;
+    width: 27%;
+    border-radius: 24px;
+}
+
+.quality .symbol i {
+    font-size: 60px;
+    color: var(--standardcolor);
+    text-align: center;
+}
+
+.quality .title p {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--standardcolor);
+    text-align: center;
+}
+
+.titleContainer {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.55);
+    flex-direction: column;
+    padding: 2em 0;
+}
+
+.titleContainer .title p {
+    font-size: 55px;
+    color: var(--standardcolor);
+    font-weight: 800;
+}
+
+.titleContainer .subTitle p {
+    font-size: 38px;
+    color: var(--thirdcolor);
+    font-weight: 600;
+}
+
+.search {
+    background-color: white;
+    border: 1px solid var(--standardcolor);
+    border-radius: 10px;
+    padding: 2px 15px;
+    column-gap: 10px;
+    min-width: 30%;
+}
+
+.search .field {
+    flex: 1;
+}
+
+.search input {
+    width: 100%;
+    outline: none;
+    border: none;
+    min-width: 100px;
+    font-size: 19px;
+}
+
+.search .imageProvider {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity 0.15s, background-color 0.2s, color 0.15s;
+}
+
+.search .imageProvider:hover {
+    background-color: rgb(115, 119, 124, 0.25);
+}
+
+.categories {
+    margin: 20px 100px;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.categories .title p {
+    font-size: 32px;
+    text-align: center;
+    margin: 20px;
+    font-weight: 800;
+    color: var(--standardcolor);
+}
+.categories .description p {
+    font-size: 17px;
+    font-weight: 200;
+    color: var(--inactive-font);
+}
+
+.categories .types {
+    margin-top: 0.8em;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 30px;
+}
+
+.category {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8px;
+    overflow: hidden;
+    row-gap: 40px;
+    cursor: pointer;
+    box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.15s, background;
+}
+.category:hover {
+    opacity: 0.95;
+}
+
+.category:hover .gradient {
+    background: linear-gradient(
+        to top,
+        rgba(0, 149, 255, 0.5),
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0)
+    );
+}
+
+.category .background,
+.category .gradient {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transition: background 0.5s;
+}
+
+.category .gradient {
+    background: linear-gradient(
+        to top,
+        rgba(255, 165, 0, 1),
+        rgba(255, 165, 0, 0.65),
+        rgba(255, 165, 0, 0.5),
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0)
+    );
+}
+
+.category .background img {
+    height: 100%;
+    width: 100%;
+}
+
+.category .title {
+    position: relative;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.category .navigate {
+    position: relative;
+    width: 100%;
+    border-radius: inherit;
+}
+.category .navigate a {
+    background-color: var(--standardcolor);
+    color: white;
+    display: flex;
+    width: 100%;
+    border-radius: inherit;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    height: 35px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.category .navigate a p,
+.category .navigate a i {
+    color: inherit;
+    text-align: center;
+}

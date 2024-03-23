@@ -12,7 +12,7 @@ export default class Logout extends Page {
     }
 
     public run() {
-        this.router.get("/", (req, res) => {
+        this.router.get("/", (req: any, res: any) => {
             this.data.server.sessionHandler.removeSessionIfExists(req);
             res.redirect(Login.base_url);
         });

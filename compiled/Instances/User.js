@@ -37,27 +37,56 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const uuid_1 = require("uuid");
-const ImageURL_1 = __importDefault(require("./ImageURL"));
+const Utils_1 = __importDefault(require("../Utils"));
+const Entity_1 = __importDefault(require("./Entity"));
+const Permission_1 = require("./Personas/Permission");
 class User {
-    constructor(user) {
-        var _b, _c;
-        this.id = (0, uuid_1.v4)();
-        this.id = user.id || (0, uuid_1.v4)();
-        this.arabicName = user.arabicName;
-        this.englishName = user.englishName;
-        this.credentials = { email: user.email, password: user.password };
-        this.createdAt = user.createdAt || new Date();
-        //===
-        if (this.credentials)
-            this.credentials.email = (_c = (_b = this.credentials) === null || _b === void 0 ? void 0 : _b.email) === null || _c === void 0 ? void 0 : _c.toLowerCase();
-        //===
-        this.imageURL = new ImageURL_1.default(user.imageURL).getURL();
+    constructor(...args) {
+        this.id = Utils_1.default.userId_prefix + Utils_1.default.createId();
+        this.save = () => __awaiter(this, void 0, void 0, function* () { return yield new (_a.schema())(this).save(); });
+        if (args.length == 1) {
+            this.id = args[0];
+        }
+        else if (args.length == 5) {
+            this.id = args[0];
+            this.displayName = args[1];
+            this.credentials = args[2];
+            this.entity = args[3];
+            this.role = args[4];
+        }
     }
-    save() {
+    load(withPassword = false) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield new (_a.schema())(this).save();
+            if (!this.id)
+                return;
+            const user = yield _a.schema().find({ id: this.id });
+            if (!user)
+                return;
+            this.displayName = user.displayName;
+            this.credentials = user.credentials;
+            yield this.afterLoad(withPassword);
+            console.log(`Loaded User: ${user.id}}`, user);
         });
+    }
+    afterLoad(withPassword = false) {
+        var _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            const roles = (_b = (yield Entity_1.default.schema().findOne({ id: this.entity }))) === null || _b === void 0 ? void 0 : _b.roles;
+            this.role = roles.find((role) => role.id == this.role);
+            if (!withPassword)
+                this.credentials = { username: this.credentials.username };
+            return this;
+        });
+    }
+    hasCustomerPermissions(entity) {
+        var _b;
+        const list = (_b = entity.roles.find(role => role.id == this.role)) === null || _b === void 0 ? void 0 : _b.permissions;
+        return this.role != null && list != null && list.includes(Permission_1.Permission.CUSTOMER_ALL);
+    }
+    hasSupplierPermissions(entity) {
+        var _b;
+        const list = (_b = entity.roles.find(role => role.id == this.role)) === null || _b === void 0 ? void 0 : _b.permissions;
+        return this.role != null && list != null && list.includes(Permission_1.Permission.SUPPLIER_ALL);
     }
 }
 _a = User;
@@ -65,11 +94,10 @@ User.schema = () => {
     if (!_a.model)
         _a.model = mongoose_1.default.model('users', new mongoose_1.Schema({
             id: { type: String, unique: true },
-            arabicName: String,
-            englishName: String,
-            imageURL: String,
+            displayName: String,
             credentials: Object,
-            createdAt: Date
+            entity: String,
+            role: String,
         }));
     return _a.model;
 };

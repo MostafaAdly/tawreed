@@ -1,54 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><%= project_name %> - Login</title>
+        <title>T.E.C Tawreed</title>
         <link rel="stylesheet" href="/Authentication/css/style.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossorigin=""
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&amp;display=swap"
-            rel="stylesheet"
-        />
     </head>
     <body>
-        <div class="background"></div>
-        <main class="container center">
-            <div class="auth-container center">
-                <div class="title center">Authentication » Login</div>
-                <form
-                    action="/login"
-                    method="post"
-                    target="_parent"
-                    class="auth"
-                >
-                    <div class="label">Email Address</div>
-                    <div class="input">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input name="email" type="email" required />
-                    </div>
-                    <div class="label">Password</div>
-                    <div class="input">
-                        <i class="fa-solid fa-lock"></i>
-                        <input name="password" type="password" required />
-                    </div>
-                    <div class="submit">
-                        <button type="submit">Sign in</button>
-                    </div>
-                </form>
-                <div class="check-account">
-                    Don't have an account? <a href="/register">Register Now</a>
-                </div>
+        <div class="login-background">
+            <form
+                class="leftbar"
+                action="/login"
+                method="post"
+                target="_parent"
+            >
+                <p class="username">إسم المستخدم</p>
+                <input
+                    type="text"
+                    dir="ltr"
+                    name="username"
+                    class="username-input"
+                    required
+                />
+                <p class="password">كلمة المرور</p>
+                <input
+                    type="password"
+                    dir="ltr"
+                    name="password"
+                    class="password-input"
+                    required
+                />
+                <button class="login" type="submit">تسجيل الدخول</button>
+                <p class="error"><%= error %></p>
+            </form>
+
+            <div class="rightbar">
+                <img src="/Authentication/imgs/logo.png" alt="" class="logo" />
+                <h1 class="company">T.E.C Tawreed</h1>
             </div>
-        </main>
+        </div>
     </body>
-    <script
-        src="https://kit.fontawesome.com/e6c13277a1.js"
-        crossorigin="anonymous"
-    ></script>
 </html>

@@ -5,6 +5,16 @@ import { v4 as uuid } from 'uuid'
 // ========================================================= [ Global ]
 export default class Global {
     private utils: any = {};
+
+    public static id_suffix: string = "";
+
+    public static productId_prefix = "PID" + this.id_suffix;
+    public static userId_prefix = "UID" + this.id_suffix;
+    public static entityId_prefix = "EID" + this.id_suffix;
+    public static departmentId_prefix = "DID" + this.id_suffix;
+    public static roleId_prefix = "RID" + this.id_suffix;
+    public static personaId_prefix = "PSID" + this.id_suffix;
+
     constructor(data: any) {
         data.utils = this.utils;
     }
@@ -37,4 +47,5 @@ export default class Global {
             whiteSpaces += " ";
         return whiteSpaces;
     }
+    public static createId = () => uuid().split("-")[0];
 }

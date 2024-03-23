@@ -1,0 +1,186 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.categoriesHero {
+    height: 250px;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+    flex-direction: column;
+}
+
+.categoriesHero .background {
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-bottom: 1px solid var(--standardcolor);
+    user-select: none;
+}
+.categoriesHero .background .gradient {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+        to top,
+        rgba(0, 51, 102, 0.8),
+        rgba(0, 51, 102, 0)
+    );
+}
+
+.categoriesHero .background img {
+    height: 101%;
+    width: 101%;
+    filter: blur(2px);
+}
+
+.categoriesHero .title p {
+    font-size: 60px;
+    font-weight: 1000;
+    color: var(--font2-color);
+}
+
+.categoriesHero .path {
+    align-self: flex-start;
+    margin: 0 10%;
+    column-gap: 1em;
+    margin-top: 4em;
+}
+
+.categoriesHero .path .root p {
+    color: white;
+    font-weight: 700;
+}
+
+.categoriesHero .path .icon i {
+    color: #ffd280;
+}
+
+.categoriesHero .path .subPath p {
+    color: #ffa500;
+    border-bottom: 1px solid #ffa500;
+}
+
+.categories {
+    margin: 20px 100px;
+    padding: 20px;
+}
+
+.categories .title p {
+    font-size: 32px;
+    text-align: center;
+    margin: 20px;
+    font-weight: 800;
+    color: var(--standardcolor);
+}
+.categories .description p {
+    font-size: 17px;
+    font-weight: 200;
+    color: var(--inactive-font);
+}
+
+.categories .types {
+    margin-top: 0.8em;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 30px;
+}
+
+.category {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8px;
+    overflow: hidden;
+    row-gap: 40px;
+    cursor: pointer;
+    box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.15s, background 0.2s;
+}
+.category:hover {
+    opacity: 0.95;
+}
+
+.category:hover .gradient {
+    background: linear-gradient(
+        to top,
+        rgba(0, 149, 255, 0.5),
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0)
+    );
+}
+
+.category .background,
+.category .gradient {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    transition: background 0.5s;
+}
+
+.category .gradient {
+    background: linear-gradient(
+        to top,
+        rgba(255, 165, 0, 1),
+        rgba(255, 165, 0, 0.65),
+        rgba(255, 165, 0, 0.5),
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0)
+    );
+}
+
+.category .background img {
+    height: 100%;
+    width: 100%;
+}
+
+.category .title {
+    position: relative;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.category .navigate {
+    position: relative;
+    width: 100%;
+    border-radius: inherit;
+}
+.category .navigate a {
+    background-color: var(--standardcolor);
+    color: white;
+    display: flex;
+    width: 100%;
+    border-radius: inherit;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    height: 35px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.category .navigate a p,
+.category .navigate a i {
+    color: inherit;
+    text-align: center;
+}

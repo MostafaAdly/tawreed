@@ -1,49 +1,56 @@
 import express from 'express';
+import next from 'next';
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import Login from './Pages/Authentication/Login';
 import Page from './Pages/Page';
 import bodyParser from 'body-parser';
-import Register from './Pages/Authentication/Register';
 import SessionHandler from './SessionHandler';
-import Home from './Pages/Home/Home';
+import Home from './Pages/Personas/Customer/Home/Home';
 import Logout from './Pages/Authentication/Logout';
-import Departments from './Pages/Home/Departments';
+import Departments from './Pages/Personas/Customer/Department/Departments';
 import multer, { Multer } from 'multer'
-import { v4 as uuid } from 'uuid'
-import df from 'date-and-time';
-import ImagesAPI from './Pages/API/ImagesAPI';
-import Companies from './Pages/Home/Companies';
+import df from 'date-and-time'
+import { NextServer } from 'next/dist/server/next';
+import { v4 as uuid } from 'uuid';
+import WildCard from './Pages/WildCards/NextWildCard';
+import Supplier from './Pages/Personas/Customer/Supplier/Supplier';
+import PersonaSelector from './Pages/Personas/Selector/PersonaSelector';
+import MyCompany from './Pages/Personas/Supplier/MyCompany';
+import MyProducts from './Pages/Personas/Supplier/MyProducts';
 
 export default class Server {
+    // ============== - PRIVATE VARIABLES - ==============
     private data: any;
-    private app: any;
     private port: number = parseInt(process.env.PORT + "") || 3000;
     private ttl: number = 14 * 24 * 60 * 60; // delete session after 14 days.
-    public multer: Multer;
-    public static api_base_url: string = "/api/v1";
-    //
     private sessionHandler: SessionHandler;
+    private development: boolean = process.env.ENVIRONMENT != "production";
+    // ============== - PUBLIC VARIABLES - ==============
+    public next: NextServer = next({ dev: this.development });
+    public static api_base_url: string = "/api/v1";
+    public app: any = express();
+    public multer: Multer;
+
     constructor(data: any) {
         this.data = data;
+        this.data.server = this;
+        this.data.utils.print("Running in " + (process.env.ENVIRONMENT as String).toUpperCase()[this.development ? "cyan" : "green"] + " mode.");
     }
     initialize() {
-        this.app = express();
-        this.app.set('view engine', 'ejs');
         this.sessionHandler = new SessionHandler(this.data);
-        this.data.server = this;
-        this.multer = multer({
-            storage: multer.diskStorage({
-                destination: function (req, file, cb) {
-                    cb(null, `views/LocalDatabase`)
-                },
-                filename: function (req, file, cb) {
-                    const title = req.body.email ?? file.fieldname;
-                    const fileType = file.mimetype.split("/")[file.mimetype.split("/").length - 1] ?? "png";
-                    cb(null, `${df.format(new Date(), 'YYYY-MM-DD-HH-mm-ss')}_${uuid().split("-")[0]}_${title}.${fileType}`);
-                }
-            })
-        });
+        // this.multer = multer({
+        //     storage: multer.diskStorage({
+        //         destination: (req, file, cb) => {
+        //             cb(null, `views/LocalDatabase`)
+        //         },
+        //         filename: (req: any, file, cb) => {
+        //             const title = req.body.email ?? file.fieldname;
+        //             const fileType = file.mimetype.split("/")[file.mimetype.split("/").length - 1] ?? "png";
+        //             cb(null, `${df.format(new Date(), 'YYYY-MM-DD-HH-mm-ss')}_${uuid().split("-")[0]}_${title}.${fileType}`);
+        //         }
+        //     })
+        // });
     }
     load_Middleware() {
         this.app.use(bodyParser.json());
@@ -56,31 +63,49 @@ export default class Server {
                 mongoUrl: process.env.MONGODB_CONNECTION_STRING, ttl: this.ttl
             }),
         }));
-        this.app.use(express.static('views/'));
-        this.app.use((req: any, res: any, next: any) => this.sessionHandler.runMiddleware(req, res, next))
-        // this.app.use(fileUpload({
-        //     useTempFiles: true,
-        //     tempFileDir: '/TemporaryLocalDatabase'
-        // }));
+        this.app.use("../../pages", express.static(__dirname));
+    }
+    load_Late_Middleware() {
+        this.app.use((req: any, res: any, next: any) => this.sessionHandler.runMiddleware(req, res, next));
     }
     load() {
-        // LOADING PAGES
-        this.load_pages();
+        this.next.prepare().then(() => {
+            // Loading all late middlewares to be executed after the pages/apis are loaded.
+            this.load_Late_Middleware();
 
-        // LOADING APIS
-        this.load_apis();
+            // Loading all available and working API for the upcoming loaded pages.
+            this.load_apis();
 
+            // Loading all available pages for  [ Development / Production ]
+            this.load_pages();
+
+
+            // Starting the server listener...
+            this.listen();
+
+        }).catch(console.error);
     }
     private load_pages() {
         const pages: Page[] = [
+
+            // AUTHENTICATION
             new Login(this.data),
-            new Register(this.data),
             new Logout(this.data),
 
-            // HOME
+            // PERSONA SELECTOR
+            new PersonaSelector(this.data),
+
+            // CUSTOMER
             new Home(this.data),
             new Departments(this.data),
-            new Companies(this.data),
+            new Supplier(this.data),
+
+            // SUPPLIER
+            new MyCompany(this.data),
+            new MyProducts(this.data),
+
+            // Do not remove this.
+            new WildCard(this.data),
         ];
 
         for (let page of pages)
@@ -90,7 +115,7 @@ export default class Server {
 
         const apis: Page[] = [
 
-            new ImagesAPI(this.data, Server.api_base_url)
+            // new ImagesAPI(this.data, Server.api_base_url)
 
         ];
         for (let api of apis)

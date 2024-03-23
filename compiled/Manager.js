@@ -17,24 +17,18 @@ const dotenv_1 = require("dotenv");
 const MongoDB_1 = __importDefault(require("./Database/MongoDB"));
 class Manager {
     constructor() {
-        this.data = { project_name: "iSupplier" };
+        this.data = { project_name: "Tawreed" };
         this.loader = new Loader_1.default(this.data);
         this.mongodb = new MongoDB_1.default(this.data);
+        this.startDatabase = () => __awaiter(this, void 0, void 0, function* () { return yield this.mongodb.connect(); });
         (0, dotenv_1.config)();
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
             this.loader.load_utils();
+            this.loader.load_departments();
             this.loader.load_Server();
             yield this.startDatabase();
-        });
-    }
-    startDatabase() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.mongodb.connect();
-            yield this.mongodb.deleteAllDepartments();
-            yield this.mongodb.import_departments_intoMySQL();
-            // await this.mongodb.deleteAllUsers();
         });
     }
 }

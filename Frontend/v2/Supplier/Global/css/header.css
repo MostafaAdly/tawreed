@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --standardcolor: #003366;
+    --secondcolor: #fefefe;
+    --font-color: #262d34;
+    --font2-color: #002447;
+    --greycolor: #e5e6e7;
+    --inactive-font: #73777c;
+}
+
+* {
+    font-family: "Cairo", sans-serif;
+    font-weight: 500;
+    color: var(--font-color);
+}
+
+body {
+    background-color: var(--secondcolor);
+    padding: 0;
+    margin: 0;
+    padding-top: 100px;
+}
+
+p {
+    margin: 0;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-shadow {
+    box-shadow: -1px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    background-color: var(--greycolor);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+
+    .logo-section {
+        justify-self: end;
+        height: 100%;
+        margin: 0 3.5em;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    .title {
+        margin-left: 6em;
+        gap: 20px;
+
+        p,
+        i {
+            font-size: 2.3em;
+            color: var(--standardcolor);
+        }
+
+        p {
+            font-weight: 900;
+        }
+    }
+
+    .search-section {
+        background-color: var(--secondcolor);
+        gap: 10px;
+        height: 40%;
+        padding: 7px 16px;
+        border: 1px solid var(--standardcolor);
+        border-radius: 15px;
+
+        i {
+            font-size: 25px;
+        }
+
+        input {
+            min-width: 350px;
+            border: none;
+            outline: none;
+            height: 100%;
+            font-size: 18px;
+        }
+    }
+
+    .profile-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        user-select: none;
+        margin: 0 3.5em;
+
+        .profile {
+            height: 51px;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: opacity 0.15s;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+
+            :hover {
+                opacity: 0.95;
+            }
+        }
+        .notifications {
+            position: relative;
+
+            .count {
+                position: absolute;
+                top: 0;
+                right: -10px;
+                border-radius: 50%;
+                background-color: red;
+                line-height: 20px;
+                width: 20px;
+                text-align: center;
+                p {
+                    color: white;
+                }
+            }
+            .icon {
+                font-size: 2em;
+
+                i {
+                    transition: opacity 0.15s, color 0.15s;
+                    cursor: pointer;
+                    color: var(--inactive-font);
+                }
+
+                :hover {
+                    opacity: 0.95;
+                    color: var(--standardcolor);
+                }
+            }
+        }
+    }
+}

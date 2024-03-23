@@ -1,0 +1,76 @@
+:root {
+    --standardcolor: #003366;
+    --secondcolor: #fefefe;
+    --font-color: #262d34;
+    --font2-color: #002447;
+    --greycolor: #e5e6e7;
+    --inactive-font: #73777c;
+    --thirdcolor: rgb(255, 165, 0);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.categories-hero {
+    height: 250px;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+    flex-direction: column;
+}
+
+.categories-hero .background {
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-bottom: 1px solid var(--standardcolor);
+    user-select: none;
+}
+.categories-hero .background .gradient {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+        to top,
+        rgba(0, 51, 102, 0.8),
+        rgba(0, 51, 102, 0)
+    );
+}
+
+.categories-hero .background img {
+    height: 101%;
+    width: 101%;
+    filter: blur(2px);
+}
+
+.categories-hero .title p {
+    font-size: 60px;
+    font-weight: 1000;
+    color: var(--font2-color);
+}
+
+.categories-hero .path {
+    align-self: flex-start;
+    margin: 0 10%;
+    column-gap: 1em;
+    margin-top: 4em;
+}
+
+.categories-hero .path .root p {
+    color: white;
+    font-weight: 700;
+}
+
+.categories-hero .path .icon i {
+    color: #ffd280;
+}
+
+.categories-hero .path .sub-path p {
+    color: #ffa500;
+    border-bottom: 1px solid #ffa500;
+}

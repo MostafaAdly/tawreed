@@ -1,0 +1,249 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --standardcolor: #003366;
+    --secondcolor: #fefefe;
+    --font-color: #262d34;
+    --font2-color: #002447;
+    --greycolor: #e5e6e7;
+    --red: #ff0000;
+}
+
+* {
+    font-family: "Cairo", sans-serif;
+    font-weight: 500;
+    color: var(--font-color);
+}
+
+body {
+    background-color: var(--secondcolor);
+    padding: 0;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.logo img {
+    height: 119px;
+    user-select: none;
+}
+
+.auth-container {
+    min-width: 22%;
+    border: 0.5px solid #73777c;
+    border-radius: 32px;
+    padding: 40px;
+    padding-bottom: 35px;
+}
+
+.auth-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--font-color);
+    text-align: center;
+    margin: 25px 0 25px 0;
+}
+
+.input-area {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* overflow: hidden; */
+    margin-bottom: 10px;
+}
+
+.input-area p {
+    text-align: right;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--font2-color);
+    margin: 0 12px 2px 0;
+}
+
+.input-field {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: 0.5px solid #73777c;
+    border-radius: 16px;
+    height: 50px;
+}
+
+.input-field i {
+    width: 40px;
+    text-align: center;
+    float: right;
+}
+
+.input-field .input {
+    width: 70%;
+    overflow: hidden;
+}
+
+.input-area .input input {
+    width: 100%;
+    border: 0px solid;
+    outline: 0px solid;
+    padding: 8px 16px 8px 16px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.forgot-password,
+.guest-browse {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forgot-password p,
+.guest-browse p {
+    font-family: "Segoe UI", sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+}
+
+.forgot-password a,
+.guest-browse a {
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    color: var(--font2-color);
+    border-bottom: 1px solid;
+    min-width: 120px;
+    text-align: center;
+}
+.buttons {
+    margin: 20px 0;
+}
+
+.auth-button {
+    width: 100%;
+}
+.auth-button i {
+    color: white;
+    margin: 3px;
+}
+
+.auth-button button {
+    width: 100%;
+    background-color: var(--standardcolor);
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    padding: 8px;
+    border-radius: 16px;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.auth-button button:hover {
+    opacity: 0.92;
+}
+
+.auth-button button:active {
+    opacity: 0.8;
+}
+
+.new-account button {
+    background-color: var(--secondcolor);
+    color: orange;
+    border: 1px solid orange;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    bottom: 0;
+    margin-top: 50px;
+    width: 100%;
+    height: 170px;
+    background: var(--greycolor);
+}
+
+.footer-divider {
+    background-color: #4d5258;
+    height: 1.3px;
+    width: 60%;
+}
+
+.social-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 25px;
+    font-size: 25px;
+    position: fixed;
+}
+.social-media .media {
+    text-align: center;
+    height: 35px;
+    width: 35px;
+    background-color: #003366;
+    border-radius: 50%;
+}
+
+.social-media .media:hover {
+    opacity: 0.9;
+}
+
+.social-media .media i::before {
+    color: #73777c;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.company-info {
+    position: absolute;
+    top: 20%;
+    column-gap: 20px;
+}
+.company-info .info {
+    cursor: pointer;
+    text-decoration: none;
+}
+.company-info .info:hover {
+    opacity: 0.9;
+}
+
+.company-name {
+    position: absolute;
+    bottom: 20%;
+    font-weight: 400;
+    color: #92989f;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}

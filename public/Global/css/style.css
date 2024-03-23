@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --standardcolor: #003366;
+    --secondcolor: #fefefe;
+    --font-color: #262d34;
+    --font2-color: #002447;
+    --greycolor: #e5e6e7;
+    --inactive-font: #73777c;
+}
+
+* {
+    font-family: "Cairo", sans-serif;
+    font-weight: 500;
+    color: var(--font-color);
+}
+
+body {
+    background-color: var(--secondcolor);
+    padding: 0;
+    margin: 0;
+}
+p {
+    margin: 0;
+}
+
+.page-body {
+    background-color: var(--secondcolor);
+    padding: 0;
+    margin: 0;
+    padding-top: 80px;
+}
+
+.supplier-body {
+    position: absolute;
+    top: 100px;
+    right: 270px;
+    left: 0;
+    bottom: auto;
+    padding: 2em;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-shadow {
+    box-shadow: -1px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.box-shadow-hover {
+    transition: box-shadow 0.2s;
+}
+
+.box-shadow-hover:hover {
+    box-shadow: -1px 3px 5px rgba(0, 0, 0, 0.3);
+}

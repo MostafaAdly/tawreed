@@ -4,25 +4,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Login_1 = __importDefault(require("./Pages/Authentication/Login"));
-const Register_1 = __importDefault(require("./Pages/Authentication/Register"));
-const Home_1 = __importDefault(require("./Pages/Home/Home"));
 const Server_1 = __importDefault(require("./Server"));
+const PersonaSelector_1 = __importDefault(require("./Pages/Personas/Selector/PersonaSelector"));
 class SessionHandler {
     constructor(data) {
         this.data = data;
     }
     runMiddleware(req, res, next) {
-        if (req.method.toLowerCase() == 'get' && !this.isSessionRegistered(req) && !this.isAuthURL(req.url)) {
+        // console.log(req.method, req.url, this.isSessionRegistered(req), this.isAuthURL(req.url))
+        if (req.url.startsWith('/_next')) {
+            next();
+        }
+        else if (req.method.toLowerCase() == 'get' && !this.isSessionRegistered(req) && !this.isAuthURL(req.url)) {
             res.redirect(Login_1.default.base_url);
+            // console.log("------")
         }
         else if (this.isSessionRegistered(req) && this.isAuthURL(req.url)) {
-            res.redirect(Home_1.default.base_url);
+            res.redirect(PersonaSelector_1.default.base_url);
+            // console.log("----=========-")
         }
         else
             next();
     }
     isAuthURL(url) {
-        return url != null && [Login_1.default.base_url, Register_1.default.base_url, Server_1.default.api_base_url].filter(auth => url.toLowerCase().startsWith(auth.toLowerCase())).length != 0;
+        return url != null && [Login_1.default.base_url, Server_1.default.api_base_url].filter(auth => url.toLowerCase().startsWith(auth.toLowerCase())).length != 0;
     }
     isSessionRegistered(req) {
         var _a;

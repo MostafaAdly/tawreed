@@ -31,17 +31,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const uuid_1 = require("uuid");
+const Utils_1 = __importDefault(require("../Utils"));
 class Department {
-    constructor(department) {
-        this.id = (0, uuid_1.v4)();
-        this.id = department.id || (0, uuid_1.v4)();
-        this.name = department.name;
-        this.imageURL = department.imageURL;
-        this.createdAt = department.createdAt || new Date();
+    constructor(name, images) {
+        this.id = Utils_1.default.departmentId_prefix + Utils_1.default.createId();
+        this.name = name;
+        this.images = images;
     }
     save() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -54,9 +55,8 @@ Department.schema = () => {
     if (!_a.model)
         _a.model = mongoose_1.default.model('departments', new mongoose_1.Schema({
             id: { type: String, unique: true },
-            name: String,
-            imageURL: String,
-            createdAt: Date
+            name: { type: String },
+            images: { type: (Array) }
         }));
     return _a.model;
 };

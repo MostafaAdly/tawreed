@@ -1,0 +1,162 @@
+.upload {
+    display: flex;
+    align-items: center;
+    column-gap: 1em;
+    height: 300px;
+    user-select: none;
+
+    .logo {
+        height: 100%;
+        aspect-ratio: 1/1;
+        background-color: #f2f3f3;
+        border-radius: 24px;
+        flex-direction: column;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        transition: background-color 0.2s, box-shadow 0.2s;
+        box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            background-color: #dddddd;
+        }
+    }
+
+    .banner {
+        flex: 1;
+        height: 100%;
+        border-radius: 24px;
+        background-color: #f2f3f3;
+        flex-direction: column;
+        cursor: pointer;
+        transition: background-color 0.2s, box-shadow 0.2s;
+        box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            background-color: #dddddd;
+        }
+    }
+
+    .info {
+        column-gap: 10px;
+    }
+}
+
+.upload i {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.upload p,
+.upload i {
+    color: var(--inactive-font);
+}
+
+.upload p {
+    font-weight: 400;
+    font-size: 14px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 15px;
+}
+
+.users-controller {
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f3f3;
+    margin-top: 1em;
+    border-radius: 24px;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+    padding: 32px;
+
+    .title {
+        text-align: center;
+        margin-bottom: 24px;
+
+        p {
+            font-size: 28px;
+            font-weight: 700;
+        }
+    }
+}
+
+.users-controller table {
+    width: 100%;
+}
+
+.users-controller table p {
+    font-size: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.users-controller table tbody tr {
+    text-align: center;
+}
+
+.users-controller table tbody tr th p {
+    font-family: "Cairo";
+    font-weight: 600;
+    color: #4d5258;
+}
+
+.users-controller table tbody tr td {
+    border-top: 1em solid transparent;
+}
+
+.users-controller table tbody tr td p {
+    font-weight: 400;
+    color: #262d34;
+}
+
+.users-controller table tbody tr .controls {
+    display: flex;
+    column-gap: 1em;
+
+    button {
+        cursor: pointer;
+        border-radius: 50%;
+        background-color: #4bd358;
+        border: none;
+        width: 2.3em;
+        aspect-ratio: 1/1;
+        box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+
+        i {
+            color: white;
+        }
+
+        &.trash {
+            background-color: #fbc63f;
+        }
+
+        &:hover {
+            opacity: 0.95;
+        }
+    }
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f3f3;
+    margin-top: 1em;
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+
+    .title p {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 0.5em;
+    }
+}
+
+.description textarea {
+    margin-top: 1em;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid var(--inactive-font);
+    padding: 10px;
+    font-size: 1em;
+    background-color: #fcfcfc;
+}

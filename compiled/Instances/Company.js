@@ -22,32 +22,58 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const uuid_1 = require("uuid");
+const ImageURL_1 = __importDefault(require("./ImageURL"));
 class Company {
-    constructor(company) {
+    constructor(company, images) {
         this.id = (0, uuid_1.v4)();
-        this.schema = () => {
-            if (!this.model)
-                this.model = mongoose_1.default.model('companies', new mongoose_1.Schema({
-                    id: { type: String, unique: true },
-                    name: String,
-                    field: String,
-                    description: String,
-                    products: Array,
-                    departments: Array,
-                    addedAt: Date
-                }));
-            return this.model;
-        };
+        this.images = [];
         this.id = company.id || (0, uuid_1.v4)();
         this.name = company.name;
         this.field = company.field;
+        this.phone = company.phone;
+        this.officeAddress = company.officeAddress;
+        this.emailAddress = company.emailAddress;
         this.description = company.description;
-        this.products = company.products;
-        this.departments = company.departments;
         this.addedAt = company.addedAt || new Date();
+        for (var image of images)
+            this.images.push(new ImageURL_1.default(image.path).getURL());
+    }
+    save() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield new (_a.schema())(this).save();
+        });
     }
 }
+_a = Company;
+Company.schema = () => {
+    if (!_a.model)
+        _a.model = mongoose_1.default.model('companies', new mongoose_1.Schema({
+            id: { type: String, unique: true },
+            name: String,
+            images: Array,
+            field: String,
+            phone: String,
+            emailAddress: String,
+            officeAddress: String,
+            description: String,
+            addedAt: Date
+        }));
+    return _a.model;
+};
 exports.default = Company;

@@ -1,0 +1,198 @@
+:root {
+    --standardcolor: #003366;
+    --secondcolor: #fefefe;
+    --font-color: #262d34;
+    --font2-color: #002447;
+    --greycolor: #e5e6e7;
+    --inactive-font: #73777c;
+    --thirdcolor: rgb(255, 165, 0);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-container {
+    margin: 3em 5em;
+}
+
+.product-main {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    column-gap: 1.5em;
+}
+
+.product-main .images {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    width: 200vh;
+    margin: 1em;
+    user-select: none;
+}
+.product-main .images .current {
+    width: 100%;
+}
+
+.product-main .images .current img {
+    aspect-ratio: 1/1;
+    border-radius: 24px;
+    width: 100%;
+}
+
+.product-main .images .other {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 1em;
+    row-gap: 0.6em;
+}
+.product-main .images .other img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    aspect-ratio: 1/1;
+    width: 4.6em;
+    height: 4.6em;
+    transition: opacity 0.2s;
+    cursor: pointer;
+}
+
+.product-main .images .other img:hover {
+    opacity: 0.9;
+}
+
+.product-main .name p {
+    font-size: 32px;
+    font-weight: 800;
+    color: #4d5258;
+}
+
+.product-main .info {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-main .info .top-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-main .info .top-info .company {
+    column-gap: 0.4em;
+}
+
+.product-main .info .top-info p {
+    color: var(--font2-color);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.product-main .info .top-info .evaluation {
+    column-gap: 0.3em;
+}
+.product-main .info .top-info .evaluation .icon i {
+    color: #ffa500;
+}
+
+.product-main .info .cost-info {
+    display: flex;
+    column-gap: 1.5em;
+    margin: 1em 0;
+    padding-bottom: 1em;
+    border-bottom: 0.5px dashed var(--inactive-font);
+}
+
+.product-main .info .cost-info p {
+    font-size: 20px;
+    color: var(--font2-color);
+    font-weight: 600;
+}
+
+.product-main .info .cost-info .cost-mid p {
+    font-weight: 800;
+}
+
+.product-main .controls {
+    column-gap: 20px;
+}
+
+.product-main .controls button p,
+.product-main .controls button i {
+    color: #fefefe;
+}
+.product-main .controls button {
+    column-gap: 0.5em;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--standardcolor);
+    border-radius: 16px;
+    padding: 5px 3em;
+    min-width: 15em;
+}
+
+.product-main .controls .request-quotation button {
+    background-color: transparent;
+    border: 2px solid #ffa500;
+}
+.product-main .controls .request-quotation p,
+.product-main .controls .request-quotation i {
+    color: #ffa500;
+}
+
+.product-info {
+    margin-top: 3.5em;
+}
+
+.product-info .tabs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 2em;
+    margin-bottom: 3em;
+    user-select: none;
+}
+.product-info .tabs .tab button {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 16px 8px 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s opacity 0.15s;
+}
+
+.product-info .tabs .tab button:hover {
+    opacity: 0.95;
+    background-color: rgba(171, 227, 199, 0.3);
+}
+
+.product-info .tabs .current-tab button {
+    background-color: rgba(171, 227, 199, 1);
+}
+
+.product-info .tabs .tab:not(.current-tab) button p {
+    color: var(--inactive-font);
+}
+
+.product-info .tabs .current-tab p {
+    color: var(--font-color);
+}
+
+.product-info .self-info table {
+    width: 50%;
+    height: 100%;
+    border-spacing: 1.5em;
+}
+
+.product-info .self-info table .table-head {
+    color: var(--inactive-font);
+}
