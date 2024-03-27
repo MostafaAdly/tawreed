@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My Requests</title>
+        <link rel="stylesheet" href="../../Global/css/header.css" />
+        <link rel="stylesheet" href="../../Global/css/sidebar.css" />
+        <link rel="stylesheet" href="my-requests.css" />
+        <script
+            src="https://kit.fontawesome.com/e6c13277a1.js"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <body>
+        <header>
+            <div class="logo-section">
+                <img src="../../Global/imgs/logo.png" alt="" />
+            </div>
+            <div class="title center">
+                <div class="icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <p>شركتي</p>
+            </div>
+            <div class="search-section center">
+                <div class="icon center">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <input type="text" placeholder="اكتب أي شيئ للبحث" />
+                <div class="search-by-image center">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+            </div>
+            <div class="profile-section">
+                <div class="notifications">
+                    <div class="count center">
+                        <!-- <p>3</p> -->
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                </div>
+                <div class="profile box-shadow">
+                    <img src="../../Global/imgs/profile.png" alt="" />
+                </div>
+            </div>
+        </header>
+        <nav>
+            <div class="top-section">
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                    <div class="title">
+                        <p>الرئيسية</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div class="title">
+                        <p>شركتي</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <div class="title">
+                        <p>منتجاتي</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                    <div class="title">
+                        <p>طلباتي</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-money-bill-1-wave"></i>
+                    </div>
+                    <div class="title">
+                        <p>المدفوعات</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </div>
+                    <div class="title">
+                        <p>التحليل</p>
+                    </div>
+                </a>
+            </div>
+            <div class="bottom-section">
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                    <div class="title">
+                        <p>الرسائل</p>
+                    </div>
+                </a>
+                <a href="/">
+                    <div class="icon">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                    </div>
+                    <div class="title">
+                        <p>تسجيل الخروج</p>
+                    </div>
+                </a>
+            </div>
+        </nav>
+        <main class="dashboard-container">
+            <section class="tabs" id="section_tabs">
+                <button
+                    class="tab current-tab"
+                    id="tab_orders"
+                    onclick="onClickOnTab(this)"
+                >
+                    <p>طلبات</p>
+                </button>
+                <button
+                    class="tab"
+                    id="tab_quotations"
+                    onclick="onClickOnTab(this)"
+                >
+                    <p>طلبات تسعير</p>
+                </button>
+            </section>
+            <section class="orders" id="section_orders">
+                <div class="filters">
+                    <div class="icon box-shadow-hover center">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <div class="self">
+                        <div class="filter checked box-shadow-hover">
+                            <p>جميع المنتجات</p>
+                            <div class="control">
+                                <div class="check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="exit">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter box-shadow-hover">
+                            <p>منتجات مفعلة</p>
+                            <div class="control">
+                                <div class="check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="exit">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter box-shadow-hover">
+                            <p>منتجات غير مفعلة</p>
+                            <div class="control">
+                                <div class="check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="exit">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th><p>رقم الطلب</p></th>
+                            <th><p>أسم المنتج</p></th>
+                            <th><p>الكمية</p></th>
+                            <th><p>التاريخ</p></th>
+                            <th><p>الحالة</p></th>
+                            <th><p>عرض التفاصيل</p></th>
+                        </tr>
+                        <tr>
+                            <td class="id">
+                                <div class="center"><p>RFQ2233A</p></div>
+                            </td>
+                            <td class="large">
+                                <p>
+                                    Lorem ipsum dolor, sit amet consectetur
+                                    adipisicing elit. Officia tempore eaque
+                                    consectetur.
+                                </p>
+                            </td>
+                            <td><p>100</p></td>
+                            <td><p>12/12/2021</p></td>
+                            <td>
+                                <div class="center">
+                                    <div class="box center box-shadow-hover">
+                                        <p>طلب جديد</p>
+                                        <i class="fa-solid fa-file-export"></i>
+                                    </div>
+                                    <div
+                                        class="choose-order center"
+                                        style="display: none"
+                                    >
+                                        <div class="title">
+                                            <p>اختر إجراء</p>
+                                        </div>
+                                        <div class="self">
+                                            <button><p>قيد التنفيذ</p></button>
+                                            <button><p>جاهز للشخن</p></button>
+                                            <button>
+                                                <p>في انتظار التحميل</p>
+                                            </button>
+                                            <button>
+                                                <p>في الإتجاه للعميل</p>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="controls">
+                                <button class="center box-shadow">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                                <button class="center edit box-shadow">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button class="center view box-shadow">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section class="quotations" id="section_quotations">
+                <div class="filters">
+                    <div class="icon box-shadow-hover center">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <div class="self">
+                        <div class="filter checked box-shadow-hover">
+                            <p>جميع المنتجات</p>
+                            <div class="control">
+                                <div class="check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="exit">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter box-shadow-hover">
+                            <p>منتجات مفعلة</p>
+                            <div class="control">
+                                <div class="check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="exit">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter box-shadow-hover">
+                            <p>منتجات غير مفعلة</p>
+                            <div class="control">
+                                <div class="check">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="exit">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th><p>رقم الطلب</p></th>
+                            <th><p>أسم المنتج</p></th>
+                            <th><p>الكمية</p></th>
+                            <th><p>التاريخ</p></th>
+                            <th><p>الحالة</p></th>
+                            <th><p>عرض التفاصيل</p></th>
+                        </tr>
+                        <tr>
+                            <td class="id">
+                                <div class="center"><p>RFQ2233A</p></div>
+                            </td>
+                            <td class="large">
+                                <p>
+                                    Lorem ipsum dolor, sit amet consectetur
+                                    adipisicing elit. Officia tempore eaque
+                                    consectetur.
+                                </p>
+                            </td>
+                            <td><p>200</p></td>
+                            <td><p>12/12/2021</p></td>
+                            <td>
+                                <div class="center">
+                                    <div class="box center box-shadow-hover">
+                                        <p>طلب جديد</p>
+                                        <i class="fa-solid fa-file-export"></i>
+                                    </div>
+                                    <div
+                                        class="choose-order center"
+                                        style="display: none"
+                                    >
+                                        <div class="title">
+                                            <p>اختر إجراء</p>
+                                        </div>
+                                        <div class="self">
+                                            <button><p>قيد التنفيذ</p></button>
+                                            <button><p>جاهز للشخن</p></button>
+                                            <button>
+                                                <p>في انتظار التحميل</p>
+                                            </button>
+                                            <button>
+                                                <p>في الإتجاه للعميل</p>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="controls">
+                                <button class="center box-shadow">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                                <button class="center edit box-shadow">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button class="center view box-shadow">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+    <script>
+        const ordersTab = document.getElementById("tab_orders");
+        const ordersSection = document.getElementById("section_orders");
+        const quotationsSection = document.getElementById("section_quotations");
+        const tabsSection = document.getElementById("section_tabs");
+
+        const onClickOnTab = (e) => {
+            for (const tab of tabsSection.children)
+                tab.classList.remove("current-tab");
+            e.classList.add("current-tab");
+
+            if (e.id == ordersTab.id) {
+                ordersSection.style.display = "block";
+                quotationsSection.style.display = "none";
+            } else {
+                ordersSection.style.display = "none";
+                quotationsSection.style.display = "block";
+            }
+        };
+    </script>
+</html>

@@ -1,94 +1,109 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyProducts/css/SupplierProductsPage.module.css'
+import { faker } from '@faker-js/faker/locale/ar';
 import { _css } from '../../../public/Assets/Helpers';
 
-
-const SupplierProductsPage = ({ user, entity }) => {
+const SupplierProductsPage = ({ user, entity, categories, products }) => {
 
     return (
         <>
             <S_HeaderComponent user={user} entity={entity} />
             <S_SidebarComponent />
             <div className={_css(styles, 'supplier-body')}>
-                <_self user={user} entity={entity} />
+                <_self user={user} entity={entity} categories={categories} entityProducts={products} />
             </div>
         </>
     );
 }
 
-const _self = ({ user, entity }) => {
+const _self = ({ user, entity, categories, entityProducts }) => {
+    const [ancestry, setAncestry] = useState("");
+    const [category, setCategory] = useState(null);
+    const [products, setProducts] = useState<any[]>([]);
 
-    const onClickOnTab = (e) => {
-        const productsTab = document.getElementById("tab_products");
-        const descriptionSection = document.getElementById(
-            "section_description"
-        );
-        const productsSection = document.getElementById("section_products");
-        const tabsSection = document.getElementById("section_tabs");
-        if (!productsSection || !descriptionSection || !tabsSection) return;
 
-        for (const tab of tabsSection.children)
-            tab.classList.remove("current-tab");
-        e.classList.add("current-tab");
 
-        if (e.id == "tab_products") {
-            productsSection.style.display = "block";
-            descriptionSection.style.display = "none";
-        } else {
-            productsSection.style.display = "none";
-            descriptionSection.style.display = "flex";
+    useEffect(() => {
+        const pros: any[] = [];
+        for (var cat of categories.filter(c => (c.ancestry + "/" + c.id).includes(ancestry))) {
+            for (var product of cat.products) {
+                if (pros.find(p => p.id == product)) continue;
+                const pro = entityProducts.find(p => p.id == product);
+                if (pro)
+                    pros.push(pro);
+            }
         }
+        setProducts(pros);
+    }, [ancestry])
+
+    const filterCategories = (category) => {
+        if (!category) {
+            setAncestry("");
+            return;
+        }
+        setAncestry(category.ancestry + "/" + category.id);
+        console.log("Filtering Categories to show:", ancestry)
     }
 
+    const getCurrentCategory = () => {
+        return ancestry == "" ? null : categories.filter(c => c.id == ancestry.split("/").pop())[0];
+    }
     return (
         <>
             <section className={styles.categories}>
                 <div className={styles.path}>
-                    <p>جميع المنتجات</p>
-                    <i className={_css(styles, 'fa-solid fa-angles-left')}></i>
-                    <p className={styles['current-path']}>المجموعة 1</p>
+                    <p onClick={() => filterCategories(null)}>جميع المنتجات</p>
+                    {ancestry.split("/").filter(id => id != "").map((id, index) => {
+                        const category = categories.find(category => category.id == id);
+                        return (
+                            <div className={
+                                _css(styles, ancestry.split("/").length == index + 2
+                                    ? 'current-path' : "path")} key={index} onClick={() => filterCategories(category)}>
+                                <i className={_css(styles, 'fa-solid fa-angles-left')}></i>
+                                <p>{category.name}</p>
+                            </div>
+                        );
+                    })}
                 </div>
                 <div className={styles['categories-self']}>
-                    <div className={styles.category}>
-                        <div className={styles.icon}>
-                            <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
-                        </div>
-                        <p>category 1</p>
-                    </div>
-                    <div className={styles.category}>
-                        <div className={styles.icon}>
-                            <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
-                        </div>
-                        <p>category 1</p>
-                    </div>
-                    <div className={styles.category}>
-                        <div className={styles.icon}>
-                            <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
-                        </div>
-                        <p>category 1</p>
-                    </div>
+                    {categories.filter(cat => cat.ancestry == ancestry).map((cat, index) => {
+                        return (
+                            <div className={styles.category} key={index} onClick={() => filterCategories(cat)}>
+                                <div className={styles.icon}>
+                                    <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
+                                </div>
+                                <p>{cat.name}</p>
+                            </div>
+                        );
+                    })}
                 </div>
             </section>
             <section className={styles.tabs} id="section_tabs">
                 <button
-                    className={styles.tab + " " + styles['current-tab']}
-                    id="description_tab"
-                    onClick={(e) => onClickOnTab(e.target)}
-                >
-                    <p>وصف المجموعة</p>
-                </button>
-                <button
-                    className={styles.tab}
+                    className={_css(styles, 'tab current-tab')}
                     id="tab_products"
-                    onClick={(e) => onClickOnTab(e.target)}
+                    onClick={(e) => onTabClick(e)}
+                    data-section="section_products"
                 >
                     <p>المنتجات</p>
                 </button>
+                {
+                    ancestry != "" ?
+                        <button
+                            className={_css(styles, 'tab')}
+                            id="tab_description"
+                            onClick={(e) => onTabClick(e)}
+                            data-section="section_description"
+                        >
+                            <p>وصف المجموعة</p>
+                        </button>
+                        : null
+                }
             </section>
             <section className={styles.description} id="section_description">
-                <div className={styles.title} ><p>وصف المجموعة 1</p></div>
+                <div className={styles.title} ><p>وصف {getCurrentCategory()?.name}</p></div>
                 <div className={styles.label}>
                     <p>اكتب ملخص عن المجموعة</p>
                     <button>
@@ -101,24 +116,8 @@ const _self = ({ user, entity }) => {
                         name="description"
                         id="description"
                         placeholder="اكتب ملخص عن هذه المجموعة"
-                        defaultValue={`لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا
-                        يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت
-                        لابوري ات دولار ماجنا أليكيوا لوريم ايبسوم دولار سيت
-                        أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو
-                        أيوسمود تيمبور لوريم ايبسوم دولار سيت أميت
-                        ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود
-                        تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا
-                        لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا
-                        يسكينج أليايت,سيت دو أيوسمود تيمبور لوريم ايبسوم
-                        دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت
-                        دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار
-                        ماجنا أليكيوا لوريم ايبسوم دولار سيت أميت
-                        ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود
-                        تيمبور لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور
-                        أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور
-                        أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا لوريم
-                        ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج
-                        أليايت,سيت دو أيوسمود تيمبور`}
+                        defaultValue={faker.commerce.productDescription()}
+                        value={getCurrentCategory()?.description}
                     >
                     </textarea>
                 </div>
@@ -177,39 +176,70 @@ const _self = ({ user, entity }) => {
                 <table>
                     <tbody>
                         <tr>
-                            <th><p>رقم المنتج</p></th>
+                            <th><p><b>#</b></p></th>
+                            <th><p>كود المنتج</p></th>
                             <th className={styles.large}><p>وصف المنتج</p></th>
-                            <th><p>المجموعة</p></th>
                             <th><p>السعر</p></th>
+                            <th><p>الوحدة</p></th>
                             <th><p>الحالة</p></th>
                             <th><p>الصورة</p></th>
                         </tr>
-                        <tr>
-                            <td className={styles.id}>
-                                <div className={"center"}><p>TE1234C</p></div>
-                            </td>
-                            <td>
-                                <p>
-                                    لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور
-                                    أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور
-                                    لوريم
-                                </p>
-                            </td>
-                            <td><p>العدد</p></td>
-                            <td><p>1224</p></td>
-                            <td><p>1</p></td>
-                            <td>
-                                <img
-                                    src="../../Global/imgs/background.jpeg"
-                                    alt=""
-                                />
-                            </td>
-                        </tr>
+                        {products.map((product, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td><p><b>{index + 1}</b></p></td>
+                                    <td className={styles.id}>
+                                        <div className={"center"}><p>{product.id}</p></div>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            {product.name}
+                                        </p>
+                                    </td>
+                                    <td><p>{product.price.cost}</p></td>
+                                    <td><p>{product.price.quantity}</p></td>
+                                    <td><p>{product.price.unit}</p></td>
+                                    <td className='center'>
+                                        {product.images.length &&
+                                            <img
+                                                src={product.images[0]}
+                                                alt=""
+                                                key={index}
+                                            />
+                                        }
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </section>
         </>
     );
+}
+
+
+const onTabClick = (e) => {
+    const tabs = document.getElementById("section_tabs")?.children;
+    if (!tabs?.length) return;
+    var target = e.target;
+    if (e.target.tagName.toLowerCase() == "p")
+        target = e.target.parentNode
+    for (var all of tabs)
+        if (all) {
+            all.classList.remove(styles['current-tab']);
+            const sectionId = all.getAttribute("data-section");
+            if (!sectionId) continue;
+            const section = document.getElementById(sectionId);
+            if (section)
+                section.style.display = "none";
+        }
+    target.classList.add(styles['current-tab']);
+    const sectionId = target.getAttribute("data-section");
+    if (!sectionId) return;
+    const section = document.getElementById(sectionId);
+    if (section)
+        section.style.display = "block";
 }
 
 export default SupplierProductsPage;

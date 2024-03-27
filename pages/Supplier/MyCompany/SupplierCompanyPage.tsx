@@ -2,13 +2,14 @@ import React from 'react'
 import styles from '../../../public/Supplier/MyCompany/css/SupplierCompanyPage.module.css'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
+import { _css } from '../../../public/Assets/Helpers';
 
 const SupplierCompanyPage = ({ user, entity }) => {
     return (
         <>
             <S_HeaderComponent user={user} entity={entity} />
             <S_SidebarComponent />
-            <div className="supplier-body">
+            <div className={_css(styles, 'supplier-body')}>
                 <_self user={user} entity={entity} />
             </div>
         </>
@@ -26,10 +27,10 @@ const _self = ({ user, entity }) => {
                 <td><p>{user.role.name}</p></td>
                 <td className={styles.controls + " center"}>
                     <button>
-                        <i className="fa-solid fa-pen"></i>
+                        <i className={_css(styles, 'fa-solid fa-pen')}></i>
                     </button>
                     <button className={styles.trash}>
-                        <i className="fa-solid fa-trash"></i>
+                        <i className={_css(styles, 'fa-solid fa-trash')}></i>
                     </button>
                 </td></tr>
         );
@@ -42,7 +43,7 @@ const _self = ({ user, entity }) => {
                 <input type="file" name="logo" id="logo" hidden />
                 <label className={styles.banner + " center" + " box-shadow-hover"} htmlFor="banner">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-arrow-up-from-bracket"></i>
+                        <i className={_css(styles, 'fa-solid fa-arrow-up-from-bracket')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>تحميل صورة الغلاف</p>
@@ -58,7 +59,7 @@ const _self = ({ user, entity }) => {
                 </label>
                 <label className={styles.logo + " center" + " box-shadow-hover"} htmlFor="logo">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-arrow-up-from-bracket"></i>
+                        <i className={_css(styles, 'fa-solid fa-arrow-up-from-bracket')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>تحميل اللوجو</p>
@@ -89,10 +90,10 @@ const _self = ({ user, entity }) => {
                             <td><p>مشتريات</p></td>
                             <td className={styles.controls + " center"}>
                                 <button>
-                                    <i className="fa-solid fa-pen"></i>
+                                    <i className={_css(styles, 'fa-solid fa-pen')}></i>
                                 </button>
                                 <button className={styles.trash}>
-                                    <i className="fa-solid fa-trash"></i>
+                                    <i className={_css(styles, 'fa-solid fa-trash')}></i>
                                 </button>
                             </td>
                         </tr> */}

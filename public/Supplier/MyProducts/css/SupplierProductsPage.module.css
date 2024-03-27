@@ -13,6 +13,7 @@
             color: var(--inactive-font);
             font-size: 20px;
             font-weight: 600;
+            cursor: pointer;
         }
 
         i {
@@ -22,9 +23,15 @@
         }
 
         .current-path {
-            color: var(--standardcolor);
-            font-weight: 700;
-            border-bottom: 0.5px solid var(--standardcolor);
+            display: flex;
+            column-gap: 20px;
+            align-items: center;
+
+            p {
+                border-bottom: 0.5px solid var(--standardcolor);
+                color: var(--standardcolor);
+                font-weight: 700;
+            }
         }
     }
 
@@ -42,7 +49,7 @@
             justify-content: center;
             padding: 16px;
             row-gap: 1em;
-            height: 7em;
+            min-width: 7em;
             aspect-ratio: 1/ 1;
             background-color: #f2f3f3;
             border-radius: 16px;
@@ -83,6 +90,7 @@
         border: none;
         border-radius: 5px;
         transition: box-shadow 0.2s;
+        background-color: #f0f0f0;
 
         p {
             font-size: 26px;
@@ -105,8 +113,8 @@
     }
 }
 .description {
-    /* display: none; */
-    display: flex;
+    display: none;
+    /* display: flex; */
     flex-direction: column;
     row-gap: 1em;
     margin-top: 3em;
@@ -153,7 +161,7 @@
             }
         }
 
-        textarea {
+        /* textarea {
             min-width: 100%;
             min-height: 150px;
             outline: none;
@@ -163,12 +171,24 @@
             font-size: 20px;
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             columns: 40;
+        } */
+        textarea {
+            min-width: 100%;
+            min-height: 150px;
+            margin-top: 0.1em;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1em;
+            background-color: #fcfcfc;
+            resize: none;
         }
     }
 }
 
 .products {
-    display: none;
+    /* display: none; */
     .filters {
         display: flex;
         margin-top: 2em;

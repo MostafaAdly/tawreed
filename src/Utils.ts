@@ -11,6 +11,7 @@ export default class Global {
     public static productId_prefix = "PID" + this.id_suffix;
     public static userId_prefix = "UID" + this.id_suffix;
     public static entityId_prefix = "EID" + this.id_suffix;
+    public static entityCategoryId_prefix = "ECID" + this.id_suffix;
     public static departmentId_prefix = "DID" + this.id_suffix;
     public static roleId_prefix = "RID" + this.id_suffix;
     public static personaId_prefix = "PSID" + this.id_suffix;

@@ -18,6 +18,8 @@ const Supplier_1 = __importDefault(require("./Pages/Personas/Customer/Supplier/S
 const PersonaSelector_1 = __importDefault(require("./Pages/Personas/Selector/PersonaSelector"));
 const MyCompany_1 = __importDefault(require("./Pages/Personas/Supplier/MyCompany"));
 const MyProducts_1 = __importDefault(require("./Pages/Personas/Supplier/MyProducts"));
+const ImagesAPI_1 = __importDefault(require("./Pages/API/ImagesAPI"));
+const MyRequests_1 = __importDefault(require("./Pages/Personas/Supplier/MyRequests"));
 class Server {
     constructor(data) {
         this.port = parseInt(process.env.PORT + "") || 3000;
@@ -57,7 +59,7 @@ class Server {
                 mongoUrl: process.env.MONGODB_CONNECTION_STRING, ttl: this.ttl
             }),
         }));
-        this.app.use("../../pages", express_1.default.static(__dirname));
+        // this.app.use("../../pages", express.static(__dirname));
     }
     load_Late_Middleware() {
         this.app.use((req, res, next) => this.sessionHandler.runMiddleware(req, res, next));
@@ -88,6 +90,7 @@ class Server {
             // SUPPLIER
             new MyCompany_1.default(this.data),
             new MyProducts_1.default(this.data),
+            new MyRequests_1.default(this.data),
             // Do not remove this.
             new NextWildCard_1.default(this.data),
         ];
@@ -96,7 +99,7 @@ class Server {
     }
     load_apis() {
         const apis = [
-        // new ImagesAPI(this.data, Server.api_base_url)
+            new ImagesAPI_1.default(this.data, Server.api_base_url)
         ];
         for (let api of apis)
             this.app.use(api.base_url, api.router);

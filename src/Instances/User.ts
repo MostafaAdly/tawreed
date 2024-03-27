@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { v4 as uuid } from 'uuid';
 import Utils from '../Utils';
 import Entity from "./Entity";
 import { Permission } from "./Personas/Permission";
@@ -16,17 +15,23 @@ export default class User {
     public entity: string;
 
     constructor(id: string)
-    constructor(id: string, displayName: string, credentials: { username: string, password: string }, entity: string, role: string)
+    constructor(displayName: string,
+        credentials: { username: string, password: string },
+        entity: string, role: string)
     constructor(...args: any[]) {
         if (args.length == 1) {
             this.id = args[0];
-        } else if (args.length == 5) {
-            this.id = args[0];
-            this.displayName = args[1];
-            this.credentials = args[2];
-            this.entity = args[3];
-            this.role = args[4];
+        } else if (args.length == 4) {
+            this.displayName = args[0];
+            this.credentials = args[1];
+            this.entity = args[2];
+            this.role = args[3];
         }
+    }
+
+    public setId = (id: string) => {
+        this.id = id;
+        return this;
     }
 
     public async load(withPassword: boolean = false) {

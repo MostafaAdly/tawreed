@@ -13,9 +13,17 @@ export default class Product {
     public price: Price;
 
     constructor({ id }: { id: string });
-    constructor({ name, description, details, price, images }: {
-        name: string, description: string, details: any, price: Price, images: string[]
-    });
+    constructor(
+        {
+            name,
+            description,
+            details,
+            price,
+            images
+        }: {
+            name: string, description: string,
+            details: any, price: Price, images: string[]
+        });
     constructor(input: any) {
         this.id = input.id || this.id;
         this.name = input.name;

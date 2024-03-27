@@ -23,6 +23,8 @@ const Product_1 = __importDefault(require("../Instances/Product"));
 const SupplierType_1 = __importDefault(require("../Instances/Personas/SupplierType"));
 const uuid_1 = require("uuid");
 const Price_1 = __importDefault(require("../Instances/Price"));
+const ar_1 = require("@faker-js/faker/locale/ar");
+const EntityCategory_1 = __importDefault(require("../Instances/EntityCategory"));
 class MongoDB {
     constructor(data) {
         this.connect = () => __awaiter(this, void 0, void 0, function* () {
@@ -30,6 +32,7 @@ class MongoDB {
                 return;
             mongoose_1.default.connect(process.env.MONGODB_CONNECTION_STRING).then(() => __awaiter(this, void 0, void 0, function* () {
                 this.data.utils.print("Connected to MongoDB.");
+                // this.createFakerDummyData();
                 // await this.deleteAllDepartments()
                 // await this.import_departments_intoMySQL();
                 // await this.createDummySuppliers();
@@ -38,10 +41,14 @@ class MongoDB {
         });
         this.disconnect = () => mongoose_1.default.disconnect();
         this.import_departments_intoMySQL = () => __awaiter(this, void 0, void 0, function* () {
+            const deps = [];
             for (const [key, value] of Object.entries(departments_json_1.default)) {
-                yield new Department_1.default(key, value).save();
+                const dep = new Department_1.default(key, value);
+                yield dep.save();
+                deps.push(dep);
             }
             ;
+            return deps;
         });
         this.deleteAllDepartments = () => __awaiter(this, void 0, void 0, function* () {
             yield Department_1.default.schema().deleteMany({});
@@ -49,6 +56,84 @@ class MongoDB {
         this.deleteAllUsers = () => __awaiter(this, void 0, void 0, function* () {
             yield User_1.default.schema().deleteMany({});
         });
+        this.createFakerDummyData = () => __awaiter(this, void 0, void 0, function* () {
+            const timeTook_start = Date.now();
+            yield this.deleteAllDepartments();
+            yield Entity_1.default.schema().deleteMany({});
+            yield Product_1.default.schema().deleteMany({});
+            yield User_1.default.schema().deleteMany({});
+            yield EntityCategory_1.default.schema().deleteMany({});
+            const deps = yield this.import_departments_intoMySQL();
+            const roles = [
+                new EntityRole_1.default({ name: "مدير الشركة", permissions: [Permission_1.Permission.CUSTOMER_ALL, Permission_1.Permission.SUPPLIER_ALL] }),
+                new EntityRole_1.default({ name: "مدير قسم المشتريات", permissions: [Permission_1.Permission.CUSTOMER_ALL] }),
+                new EntityRole_1.default({ name: "مدير قسم المبيعات", permissions: [Permission_1.Permission.SUPPLIER_ALL] })
+            ];
+            const products = [];
+            for (var i = 0; i < 200; i++) {
+                const images = [];
+                for (var h = 0; h < 5; h++) {
+                    images.push(ar_1.faker.image.url());
+                }
+                const product = new Product_1.default({
+                    name: ar_1.faker.commerce.productName(),
+                    description: ar_1.faker.commerce.productDescription(),
+                    images,
+                    details: { rating: ar_1.faker.number.int({ min: 1, max: 5 }), weight: Math.floor(Math.random() * 100) + " Kg", age: Math.floor(Math.random() * 100), material: ar_1.faker.commerce.productMaterial() },
+                    price: new Price_1.default({ cost: parseInt(ar_1.faker.commerce.price()), quantity: Math.floor(Math.random() * 5), unit: "دستة", currency: "جنيه مصري" })
+                });
+                yield product.save();
+                products.push(product);
+            }
+            const entities = [];
+            for (var i = 0; i < 5; i++) {
+                const entityProducts = [];
+                for (var h = 0; h < Math.floor(Math.random() * 100); h++) {
+                    entityProducts.push(this.random(products).id);
+                }
+                const entity = new Entity_1.default({
+                    details: {
+                        displayName: ar_1.faker.company.name(),
+                        logo: ar_1.faker.image.avatar(),
+                        banner: ar_1.faker.image.url(),
+                        description: ar_1.faker.company.catchPhrase(),
+                        categories: [this.random(deps).id]
+                    },
+                    personas: {
+                        supplier: new SupplierType_1.default({ products: entityProducts })
+                    },
+                    roles,
+                    categories: []
+                });
+                const cats = [];
+                for (var h = 0; h < Math.floor(Math.random() * 2) + 1; h++) {
+                    const cat = new EntityCategory_1.default({
+                        name: `Group ${ar_1.faker.word.sample()}`,
+                        description: ar_1.faker.company.catchPhrase(),
+                        entity: entity.id
+                    });
+                    yield cat.createFakerChildren(products, entity, 3);
+                    cats.push(cat);
+                }
+                entity.categories = cats.map(cat => cat.id);
+                entities.push(entity);
+                yield entity.save();
+            }
+            yield this.createDefaultDeveloperUser(entities, roles);
+            const users = [];
+            for (var i = 0; i < 20; i++) {
+                const user = new User_1.default(ar_1.faker.internet.displayName(), { username: ar_1.faker.internet.userName(), password: ar_1.faker.internet.password() }, this.random(entities).id, this.random(roles).id);
+                yield user.save();
+                users.push(user);
+            }
+            this.data.utils.print(`Took ${(Date.now() - timeTook_start) / 1000}sec to delete and create:`, "FAKER");
+            this.data.utils.print(`Created ${roles.length} roles.`, "FAKER");
+            this.data.utils.print(`Created ${products.length} products.`, "FAKER");
+            this.data.utils.print(`Created ${entities.length} entities.`, "FAKER");
+            this.data.utils.print(`Created ${(yield EntityCategory_1.default.schema().find({})).length} categories.`, "FAKER");
+            this.data.utils.print(`Created ${users.length} users.`, "FAKER");
+        });
+        this.random = (list) => list[Math.floor(Math.random() * list.length)];
         this.createSemiRealData = () => __awaiter(this, void 0, void 0, function* () {
             try {
                 // await this.deleteAllDepartments();
@@ -239,6 +324,7 @@ class MongoDB {
                 console.log(error);
             }
         });
+        this.createDefaultDeveloperUser = (entities, roles) => __awaiter(this, void 0, void 0, function* () { return yield new User_1.default("Mostafa Adly", { username: "mostafaadly", password: "123123" }, entities[0].id, roles[0].id).save(); });
         this.data = data;
     }
 }

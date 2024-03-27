@@ -3,6 +3,7 @@ import User from '../Instances/User';
 import Home from "./Pages/Personas/Customer/Home/Home";
 import Server from "./Server";
 import PersonaSelector from "./Pages/Personas/Selector/PersonaSelector";
+import Entity from "../Instances/Entity";
 
 export default class SessionHandler {
     private data: any;
@@ -10,18 +11,35 @@ export default class SessionHandler {
         this.data = data;
     }
 
-    public runMiddleware(req: any, res: any, next: any) {
-        // console.log(req.method, req.url, this.isSessionRegistered(req), this.isAuthURL(req.url))
-        if (req.url.startsWith('/_next')) {
+    public async runMiddleware(req: any, res: any, next: any) {
+        if (req.url.startsWith('/_next') || req.url.startsWith(Server.api_base_url)) {
             next();
-        } else if (req.method.toLowerCase() == 'get' && !this.isSessionRegistered(req) && !this.isAuthURL(req.url)) {
+        }
+        else if (req.method.toLowerCase() == 'get' && !this.isSessionRegistered(req) && !this.isAuthURL(req.url)) {
             res.redirect(Login.base_url);
-            // console.log("------")
-        } else if (this.isSessionRegistered(req) && this.isAuthURL(req.url)) {
+        }
+        else if (this.isSessionRegistered(req) && this.isAuthURL(req.url)) {
             res.redirect(PersonaSelector.base_url);
-            // console.log("----=========-")
-        } else
+        }
+        else if (this.isSessionRegistered(req) && !(await this.checkForPersonaAccess(req))) {
+            res.redirect("/");
+        }
+        else {
             next();
+        }
+    }
+
+    public checkForPersonaAccess = async (req: any): Promise<boolean> => {
+        const user = req.session.user;
+        if (user) {
+            const entity = await new Entity({}).load(user.entity);
+            if (!entity
+                || !entity.personas.customer && req.url.startsWith("/c")
+                || !entity.personas.supplier && req.url.startsWith("/s"))
+                return false;
+            return true;
+        }
+        return false;
     }
 
     public isAuthURL(url: string) {

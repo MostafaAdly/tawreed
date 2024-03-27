@@ -2,12 +2,13 @@ import React from "react";
 import styles from '../../../public/Customer/Home/css/main.module.css'
 import C_HeaderComponent from '../Global/HeaderComponent';
 import C_FooterComponent from "../Global/FooterComponent";
+import { _css } from "../../../public/Assets/Helpers";
 
 const HomePage = ({ departments, user }) => {
     return (
         <>
             <C_HeaderComponent user={user} />
-            <div className="page-body">
+            <div className={_css(styles, 'page-body')}>
                 <_self departments={departments} />
             </div>
             <C_FooterComponent />
@@ -16,24 +17,6 @@ const HomePage = ({ departments, user }) => {
 }
 
 const _self = ({ departments }) => {
-    const deps: any[] = [];
-    departments.map((department) => {
-        deps.push(
-            <div className={styles.category} key={department.id}>
-                <div className={styles.background}>
-                    <div className={styles.gradient}></div>
-                    <img src={department.images[0]} alt={department.name} />
-                </div>
-                <div className={styles.title}>{department.name}</div>
-                <div className={styles.navigate}>
-                    <a href={`/departments/${department.id}`}>
-                        <i className="fa-solid fa-eye"></i>
-                        <p>شاهد الكل</p>
-                    </a>
-                </div>
-            </div>
-        );
-    })
     return (
         <>
             <div className={styles.container}>
@@ -42,9 +25,9 @@ const _self = ({ departments }) => {
                     <div className={styles.titleContainer + " " + styles.center}>
                         <div className={styles.title}><p>الموقع الأول في مصر</p></div>
                         <div className={styles.subTitle}><p>لربط المشتريات والمبيعات</p></div>
-                        <div className={styles.search + " " + styles.center}>
+                        {/* <div className={styles.search + " " + styles.center}>
                             <div className={styles.symbol}>
-                                <i className="fa-solid fa-magnifying-glass"></i>
+                                <i className={_css(styles, 'fa-solid fa-magnifying-glass')}></i>
                             </div>
                             <div className={styles.field}>
                                 <input
@@ -55,14 +38,14 @@ const _self = ({ departments }) => {
                                 />
                             </div>
                             <div className={styles.imageProvider + " " + styles.center}>
-                                <i className="fa-solid fa-camera"></i>
+                                <i className={_css(styles, 'fa-solid fa-camera')}></i>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className={styles.companyQualities + " " + styles.center}>
                         <div className={styles.quality + " " + styles.center}>
                             <div className={styles.symbol}>
-                                <i className="fa-solid fa-handshake-simple"></i>
+                                <i className={_css(styles, 'fa-solid fa-handshake-simple')}></i>
                             </div>
                             <div className={styles.title}><p>ثقة</p></div>
                             <div className={styles.description}>
@@ -75,7 +58,7 @@ const _self = ({ departments }) => {
                         </div>
                         <div className={styles.quality + " " + styles.center}>
                             <div className={styles.symbol}>
-                                <i className="fa-solid fa-hands-clapping"></i>
+                                <i className={_css(styles, 'fa-solid fa-hands-clapping')}></i>
                             </div>
                             <div className={styles.title}><p>سهولة</p></div>
                             <div className={styles.description}>
@@ -88,7 +71,7 @@ const _self = ({ departments }) => {
                         </div>
                         <div className={styles.quality + " " + styles.center}>
                             <div className={styles.symbol}>
-                                <i className="fa-solid fa-hands-holding-circle"></i>
+                                <i className={_css(styles, 'fa-solid fa-hands-holding-circle')}></i>
                             </div>
                             <div className={styles.title}><p>تواصل</p></div>
                             <div className={styles.description}>
@@ -110,7 +93,23 @@ const _self = ({ departments }) => {
                             <p>لوريم ابسيم دولار ابسنت كوشسيسش</p>
                         </div>
                         <div className={styles.types + " " + styles.center}>
-                            {deps}
+                            {departments.map((department,) => {
+                                return (
+                                    <div className={styles.category} key={department.id}>
+                                        <div className={styles.background}>
+                                            <div className={styles.gradient}></div>
+                                            <img src={department.images[0]} alt={department.name} />
+                                        </div>
+                                        <div className={styles.title}>{department.name}</div>
+                                        <div className={styles.navigate}>
+                                            <a href={`/c/departments/${department.id}`}>
+                                                <i className={_css(styles, 'fa-solid fa-eye')}></i>
+                                                <p>شاهد الكل</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>

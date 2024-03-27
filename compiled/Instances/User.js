@@ -43,16 +43,19 @@ const Permission_1 = require("./Personas/Permission");
 class User {
     constructor(...args) {
         this.id = Utils_1.default.userId_prefix + Utils_1.default.createId();
+        this.setId = (id) => {
+            this.id = id;
+            return this;
+        };
         this.save = () => __awaiter(this, void 0, void 0, function* () { return yield new (_a.schema())(this).save(); });
         if (args.length == 1) {
             this.id = args[0];
         }
-        else if (args.length == 5) {
-            this.id = args[0];
-            this.displayName = args[1];
-            this.credentials = args[2];
-            this.entity = args[3];
-            this.role = args[4];
+        else if (args.length == 4) {
+            this.displayName = args[0];
+            this.credentials = args[1];
+            this.entity = args[2];
+            this.role = args[3];
         }
     }
     load(withPassword = false) {

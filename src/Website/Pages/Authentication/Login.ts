@@ -37,7 +37,8 @@ export default class Login extends Page {
                 return res.status(200).redirect(`/login?error=${entity ? 2 : 1}`);
             }
 
-            return res.redirect(MyCompany.base_url)
+
+            // return res.redirect(MyCompany.base_url)
 
             if (this.hasCustomerAndSupplierPermissions(validatedUser, entity))
                 return res.status(200).redirect("/");

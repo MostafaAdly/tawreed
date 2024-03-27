@@ -9,32 +9,39 @@ import Utils from "../Utils";
 export default class Entity {
 
     public id: string = Utils.entityId_prefix + Utils.createId();
-    public details: { displayName: string, logo: string, banner: string, description?: string, categories: string[] };
+    public details: {
+        displayName: string,
+        logo: string,
+        banner: string,
+        description?: string,
+        categories: String[]
+    };
     public personas: { supplier: SupplierType, customer: CustomerType };
     public users: User[] = [];
     public roles: EntityRole[] = [];
-    public categories: string[] = [];
+    public categories: String[] = [];
 
     constructor({ });
-    constructor({ details, personas, roles }:
+    constructor({ details, personas, roles, categories }:
         {
             details: {
                 displayName: string,
                 logo: string,
                 banner: string,
                 description?: string,
-                categories?: string[]
+                categories?: String[]
             },
             personas: {
                 supplier?: SupplierType, customer?: CustomerType
             },
-            roles: EntityRole[]
-
+            roles: EntityRole[],
+            categories?: String[]
         });
     constructor(input: any) {
         this.details = input.details;
         this.personas = input.personas;
         this.roles = input.roles;
+        this.categories = input.categories;
     }
 
     public load = async (id: string) => {
@@ -59,8 +66,8 @@ export default class Entity {
         var loadedUsers = await User.schema().find({ entity: this.id });
         var users: User[] = [];
         for (var user of loadedUsers)
-            users.push(await new User(user.id, user.displayName, user.credentials, user.entity, user.role).afterLoad(false));
-        return users
+            users.push(await new User(user.displayName, user.credentials, user.entity, user.role).setId(user.id).afterLoad(false));
+        return users;
     }
 
     public hasPermission(user: User, permission: Permission) {

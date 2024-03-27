@@ -43,7 +43,7 @@ class Login extends Page_1.default {
                 console.log("ERROR");
                 return res.status(200).redirect(`/login?error=${entity ? 2 : 1}`);
             }
-            return res.redirect(MyCompany_1.default.base_url);
+            // return res.redirect(MyCompany.base_url)
             if (this.hasCustomerAndSupplierPermissions(validatedUser, entity))
                 return res.status(200).redirect("/");
             return res.status(200).redirect(this.hasCustomerPermissions(validatedUser, entity) ? (Home_1.default.base_url + `/#departments`) : MyCompany_1.default.base_url);

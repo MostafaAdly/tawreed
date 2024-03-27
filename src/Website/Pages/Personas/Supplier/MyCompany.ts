@@ -15,7 +15,9 @@ export default class MyCompany extends Page {
         this.router.get('/', async (req: any, res: any) => {
             const user = req.session.user;
             const entity = await new Entity({}).load(user.entity);
-            this.data.server.next.render(req, res, '/Supplier/MyCompany/SupplierCompanyPage', { data: JSON.stringify({ user, entity }) });
+            this.data.server.next.render(req, res,
+                '/Supplier/MyCompany/SupplierCompanyPage',
+                { data: JSON.stringify({ user, entity }) });
         });
     }
 }

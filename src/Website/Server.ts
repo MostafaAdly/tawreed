@@ -18,6 +18,8 @@ import Supplier from './Pages/Personas/Customer/Supplier/Supplier';
 import PersonaSelector from './Pages/Personas/Selector/PersonaSelector';
 import MyCompany from './Pages/Personas/Supplier/MyCompany';
 import MyProducts from './Pages/Personas/Supplier/MyProducts';
+import ImagesAPI from './Pages/API/ImagesAPI';
+import MyRequests from './Pages/Personas/Supplier/MyRequests';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -63,7 +65,7 @@ export default class Server {
                 mongoUrl: process.env.MONGODB_CONNECTION_STRING, ttl: this.ttl
             }),
         }));
-        this.app.use("../../pages", express.static(__dirname));
+        // this.app.use("../../pages", express.static(__dirname));
     }
     load_Late_Middleware() {
         this.app.use((req: any, res: any, next: any) => this.sessionHandler.runMiddleware(req, res, next));
@@ -103,6 +105,7 @@ export default class Server {
             // SUPPLIER
             new MyCompany(this.data),
             new MyProducts(this.data),
+            new MyRequests(this.data),
 
             // Do not remove this.
             new WildCard(this.data),
@@ -115,7 +118,7 @@ export default class Server {
 
         const apis: Page[] = [
 
-            // new ImagesAPI(this.data, Server.api_base_url)
+            new ImagesAPI(this.data, Server.api_base_url)
 
         ];
         for (let api of apis)

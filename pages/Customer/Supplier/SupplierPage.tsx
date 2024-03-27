@@ -2,12 +2,13 @@ import React from "react";
 import C_HeaderComponent from "../Global/HeaderComponent";
 import C_FooterComponent from "../Global/FooterComponent";
 import styles from '../../../public/Customer/Supplier/css/supplier-page.module.css'
+import { _css } from "../../../public/Assets/Helpers";
 
 const SupplierPage = ({ user, supplier, products }) => {
     return (
         <>
             <C_HeaderComponent user={user} />
-            <div className="page-body">
+            <div className={_css(styles, 'page-body')}>
                 <_self user={user} supplier={supplier} products={products} />
             </div>
             <C_FooterComponent />
@@ -31,20 +32,20 @@ const _self = ({ user, supplier, products }) => {
                 </div>
                 <div className={styles.controls}>
                     <div className={styles.order}>
-                        <a href={`/suppliers/${supplier.id}/products/${product.id}`} className={styles.center}>
+                        <a href={`/c/suppliers/${supplier.id}/products/${product.id}`} className={styles.center}>
                             <div className={styles.center}>
                                 <i
-                                    className="fa-solid fa-angles-right"
+                                    className={_css(styles, 'fa-solid fa-angles-right')}
                                 ></i>
                             </div>
                             <p>اطلب الآن</p>
                         </a>
                     </div>
                     <div className={styles['request-quotation']}>
-                        <a href={`/suppliers/${supplier.id}/products/${product.id}`} className={styles.center}>
+                        <a href={`/c/suppliers/${supplier.id}/products/${product.id}`} className={styles.center}>
                             <div className={styles.icon}>
                                 <i
-                                    className="fa-solid fa-file-circle-exclamation"
+                                    className={_css(styles, 'fa-solid fa-file-circle-exclamation')}
                                 ></i>
                             </div>
                             <p>اطلب عرض سعر</p>
@@ -74,7 +75,7 @@ const _self = ({ user, supplier, products }) => {
                     <div className={styles.path + " " + styles.center}>
                         <div className={styles.root}><p>الرئيسية</p></div>
                         <div className={styles.icon}>
-                            <i className="fa-solid fa-angles-left"></i>
+                            <i className={_css(styles, 'fa-solid fa-angles-left')}></i>
                         </div>
                         <div className={styles['sub-path']}><p>التصنيفات</p></div>
                     </div>
@@ -86,25 +87,15 @@ const _self = ({ user, supplier, products }) => {
                         </div>
                         <div className={styles.description}>
                             <p>
-                                لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا
-                                يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت
-                                لابوري ات دولار ماجنا أليكيوا لوريم ايبسوم دولار سيت
-                                أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو
-                                أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا
-                                أليكيوا لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور
-                                أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور
-                                أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا لوريم
-                                ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج
-                                أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري
-                                ات دولار ماجنا أليكيوا
+                                {supplier.details.description}
                             </p>
                         </div>
                     </section>
                     <section className={styles.products + " " + styles.center}>
                         <div className={styles.title}><p>منتجات الشركة</p></div>
-                        <div className={styles.filters}>
+                        {/* <div className={styles.filters}>
                             <div className={styles.icon + " " + styles.center}>
-                                <i className="fa-solid fa-filter"></i>
+                                <i className={_css(styles, 'fa-solid fa-filter')}></i>
                             </div>
                             <div className={styles['self-filters']}>
                                 <div className={styles.filter}>
@@ -123,7 +114,7 @@ const _self = ({ user, supplier, products }) => {
                                     <button><p>اسم الفلتر</p></button>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className={styles.self}>
                             {productsElements}
                         </div>

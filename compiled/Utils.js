@@ -41,6 +41,7 @@ Global.id_suffix = "";
 Global.productId_prefix = "PID" + _a.id_suffix;
 Global.userId_prefix = "UID" + _a.id_suffix;
 Global.entityId_prefix = "EID" + _a.id_suffix;
+Global.entityCategoryId_prefix = "ECID" + _a.id_suffix;
 Global.departmentId_prefix = "DID" + _a.id_suffix;
 Global.roleId_prefix = "RID" + _a.id_suffix;
 Global.personaId_prefix = "PSID" + _a.id_suffix;

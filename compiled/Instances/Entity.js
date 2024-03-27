@@ -63,6 +63,7 @@ class Entity {
         this.details = input.details;
         this.personas = input.personas;
         this.roles = input.roles;
+        this.categories = input.categories;
     }
     afterLoad() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -74,7 +75,7 @@ class Entity {
             var loadedUsers = yield User_1.default.schema().find({ entity: this.id });
             var users = [];
             for (var user of loadedUsers)
-                users.push(yield new User_1.default(user.id, user.displayName, user.credentials, user.entity, user.role).afterLoad(false));
+                users.push(yield new User_1.default(user.displayName, user.credentials, user.entity, user.role).setId(user.id).afterLoad(false));
             return users;
         });
     }

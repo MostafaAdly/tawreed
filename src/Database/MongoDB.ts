@@ -9,6 +9,9 @@ import Product from "../Instances/Product";
 import SupplierType from "../Instances/Personas/SupplierType";
 import { v4 as uuid } from 'uuid';
 import Price from "../Instances/Price";
+import { faker } from '@faker-js/faker/locale/ar';
+import EntityCategory from '../Instances/EntityCategory';
+
 export default class MongoDB {
     private data: any;
     constructor(data: any) {
@@ -18,6 +21,7 @@ export default class MongoDB {
         if (!process.env.MONGODB_CONNECTION_STRING) return;
         mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(async () => {
             this.data.utils.print("Connected to MongoDB.");
+            // this.createFakerDummyData();
             // await this.deleteAllDepartments()
             // await this.import_departments_intoMySQL();
             // await this.createDummySuppliers();
@@ -25,10 +29,14 @@ export default class MongoDB {
         }).catch(() => this.data.utils.print("Failed to connect to MongoDB"));
     }
     disconnect = () => mongoose.disconnect();
-    import_departments_intoMySQL = async () => {
+    import_departments_intoMySQL = async (): Promise<any[]> => {
+        const deps: any[] = [];
         for (const [key, value] of Object.entries(departments)) {
-            await new Department(key, value).save();
+            const dep = new Department(key, value);
+            await dep.save();
+            deps.push(dep);
         };
+        return deps;
     }
     deleteAllDepartments = async () => {
         await Department.schema().deleteMany({});
@@ -36,6 +44,93 @@ export default class MongoDB {
     deleteAllUsers = async () => {
         await User.schema().deleteMany({});
     }
+    createFakerDummyData = async () => {
+        const timeTook_start = Date.now();
+        await this.deleteAllDepartments();
+        await Entity.schema().deleteMany({});
+        await Product.schema().deleteMany({});
+        await User.schema().deleteMany({});
+        await EntityCategory.schema().deleteMany({});
+        const deps = await this.import_departments_intoMySQL();
+
+        const roles = [
+            new EntityRole({ name: "مدير الشركة", permissions: [Permission.CUSTOMER_ALL, Permission.SUPPLIER_ALL] }),
+            new EntityRole({ name: "مدير قسم المشتريات", permissions: [Permission.CUSTOMER_ALL] }),
+            new EntityRole({ name: "مدير قسم المبيعات", permissions: [Permission.SUPPLIER_ALL] })
+        ];
+
+        const products: any[] = [];
+        for (var i = 0; i < 200; i++) {
+            const images: any[] = [];
+            for (var h = 0; h < 5; h++) {
+                images.push(faker.image.url());
+            }
+            const product = new Product({
+                name: faker.commerce.productName(),
+                description: faker.commerce.productDescription(),
+                images,
+                details: { rating: faker.number.int({ min: 1, max: 5 }), weight: Math.floor(Math.random() * 100) + " Kg", age: Math.floor(Math.random() * 100), material: faker.commerce.productMaterial() },
+                price: new Price({ cost: parseInt(faker.commerce.price()), quantity: Math.floor(Math.random() * 5), unit: "دستة", currency: "جنيه مصري" })
+            });
+            await product.save();
+            products.push(product);
+        }
+
+        const entities: any[] = [];
+
+        for (var i = 0; i < 5; i++) {
+            const entityProducts: any[] = [];
+            for (var h = 0; h < Math.floor(Math.random() * 100); h++) {
+                entityProducts.push(this.random(products).id);
+            }
+            const entity = new Entity({
+                details:
+                {
+                    displayName: faker.company.name(),
+                    logo: faker.image.avatar(),
+                    banner: faker.image.url(),
+                    description: faker.company.catchPhrase(),
+                    categories: [this.random(deps).id]
+                },
+                personas: {
+                    supplier: new SupplierType({ products: entityProducts })
+                },
+                roles,
+                categories: []
+            });
+
+            const cats: EntityCategory[] = [];
+            for (var h = 0; h < Math.floor(Math.random() * 2) + 1; h++) {
+                const cat = new EntityCategory({
+                    name: `Group ${faker.word.sample()}`,
+                    description: faker.company.catchPhrase(),
+                    entity: entity.id
+                });
+                await cat.createFakerChildren(products, entity, 3);
+                cats.push(cat);
+            }
+            entity.categories = cats.map(cat => cat.id);
+            entities.push(entity);
+            await entity.save();
+        }
+        await this.createDefaultDeveloperUser(entities, roles);
+
+        const users: any[] = [];
+        for (var i = 0; i < 20; i++) {
+            const user = new User(faker.internet.displayName(),
+                { username: faker.internet.userName(), password: faker.internet.password() },
+                this.random(entities).id, this.random(roles).id);
+            await user.save();
+            users.push(user);
+        }
+        this.data.utils.print(`Took ${(Date.now() - timeTook_start) / 1000}sec to delete and create:`, "FAKER");
+        this.data.utils.print(`Created ${roles.length} roles.`, "FAKER");
+        this.data.utils.print(`Created ${products.length} products.`, "FAKER");
+        this.data.utils.print(`Created ${entities.length} entities.`, "FAKER");
+        this.data.utils.print(`Created ${(await EntityCategory.schema().find({})).length} categories.`, "FAKER");
+        this.data.utils.print(`Created ${users.length} users.`, "FAKER");
+    }
+    random = (list: any[]) => list[Math.floor(Math.random() * list.length)];
     createSemiRealData = async () => {
         try {
             // await this.deleteAllDepartments();
@@ -240,4 +335,6 @@ export default class MongoDB {
             console.log(error)
         }
     }
+    createDefaultDeveloperUser = async (entities: any[], roles: any[]) => await new User("Mostafa Adly", { username: "mostafaadly", password: "123123" }, entities[0].id, roles[0].id).save()
+
 }
