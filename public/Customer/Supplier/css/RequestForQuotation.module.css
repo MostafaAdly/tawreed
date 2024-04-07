@@ -1,0 +1,4 @@
+.product-rfq-container {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import C_HeaderComponent from "../Global/HeaderComponent";
 import C_FooterComponent from "../Global/FooterComponent";
-import styles from '../../../public/Customer/Supplier/css/supplier-page.module.css'
+import styles from '../../../public/Customer/Supplier/css/SupplierPage.module.css'
 import { _css } from "../../../public/Assets/Helpers";
 
 const SupplierPage = ({ user, supplier, products }) => {

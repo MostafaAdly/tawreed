@@ -2,6 +2,7 @@ import React from "react";
 import styles from '../../../public/Supplier/Global/css/sidebar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTableCellsLarge } from '@fortawesome/free-solid-svg-icons'
+import { _css } from "../../../public/Assets/Helpers";
 
 
 
@@ -11,7 +12,7 @@ const S_SidebarComponent = ({ }) => {
             <div className={styles['top-section']}>
                 <a href="/s">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-table-cells-large"></i>
+                        <i className={_css(styles, 'fa-solid fa-table-cells-large')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>الرئيسية</p>
@@ -19,7 +20,7 @@ const S_SidebarComponent = ({ }) => {
                 </a>
                 <a href="/s">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-building"></i>
+                        <i className={_css(styles, 'fa-solid fa-building')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>شركتي</p>
@@ -27,15 +28,15 @@ const S_SidebarComponent = ({ }) => {
                 </a>
                 <a href="/s/products">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-boxes-stacked"></i>
+                        <i className={_css(styles, 'fa-solid fa-boxes-stacked')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>منتجاتي</p>
                     </div>
                 </a>
-                <a href="/s/orders">
+                <a href="/s/requests">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-table-cells-large"></i>
+                        <i className={_css(styles, 'fa-solid fa-table-cells-large')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>طلباتي</p>
@@ -43,7 +44,7 @@ const S_SidebarComponent = ({ }) => {
                 </a>
                 <a href="/s/payments">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-money-bill-1-wave"></i>
+                        <i className={_css(styles, 'fa-solid fa-money-bill-1-wave')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>المدفوعات</p>
@@ -51,7 +52,7 @@ const S_SidebarComponent = ({ }) => {
                 </a>
                 <a href="/s/statistics">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-chart-simple"></i>
+                        <i className={_css(styles, 'fa-solid fa-chart-simple')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>التحليل</p>
@@ -61,7 +62,7 @@ const S_SidebarComponent = ({ }) => {
             <div className={styles['bottom-section']}>
                 <a href="/s/chat">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-message"></i>
+                        <i className={_css(styles, 'fa-solid fa-message')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>الرسائل</p>
@@ -69,7 +70,7 @@ const S_SidebarComponent = ({ }) => {
                 </a>
                 <a href="/logout">
                     <div className={styles.icon}>
-                        <i className="fa-solid fa-table-cells-large"></i>
+                        <i className={_css(styles, 'fa-solid fa-table-cells-large')}></i>
                     </div>
                     <div className={styles.title}>
                         <p>تسجيل الخروج</p>

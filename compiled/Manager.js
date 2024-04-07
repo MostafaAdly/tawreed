@@ -34,7 +34,7 @@ class Manager {
 }
 exports.default = Manager;
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    // STARTER
+    // STARTER;
     const starter = new Manager();
     starter.init();
 }))();

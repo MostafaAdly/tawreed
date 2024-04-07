@@ -44,6 +44,13 @@ class Supplier extends Page_1.default {
             const product = yield Product_1.default.schema().findOne({ id: req.params.productId });
             this.data.server.next.render(req, res, '/Customer/Supplier/ProductPage', { data: JSON.stringify({ user, supplier: entity, product }) });
         }));
+        // RFQ FOR PRODUCT BY ID OF SUPPLIER BY ID
+        this.router.get('/:supplierId/products/:productId/rfq', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const user = req.session.user;
+            const entity = yield Entity_1.default.schema().findOne({ id: req.params.supplierId });
+            const product = yield Product_1.default.schema().findOne({ id: req.params.productId });
+            this.data.server.next.render(req, res, '/Customer/Supplier/RequestForQuotation', { data: JSON.stringify({ user, supplier: entity, product }) });
+        }));
     }
 }
 Supplier.base_url = "/c/suppliers";

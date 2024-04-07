@@ -1,0 +1,204 @@
+.supplier-body {
+    position: absolute;
+    top: 100px;
+    right: 270px;
+    left: 0;
+    bottom: auto;
+    padding: 2em;
+}
+
+.order-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    .info {
+        display: flex;
+        align-items: center;
+        column-gap: 2em;
+
+        p {
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        .title p {
+            font-weight: 700;
+            font-size: 28px;
+        }
+    }
+}
+
+.customer-info .title,
+.products .title,
+.payment-info .title {
+    border-bottom: 1px solid var(--inactive-font);
+    padding: 0.5em 2em;
+    width: fit-content;
+    margin-bottom: 1em;
+    p {
+        font-size: 28px;
+        font-weight: 700;
+    }
+}
+
+.customer-info,
+.payment-info {
+    margin-top: 2em;
+
+    .data {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        row-gap: 1em;
+        .info {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--inactive-font);
+            border-radius: 10px;
+            min-width: 30em;
+            padding: 10px;
+
+            p {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 20px;
+                font-weight: 400;
+            }
+
+            .name {
+                width: 10em;
+                text-align: right;
+                p {
+                    font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana,
+                        sans-serif;
+                    font-size: 18px;
+                    font-weight: 200;
+                }
+            }
+        }
+    }
+}
+
+.payment-info .data .info {
+    border: none;
+    border-bottom: 1px solid var(--inactive-font);
+    border-radius: 0;
+    .name {
+        min-width: 12em;
+    }
+}
+
+.divider {
+    margin: 2em 0;
+    width: 100%;
+    background-color: rgb(48, 79, 80);
+    opacity: 0.2;
+    height: 3px;
+}
+
+.products {
+    display: flex;
+    gap: 1.5em;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 1em;
+
+    .self {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.5em;
+    }
+}
+
+.approve {
+    margin-top: 1em;
+
+    button {
+        display: flex;
+        column-gap: 1em;
+        background-color: var(--standardcolor);
+        padding: 0.7em 7em;
+        border-radius: 15px;
+        cursor: pointer;
+
+        p,
+        i {
+            color: white;
+            font-size: 20px;
+        }
+    }
+}
+
+table {
+    border-spacing: 0;
+    tbody {
+        .rfq-table-head {
+            th {
+                border: 1px solid #73777c;
+                border-right: 0;
+                border-left: 0;
+                border-collapse: collapse;
+            }
+
+            th:first-child {
+                border-right: 1px solid #73777c;
+                border-top-right-radius: 8px;
+                border-bottom-right-radius: 8px;
+            }
+
+            th:last-child {
+                border-left: 1px solid #73777c;
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
+            }
+
+            p {
+                color: #73777c;
+                font-size: 20px;
+                font-weight: 600;
+            }
+        }
+
+        tr {
+            .image-container {
+                margin: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .rfq-image-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    background-color: #f2f3f3;
+                    width: fit-content;
+                    padding: 4px;
+                    padding-bottom: 8px;
+                    border-radius: 16px;
+                    align-self: center;
+                    justify-self: center;
+
+                    img {
+                        border-radius: inherit;
+                        width: 130px;
+                        height: 130px;
+                        user-select: none;
+                    }
+                }
+            }
+
+            td {
+                p {
+                    text-align: center;
+                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+            }
+
+            .product-name {
+                width: 30%;
+            }
+        }
+    }
+}
