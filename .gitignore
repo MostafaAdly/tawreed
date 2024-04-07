@@ -8,3 +8,7 @@ package-lock.json
 /dist
 /public/Assets/FontAwesome
 /.next
+
+.gitignore
+
+/Frontend/v2/Supplier/Nawaf
