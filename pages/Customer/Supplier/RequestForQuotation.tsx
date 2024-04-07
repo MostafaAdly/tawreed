@@ -51,7 +51,7 @@ const _self = ({ supplier, product }) => {
                         </div>
                     </div>
                     <div className={_css(styles, 'left-box')}>
-
+                        <div className={_css(styles, 'tabs')}></div>
                     </div>
                 </div>
             </div>
