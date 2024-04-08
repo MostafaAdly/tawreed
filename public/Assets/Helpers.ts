@@ -1,4 +1,4 @@
-const cssExceptions = ["page-body", "supplier-body", "center", "box-shadow", "box-shadow-hover"];
+const cssExceptions = ["page-body", "supplier-body", "center", "box-shadow", "opacity", "opacity-active", "box-shadow-hover"];
 export const _css = (styles, css) => {
     if (css.startsWith("fa-") || css.startsWith("__"))
         return css;
@@ -9,4 +9,29 @@ export const _css = (styles, css) => {
 }
 export const getImage = (path) => {
     return `http://${process.env.NEXT_PUBLIC_URL}/api/v1/images/${path}`;
+}
+
+export const onTabClick = ({ target, styles, activatedTabClassName = "activated", tabClassName = "tab" }) => {
+    if (target.nodeName == "P")
+        target = target.parentNode;
+    if (target.classList.contains(_css(styles, activatedTabClassName))) return;
+    [...document.getElementsByClassName(_css(styles, activatedTabClassName))]
+        .forEach((tab) => {
+            if (tab.classList.contains(_css(styles, tabClassName))) {
+                tab.classList.remove(_css(styles, activatedTabClassName));
+                const tabId = tab.getAttribute("data-tab-id");
+                if (tabId) {
+                    let tabElement = document.getElementById(tabId);
+                    if (tabElement)
+                        tabElement.style.display = "none";
+                }
+            }
+        });
+    target.classList.add(_css(styles, activatedTabClassName));
+    const tabId = target.getAttribute("data-tab-id");
+    if (tabId) {
+        let tabElement = document.getElementById(tabId);
+        if (tabElement)
+            tabElement.style.display = target.getAttribute("data-default-display") || "flex";
+    }
 }

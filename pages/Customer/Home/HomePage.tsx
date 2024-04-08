@@ -10,8 +10,8 @@ const HomePage = ({ departments, user }) => {
             <C_HeaderComponent user={user} />
             <div className={_css(styles, 'page-body')}>
                 <_self departments={departments} />
+                <C_FooterComponent />
             </div>
-            <C_FooterComponent />
         </>
     );
 }

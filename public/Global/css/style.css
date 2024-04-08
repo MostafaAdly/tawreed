@@ -29,7 +29,14 @@ p {
     background-color: var(--secondcolor);
     padding: 0;
     margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    min-height: 100%;
     padding-top: 80px;
+    padding-bottom: 300px;
 }
 
 .supplier-body {
@@ -57,4 +64,23 @@ p {
 
 .box-shadow-hover:hover {
     box-shadow: -1px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.opacity {
+    transition: opacity 0.15s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.opacity-active {
+    transition: opacity 0.15s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+    :active {
+        opacity: 0.8;
+    }
 }

@@ -6,32 +6,32 @@ import { _css, getImage } from '../../../public/Assets/Helpers';
 const C_FooterComponent = ({ }) => {
     return (
         <>
-            <footer className={styles.footer + " " + styles.center}>
-                <div className={styles.logo}>
+            <footer className={_css(styles, 'footer center')}>
+                <div className={_css(styles, 'logo')}>
                     <img src={getImage("grey-logo.png")} alt="Tawreed Logo" />
                 </div>
-                <div className={styles.companyInfo + " " + styles.center}>
+                <div className={_css(styles, 'companyInfo center')}>
                     <a href="">سياسة الخصوصية</a>
                     <a href="">سياسة الاتسبدال</a>
                     <a href="">من نحن</a>
                     <a href="">تواصل معنا</a>
                 </div>
-                <div className={styles.socialLinks + " " + styles.center}>
-                    <div className={styles.divider}></div>
-                    <div className={styles.links + " " + styles.center}>
-                        <a href="" className={styles.link + " " + styles.center}>
+                <div className={_css(styles, 'socialLinks center')}>
+                    <div className={_css(styles, 'divider')}></div>
+                    <div className={_css(styles, 'links center')}>
+                        <a href="" className={_css(styles, 'link center')}>
                             <i className={_css(styles, 'fa-brands fa-facebook')}></i>
                         </a>
-                        <a href="" className={styles.link + " " + styles.center}>
+                        <a href="" className={_css(styles, 'link center')}>
                             <i className={_css(styles, 'fa-brands fa-instagram')}></i>
                         </a>
-                        <a href="" className={styles.link + " " + styles.center}>
+                        <a href="" className={_css(styles, 'link center')}>
                             <i className={_css(styles, 'fa-brands fa-twitter')}></i>
                         </a>
-                        <a href="" className={styles.link + " " + styles.center}>
+                        <a href="" className={_css(styles, 'link center')}>
                             <i className={_css(styles, 'fa-brands fa-linkedin')}></i>
                         </a>
-                        <a href="" className={styles.link + " " + styles.center}>
+                        <a href="" className={_css(styles, 'link center')}>
                             <i className={_css(styles, 'fa-regular fa-envelope')}></i>
                         </a>
                     </div>

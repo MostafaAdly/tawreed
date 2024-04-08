@@ -20,6 +20,7 @@ import MyCompany from './Pages/Personas/Supplier/MyCompany';
 import MyProducts from './Pages/Personas/Supplier/MyProducts';
 import ImagesAPI from './Pages/API/ImagesAPI';
 import MyRequests from './Pages/Personas/Supplier/MyRequests';
+import CustomerRequests from './Pages/Personas/Customer/Profile/CustomerRequests';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -101,6 +102,7 @@ export default class Server {
             new Home(this.data),
             new Departments(this.data),
             new Supplier(this.data),
+            new CustomerRequests(this.data),
 
             // SUPPLIER
             new MyCompany(this.data),

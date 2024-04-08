@@ -20,6 +20,7 @@ const MyCompany_1 = __importDefault(require("./Pages/Personas/Supplier/MyCompany
 const MyProducts_1 = __importDefault(require("./Pages/Personas/Supplier/MyProducts"));
 const ImagesAPI_1 = __importDefault(require("./Pages/API/ImagesAPI"));
 const MyRequests_1 = __importDefault(require("./Pages/Personas/Supplier/MyRequests"));
+const CustomerRequests_1 = __importDefault(require("./Pages/Personas/Customer/Profile/CustomerRequests"));
 class Server {
     constructor(data) {
         this.port = parseInt(process.env.PORT + "") || 3000;
@@ -87,6 +88,7 @@ class Server {
             new Home_1.default(this.data),
             new Departments_1.default(this.data),
             new Supplier_1.default(this.data),
+            new CustomerRequests_1.default(this.data),
             // SUPPLIER
             new MyCompany_1.default(this.data),
             new MyProducts_1.default(this.data),

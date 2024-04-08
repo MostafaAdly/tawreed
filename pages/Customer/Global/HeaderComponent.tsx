@@ -5,34 +5,43 @@ import { _css, getImage } from "../../../public/Assets/Helpers";
 const C_HeaderComponent = ({ user }) => {
     return (
         <>
-            <div className={styles.header}>
-                <div className={styles.logo + " " + styles.center}>
+            <div className={_css(styles, 'header')}>
+                <div className={_css(styles, 'logo center')}>
                     <img src={getImage("logo.png")} alt="Tawreed Logo" />
                 </div>
-                <nav className={styles.tabs}>
-                    <div className={styles.tab + " " + styles.activeTab}>
+                <nav className={_css(styles, 'tabs')}>
+                    <div className={_css(styles, 'tab activeTab')}>
                         <a href="/">الرئيسية</a>
                     </div>
-                    <div className={styles.tab}>
+                    <div className={_css(styles, 'tab')}>
                         <a href="/">تصنيفات</a>
                     </div>
-                    <div className={styles.tab}>
+                    <div className={_css(styles, 'tab')}>
                         <a href="/">الشركات</a>
                     </div >
-                    <div className={styles.tab}>
+                    <div className={_css(styles, 'tab')}>
                         <a href="/">الأصناف</a>
                     </div>
                 </nav >
-                <div className={styles.controls + " " + styles.center}>
-                    <div className={styles.notifications + " " + styles.center}>
-                        {/* <div className={styles.notificationsCount + " " + styles.center}><p>3</p></div> */}
+                <div className={_css(styles, 'controls center')}>
+                    <a className={_css(styles, 'notifications center')} href="/c/requests">
+                        {/* <div className={_css(styles, 'notificationsCount center')}><p>3</p></div> */}
+                        <i className={_css(styles, 'fa-solid fa-file-export')}></i>
+                    </a>
+                    <a className={_css(styles, 'notifications center')} href="/c/requests">
+                        {/* <div className={_css(styles, 'notificationsCount center')}><p>3</p></div> */}
+                        <i className={_css(styles, 'fa-solid fa-file-import')}></i>
+                    </a>
+                    <div className={_css(styles, 'notifications center')}>
+                        {/* <div className={_css(styles, 'notificationsCount center')}><p>3</p></div> */}
                         <i className={_css(styles, 'fa-solid fa-bell')}></i>
+
                     </div>
-                    <div className={styles.profile + " " + styles.center}>
-                        <div className={styles.profileImage}>
+                    <div className={_css(styles, 'profile center')}>
+                        <div className={_css(styles, 'profileImage')}>
                             <img src={getImage("default-profile-picture.png")} alt="Profile Picture" />
                         </div>
-                        <div className={styles.profileUsername + " " + styles.center}>
+                        <div className={_css(styles, 'profileUsername center')}>
                             <p>{user?.displayName || "أسم المستخدم"}</p>
                             <i className={_css(styles, 'fa-solid fa-angles-down')}></i>
                         </div>

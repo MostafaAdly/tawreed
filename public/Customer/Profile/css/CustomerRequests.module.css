@@ -1,0 +1,85 @@
+.requests-container {
+    flex-direction: column;
+    margin: 3em;
+
+    .tabs {
+        display: flex;
+        column-gap: 1.8em;
+
+        .tab {
+            padding: 8px;
+            border-bottom: 1px solid var(--inactive-font);
+            min-width: 13em;
+            cursor: pointer;
+            background-color: #f2f3f3;
+            border-radius: 5px;
+            user-select: none;
+
+            p {
+                text-align: center;
+                font-size: 25px;
+                font-weight: 700;
+            }
+
+            &.tab-activated {
+                background-color: #6c9;
+                border: none;
+
+                p {
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .filters {
+        margin-top: 2em;
+        display: flex;
+        column-gap: 2em;
+
+        .icon {
+            border: 1px solid var(--standardcolor);
+            border-radius: 4px;
+            padding: 8px;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+
+            i {
+                color: var(--standardcolor);
+                font-size: 18px;
+                font-weight: 900;
+            }
+        }
+
+        .self {
+            display: flex;
+            column-gap: 1em;
+            flex-wrap: wrap;
+
+            .filter {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #6c9;
+                background: transparent;
+                padding: 0 8px;
+                border-radius: 24px;
+                cursor: pointer;
+
+                p {
+                    font-size: 17px;
+                    font-weight: 600;
+                    color: #262d34;
+                }
+
+                &.filter-activated {
+                    background-color: #6c9;
+
+                    p {
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,41 @@
+.container-requested {
+    margin: 5em 0;
+    height: 100%;
+    flex-direction: column;
+
+    p {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--standardcolor);
+    }
+
+    .page-title {
+        margin-bottom: 4em;
+    }
+
+    .data {
+        column-gap: 3em;
+    }
+
+    button {
+        background-color: var(--standardcolor);
+        min-width: 20%;
+        padding: 8px;
+        border-radius: 16px;
+        min-height: 40px;
+        display: flex;
+        margin-top: 5em;
+        column-gap: 10px;
+
+        p,
+        i {
+            font-size: 18px;
+            color: white;
+            font-weight: 600;
+        }
+
+        &:active {
+            opacity: 0.8;
+        }
+    }
+}

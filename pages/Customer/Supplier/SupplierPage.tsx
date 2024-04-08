@@ -10,8 +10,8 @@ const SupplierPage = ({ user, supplier, products }) => {
             <C_HeaderComponent user={user} />
             <div className={_css(styles, 'page-body')}>
                 <_self user={user} supplier={supplier} products={products} />
+                <C_FooterComponent />
             </div>
-            <C_FooterComponent />
         </>
     );
 }
