@@ -26,7 +26,10 @@ export default class MongoDB {
             // await this.import_departments_intoMySQL();
             // await this.createDummySuppliers();
             // await this.createSemiRealData();
-        }).catch(() => this.data.utils.print("Failed to connect to MongoDB"));
+        }).catch(() => {
+            this.data.utils.error("Failed to connect to MongoDB");
+            process.exit(1);
+        });
     }
     disconnect = () => mongoose.disconnect();
     import_departments_intoMySQL = async (): Promise<any[]> => {

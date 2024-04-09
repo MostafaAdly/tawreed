@@ -15,12 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Loader_1 = __importDefault(require("./Loader"));
 const dotenv_1 = require("dotenv");
 const MongoDB_1 = __importDefault(require("./Database/MongoDB"));
+const Redis_1 = __importDefault(require("./Database/Redis"));
 class Manager {
     constructor() {
         this.data = { project_name: "Tawreed" };
         this.loader = new Loader_1.default(this.data);
         this.mongodb = new MongoDB_1.default(this.data);
+        this.redis = new Redis_1.default(this.data);
         this.startDatabase = () => __awaiter(this, void 0, void 0, function* () { return yield this.mongodb.connect(); });
+        this.startRedis = () => __awaiter(this, void 0, void 0, function* () { return yield this.redis.connect(); });
         (0, dotenv_1.config)();
     }
     init() {
@@ -28,6 +31,7 @@ class Manager {
             this.loader.load_utils();
             this.loader.load_departments();
             this.loader.load_Server();
+            yield this.startRedis();
             yield this.startDatabase();
         });
     }

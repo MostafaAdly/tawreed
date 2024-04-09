@@ -37,7 +37,10 @@ class MongoDB {
                 // await this.import_departments_intoMySQL();
                 // await this.createDummySuppliers();
                 // await this.createSemiRealData();
-            })).catch(() => this.data.utils.print("Failed to connect to MongoDB"));
+            })).catch(() => {
+                this.data.utils.error("Failed to connect to MongoDB");
+                process.exit(1);
+            });
         });
         this.disconnect = () => mongoose_1.default.disconnect();
         this.import_departments_intoMySQL = () => __awaiter(this, void 0, void 0, function* () {

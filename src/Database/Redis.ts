@@ -1,7 +1,8 @@
 
 import { createClient } from 'redis';
+import Redis from 'ioredis';
 
-export default class Redis {
+export default class RedisClient {
     private data: any;
 
     constructor(data: any) {
@@ -9,12 +10,18 @@ export default class Redis {
     }
 
     connect = async () => {
-        const client = await createClient()
-            .on('error', err => console.log('Redis Client Error', err))
-            .connect();
+        const endPoint = process.env.REDIS_ENDPOINT;
+        if (!endPoint) {
+            this.data.utils.error("Could not connect to Redis. ");
+            process.exit(1);
+        }
 
-        await client.set('key', 'value');
-        const value = await client.get('key');
-        await client.disconnect();
+        this.data.redis = new Redis(endPoint);
+        this.data.redis.on("error", (err: any) => this.onError(err));
+    }
+
+    onError = (err: any) => {
+        this.data.utils.print('Redis Client Error\n', 'Redis');
+        console.error(err);
     }
 }
