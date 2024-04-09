@@ -5,15 +5,17 @@
     .tabs {
         display: flex;
         column-gap: 1.8em;
+        margin: 0 10em;
 
         .tab {
-            padding: 8px;
-            border-bottom: 1px solid var(--inactive-font);
+            padding: 8px 2em;
+            /* border-bottom: 1px solid var(--inactive-font); */
             min-width: 13em;
             cursor: pointer;
             background-color: #f2f3f3;
             border-radius: 5px;
             user-select: none;
+            position: relative;
 
             p {
                 text-align: center;
@@ -24,9 +26,22 @@
             &.tab-activated {
                 background-color: #6c9;
                 border: none;
+                position: relative;
 
                 p {
                     color: white;
+                }
+
+                &::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    background-color: #6c9;
+                    border-radius: 50%;
+                    bottom: -5px;
+                    right: calc(50% - 10px);
+                    height: 10px;
+                    width: 10px;
                 }
             }
         }
@@ -65,6 +80,7 @@
                 padding: 0 8px;
                 border-radius: 24px;
                 cursor: pointer;
+                user-select: none;
 
                 p {
                     font-size: 17px;
@@ -77,6 +93,83 @@
 
                     p {
                         color: white;
+                    }
+                }
+            }
+        }
+    }
+    .orders,
+    .rfqs {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.7em;
+        margin: 0 10em;
+    }
+
+    table {
+        tbody {
+            tr:first-child {
+                background-color: var(--standardcolor);
+            }
+
+            tr {
+                p {
+                    text-align: center;
+                    text-wrap: wrap;
+                }
+
+                &:nth-child(even) {
+                    background-color: #f3f3f3;
+                }
+
+                th {
+                    min-width: 10em;
+
+                    &:first-child {
+                        border-top-right-radius: 1em;
+                    }
+                    &:last-child {
+                        border-top-left-radius: 1em;
+                    }
+
+                    p {
+                        margin: 7px 0;
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: white;
+                    }
+                }
+
+                td {
+                    max-width: 600px;
+                    p {
+                        margin: 5px 0;
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana,
+                            sans-serif;
+                        font-size: 17px;
+                        font-weight: 400;
+                    }
+
+                    .controls {
+                        column-gap: 1em;
+
+                        button {
+                            background-color: red;
+                            width: 2.1em;
+                            border-radius: 50%;
+                            aspect-ratio: 1/1;
+                            cursor: pointer;
+
+                            i {
+                                font-size: 16px;
+                                color: white;
+                                font-weight: 900;
+                            }
+                        }
+
+                        .visit {
+                            background-color: #674aff;
+                        }
                     }
                 }
             }
