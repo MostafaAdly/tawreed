@@ -46,4 +46,5 @@ Global.departmentId_prefix = "DID" + _a.id_suffix;
 Global.roleId_prefix = "RID" + _a.id_suffix;
 Global.personaId_prefix = "PSID" + _a.id_suffix;
 Global.createId = () => (0, uuid_1.v4)().split("-")[0];
+Global.createToken = () => (0, uuid_1.v4)().replaceAll("-", "");
 exports.default = Global;

@@ -49,4 +49,5 @@ export default class Global {
         return whiteSpaces;
     }
     public static createId = () => uuid().split("-")[0];
+    public static createToken = () => uuid().replaceAll("-", "");
 }

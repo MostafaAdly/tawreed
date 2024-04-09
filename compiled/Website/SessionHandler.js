@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Login_1 = __importDefault(require("./Pages/Authentication/Login"));
 const Server_1 = __importDefault(require("./Server"));
-const PersonaSelector_1 = __importDefault(require("./Pages/Personas/Selector/PersonaSelector"));
 const Entity_1 = __importDefault(require("../Instances/Entity"));
+const Utils_1 = __importDefault(require("../Utils"));
 class SessionHandler {
     constructor(data) {
         this.checkForPersonaAccess = (req) => __awaiter(this, void 0, void 0, function* () {
@@ -41,7 +41,7 @@ class SessionHandler {
                 res.redirect(Login_1.default.base_url);
             }
             else if (this.isSessionRegistered(req) && this.isAuthURL(req.url)) {
-                res.redirect(PersonaSelector_1.default.base_url);
+                res.redirect('/');
             }
             else if (this.isSessionRegistered(req) && !(yield this.checkForPersonaAccess(req))) {
                 res.redirect("/");
@@ -58,16 +58,19 @@ class SessionHandler {
         var _a;
         return ((_a = req === null || req === void 0 ? void 0 : req.session) === null || _a === void 0 ? void 0 : _a.auth) == true;
     }
-    // =========
+    // ======================================================
     removeSessionIfExists(req) {
-        if (this.isSessionRegistered(req))
+        if (this.isSessionRegistered(req)) {
             req.session.destroy(() => { });
+            // this.data.
+        }
     }
     validateSessionWithUser(req, user) {
         if (!(req === null || req === void 0 ? void 0 : req.session) || !user || this.isSessionRegistered(req))
             return;
         req.session.auth = true;
         req.session.user = user;
+        this.data.redis.set("token:" + user.id, Utils_1.default.createToken());
     }
 }
 exports.default = SessionHandler;

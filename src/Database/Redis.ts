@@ -15,7 +15,6 @@ export default class RedisClient {
             this.data.utils.error("Could not connect to Redis. ");
             process.exit(1);
         }
-
         this.data.redis = new Redis(endPoint);
         this.data.redis.on("error", (err: any) => this.onError(err));
     }

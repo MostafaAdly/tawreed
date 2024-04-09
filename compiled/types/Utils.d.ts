@@ -12,4 +12,5 @@ export default class Global {
     initialize(): void;
     private countSpaces;
     static createId: () => string;
+    static createToken: () => string;
 }

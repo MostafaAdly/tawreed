@@ -1,12 +1,12 @@
 import Login from "./Pages/Authentication/Login";
 import User from '../Instances/User';
-import Home from "./Pages/Personas/Customer/Home/Home";
 import Server from "./Server";
-import PersonaSelector from "./Pages/Personas/Selector/PersonaSelector";
 import Entity from "../Instances/Entity";
+import Utils from "../Utils";
 
 export default class SessionHandler {
     private data: any;
+
     constructor(data: any) {
         this.data = data;
     }
@@ -19,7 +19,7 @@ export default class SessionHandler {
             res.redirect(Login.base_url);
         }
         else if (this.isSessionRegistered(req) && this.isAuthURL(req.url)) {
-            res.redirect(PersonaSelector.base_url);
+            res.redirect('/');
         }
         else if (this.isSessionRegistered(req) && !(await this.checkForPersonaAccess(req))) {
             res.redirect("/");
@@ -50,16 +50,19 @@ export default class SessionHandler {
 
         return req?.session?.auth == true;
     }
-    // =========
 
+    // ======================================================
     removeSessionIfExists(req: any) {
-        if (this.isSessionRegistered(req))
+        if (this.isSessionRegistered(req)) {
             req.session.destroy(() => { });
+            // this.data.
+        }
     }
 
     validateSessionWithUser(req: any, user: User) {
         if (!req?.session || !user || this.isSessionRegistered(req)) return;
         req.session.auth = true;
         req.session.user = user;
+        this.data.redis.set("token:" + user.id, Utils.createToken());
     }
 }

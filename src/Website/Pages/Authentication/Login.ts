@@ -32,13 +32,8 @@ export default class Login extends Page {
             if (validatedUser)
                 this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
             else {
-
-                console.log("ERROR")
                 return res.status(200).redirect(`/login?error=${entity ? 2 : 1}`);
             }
-
-
-            // return res.redirect(MyCompany.base_url)
 
             if (this.hasCustomerAndSupplierPermissions(validatedUser, entity))
                 return res.status(200).redirect("/");
