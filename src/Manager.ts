@@ -24,7 +24,6 @@ export default class Manager {
 		await this.startDatabase();
 		await this.modelManager.populateModels();
 		await this.testClient.run();
-		console.log("test");
 	}
 	startDatabase = async () => await this.mongodb.connect();
 	startRedis = async () => await this.redis.connect();
