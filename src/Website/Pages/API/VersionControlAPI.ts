@@ -13,22 +13,9 @@ export default class VersionControlAPI extends Page {
 
     private run() {
         this.router.get("/", (req: any, res: any) => {
-            this.pull()
-            const version = "fs.readFileSync(path.join(__dirname, '../../../../version.txt'), 'utf8');"
-            res.status(200).json({ version });
-        });
-    }
-
-    private pull() {
-        exec('mkdir ____________test', (err, stdout, stderr) => {
-            if (err) {
-                //some err occurred
-                console.error(err)
-            } else {
-                // the *entire* stdout and stderr (buffered)
-                console.log(`stdout: ${stdout}`);
-                console.log(`stderr: ${stderr}`);
-            }
+            exec(`git pull ${process.env.GITHUB_REPOSITORY}`, (err, stdout, stderr) => {
+                res.status(200).json({ err, stdout, stderr });
+            });
         });
     }
 }

@@ -12,22 +12,9 @@ class VersionControlAPI extends Page_1.default {
     }
     run() {
         this.router.get("/", (req, res) => {
-            this.pull();
-            const version = "fs.readFileSync(path.join(__dirname, '../../../../version.txt'), 'utf8');";
-            res.status(200).json({ version });
-        });
-    }
-    pull() {
-        (0, child_process_1.exec)('mkdir ____________test', (err, stdout, stderr) => {
-            if (err) {
-                //some err occurred
-                console.error(err);
-            }
-            else {
-                // the *entire* stdout and stderr (buffered)
-                console.log(`stdout: ${stdout}`);
-                console.log(`stderr: ${stderr}`);
-            }
+            (0, child_process_1.exec)(`git pull ${process.env.GITHUB_REPOSITORY}`, (err, stdout, stderr) => {
+                res.status(200).json({ err, stdout, stderr });
+            });
         });
     }
 }
