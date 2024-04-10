@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Product_1 = __importDefault(require("../../../../../Instances/Product"));
 const Page_1 = __importDefault(require("../../../Page"));
 const Entity_1 = __importDefault(require("../../../../../Instances/Entity"));
+const mongoose_1 = __importDefault(require("mongoose"));
 class CustomerRequests extends Page_1.default {
     constructor(data, base_url) {
         super(base_url || CustomerRequests.base_url);
@@ -24,9 +24,14 @@ class CustomerRequests extends Page_1.default {
     run() {
         // ALL SUPPLIERS OF A DEPARTMENT
         this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const user = req.session.user;
-            const entity = yield Entity_1.default.schema().findOne({ id: user.entity });
-            const products = yield Product_1.default.schema().find({ id: { $in: entity.personas.supplier.products } });
+            const entity = yield new Entity_1.default().load({ entityId: req.params.id });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
+            const products = yield mongoose_1.default.models.Product.find({ _id: { $in: ((_a = entity.personas.supplier) === null || _a === void 0 ? void 0 : _a.products) || [] } });
             this.data.server.next.render(req, res, '/Customer/Profile/CustomerRequests', { data: JSON.stringify({ user, supplier: entity, products }) });
         }));
     }

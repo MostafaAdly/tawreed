@@ -19,23 +19,6 @@ const SupplierCompanyPage = ({ user, entity }) => {
 const _self = ({ user, entity }) => {
     const usersElement: any[] = [];
 
-    entity.users.map((user) => {
-        usersElement.push(
-            <tr key={user.id}>
-                <td><p>{user.displayName}</p></td>
-                <td><p>{user.role.name}</p></td>
-                <td><p>{user.role.name}</p></td>
-                <td className={styles.controls + " center"}>
-                    <button>
-                        <i className={_css(styles, 'fa-solid fa-pen')}></i>
-                    </button>
-                    <button className={styles.trash}>
-                        <i className={_css(styles, 'fa-solid fa-trash')}></i>
-                    </button>
-                </td></tr>
-        );
-    })
-
     return (
         <>
             <div className={styles.upload}>
@@ -84,20 +67,25 @@ const _self = ({ user, entity }) => {
                             <th><p>الوظيفة</p></th>
                             <th><p>الإجرائات</p></th>
                         </tr>
-                        {/* <tr>
-                            <td><p>مصطفى محمد</p></td>
-                            <td><p>مدير مشتريات</p></td>
-                            <td><p>مشتريات</p></td>
-                            <td className={styles.controls + " center"}>
-                                <button>
-                                    <i className={_css(styles, 'fa-solid fa-pen')}></i>
-                                </button>
-                                <button className={styles.trash}>
-                                    <i className={_css(styles, 'fa-solid fa-trash')}></i>
-                                </button>
-                            </td>
-                        </tr> */}
-                        {usersElement}
+                        {
+                            entity?.users?.map((user: any, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td><p>{user.displayName}</p></td>
+                                        <td><p>{user.role.name}</p></td>
+                                        <td><p>{user.role.name}</p></td>
+                                        <td className={styles.controls + " center"}>
+                                            <button>
+                                                <i className={_css(styles, 'fa-solid fa-pen')}></i>
+                                            </button>
+                                            <button className={styles.trash}>
+                                                <i className={_css(styles, 'fa-solid fa-trash')}></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        }
                     </tbody>
                 </table>
             </div>

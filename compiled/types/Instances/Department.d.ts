@@ -1,9 +1,10 @@
+import { ObjectId } from "../Types/ObjectId";
 export default class Department {
-    id: string;
+    _id: ObjectId;
+    departmentId: string;
     name: string;
     images: string[];
-    constructor(name: string, images: string[]);
-    private static model;
-    static schema: () => any;
-    save(): Promise<any>;
+    constructor(input?: any);
+    load: (query: any) => Promise<this | undefined>;
+    save: () => Promise<void>;
 }

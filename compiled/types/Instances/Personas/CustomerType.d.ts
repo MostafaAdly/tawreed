@@ -1,5 +1,9 @@
 import Persona from "./Persona";
+import Request from "../Request";
 export default class CustomerType extends Persona {
-    users: string[];
-    constructor(users: string[]);
+    requests: Request[];
+    constructor();
+    constructor({ requests }: {
+        requests?: Request[];
+    });
 }

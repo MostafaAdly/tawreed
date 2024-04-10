@@ -1,11 +1,14 @@
 import Price from "./Price";
+import { ObjectId } from "../Types/ObjectId";
 export default class Product {
-    id: string;
+    _id: ObjectId;
+    productId: string;
     name: string;
     description: string;
     details: any;
     images: string[];
     price: Price;
+    constructor();
     constructor({ id }: {
         id: string;
     });
@@ -16,8 +19,6 @@ export default class Product {
         price: Price;
         images: string[];
     });
-    load(): Promise<void>;
-    private static model;
-    static schema: () => any;
-    save: () => Promise<any>;
+    load: (query: any) => Promise<this | undefined>;
+    save: () => Promise<void>;
 }

@@ -8,6 +8,8 @@ export default class Global {
     static departmentId_prefix: string;
     static roleId_prefix: string;
     static personaId_prefix: string;
+    static commentId_prefix: string;
+    static requestId_prefix: string;
     constructor(data: any);
     initialize(): void;
     private countSpaces;

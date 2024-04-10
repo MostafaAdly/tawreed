@@ -1,45 +1,43 @@
 import SupplierType from "./Personas/SupplierType";
 import CustomerType from './Personas/CustomerType';
-import EntityRole from "./Personas/EntityRole";
+import EntityRole from "./EntityRole";
 import User from "./User";
-import { Permission } from "./Personas/Permission";
+import { Permission } from "./Permission";
+import { ObjectId } from '../Types/ObjectId';
 export default class Entity {
-    id: string;
+    _id: ObjectId;
+    entityId: string;
     details: {
         displayName: string;
         logo: string;
         banner: string;
         description?: string;
-        categories: String[];
     };
     personas: {
-        supplier: SupplierType;
+        supplier?: SupplierType;
         customer: CustomerType;
     };
     users: User[];
-    roles: EntityRole[];
-    categories: String[];
-    constructor({}: {});
+    roles: ObjectId[];
+    departments: ObjectId[];
+    categories: ObjectId[];
+    constructor();
     constructor({ details, personas, roles, categories }: {
         details: {
             displayName: string;
             logo: string;
             banner: string;
             description?: string;
-            categories?: String[];
         };
         personas: {
             supplier?: SupplierType;
             customer?: CustomerType;
         };
         roles: EntityRole[];
-        categories?: String[];
+        departments?: ObjectId[];
+        categories?: ObjectId[];
     });
-    load: (id: string) => Promise<this>;
-    afterLoad(): Promise<void>;
-    getUsers(): Promise<User[]>;
-    hasPermission(user: User, permission: Permission): boolean | undefined;
-    private static model;
-    static schema: () => any;
-    save: () => Promise<any>;
+    hasPermission(user: User, permission: Permission): any;
+    load: (query: any) => Promise<this | undefined>;
+    save: () => Promise<void>;
 }

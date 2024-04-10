@@ -5,10 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Persona_1 = __importDefault(require("./Persona"));
 class CustomerType extends Persona_1.default {
-    constructor(users) {
+    constructor(input) {
         super();
-        this.users = [];
-        this.users = users;
+        this.requests = [];
+        if (input)
+            Object.assign(this, input);
     }
 }
 exports.default = CustomerType;

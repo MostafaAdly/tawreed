@@ -1,6 +1,7 @@
 import Product from "../../../../../Instances/Product";
 import Page from "../../../Page";
 import Entity from "../../../../../Instances/Entity";
+import mongoose from "mongoose";
 
 export default class CustomerRequests extends Page {
     private data: any;
@@ -16,8 +17,11 @@ export default class CustomerRequests extends Page {
         // ALL SUPPLIERS OF A DEPARTMENT
         this.router.get('/', async (req: any, res: any) => {
             const user = req.session.user;
-            const entity = await Entity.schema().findOne({ id: user.entity });
-            const products = await Product.schema().find({ id: { $in: entity.personas.supplier.products } });
+            const entity = await new Entity().load({ entityId: req.params.id });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            } const products = await mongoose.models.Product.find({ _id: { $in: entity.personas.supplier?.products || [] } });
             this.data.server.next.render(req, res, '/Customer/Profile/CustomerRequests', { data: JSON.stringify({ user, supplier: entity, products }) });
         });
     }

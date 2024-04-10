@@ -1,11 +1,12 @@
+import { ObjectId } from "../../Types/ObjectId";
 import Persona from "./Persona";
 export default class SupplierType extends Persona {
 
-    public products: string[] = [];
+    public products: ObjectId[] = [];
 
-    constructor({ products }: { products: string[] });
-    constructor(input: any) {
+    constructor({ products }: { products: ObjectId[] });
+    constructor(input?: any) {
         super();
-        this.products = input.products;
+        if (input) Object.assign(this, input);
     }
 }

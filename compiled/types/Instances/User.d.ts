@@ -1,25 +1,21 @@
 import Entity from "./Entity";
-import EntityRole from "./Personas/EntityRole";
+import { ObjectId } from "../Types/ObjectId";
 export default class User {
-    id: string;
+    _id: ObjectId;
+    userId: string;
     displayName: string;
     credentials: {
         username: string;
         password?: string;
     };
-    role: string | EntityRole | undefined;
-    entity: string;
-    constructor(id: string);
-    constructor(displayName: string, credentials: {
-        username: string;
-        password: string;
-    }, entity: string, role: string);
-    setId: (id: string) => this;
-    load(withPassword?: boolean): Promise<void>;
+    role: ObjectId;
+    entity: ObjectId;
+    constructor(input?: any);
+    setId: (id: mongoose.Types.ObjectId) => this;
+    load(withPassword?: boolean, loadRole?: boolean): Promise<void>;
     afterLoad(withPassword?: boolean): Promise<this>;
     hasCustomerPermissions(entity: Entity): boolean;
     hasSupplierPermissions(entity: Entity): boolean;
-    private static model;
-    static schema: () => any;
-    save: () => Promise<any>;
+    _load: (query: any) => Promise<this | undefined>;
+    save: () => Promise<void>;
 }

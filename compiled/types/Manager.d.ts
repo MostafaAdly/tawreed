@@ -3,6 +3,8 @@ export default class Manager {
     private loader;
     private mongodb;
     private redis;
+    private testClient;
+    private modelManager;
     constructor();
     init(): Promise<void>;
     startDatabase: () => Promise<void>;

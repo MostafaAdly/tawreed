@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
+class ProductSchema extends mongoose_1.Schema {
+    constructor({ id, options, schema = {
+        productId: String,
+        name: String,
+        description: String,
+        details: Object,
+        price: {
+            cost: Number,
+            quantity: Number,
+            unit: String,
+            currency: String
+        },
+        images: [String],
+    } }) {
+        if (id === null || id === void 0 ? void 0 : id.enabled)
+            schema[id.key] = id.value;
+        super(schema, options);
+        this.model = "Product";
+    }
+}
+exports.default = ProductSchema;

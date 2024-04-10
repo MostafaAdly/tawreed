@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Entity_1 = __importDefault(require("../../../../Instances/Entity"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const Page_1 = __importDefault(require("../../Page"));
 class MyCompany extends Page_1.default {
     constructor(data, base_url) {
@@ -24,7 +24,8 @@ class MyCompany extends Page_1.default {
         // SUPPLIER - MY COMPANY PAGE
         this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield new Entity_1.default({}).load(user.entity);
+            const entity = (yield mongoose_1.default.models.Entity.findOne({ _id: new mongoose_1.default.Types.ObjectId(user.entity) })).toObject();
+            entity.users = (yield mongoose_1.default.models.User.find({ entity: entity._id }).populate('role').exec());
             this.data.server.next.render(req, res, '/Supplier/MyCompany/SupplierCompanyPage', { data: JSON.stringify({ user, entity }) });
         }));
     }

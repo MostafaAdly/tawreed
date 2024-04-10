@@ -4,11 +4,10 @@ export default class MongoDB {
     connect: () => Promise<void>;
     disconnect: () => Promise<void>;
     import_departments_intoMySQL: () => Promise<any[]>;
+    eraseDatabase: () => Promise<void>;
     deleteAllDepartments: () => Promise<void>;
     deleteAllUsers: () => Promise<void>;
-    createFakerDummyData: () => Promise<void>;
+    createFakerDummyData: (erase?: boolean) => Promise<void>;
     random: (list: any[]) => any;
-    createSemiRealData: () => Promise<void>;
-    createDummySuppliers: () => Promise<void>;
-    createDefaultDeveloperUser: (entities: any[], roles: any[]) => Promise<any>;
+    createDefaultDeveloperUser: (entities: any[], roles: any[]) => Promise<void>;
 }

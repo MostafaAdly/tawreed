@@ -1,4 +1,3 @@
-import Entity from "../../../Instances/Entity";
 import User from "../../../Instances/User";
 import Page from "../Page";
 export default class Login extends Page {
@@ -7,9 +6,9 @@ export default class Login extends Page {
     static base_url: string;
     constructor(data: any, base_url?: string);
     private run;
-    hasCustomerAndSupplierPermissions(user: User, entity: Entity): boolean;
-    hasCustomerPermissions(user: User, entity: Entity): boolean;
-    hasSupplierPermissions(user: User, entity: Entity): boolean;
+    hasCustomerAndSupplierPermissions(user: User): boolean;
+    hasCustomerPermissions(user: User): boolean;
+    hasSupplierPermissions(user: User): boolean;
     static validateCredentials(credentials: {
         username: string;
         password: string;

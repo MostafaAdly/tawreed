@@ -8,7 +8,8 @@ class SupplierType extends Persona_1.default {
     constructor(input) {
         super();
         this.products = [];
-        this.products = input.products;
+        if (input)
+            Object.assign(this, input);
     }
 }
 exports.default = SupplierType;

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Product_1 = __importDefault(require("../../../../../Instances/Product"));
 const Page_1 = __importDefault(require("../../../Page"));
 const Entity_1 = __importDefault(require("../../../../../Instances/Entity"));
+const mongoose_1 = __importDefault(require("mongoose"));
 class Supplier extends Page_1.default {
     constructor(data, base_url) {
         super(base_url || Supplier.base_url);
@@ -28,9 +29,14 @@ class Supplier extends Page_1.default {
         }));
         // SUPPLIER BY ID
         this.router.get('/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const user = req.session.user;
-            const entity = yield Entity_1.default.schema().findOne({ id: req.params.id });
-            const products = yield Product_1.default.schema().find({ id: { $in: entity.personas.supplier.products } });
+            const entity = yield new Entity_1.default().load({ entityId: req.params.id });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
+            const products = yield mongoose_1.default.models.Product.find({ _id: { $in: ((_a = entity.personas.supplier) === null || _a === void 0 ? void 0 : _a.products) || [] } });
             this.data.server.next.render(req, res, '/Customer/Supplier/SupplierPage', { data: JSON.stringify({ user, supplier: entity, products }) });
         }));
         // ALL PRODUCTS OF A SUPPLIERS OF A DEPARTMENT
@@ -40,22 +46,46 @@ class Supplier extends Page_1.default {
         // PRODUCT BY ID OF SUPPLIER BY ID
         this.router.get('/:supplierId/products/:productId', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield Entity_1.default.schema().findOne({ id: req.params.supplierId });
-            const product = yield Product_1.default.schema().findOne({ id: req.params.productId });
+            const entity = yield new Entity_1.default().load({ entityId: req.params.supplierId });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
+            const product = yield new Product_1.default().load({ productId: req.params.productId });
+            if (!product) {
+                // TODO: HANDLE PRODUCT IF NULL
+                return;
+            }
             this.data.server.next.render(req, res, '/Customer/Supplier/ProductPage', { data: JSON.stringify({ user, supplier: entity, product }) });
         }));
         // RFQ FOR PRODUCT BY ID OF SUPPLIER BY ID
         this.router.get('/:supplierId/products/:productId/rfq', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield Entity_1.default.schema().findOne({ id: req.params.supplierId });
-            const product = yield Product_1.default.schema().findOne({ id: req.params.productId });
+            const entity = yield new Entity_1.default().load({ entityId: req.params.supplierId });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
+            const product = yield new Product_1.default().load({ productId: req.params.productId });
+            if (!product) {
+                // TODO: HANDLE PRODUCT IF NULL
+                return;
+            }
             this.data.server.next.render(req, res, '/Customer/Supplier/RequestForQuotation', { data: JSON.stringify({ user, supplier: entity, product }) });
         }));
         // RFQ REQUESTED FOR PRODUCT BY ID FOR A SUPPLIER BY ID
         this.router.get('/:supplierId/products/:productId/rfq/sent', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield Entity_1.default.schema().findOne({ id: req.params.supplierId });
-            const product = yield Product_1.default.schema().findOne({ id: req.params.productId });
+            const entity = yield new Entity_1.default().load({ entityId: req.params.supplierId });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
+            const product = yield new Product_1.default().load({ productId: req.params.productId });
+            if (!product) {
+                // TODO: HANDLE PRODUCT IF NULL
+                return;
+            }
             this.data.server.next.render(req, res, '/Customer/Supplier/RFQ_Requested', { data: JSON.stringify({ user, supplier: entity, product }) });
         }));
     }

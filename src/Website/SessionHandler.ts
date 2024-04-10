@@ -3,6 +3,7 @@ import User from '../Instances/User';
 import Server from "./Server";
 import Entity from "../Instances/Entity";
 import Utils from "../Utils";
+import mongoose from "mongoose";
 
 export default class SessionHandler {
     private data: any;
@@ -32,7 +33,7 @@ export default class SessionHandler {
     public checkForPersonaAccess = async (req: any): Promise<boolean> => {
         const user = req.session.user;
         if (user) {
-            const entity = await new Entity({}).load(user.entity);
+            const entity = await new Entity().load({ _id: user.entity });
             if (!entity
                 || !entity.personas.customer && req.url.startsWith("/c")
                 || !entity.personas.supplier && req.url.startsWith("/s"))
@@ -61,8 +62,9 @@ export default class SessionHandler {
 
     validateSessionWithUser(req: any, user: User) {
         if (!req?.session || !user || this.isSessionRegistered(req)) return;
+        user.entity = user.entity._id;
         req.session.auth = true;
         req.session.user = user;
-        this.data.redis.set("token:" + user.id, Utils.createToken());
+        this.data.redis.set("token:" + user._id.toString(), Utils.createToken());
     }
 }

@@ -50,7 +50,7 @@ const _self = ({ department, entities }) => {
                                         </div>
                                         <div className={_css(styles, 'title')}>{company.details.displayName}</div>
                                         <div className={_css(styles, 'navigate')}>
-                                            <a href={`/c/suppliers/${company.id}`}>
+                                            <a href={`/c/suppliers/${company.entityId}`}>
                                                 <i className={_css(styles, 'fa-solid fa-eye')}></i>
                                                 <p>جميع المنتجات</p>
                                             </a>

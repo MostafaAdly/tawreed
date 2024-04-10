@@ -1,0 +1,1 @@
+export type ObjectId = mongoose.Types.ObjectId;

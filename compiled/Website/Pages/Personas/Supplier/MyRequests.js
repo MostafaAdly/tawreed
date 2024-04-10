@@ -24,19 +24,31 @@ class MyRequests extends Page_1.default {
         // SUPPLIER - MY REQUESTS PAGE
         this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield new Entity_1.default({}).load(user.entity);
+            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
             this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierRequestsPage', { data: JSON.stringify({ user, entity }) });
         }));
         // SUPPLIER - MY ORDER 
         this.router.get('/order/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield new Entity_1.default({}).load(user.entity);
+            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
             this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveOrderPage', { data: JSON.stringify({ user, entity }) });
         }));
         // SUPPLIER - MY RFQ 
         this.router.get('/rfq/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield new Entity_1.default({}).load(user.entity);
+            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
             this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveRFQPage', { data: JSON.stringify({ user, entity }) });
         }));
     }

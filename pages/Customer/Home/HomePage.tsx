@@ -95,14 +95,14 @@ const _self = ({ departments }) => {
                         <div className={styles.types + " " + styles.center}>
                             {departments.map((department,) => {
                                 return (
-                                    <div className={styles.category} key={department.id}>
+                                    <div className={styles.category} key={department.departmentId}>
                                         <div className={styles.background}>
                                             <div className={styles.gradient}></div>
                                             <img src={department.images[0]} alt={department.name} />
                                         </div>
                                         <div className={styles.title}>{department.name}</div>
                                         <div className={styles.navigate}>
-                                            <a href={`/c/departments/${department.id}`}>
+                                            <a href={`/c/departments/${department.departmentId}`}>
                                                 <i className={_css(styles, 'fa-solid fa-eye')}></i>
                                                 <p>شاهد الكل</p>
                                             </a>

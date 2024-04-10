@@ -1,4 +1,4 @@
-import Entity from "../../../../Instances/Entity";
+import mongoose from "mongoose";
 import Page from "../../Page";
 
 export default class MyCompany extends Page {
@@ -14,10 +14,9 @@ export default class MyCompany extends Page {
         // SUPPLIER - MY COMPANY PAGE
         this.router.get('/', async (req: any, res: any) => {
             const user = req.session.user;
-            const entity = await new Entity({}).load(user.entity);
-            this.data.server.next.render(req, res,
-                '/Supplier/MyCompany/SupplierCompanyPage',
-                { data: JSON.stringify({ user, entity }) });
+            const entity = (await mongoose.models.Entity.findOne({ _id: new mongoose.Types.ObjectId(user.entity) })).toObject();
+            entity.users = (await mongoose.models.User.find({ entity: entity._id }).populate('role').exec())
+            this.data.server.next.render(req, res, '/Supplier/MyCompany/SupplierCompanyPage', { data: JSON.stringify({ user, entity }) });
         });
     }
 }

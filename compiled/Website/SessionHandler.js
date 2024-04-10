@@ -21,7 +21,7 @@ class SessionHandler {
         this.checkForPersonaAccess = (req) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
             if (user) {
-                const entity = yield new Entity_1.default({}).load(user.entity);
+                const entity = yield new Entity_1.default().load({ _id: user.entity });
                 if (!entity
                     || !entity.personas.customer && req.url.startsWith("/c")
                     || !entity.personas.supplier && req.url.startsWith("/s"))
@@ -68,9 +68,10 @@ class SessionHandler {
     validateSessionWithUser(req, user) {
         if (!(req === null || req === void 0 ? void 0 : req.session) || !user || this.isSessionRegistered(req))
             return;
+        user.entity = user.entity._id;
         req.session.auth = true;
         req.session.user = user;
-        this.data.redis.set("token:" + user.id, Utils_1.default.createToken());
+        this.data.redis.set("token:" + user._id.toString(), Utils_1.default.createToken());
     }
 }
 exports.default = SessionHandler;

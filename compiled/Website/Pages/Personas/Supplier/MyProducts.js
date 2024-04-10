@@ -12,9 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
 const Entity_1 = __importDefault(require("../../../../Instances/Entity"));
-const EntityCategory_1 = __importDefault(require("../../../../Instances/EntityCategory"));
-const Product_1 = __importDefault(require("../../../../Instances/Product"));
 const Page_1 = __importDefault(require("../../Page"));
 class MyProducts extends Page_1.default {
     constructor(data, base_url) {
@@ -32,9 +31,13 @@ class MyProducts extends Page_1.default {
         // SUPPLIER - MY PRODUCTS PAGE
         this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield new Entity_1.default({}).load(user.entity);
-            const categories = yield EntityCategory_1.default.schema().find({ entity: entity.id });
-            const products = yield Product_1.default.schema().find({ id: { "$in": this.getAllProducts(categories) } });
+            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL   
+                return;
+            }
+            const categories = yield mongoose_1.default.models.EntityCategory.find({ entity: entity._id });
+            const products = yield mongoose_1.default.models.Product.find({ _id: { $in: this.getAllProducts(categories) } });
             this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierProductsPage', { data: JSON.stringify({ user, entity, categories, products }) });
         }));
     }

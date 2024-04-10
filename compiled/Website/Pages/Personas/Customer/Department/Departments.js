@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Department_1 = __importDefault(require("../../../../../Instances/Department"));
 const Page_1 = __importDefault(require("../../../Page"));
-const Entity_1 = __importDefault(require("../../../../../Instances/Entity"));
+const mongoose_1 = __importDefault(require("mongoose"));
 class Departments extends Page_1.default {
     constructor(data, base_url) {
         super(base_url || Departments.base_url);
@@ -27,10 +27,14 @@ class Departments extends Page_1.default {
             return res.status(200).redirect('/home#departments');
         }));
         // DEPARTMENT BY ID
-        this.router.get('/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get('/:departmentId', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const department = yield Department_1.default.schema().findOne({ id: req.params.id });
-            const entities = yield Entity_1.default.schema().find({ "details.categories": { $elemMatch: { $eq: department.id } } });
+            const department = yield new Department_1.default().load({ departmentId: req.params.departmentId });
+            if (!department) {
+                //TODO: HANDLE DEPARTMENT IF NULL
+                return;
+            }
+            const entities = yield mongoose_1.default.models.Entity.find({ "departments": { $elemMatch: { $eq: department._id } } });
             this.data.server.next.render(req, res, '/Customer/Department/DepartmentPage', { data: JSON.stringify({ department, entities, user }) });
         }));
     }

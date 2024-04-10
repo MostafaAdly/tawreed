@@ -15,6 +15,8 @@ export default class Global {
     public static departmentId_prefix = "DID" + this.id_suffix;
     public static roleId_prefix = "RID" + this.id_suffix;
     public static personaId_prefix = "PSID" + this.id_suffix;
+    public static commentId_prefix = "CID" + this.id_suffix;
+    public static requestId_prefix = "RID" + this.id_suffix;
 
     constructor(data: any) {
         data.utils = this.utils;

@@ -20,7 +20,7 @@ const _self = ({ user, supplier, products }) => {
     const productsElements: any[] = [];
     products.forEach(product => {
         productsElements.push(
-            <div className={styles.product} key={product.id}>
+            <div className={styles.product} key={product.productId}>
                 <div className={styles.image}>
                     <img src={product.images[0]} alt="" />
                 </div>
@@ -32,7 +32,7 @@ const _self = ({ user, supplier, products }) => {
                 </div>
                 <div className={styles.controls}>
                     <div className={styles.order}>
-                        <a href={`/c/suppliers/${supplier.id}/products/${product.id}`} className={styles.center}>
+                        <a href={`/c/suppliers/${supplier.entityId}/products/${product.productId}`} className={styles.center}>
                             <div className={styles.center}>
                                 <i
                                     className={_css(styles, 'fa-solid fa-angles-right')}
@@ -42,7 +42,7 @@ const _self = ({ user, supplier, products }) => {
                         </a>
                     </div>
                     <div className={styles['request-quotation']}>
-                        <a href={`/c/suppliers/${supplier.id}/products/${product.id}`} className={styles.center}>
+                        <a href={`/c/suppliers/${supplier.entityId}/products/${product.productId}`} className={styles.center}>
                             <div className={styles.icon}>
                                 <i
                                     className={_css(styles, 'fa-solid fa-file-circle-exclamation')}

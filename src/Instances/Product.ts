@@ -1,17 +1,20 @@
-import mongoose, { Schema } from "mongoose";
-import { v4 as uuid } from 'uuid';
+import mongoose from "mongoose";
 import Utils from "../Utils";
 import Price from "./Price";
+import ModelManager from "../Database/ModelManager";
+import { ObjectId } from "../Types/ObjectId";
 
 export default class Product {
 
-    public id: string = Utils.productId_prefix + Utils.createId();
+    public _id: ObjectId = new mongoose.Types.ObjectId();
+    public productId: string = Utils.productId_prefix + Utils.createId();
     public name: string;
     public description: string;
     public details: any = {};
     public images: string[] = [];
-    public price: Price;
+    public price: Price = new Price({ cost: 0, quantity: 1, unit: "قطعة" });
 
+    constructor();
     constructor({ id }: { id: string });
     constructor(
         {
@@ -24,36 +27,16 @@ export default class Product {
             name: string, description: string,
             details: any, price: Price, images: string[]
         });
-    constructor(input: any) {
-        this.id = input.id || this.id;
-        this.name = input.name;
-        this.description = input.description;
-        this.details = input.details;
-        this.price = input.price || new Price({ cost: 0, quantity: 1, unit: "قطعة" });
-        this.images = input.images || [];
+    constructor(input?: any) {
+        if (input) Object.assign(this, input);
     }
 
-    public async load() {
-        if (!this.id) return;
-        const product = await Product.schema().find({ id: this.id });
-        if (!product) return;
-        this.name = product.description;
-        this.description = product.description;
-        this.details = product.details;
-        console.log(`Loaded Product: ${product.id}}`, product);
-    }
+    public load = async (query: any) => {
+        const doc = await ModelManager.loadOne(this.constructor.name, query);
+        if (!doc) return;
+        Object.assign(this, doc);
+        return this;
+    };
 
-    private static model: any;
-    public static schema = () => {
-        if (!this.model) this.model = mongoose.model('products', new Schema({
-            id: { type: String, unique: true },
-            name: String,
-            description: String,
-            details: Object,
-            price: Object,
-            images: Array<string>,
-        }));
-        return this.model;
-    }
-    public save = async () => await new (Product.schema())(this).save();
+    public save = async () => await ModelManager.save(this.constructor.name, this);
 }

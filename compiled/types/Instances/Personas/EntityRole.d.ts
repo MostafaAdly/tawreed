@@ -1,6 +1,8 @@
+import { ObjectId } from 'mongoose';
 import { Permission } from './Permission';
 export default class EntityRole {
-    id: string;
+    _id: ObjectId;
+    roleId: string;
     name: string;
     permissions: Permission[];
     constructor({ id }: {
@@ -11,4 +13,6 @@ export default class EntityRole {
         name: string;
         permissions: Permission[];
     });
+    load: (query: any) => Promise<this | undefined>;
+    save: () => Promise<void>;
 }

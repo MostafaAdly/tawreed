@@ -1,27 +1,30 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from 'mongoose';
 import SupplierType from "./Personas/SupplierType";
 import CustomerType from './Personas/CustomerType';
-import EntityRole from "./Personas/EntityRole";
+import EntityRole from "./EntityRole";
 import User from "./User";
-import { Permission } from "./Personas/Permission";
+import { Permission } from "./Permission";
 import Utils from "../Utils";
+import ModelManager from "../Database/ModelManager";
+import { ObjectId } from '../Types/ObjectId';
 
 export default class Entity {
 
-    public id: string = Utils.entityId_prefix + Utils.createId();
+    public _id: ObjectId = new mongoose.Types.ObjectId();
+    public entityId: string = Utils.entityId_prefix + Utils.createId();
     public details: {
         displayName: string,
         logo: string,
         banner: string,
         description?: string,
-        categories: String[]
     };
-    public personas: { supplier: SupplierType, customer: CustomerType };
+    public personas: { supplier?: SupplierType, customer: CustomerType } = { customer: new CustomerType({ requests: [] }) };
     public users: User[] = [];
-    public roles: EntityRole[] = [];
-    public categories: String[] = [];
+    public roles: ObjectId[] = [];
+    public departments: ObjectId[] = [];
+    public categories: ObjectId[] = [];
 
-    constructor({ });
+    constructor();
     constructor({ details, personas, roles, categories }:
         {
             details: {
@@ -29,62 +32,28 @@ export default class Entity {
                 logo: string,
                 banner: string,
                 description?: string,
-                categories?: String[]
             },
             personas: {
                 supplier?: SupplierType, customer?: CustomerType
             },
             roles: EntityRole[],
-            categories?: String[]
-        });
-    constructor(input: any) {
-        this.details = input.details;
-        this.personas = input.personas;
-        this.roles = input.roles;
-        this.categories = input.categories;
+            departments?: ObjectId[]
+            categories?: ObjectId[]
+        }
+    );
+    constructor(input?: any) {
+        if (input) Object.assign(this, input);
     }
-
-    public load = async (id: string) => {
-        this.id = id;
-        if (!this.id) return this;
-        const entity = await Entity.schema().findOne({ id: this.id });
-        if (!entity) return this;
-        this.details = entity.details;
-        this.personas = entity.personas;
-        this.roles = entity.roles;
-        this.categories = entity.categories;
-
-        await this.afterLoad();
-        return this;
-    }
-
-    public async afterLoad() {
-        this.users = await this.getUsers()
-    }
-
-    public async getUsers() {
-        var loadedUsers = await User.schema().find({ entity: this.id });
-        var users: User[] = [];
-        for (var user of loadedUsers)
-            users.push(await new User(user.displayName, user.credentials, user.entity, user.role).setId(user.id).afterLoad(false));
-        return users;
-    }
-
     public hasPermission(user: User, permission: Permission) {
-        return !user || !user.role || !permission || !this.roles ? false : this.roles.find(role => role.id == user.role)?.permissions.includes(permission);
+        return !user || !user.role || !permission || !this.roles ? false : this.roles.find(role => role._id == user.role)?.permissions.includes(permission);
     }
 
-    private static model: any;
-    public static schema = () => {
-        if (!this.model) this.model = mongoose.model('entities', new Schema({
-            id: { type: String, unique: true },
-            details: { type: Object },
-            personas: { type: Object },
-            roles: { type: Array<EntityRole> },
-            categories: { type: Array<String> }
-        }));
-        return this.model;
-    }
-    public save = async () => await new (Entity.schema())(this).save();
+    public load = async (query: any) => {
+        const doc = await ModelManager.loadOne(this.constructor.name, query);
+        if (!doc) return;
+        Object.assign(this, doc);
+        return this;
+    };
 
+    public save = async () => await ModelManager.save(this.constructor.name, this);
 }

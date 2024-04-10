@@ -1,25 +1,25 @@
 import Product from "./Product";
 import Entity from "./Entity";
+import { ObjectId } from "../Types/ObjectId";
 export default class EntityCategory {
-    id: string;
+    _id: ObjectId;
+    categoryId: string;
     name: string;
     description: string;
-    entity: string;
-    products: string[];
+    entity: ObjectId;
+    products: ObjectId[];
     private ancestry;
-    constructor(id: string);
+    constructor(_id: ObjectId);
     constructor({ name, description, entity, ancestry }: {
         name: string;
         description: string;
-        entity: string;
+        entity: ObjectId;
         ancestry?: string;
     });
-    load: () => Promise<this | undefined>;
-    setId(id: string): EntityCategory;
-    setProducts(products: string[]): EntityCategory;
+    setId(id: ObjectId): EntityCategory;
+    setProducts(products: ObjectId[]): EntityCategory;
     createFakerChildren(products: Product[], entity: Entity, amount: number): Promise<void>;
     private random;
-    private static model;
-    static schema: () => any;
-    save: () => Promise<any>;
+    load: (query: any) => Promise<this | undefined>;
+    save: () => Promise<void>;
 }

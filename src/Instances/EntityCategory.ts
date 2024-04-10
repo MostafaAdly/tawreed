@@ -1,55 +1,40 @@
-import mongoose, { Schema } from "mongoose";
-import { v4 as uuid } from 'uuid';
+import mongoose from "mongoose";
 import { faker } from "@faker-js/faker/locale/ar";
 import Product from "./Product";
 import Entity from "./Entity";
 import Utils from '../Utils';
+import ModelManager from "../Database/ModelManager";
+import { ObjectId } from "../Types/ObjectId";
 
 export default class EntityCategory {
 
-    public id: string = Utils.entityCategoryId_prefix + Utils.createId();
+    public _id: ObjectId = new mongoose.Types.ObjectId();
+    public categoryId: string = Utils.entityCategoryId_prefix + Utils.createId();
     public name: string;
     public description: string;
-    public entity: string;
-    public products: string[] = [];
+    public entity: ObjectId;
+    public products: ObjectId[] = [];
     private ancestry: string = "";
 
-    constructor(id: string);
+    constructor(_id: ObjectId);
     constructor({ name, description
         , entity, ancestry }:
         {
             name: string,
             description: string,
-            entity: string,
+            entity: ObjectId,
             ancestry?: string,
         });
-    constructor(input: any) {
-        if (typeof input === "string")
-            this.id = input;
-        else {
-            this.name = input.name;
-            this.description = input.description;
-            this.entity = input.entity;
-            this.ancestry = input.ancestry || this.ancestry;
-        }
+    constructor(input?: any) {
+        if (input) Object.assign(this, input);
     }
 
-    public load = async () => {
-        const category = await EntityCategory.schema().findOne({ id: this.id });
-        if (!category) return this;
-        this.name = category.name;
-        this.description = category.description;
-        this.entity = category.entity;
-        this.ancestry = category.ancestry;
-        this.products = category.products;
-    }
-
-    public setId(id: string): EntityCategory {
-        this.id = id;
+    public setId(id: ObjectId): EntityCategory {
+        this._id = id;
         return this;
     }
 
-    public setProducts(products: string[]): EntityCategory {
+    public setProducts(products: ObjectId[]): EntityCategory {
         this.products = products;
         return this;
     }
@@ -57,17 +42,17 @@ export default class EntityCategory {
     public async createFakerChildren(products: Product[], entity: Entity, amount: number) {
         if (amount == 0) {
             // create products
-            var asd = Math.floor(Math.random() * entity.personas.supplier.products.length);
-            console.log(`adding ${asd} products to ${this.id}`)
+            var asd = Math.floor(Math.random() * (entity.personas.supplier?.products.length || 0));
+            console.log(`adding ${asd} products to ${this._id}`)
             for (let i = 0; i < asd; i++)
-                this.products.push(this.random(products).id);
+                this.products.push(this.random(products)._id);
         } else {
             for (let i = 0; i < Math.floor(Math.random() * 4) + 1; i++) {
                 const category = new EntityCategory({
                     name: `Group ${faker.word.sample()}`,
                     description: faker.company.catchPhrase(),
-                    entity: entity.id,
-                    ancestry: this.ancestry + "/" + this.id
+                    entity: entity._id,
+                    ancestry: this.ancestry + "/" + this.categoryId
                 });
                 category.createFakerChildren(products, entity, amount - 1);
                 // this.children.push(category);
@@ -77,18 +62,12 @@ export default class EntityCategory {
     }
     private random = (list: any[]) => list[Math.floor(Math.random() * list.length)];
 
-    private static model: any;
-    public static schema = () => {
-        if (!this.model) this.model = mongoose.model('categories', new Schema({
-            id: { type: String, unique: true },
-            name: { type: String },
-            description: { type: String },
-            entity: { type: String },
-            // children: { type: Array<Object> },
-            ancestry: { type: String },
-            products: { type: Array<String> }
-        }));
-        return this.model;
-    }
-    public save = async () => await new (EntityCategory.schema())(this).save();
+    public load = async (query: any) => {
+        const doc = await ModelManager.loadOne(this.constructor.name, query);
+        if (!doc) return;
+        Object.assign(this, doc);
+        return this;
+    };
+
+    public save = async () => await ModelManager.save(this.constructor.name, this);
 }

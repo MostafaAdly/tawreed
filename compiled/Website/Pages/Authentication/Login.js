@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Entity_1 = __importDefault(require("../../../Instances/Entity"));
-const Permission_1 = require("../../../Instances/Personas/Permission");
+const mongoose_1 = __importDefault(require("mongoose"));
+const Permission_1 = require("../../../Instances/Permission");
 const User_1 = __importDefault(require("../../../Instances/User"));
 const Page_1 = __importDefault(require("../Page"));
 const Home_1 = __importDefault(require("../Personas/Customer/Home/Home"));
@@ -29,46 +29,44 @@ class Login extends Page_1.default {
     }
     run() {
         this.router.get("/", (req, res) => {
-            this.data.server.next.render(req, res, '/Authentication/LoginPage', {}
-            // { project_name: this.data.project_name, error: this.reasons[req.query.error] == null ? "" : this.reasons[req.query.error] }
-            );
+            this.data.server.next.render(req, res, '/Authentication/LoginPage', {});
         });
         this.router.post("/", (req, res) => __awaiter(this, void 0, void 0, function* () {
             const credentials = req.body;
             const validatedUser = yield this.validateCredentialsToUser(credentials);
-            const entity = yield Entity_1.default.schema().findOne({ id: validatedUser === null || validatedUser === void 0 ? void 0 : validatedUser.entity });
-            if (validatedUser)
-                this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
-            else {
-                return res.status(200).redirect(`/login?error=${entity ? 2 : 1}`);
-            }
-            if (this.hasCustomerAndSupplierPermissions(validatedUser, entity))
+            if (!validatedUser)
+                return res.status(200).redirect(`/login?error=${validatedUser.entity ? 2 : 1}`);
+            const isTotallyValid = this.hasCustomerAndSupplierPermissions(validatedUser);
+            const isPartiallyValid = this.hasCustomerPermissions(validatedUser);
+            this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
+            if (isTotallyValid)
                 return res.status(200).redirect("/");
-            return res.status(200).redirect(this.hasCustomerPermissions(validatedUser, entity) ? (Home_1.default.base_url + `/#departments`) : MyCompany_1.default.base_url);
+            return res.status(200).redirect(isPartiallyValid ? (Home_1.default.base_url + `/#departments`) : MyCompany_1.default.base_url);
         }));
     }
-    hasCustomerAndSupplierPermissions(user, entity) {
-        return this.hasCustomerPermissions(user, entity) && this.hasSupplierPermissions(user, entity);
+    hasCustomerAndSupplierPermissions(user) {
+        return this.hasCustomerPermissions(user) && this.hasSupplierPermissions(user);
     }
-    hasCustomerPermissions(user, entity) {
+    hasCustomerPermissions(user) {
         var _a;
-        const list = (_a = entity.roles.find(role => role.id == user.role)) === null || _a === void 0 ? void 0 : _a.permissions;
+        const list = (_a = user.entity.roles.find((role) => role._id == user.role)) === null || _a === void 0 ? void 0 : _a.permissions;
         return user.role != null && list != null && list.includes(Permission_1.Permission.CUSTOMER_ALL);
     }
-    hasSupplierPermissions(user, entity) {
+    hasSupplierPermissions(user) {
         var _a;
-        const list = (_a = entity.roles.find(role => role.id == user.role)) === null || _a === void 0 ? void 0 : _a.permissions;
+        const list = (_a = user.entity.roles.find((role) => role._id == user.role)) === null || _a === void 0 ? void 0 : _a.permissions;
         return user.role != null && list != null && list.includes(Permission_1.Permission.SUPPLIER_ALL);
     }
     static validateCredentials(credentials) {
-        var _a, _b;
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            return ((_b = (_a = (yield User_1.default.schema().findOne({ 'credentials.username': credentials.username.toLowerCase() }))) === null || _a === void 0 ? void 0 : _a.credentials) === null || _b === void 0 ? void 0 : _b.password) == credentials.password;
+            const user = (yield new User_1.default()._load({ 'credentials.username': credentials.username.toLowerCase() }));
+            return ((_a = user === null || user === void 0 ? void 0 : user.credentials) === null || _a === void 0 ? void 0 : _a.password) == credentials.password;
         });
     }
     validateCredentialsToUser(credentials) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield User_1.default.schema().findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password });
+            return yield mongoose_1.default.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password }).populate('entity');
         });
     }
 }

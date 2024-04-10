@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Department_1 = __importDefault(require("../../../../../Instances/Department"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const Page_1 = __importDefault(require("../../../Page"));
 class Home extends Page_1.default {
     constructor(data, base_url) {
@@ -23,7 +23,7 @@ class Home extends Page_1.default {
     run() {
         // HOME PAGE
         this.router.get(['/', '/home'], (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const departments = yield Department_1.default.schema().find({});
+            const departments = yield mongoose_1.default.models.Department.find({});
             const user = req.session.user;
             this.data.server.next.render(req, res, '/Customer/Home/HomePage', { data: JSON.stringify({ departments, user }) });
         }));

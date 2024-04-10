@@ -1,9 +1,11 @@
+import mongoose from "mongoose";
 import Entity from "../../../Instances/Entity";
-import { Permission } from "../../../Instances/Personas/Permission";
+import { Permission } from "../../../Instances/Permission";
 import User from "../../../Instances/User";
 import Page from "../Page";
 import Home from '../Personas/Customer/Home/Home';
 import MyCompany from "../Personas/Supplier/MyCompany";
+import { ObjectId } from "../../../Types/ObjectId";
 
 export default class Login extends Page {
     private data: any;
@@ -19,49 +21,48 @@ export default class Login extends Page {
 
     private run() {
         this.router.get("/", (req: any, res: any) => {
-            this.data.server.next.render(req, res, '/Authentication/LoginPage', {}
-                // { project_name: this.data.project_name, error: this.reasons[req.query.error] == null ? "" : this.reasons[req.query.error] }
-            );
+            this.data.server.next.render(req, res, '/Authentication/LoginPage', {});
         });
 
         this.router.post("/", async (req: any, res: any) => {
             const credentials = req.body;
             const validatedUser = await this.validateCredentialsToUser(credentials);
-            const entity = await Entity.schema().findOne({ id: validatedUser?.entity });
 
-            if (validatedUser)
-                this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
-            else {
-                return res.status(200).redirect(`/login?error=${entity ? 2 : 1}`);
-            }
+            if (!validatedUser)
+                return res.status(200).redirect(`/login?error=${validatedUser.entity ? 2 : 1}`);
 
-            if (this.hasCustomerAndSupplierPermissions(validatedUser, entity))
+            const isTotallyValid = this.hasCustomerAndSupplierPermissions(validatedUser);
+            const isPartiallyValid = this.hasCustomerPermissions(validatedUser);
+            this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
+
+            if (isTotallyValid)
                 return res.status(200).redirect("/");
 
-            return res.status(200).redirect(this.hasCustomerPermissions(validatedUser, entity) ? (Home.base_url + `/#departments`) : MyCompany.base_url);
+            return res.status(200).redirect(isPartiallyValid ? (Home.base_url + `/#departments`) : MyCompany.base_url);
         });
     }
 
-    public hasCustomerAndSupplierPermissions(user: User, entity: Entity): boolean {
-        return this.hasCustomerPermissions(user, entity) && this.hasSupplierPermissions(user, entity);
+    public hasCustomerAndSupplierPermissions(user: User): boolean {
+        return this.hasCustomerPermissions(user) && this.hasSupplierPermissions(user);
     }
 
-    public hasCustomerPermissions(user: User, entity: Entity): boolean {
-        const list = entity.roles.find(role => role.id == user.role)?.permissions;
+    public hasCustomerPermissions(user: User): boolean {
+        const list = user.entity.roles.find((role: ObjectId) => role._id == user.role)?.permissions;
         return user.role != null && list != null && list.includes(Permission.CUSTOMER_ALL);
     }
 
-    public hasSupplierPermissions(user: User, entity: Entity): boolean {
-        const list = entity.roles.find(role => role.id == user.role)?.permissions;
+    public hasSupplierPermissions(user: User): boolean {
+        const list = user.entity.roles.find((role: ObjectId) => role._id == user.role)?.permissions;
         return user.role != null && list != null && list.includes(Permission.SUPPLIER_ALL);
     }
 
     public static async validateCredentials(credentials: { username: string, password: string }): Promise<boolean> {
-        return (await User.schema().findOne({ 'credentials.username': credentials.username.toLowerCase() }))?.credentials?.password == credentials.password;
+        const user = (await new User()._load({ 'credentials.username': credentials.username.toLowerCase() }));
+        return user?.credentials?.password == credentials.password;
     }
 
-    private async validateCredentialsToUser(credentials: { username: string, password: string }): Promise<User> {
-        return await User.schema().findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
+    private async validateCredentialsToUser(credentials: { username: string, password: string }): Promise<any> {
+        return await mongoose.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password }).populate('entity')
     }
 
 }

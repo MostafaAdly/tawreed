@@ -27,10 +27,12 @@ const _self = ({ user, entity, categories, entityProducts }) => {
 
     useEffect(() => {
         const pros: any[] = [];
-        for (var cat of categories.filter(c => (c.ancestry + "/" + c.id).includes(ancestry))) {
+        for (var cat of categories.filter(c => (c.ancestry + "/" + c.categoryId).includes(ancestry))) {
+            // console.log(cat)
             for (var product of cat.products) {
-                if (pros.find(p => p.id == product)) continue;
-                const pro = entityProducts.find(p => p.id == product);
+                console.log(product)
+                if (pros.find(p => p._id == product)) continue;
+                const pro = entityProducts.find(p => p._id == product);
                 if (pro)
                     pros.push(pro);
             }
@@ -43,12 +45,12 @@ const _self = ({ user, entity, categories, entityProducts }) => {
             setAncestry("");
             return;
         }
-        setAncestry(category.ancestry + "/" + category.id);
+        setAncestry(category.ancestry + "/" + category.categoryId);
         console.log("Filtering Categories to show:", ancestry)
     }
 
     const getCurrentCategory = () => {
-        return ancestry == "" ? null : categories.filter(c => c.id == ancestry.split("/").pop())[0];
+        return ancestry == "" ? null : categories.filter(c => c.categoryId == ancestry.split("/").pop())[0];
     }
     return (
         <>
@@ -56,7 +58,7 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                 <div className={styles.path}>
                     <p onClick={() => filterCategories(null)}>جميع المنتجات</p>
                     {ancestry.split("/").filter(id => id != "").map((id, index) => {
-                        const category = categories.find(category => category.id == id);
+                        const category = categories.find(category => category.categoryId == id);
                         return (
                             <div className={
                                 _css(styles, ancestry.split("/").length == index + 2
@@ -189,7 +191,7 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                                 <tr key={index}>
                                     <td><p><b>{index + 1}</b></p></td>
                                     <td className={styles.id}>
-                                        <div className={"center"}><p>{product.id}</p></div>
+                                        <div className={"center"}><p>{product.productId}</p></div>
                                     </td>
                                     <td>
                                         <p>
