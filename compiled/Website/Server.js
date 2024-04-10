@@ -21,6 +21,7 @@ const MyProducts_1 = __importDefault(require("./Pages/Personas/Supplier/MyProduc
 const ImagesAPI_1 = __importDefault(require("./Pages/API/ImagesAPI"));
 const MyRequests_1 = __importDefault(require("./Pages/Personas/Supplier/MyRequests"));
 const CustomerRequests_1 = __importDefault(require("./Pages/Personas/Customer/Profile/CustomerRequests"));
+const VersionControlAPI_1 = __importDefault(require("./Pages/API/VersionControlAPI"));
 class Server {
     constructor(data) {
         this.port = parseInt(process.env.PORT + "") || 3000;
@@ -101,7 +102,8 @@ class Server {
     }
     load_apis() {
         const apis = [
-            new ImagesAPI_1.default(this.data, Server.api_base_url)
+            new ImagesAPI_1.default(this.data, Server.api_base_url),
+            new VersionControlAPI_1.default(this.data, Server.api_base_url)
         ];
         for (let api of apis)
             this.app.use(api.base_url, api.router);

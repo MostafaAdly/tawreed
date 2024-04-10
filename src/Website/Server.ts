@@ -21,6 +21,7 @@ import MyProducts from './Pages/Personas/Supplier/MyProducts';
 import ImagesAPI from './Pages/API/ImagesAPI';
 import MyRequests from './Pages/Personas/Supplier/MyRequests';
 import CustomerRequests from './Pages/Personas/Customer/Profile/CustomerRequests';
+import VersionControlAPI from './Pages/API/VersionControlAPI';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -120,7 +121,8 @@ export default class Server {
 
         const apis: Page[] = [
 
-            new ImagesAPI(this.data, Server.api_base_url)
+            new ImagesAPI(this.data, Server.api_base_url),
+            new VersionControlAPI(this.data, Server.api_base_url)
 
         ];
         for (let api of apis)

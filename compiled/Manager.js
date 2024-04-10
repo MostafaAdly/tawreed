@@ -39,7 +39,6 @@ class Manager {
             yield this.startDatabase();
             yield this.modelManager.populateModels();
             yield this.testClient.run();
-            console.log("LIVE");
         });
     }
 }
