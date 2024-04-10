@@ -17,7 +17,7 @@ class ImagesAPI extends Page_1.default {
         this.router.get("/images/:id", (req, res) => {
             const id = req.params.id;
             const ps = new stream_1.default.PassThrough();
-            stream_1.default.pipeline(fs_1.default.createReadStream(path_1.default.join(__dirname, `../../../../LocalDatabase/images/${id}`)), ps, (err) => {
+            stream_1.default.pipeline(fs_1.default.createReadStream(path_1.default.join(process.cwd(), `/LocalDatabase/images/${id}`)), ps, (err) => {
                 if (err)
                     return res.sendStatus(400);
             });

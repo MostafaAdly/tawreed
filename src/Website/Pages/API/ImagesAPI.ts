@@ -17,7 +17,7 @@ export default class ImagesAPI extends Page {
             const id = req.params.id;
             const ps = new stream.PassThrough();
             stream.pipeline(
-                fs.createReadStream(path.join(__dirname, `../../../../LocalDatabase/images/${id}`)),
+                fs.createReadStream(path.join(process.cwd(), `/LocalDatabase/images/${id}`)),
                 ps,
                 (err) => {
                     if (err)
