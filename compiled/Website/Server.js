@@ -24,7 +24,7 @@ const CustomerRequests_1 = __importDefault(require("./Pages/Personas/Customer/Pr
 const VersionControlAPI_1 = __importDefault(require("./Pages/API/VersionControlAPI"));
 class Server {
     constructor(data) {
-        this.port = parseInt(process.env.PORT + "") || 3000;
+        this.port = parseInt(process.env.SERVER_PORT + "") || 3000;
         this.ttl = 14 * 24 * 60 * 60; // delete session after 14 days.
         this.development = process.env.ENVIRONMENT != "production";
         // ============== - PUBLIC VARIABLES - ==============

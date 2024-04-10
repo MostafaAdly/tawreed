@@ -26,7 +26,7 @@ import VersionControlAPI from './Pages/API/VersionControlAPI';
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
     private data: any;
-    private port: number = parseInt(process.env.PORT + "") || 3000;
+    private port: number = parseInt(process.env.SERVER_PORT + "") || 3000;
     private ttl: number = 14 * 24 * 60 * 60; // delete session after 14 days.
     private sessionHandler: SessionHandler;
     private development: boolean = process.env.ENVIRONMENT != "production";
