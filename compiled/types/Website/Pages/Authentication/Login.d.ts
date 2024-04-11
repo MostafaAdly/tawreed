@@ -6,9 +6,7 @@ export default class Login extends Page {
     static base_url: string;
     constructor(data: any, base_url?: string);
     private run;
-    hasCustomerAndSupplierPermissions(user: User): boolean;
-    hasCustomerPermissions(user: User): boolean;
-    hasSupplierPermissions(user: User): boolean;
+    hasPermissions(user: User, persona: number): boolean;
     static validateCredentials(credentials: {
         username: string;
         password: string;

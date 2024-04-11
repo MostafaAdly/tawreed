@@ -6,6 +6,7 @@ import Page from "../Page";
 import Home from '../Personas/Customer/Home/Home';
 import MyCompany from "../Personas/Supplier/MyCompany";
 import { ObjectId } from "../../../Types/ObjectId";
+import EntityRole from "../../../Instances/EntityRole";
 
 export default class Login extends Page {
     private data: any;
@@ -21,7 +22,7 @@ export default class Login extends Page {
 
     private run() {
         this.router.get("/", (req: any, res: any) => {
-            this.data.server.next.render(req, res, '/Authentication/LoginPage', {});
+            this.data.server.next.render(req, res, '/Authentication/LoginPage', { data: JSON.stringify({ error: req.query.error }) });
         });
 
         this.router.post("/", async (req: any, res: any) => {
@@ -29,31 +30,30 @@ export default class Login extends Page {
             const validatedUser = await this.validateCredentialsToUser(credentials);
 
             if (!validatedUser)
-                return res.status(200).redirect(`/login?error=${validatedUser.entity ? 2 : 1}`);
+                return res.status(200).redirect(`/login?error=${validatedUser?.entity ? 2 : 1}`);
 
-            const isTotallyValid = this.hasCustomerAndSupplierPermissions(validatedUser);
-            const isPartiallyValid = this.hasCustomerPermissions(validatedUser);
+            console.log("-------------")
+            const isCustomerValid = this.hasPermissions(validatedUser, 1);
+            const isSupplierValid = this.hasPermissions(validatedUser, 2);
             this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
 
-            if (isTotallyValid)
+            console.log("isCustomerValid", isCustomerValid)
+            console.log("isSupplierValid", isSupplierValid)
+            console.log("-------------")
+
+            if (isCustomerValid && isSupplierValid)
                 return res.status(200).redirect("/");
 
-            return res.status(200).redirect(isPartiallyValid ? (Home.base_url + `/#departments`) : MyCompany.base_url);
+            return res.status(200).redirect(isCustomerValid ? (Home.base_url + `/#departments`) : MyCompany.base_url);
         });
     }
 
-    public hasCustomerAndSupplierPermissions(user: User): boolean {
-        return this.hasCustomerPermissions(user) && this.hasSupplierPermissions(user);
-    }
-
-    public hasCustomerPermissions(user: User): boolean {
-        const list = user.entity.roles.find((role: ObjectId) => role._id == user.role)?.permissions;
-        return user.role != null && list != null && list.includes(Permission.CUSTOMER_ALL);
-    }
-
-    public hasSupplierPermissions(user: User): boolean {
-        const list = user.entity.roles.find((role: ObjectId) => role._id == user.role)?.permissions;
-        return user.role != null && list != null && list.includes(Permission.SUPPLIER_ALL);
+    public hasPermissions(user: User, persona: number): boolean {
+        const permissions: Permission[] = persona == 0 ? Object.values(Permission) : [];
+        if (persona == 1) permissions.push(Permission.CUSTOMER_ALL);
+        else if (persona == 2) permissions.push(Permission.SUPPLIER_ALL);
+        const found = user.entity.roles.includes(user.role._id);
+        return user.role != null && user.role.permissions != null && permissions.every((permission: Permission) => user.role.permissions.includes(permission));
     }
 
     public static async validateCredentials(credentials: { username: string, password: string }): Promise<boolean> {
@@ -62,7 +62,8 @@ export default class Login extends Page {
     }
 
     private async validateCredentialsToUser(credentials: { username: string, password: string }): Promise<any> {
-        return await mongoose.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password }).populate('entity')
+        return await mongoose.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
+            .populate({ path: 'entity' }).populate('role');
     }
 
 }

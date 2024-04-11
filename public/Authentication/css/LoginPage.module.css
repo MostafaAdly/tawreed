@@ -45,8 +45,11 @@
     text-align: right;
     font-weight: 600;
     font-size: 17px;
-    color: var(--font2-color);
     margin: 0 12px 2px 0;
+}
+
+.inputArea .inputLabel {
+    color: var(--font2-color);
 }
 
 .inputField {
@@ -62,6 +65,7 @@
     width: 40px;
     text-align: center;
     float: right;
+    font-size: 20px;
 }
 
 .inputField .input {
@@ -77,6 +81,16 @@
     font-size: 16px;
     font-weight: 400;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.error {
+    color: red;
+
+    i,
+    div,
+    input {
+        color: red;
+    }
 }
 
 .forgotPassword,

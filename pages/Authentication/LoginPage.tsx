@@ -2,7 +2,7 @@ import React from "react";
 import styles from '../../public/Authentication/css/LoginPage.module.css';
 import { _css, getImage } from '../../public/Assets/Helpers';
 
-const LoginPage = ({ }) => {
+const LoginPage = ({ error }) => {
     return (
         <>
             <main className={styles.container}>
@@ -18,7 +18,7 @@ const LoginPage = ({ }) => {
                     <form action="/login" method="POST">
                         <div className={styles.inputArea}>
                             <p className={styles.inputLabel}>أسم المستخدم</p>
-                            <div className={styles.inputField}>
+                            <div className={_css(styles, `inputField ${error ? "error" : ""}`)}>
                                 <i className={_css(styles, 'fa-solid fa-user')}></i>
                                 <div className={styles.input}>
                                     <input
@@ -30,21 +30,28 @@ const LoginPage = ({ }) => {
                                     />
                                 </div>
                             </div>
+                            {error ? <p className={_css(styles, 'error')}>خطأ في البيانات! الرجاء إعادة إدخال بياناتك</p> : null}
                         </div>
                         <div className={styles.inputArea}>
                             <p className={styles.inputLabel}>كلمة المرور</p>
-                            <div className={styles.inputField}>
+                            <div className={_css(styles, `inputField ${error ? "error" : ""}`)}>
                                 <i className={_css(styles, 'fa-solid fa-lock')}></i>
                                 <div className={styles.input}>
                                     {/* <input type="password" placeholder="********" id="password" name="password" dir="ltr" /> */}
-                                    <input type="password" id="password" name="password" dir="ltr" defaultValue={"123123"} />
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        dir="ltr"
+                                        defaultValue={"123123"} />
                                 </div>
                             </div>
+                            {error ? <p className={_css(styles, 'error')}>خطأ في البيانات! الرجاء إعادة إدخال بياناتك</p> : null}
                         </div>
-                        <div className={styles.forgotPassword}>
+                        {/* <div className={styles.forgotPassword}>
                             <p className={styles.label}>هل فقدت كلمة المرور؟</p>
                             <a href="forgot-password">إعادة ظبط كلمة المرور</a>
-                        </div>
+                        </div> */}
                         <div className={styles.buttons}>
                             <div className={`${styles.authButton} ${styles.center}`}>
                                 <button type="submit">
@@ -99,3 +106,9 @@ const LoginPage = ({ }) => {
 }
 
 export default LoginPage;
+
+export const getServerSideProps = async (context) => {
+    return {
+        props: JSON.parse(context.query.data)
+    };
+}
