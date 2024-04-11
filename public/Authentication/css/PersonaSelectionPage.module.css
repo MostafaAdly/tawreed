@@ -11,7 +11,7 @@
     bottom: 0;
     right: 0;
     flex-direction: column;
-    margin-bottom: 8em;
+    padding-bottom: 170px;
 
     .logo {
         width: 20%;

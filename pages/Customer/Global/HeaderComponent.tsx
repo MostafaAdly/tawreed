@@ -6,9 +6,9 @@ const C_HeaderComponent = ({ user }) => {
     return (
         <>
             <div className={_css(styles, 'header')}>
-                <div className={_css(styles, 'logo center')}>
+                <a className={_css(styles, 'logo center')} href="/c">
                     <img src={getImage("logo.png")} alt="Tawreed Logo" />
-                </div>
+                </a>
                 <nav className={_css(styles, 'tabs')}>
                     <div className={_css(styles, 'tab activeTab')}>
                         <a href="/">الرئيسية</a>

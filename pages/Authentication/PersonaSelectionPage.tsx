@@ -1,12 +1,13 @@
 import React from "react";
 import styles from '../../public/Authentication/css/PersonaSelectionPage.module.css';
 import { _css, getImage } from "../../public/Assets/Helpers";
+import { LoginFooter } from "./LoginPage";
 
 
 const PersonaSelectionPage = () => {
     return (
         <>
-            <div className={_css(styles, 'container center')}>
+            <main className={_css(styles, 'container center')}>
                 <div className={_css(styles, 'logo center')}>
                     <img
                         src={getImage("logo.png")}
@@ -33,7 +34,8 @@ const PersonaSelectionPage = () => {
                         </div>
                     </a>
                 </div>
-            </div >
+                <LoginFooter />
+            </main >
         </>
     );
 }
