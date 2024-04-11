@@ -8,7 +8,7 @@ export const _css = (styles, css) => {
     return array.join(" ");
 }
 export const getImage = (path) => {
-    return `http://${process.env.NEXT_PUBLIC_URL}/api/v1/images/${path}`;
+    return `/api/v1/images/${path}`;
 }
 
 export const onTabClick = ({ target, styles, activatedTabClassName = "activated", tabClassName = "tab" }) => {
