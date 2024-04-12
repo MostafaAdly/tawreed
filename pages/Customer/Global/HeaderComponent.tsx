@@ -37,7 +37,7 @@ const C_HeaderComponent = ({ user }) => {
                         <i className={_css(styles, 'fa-solid fa-bell')}></i>
 
                     </div>
-                    <div className={_css(styles, 'profile center')}>
+                    <a className={_css(styles, 'profile center')} href="/logout">
                         <div className={_css(styles, 'profileImage')}>
                             <img src={getImage("default-profile-picture.png")} alt="Profile Picture" />
                         </div>
@@ -45,7 +45,7 @@ const C_HeaderComponent = ({ user }) => {
                             <p>{user?.displayName || "أسم المستخدم"}</p>
                             <i className={_css(styles, 'fa-solid fa-angles-down')}></i>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </>

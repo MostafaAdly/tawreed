@@ -24,6 +24,7 @@
     width: 100%;
     border-bottom: 1px solid var(--standardcolor);
     user-select: none;
+    overflow: hidden;
 }
 .categoriesHero .background .gradient {
     position: absolute;
@@ -38,9 +39,9 @@
 }
 
 .categoriesHero .background img {
-    height: 101%;
-    width: 101%;
-    filter: blur(2px);
+    width: 100%;
+    height: auto;
+    filter: blur(10px);
 }
 
 .categoriesHero .title p {
@@ -162,8 +163,6 @@
     position: relative;
     width: 100%;
     border-radius: inherit;
-}
-.category .navigate a {
     background-color: var(--standardcolor);
     color: white;
     display: flex;
@@ -178,9 +177,8 @@
     text-decoration: none;
     cursor: pointer;
 }
-
-.category .navigate a p,
-.category .navigate a i {
+.category .navigate p,
+.category .navigate i {
     color: inherit;
     text-align: center;
 }

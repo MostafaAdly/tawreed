@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import C_HeaderComponent from "../Global/HeaderComponent";
 import C_FooterComponent from "../Global/FooterComponent";
 import styles from '../../../public/Customer/Supplier/css/ProductPage.module.css'
-import { _css } from "../../../public/Assets/Helpers";
+import { _css, getImage, onTabClick } from '../../../public/Assets/Helpers';
 
 const SupplierPage = ({ user, supplier, product }) => {
     return (
@@ -17,122 +17,149 @@ const SupplierPage = ({ user, supplier, product }) => {
 }
 
 const _self = ({ user, supplier, product }) => {
-    const imagesElements: any[] = [];
-    product.images.map((image, index) =>
-        imagesElements.push(
-            <img key={index} src={image} alt="" />
-        )
-    );
+    const [image, setImage] = useState(product.images[0]);
+    const [images, setImages] = useState(product.images.filter(img => img != image));
+
+    const onPurchase = (e) => {
+
+    }
+
+    const onRFQ = (e) => {
+        location.href = `/c/suppliers/${supplier.entityId}/products/${product.productId}/rfq`;
+    }
+
+    const onImageSelect = (target) => {
+        setImage(target.src);
+        setImages(product.images.filter(img => img != target.src));
+    }
+
     return (
         <>
-            <main className={styles['product-container']}>
-                <section className={styles['product-main']}>
-                    <div className={styles['right-box']}>
-                        <div className={styles.name}>
-                            <p>
-                                {product.name}
-                            </p>
-                        </div>
-                        <div className={styles.info}>
-                            <div className={styles['top-info']}>
-                                <div className={styles.company + " " + styles.center}>
+            <div className={_css(styles, 'container center')}>
+                <section className={_css(styles, 'top-container')}>
+                    <div className={_css(styles, 'product-container')}>
+                        <section className={_css(styles, 'right-box')}>
+                            <div className={_css(styles, 'product-name')}>
+                                <p>{product.name}</p>
+                            </div>
+                            <div className={_css(styles, 'product-info')}>
+                                <div className={_css(styles, 'product-company')}>
                                     <p>شركة:</p>
                                     <p>{supplier.details.displayName}</p>
                                 </div>
-                                <div className={styles.evaluation + " " + styles.center}>
-                                    <div className={styles.icon}>
-                                        <i className={_css(styles, 'fa-solid fa-star')}></i>
-                                    </div>
-                                    <div className={styles['self-evaluation']}>
-                                        <p>4.5 من 15 تقييم</p>
-                                    </div>
+                                <div className={_css(styles, 'evaluation center')}>
+                                    <i className={_css(styles, 'fa-solid fa-star')}></i>
+                                    <p>{"4.5"} من {"15"} تقييم</p>
                                 </div>
                             </div>
-                            <div className={styles['cost-info'] + " " + styles.center}>
-                                <div className={styles['cost-right']}><p>السعر يبدأ من</p></div>
-                                <div className={styles['cost-mid']}><p>{product.price.cost}</p></div>
-                                <div className={styles['cost-right']}><p>{product.price.currency}</p></div>
+                            <div className={_css(styles, 'product-cost center')}>
+                                <p>السعر يبدأ من</p>
+                                <p>{product.price.cost}</p>
+                                <p>{product.price.currency}</p>
                             </div>
-                            <div className={styles.description}>
-                                <p>
-                                    {product.description}
-                                </p>
+                            <div className={_css(styles, 'description')}>
+                                <p>{product.description}</p>
                             </div>
-                            <div className={styles['cost-info'] + " " + styles.center}>
-                                <div className={styles['cost-right']}><p>أقل كمية للطلب</p></div>
-                                <div className={styles['cost-mid']}><p>{product.price.quantity}</p></div>
-                                <div className={styles['cost-right']}><p>{product.price.unit}</p></div>
+                            <div className={_css(styles, 'product-cost center')}>
+                                <p>أقل كمية للطلب</p>
+                                <p>{product.price.quantity}</p>
+                                <p>دستة</p>
                             </div>
-                        </div>
-                        <div className={styles.controls + " " + styles.center}>
-                            <div className={styles.buy}>
-                                <button className={styles.center}>
-                                    <div className={styles.icon}>
-                                        <i className={_css(styles, 'fa-solid fa-angles-right')}></i>
-                                    </div>
-                                    <p>اطلب الآن</p>
-                                </button>
-                            </div>
-                            <div className={styles['request-quotation']}>
-                                <button className={styles.center}>
-                                    <div className={styles.icon}>
-                                        <i
-                                            className={_css(styles, 'fa-solid fa-file-circle-exclamation')}
-                                        ></i>
-                                    </div>
+                            <div className={_css(styles, 'controls')}>
+                                <a className={_css(styles, 'center opacity-active box-shadow-hover')} onClick={(e) => onPurchase(e)}>
+                                    <i className={_css(styles, 'fa-solid fa-angles-right')}></i>
+                                    <p>أطلب الآن</p>
+                                </a>
+                                <a className={_css(styles, 'rfq center opacity-active box-shadow-hover')} onClick={(e) => onRFQ(e)}>
+                                    <i className={_css(styles, 'fa-solid fa-file-circle-exclamation')}></i>
                                     <p>أطلب عرض سعر</p>
-                                </button>
+                                </a>
                             </div>
-                        </div>
+                        </section>
+                        <section className={_css(styles, 'left-box')}>
+                            <div className={_css(styles, 'current')}>
+                                <img src={image} alt="" />
+                            </div>
+                            <div className={_css(styles, 'other center')}>
+                                {images.map((image, index) => <img className={_css(styles, 'opacity')} key={index} src={image} alt="" onClick={(e) => onImageSelect(e.target)} />)}
+                            </div>
+                        </section>
                     </div>
-                    <div className={styles.images}>
-                        <div className={styles.current}>
-                            <img src={product.images[0]} alt="" />
-                        </div>
-                        <div className={styles.other}>
-                            {imagesElements}
-                        </div>
-                    </div>
-                </section>
-                <section className={styles['product-info']}>
-                    <div className={styles.tabs}>
-                        <div className={styles.tab + " " + styles['current-tab']}>
-                            <button>
+                    <section className={_css(styles, 'details')}>
+                        <div className={_css(styles, 'tabs')}>
+                            <button
+                                className={_css(styles, 'tab activated')}
+                                onClick={(e) => onTabClick({ target: e.target, styles })}
+                                data-tab-id="info"
+                                data-default-display="flex"
+                            >
                                 <p>المزيد من التفاصيل</p>
                             </button>
-                        </div>
-                        <div className={styles.tab}>
-                            <button>
+                            <button
+                                className={_css(styles, 'tab')}
+                                onClick={(e) => onTabClick({ target: e.target, styles })}
+                                data-tab-id="reviews"
+                                data-default-display="flex">
                                 <p>تقييمات العملاء</p>
                             </button>
-                        </div>
-                        <div className={styles.tab}>
-                            <button>
+                            <button
+                                className={_css(styles, 'tab')}
+                                onClick={(e) => onTabClick({ target: e.target, styles })}
+                                data-tab-id="add-review"
+                                data-default-display="flex">
                                 <p>اضف تقييمك</p>
                             </button>
                         </div>
-                    </div>
-                    <div className={styles['self-info']}>
-                        <table>
-                            <tbody>
-                                {Object.keys(product.details).map((d, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td>
-                                                <p className={styles['table-head']}>{d}</p>
-                                            </td>
-                                            <td>
-                                                <p>{product.details[d]}</p>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-
-                            </tbody>
-                        </table>
-                    </div>
+                        <div className={_css(styles, 'info')} id="info">
+                            {Object.keys(product.details).map((d, index) => {
+                                return (
+                                    <div className={_css(styles, 'product-detail')} key={index}>
+                                        <p>{d}</p>
+                                        <p>{product.details[d]}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className={_css(styles, 'reviews')} id="reviews">
+                            <div className={_css(styles, 'review')}>
+                                <div className={_css(styles, 'review-header center')}>
+                                    <div className={_css(styles, 'profile-image')}>
+                                        <img src={getImage("default-profile-picture.png")} alt="" />
+                                    </div>
+                                    <p className={_css(styles, 'profile-name')}>أيمن عبدالرحمن</p>
+                                    <div className={_css(styles, 'profile-info')}>
+                                        <p>مدير مشتريات</p>
+                                        <p>المتحدة للصيانة</p>
+                                    </div>
+                                </div>
+                                <div className={_css(styles, 'review-content')}>
+                                    <p>
+                                        لوريم ايبسوم دولار سيت أميت كونسيكتيتور أدايبا يسكينج أليايت.سيت دو أيوسمود تيمبور
+                                        أنكايديديونتيوت لابوري ات
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={_css(styles, 'add-review')} id="add-review">
+                            <div className={_css(styles, 'review-title')}>
+                                <p>شكرا لرغبتك في ترك تعليق</p>
+                                <i className={_css(styles, 'fa-solid fa-hands-praying')}></i>
+                            </div>
+                            <div className={_css(styles, 'review-info')}>
+                                <p>مشاركة تجربتك مع الآخرين يساعدنا على تطوير خدماتنا وتعريق العملاء الأخرين بنا</p>
+                            </div>
+                            <div className={_css(styles, 'review-content')}>
+                                <textarea placeholder="يعجبني في هذا المنتج ...." />
+                            </div>
+                            <div className={_css(styles, 'review-controls')}>
+                                <button className={_css(styles, 'center opacity-active')}>
+                                    <i className={_css(styles, 'fa-solid fa-arrow-right')} />
+                                    <p>أرسل تعليقك</p></button>
+                            </div>
+                        </div>
+                    </section>
                 </section>
-            </main>
+            </div>
         </>
     );
 }

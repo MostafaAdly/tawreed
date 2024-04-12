@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import C_HeaderComponent from "../Global/HeaderComponent";
 import C_FooterComponent from "../Global/FooterComponent";
 import styles from '../../../public/Customer/Supplier/css/RequestForQuotation.module.css'
@@ -18,6 +18,20 @@ const RequestForQuotation = ({ user, supplier, product }) => {
 }
 
 const _self = ({ supplier, product }) => {
+    const [image, setImage] = useState(product.images[0]);
+    const [images, setImages] = useState(product.images.filter(img => img != image));
+
+    const onPurchase = (e) => {
+
+    }
+
+    const onRFQ = (e) => {
+    }
+
+    const onImageSelect = (target) => {
+        setImage(target.src);
+        setImages(product.images.filter(img => img != target.src));
+    }
 
     return (
         <>
@@ -28,14 +42,14 @@ const _self = ({ supplier, product }) => {
                 <div className={_css(styles, 'product-rfq center')}>
                     <section className={_css(styles, 'right-box')}>
                         <div className={_css(styles, 'product-name')}>
-                            <p>خوذة هيمليت سيفتي ألماني الصنع من البلاستيك مع حزام سيليكون مانع للإنزلاق</p>
+                            <p>{product.name}</p>
                         </div>
                         <div className={_css(styles, 'product-company')}>
-                            <p>الرضوان للعدد</p>
+                            <p>{supplier.details.displayName}</p>
                         </div>
                         <label htmlFor="quantity">الكمية</label>
                         <div className={_css(styles, 'product-input')}>
-                            <input type="number" name="quantity" id="quantity" min={1} />
+                            <input type="number" name="quantity" id="quantity" min={1} defaultValue={1} />
                         </div>
                         <label htmlFor="quantity">فترة التوريد</label>
                         <div className={_css(styles, 'product-input')}>
@@ -50,14 +64,14 @@ const _self = ({ supplier, product }) => {
                             </select>
                         </div>
                         <div className={_css(styles, 'controls')}>
-                            <button className={_css(styles, 'center')}>
+                            <a className={_css(styles, 'center')}>
                                 <i className={_css(styles, 'fa-solid fa-right-to-bracket')}></i>
                                 <p>طلب عرض السعر</p>
-                            </button>
-                            <button className={_css(styles, 'center buy-now')}>
+                            </a>
+                            <a className={_css(styles, 'center buy-now')} href={`/c/suppliers/${supplier.entityId}/products/${product.productId}`}>
                                 <i className={_css(styles, 'fa-solid fa-right-to-bracket')}></i>
                                 <p>شراء الآن</p>
-                            </button>
+                            </a>
                         </div>
                     </section>
                     <section className={_css(styles, 'left-box')}>
@@ -71,38 +85,23 @@ const _self = ({ supplier, product }) => {
                         </div>
                         <section id="images" className={_css(styles, 'images')}>
                             <div className={_css(styles, 'current')}>
-                                <img src={getImage("background.jpeg")} alt="" />
-                                {/* <img src={getImage("default-profile-picture.png")} alt="" /> */}
+                                <img src={image} alt="" />
                             </div>
-                            <div className={_css(styles, 'other')}>
-                                <img src={getImage("background.jpeg")} alt="" />
-                                <img src={getImage("background.jpeg")} alt="" />
-                                <img src={getImage("background.jpeg")} alt="" />
-                                <img src={getImage("background.jpeg")} alt="" />
-                                <img src={getImage("background.jpeg")} alt="" />
+                            <div className={_css(styles, 'other center')}>
+                                {images.map((image, index) => <img className={_css(styles, 'opacity')} key={index} src={image} alt="" onClick={(e) => onImageSelect(e.target)} />)}
                             </div>
                         </section>
                         <section id="product-info" className={_css(styles, 'product-info')}>
-                            <div className={_css(styles, 'data')}>
-                                <div className={_css(styles, 'label')}><p>الوزن</p></div>
-                                <div className={_css(styles, 'value')}><p>240 ج.م</p></div>
-                            </div>
-                            <div className={_css(styles, 'data')}>
-                                <div className={_css(styles, 'label')}><p>الوزن</p></div>
-                                <div className={_css(styles, 'value')}><p>240 ج.م</p></div>
-                            </div>
-                            <div className={_css(styles, 'data')}>
-                                <div className={_css(styles, 'label')}><p>الوزن</p></div>
-                                <div className={_css(styles, 'value')}><p>240 ج.م</p></div>
-                            </div>
-                            <div className={_css(styles, 'data')}>
-                                <div className={_css(styles, 'label')}><p>الوزن</p></div>
-                                <div className={_css(styles, 'value')}><p>240 ج.م</p></div>
-                            </div>
-                            <div className={_css(styles, 'data')}>
-                                <div className={_css(styles, 'label')}><p>الوزن</p></div>
-                                <div className={_css(styles, 'value')}><p>240 ج.م</p></div>
-                            </div>
+                            {
+                                Object.keys(product.details).map((key, index) => {
+                                    return (
+                                        <div className={_css(styles, 'data')} key={index}>
+                                            <div className={_css(styles, 'label')}><p>{key}</p></div>
+                                            <div className={_css(styles, 'value')}><p>{product.details[key]}</p></div>
+                                        </div>
+                                    );
+                                })
+                            }
                         </section>
                     </section>
                 </div>
@@ -134,4 +133,10 @@ const onTabClick = (element) => {
 }
 
 
-export default RequestForQuotation
+export default RequestForQuotation;
+
+export const getServerSideProps = async (context) => {
+    return {
+        props: JSON.parse(context.query.data)
+    };
+}

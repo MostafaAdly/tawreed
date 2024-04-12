@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from '../../../public/Customer/Home/css/main.module.css'
 import C_HeaderComponent from '../Global/HeaderComponent';
 import C_FooterComponent from "../Global/FooterComponent";
-import { _css } from "../../../public/Assets/Helpers";
+import { _css, randomList } from "../../../public/Assets/Helpers";
 
 const HomePage = ({ departments, user }) => {
     return (
@@ -17,6 +17,37 @@ const HomePage = ({ departments, user }) => {
 }
 
 const _self = ({ departments }) => {
+
+    useEffect(() => {
+        const categories = document.getElementById('categories');
+        if (categories) {
+            setInterval(() => {
+                const element = randomList(categories.children);
+                if (element && departments.find(dep => dep.departmentId == element.id)) {
+                    const img = element.querySelector("img");
+                    if (img) img.src = randomList(departments.find(dep => dep.departmentId == element.id).images)
+                }
+            }, 5000 + Math.floor(Math.random() * 5000));
+        }
+    }, []);
+
+    // useEffect(() => {
+    //     if (currentInterval) clearLocalInterval(currentInterval);
+    //     if (!currentCategory) return;
+    //     const element = document.getElementById(currentCategory.departmentId);
+    //     if (!element) return;
+    //     setCurrentInterval(setInterval(() => {
+    //         console.log(currentCategory);
+    //         const img = element.querySelector("img");
+    //         if (img) img.src = randomList(currentCategory.images)
+    //     }, 1000));
+    // }, [currentCategory])
+
+    // const clearLocalInterval = (currentInterval) => {
+    //     clearInterval(currentInterval);
+    //     setCurrentInterval(null);
+    // }
+
     return (
         <>
             <div className={_css(styles, 'container')}>
@@ -92,22 +123,20 @@ const _self = ({ departments }) => {
                         <div className={_css(styles, 'description')}>
                             <p>لوريم ابسيم دولار ابسنت كوشسيسش</p>
                         </div>
-                        <div className={_css(styles, 'types center')}>
+                        <div className={_css(styles, 'types center')} id="categories">
                             {departments.map((department,) => {
                                 return (
-                                    <div className={_css(styles, 'category')} key={department.departmentId}>
-                                        <div className={_css(styles, 'background')}>
-                                            <div className={_css(styles, 'gradient')}></div>
-                                            <img src={department.images[0]} alt={department.name} />
+                                    <a
+                                        className={_css(styles, 'category opacity box-shadow-hover')}
+                                        key={department.departmentId}
+                                        id={department.departmentId}
+                                        href={"/c/departments/" + department.departmentId}
+                                    >
+                                        <img src={randomList(department.images)} alt={department.name} />
+                                        <div className={_css(styles, 'category-name center')}>
+                                            <p>{department.name}</p>
                                         </div>
-                                        <div className={_css(styles, 'title')}>{department.name}</div>
-                                        <div className={_css(styles, 'navigate')}>
-                                            <a href={`/c/departments/${department.departmentId}`}>
-                                                <i className={_css(styles, 'fa-solid fa-eye')}></i>
-                                                <p>شاهد الكل</p>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    </a>
                                 );
                             })}
                         </div>

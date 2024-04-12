@@ -70,7 +70,7 @@
                 flex-direction: column;
                 row-gap: 10px;
 
-                button {
+                a {
                     background-color: var(--standardcolor);
                     width: 50%;
                     column-gap: 10px;
@@ -78,6 +78,8 @@
                     min-height: 40px;
                     border-radius: 16px;
                     transition: opacity 0.15s;
+                    text-decoration: none;
+                    cursor: pointer;
 
                     p,
                     i {
@@ -142,7 +144,7 @@
             }
 
             .product-info {
-                display: flex;
+                display: none;
                 flex-direction: column;
                 row-gap: 2em;
                 background-color: #f2f3f3;
@@ -186,10 +188,7 @@
                 }
 
                 .other {
-                    display: flex;
-                    align-items: center;
                     flex-wrap: wrap;
-                    justify-content: space-between;
                     flex-direction: row;
                     column-gap: 15px;
                     row-gap: 15px;
@@ -199,6 +198,7 @@
                         aspect-ratio: 1/1;
                         object-fit: cover;
                         border-radius: 4px;
+                        cursor: pointer;
                     }
                 }
             }

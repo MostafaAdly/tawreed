@@ -1,8 +1,3 @@
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 .company-container {
     display: flex;
     flex-direction: column;
@@ -130,140 +125,240 @@
 
 .products {
     flex-direction: column;
-}
-
-.products .title {
-    margin-bottom: 2em;
-}
-
-.products .title p {
-    font-weight: 700;
-    font-size: 32px;
-    color: var(--font2-color);
-}
-
-.products .filters {
-    display: flex;
-    column-gap: 2em;
-    width: 100%;
-    user-select: none;
-}
-
-.products .filters .icon {
+    margin-bottom: 1rem;
     height: 100%;
-    width: 5em;
-}
 
-.products .filters .icon i {
-    font-size: 32px;
-}
+    .title {
+        margin-bottom: 2em;
 
-.products .filters .self-filters {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    column-gap: 20px;
-    row-gap: 10px;
-}
+        p {
+            font-weight: 700;
+            font-size: 32px;
+            color: var(--font2-color);
+        }
+    }
+    .filters {
+        display: flex;
+        column-gap: 2em;
+        width: 100%;
+        user-select: none;
 
-.products .filters .self-filters .filter button {
-    padding: 5px 10px;
-    border: none;
-    background-color: transparent;
-    transition: opacity 0.15s, background 0.2s;
-    border-radius: 10px;
-    cursor: pointer;
-}
+        .icon {
+            width: 4rem;
+            aspect-ratio: 1/1;
+            border-radius: 0.5rem;
+            cursor: pointer;
 
-.products .filters .self-filters .filter button p {
-    font-size: 18px;
-}
+            i {
+                font-size: 32px;
+            }
 
-.products .filters .self-filters .filter button:hover {
-    opacity: 0.95;
-    background-color: rgba(115, 119, 124, 0.15);
-}
+            &.selected i {
+                color: var(--standardcolor);
+            }
+        }
 
-.products .self {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 2em;
-    row-gap: 3em;
-    margin-top: 3em;
-}
+        .self-filters {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            column-gap: 20px;
+            row-gap: 10px;
 
-.products .self .product {
-    width: 500px;
-    background-color: #f2f3f3;
-    border-radius: 10px;
-    overflow: hidden;
-    padding: 10px;
-}
+            .filter {
+                border-radius: 10px;
+                button {
+                    padding: 5px 10px;
+                    border: none;
+                    background-color: transparent;
+                    transition: opacity 0.15s, background 0.2s;
+                    cursor: pointer;
+                    p {
+                        font-size: 18px;
+                    }
+                }
 
-.products .self .product .image img {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px 10px 0px 0px;
-    height: 70%;
-}
+                &:hover {
+                    opacity: 0.95;
+                    background-color: rgba(115, 119, 124, 0.15);
+                }
 
-.product .name {
-    font-size: 20px;
-    font-weight: 500;
-    margin-right: 15px;
-}
-.product .name p {
-    color: #4d5258;
-}
+                &.selected p {
+                    color: var(--standardcolor);
+                }
+            }
+        }
+    }
+    .self-products {
+        display: flex;
+        justify-content: center;
+        align-items: flex;
+        flex-wrap: wrap;
+        column-gap: 2em;
+        row-gap: 2em;
+        margin-top: 2rem;
+        overflow: hidden;
+        padding-bottom: 1rem;
 
-.product .description {
-    margin-right: 15px;
-}
+        .product {
+            display: flex;
+            flex-direction: column;
+            background-color: #f2f3f3;
+            border-radius: 1.5rem;
+            padding: 0.5rem;
+            width: 24.8125rem;
+            height: 34.9rem;
+            flex-shrink: 0;
+            position: relative;
+            padding-bottom: 4.5rem;
 
-.product .description p {
-    color: #262d34;
-    font-size: 17px;
-    font-weight: 400;
-}
+            .image {
+                width: 23.8125rem;
+                height: 23.8125rem;
+                border-radius: 1rem 1rem 0 0;
+                overflow: hidden;
+                box-shadow: 8px 4px 24px 0px rgba(0, 0, 0, 0.1);
 
-.product .controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    margin-top: 15px;
-    gap: 10px;
-}
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 2em 2em 0 0;
+                }
+            }
 
-.product .controls a {
-    display: flex;
-    background-color: var(--standardcolor);
-    border: none;
-    outline: none;
-    column-gap: 10px;
-    padding: 5px 10px;
-    min-width: 12em;
-    border-radius: 20px;
-    text-decoration: none;
-    cursor: pointer;
-}
+            .product-name {
+                p {
+                    color: #4d5258;
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                }
+            }
 
-.product .controls a p {
-    color: white;
-    font-size: 15px;
-}
+            .product-description {
+                p {
+                    color: #262d34;
+                    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 1rem;
+                    font-weight: 400;
+                }
+            }
 
-.product .controls a i {
-    color: white;
-    font-size: 15px;
-}
-.product .request-quotation a {
-    background-color: transparent;
-    border: 2px solid #ffa500;
-}
+            .controls {
+                column-gap: 1.5rem;
+                flex-shrink: 0;
+                position: absolute;
+                bottom: 1rem;
+                width: 100%;
 
-.product .request-quotation a p {
-    color: #ffa500;
-}
-.product .request-quotation a i {
-    color: #ffa500;
+                a {
+                    width: 9.69rem;
+                    padding: 0.5rem;
+                    border-radius: 1rem;
+                    flex-shrink: 0;
+                    background-color: var(--standardcolor);
+                    column-gap: 0.5rem;
+
+                    p,
+                    i {
+                        color: white;
+                        font-size: 0.875rem;
+                        font-weight: 600;
+                    }
+
+                    &.rfq {
+                        background-color: transparent;
+                        border: 0.13rem solid #ffa500;
+
+                        p,
+                        i {
+                            color: #ffa500;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .self {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 2em;
+        row-gap: 3em;
+        margin-top: 3em;
+
+        .product {
+            width: 500px;
+            background-color: #f2f3f3;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 10px;
+
+            .image img {
+                width: 100%;
+                height: 100%;
+                border-radius: 10px 10px 0px 0px;
+                height: 70%;
+            }
+
+            .name {
+                font-size: 20px;
+                font-weight: 500;
+                margin-right: 15px;
+                p {
+                    color: #4d5258;
+                }
+            }
+
+            .description {
+                margin-right: 15px;
+
+                p {
+                    color: #262d34;
+                    font-size: 17px;
+                    font-weight: 400;
+                }
+            }
+
+            .controls {
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                margin-top: 15px;
+                gap: 10px;
+
+                a {
+                    display: flex;
+                    background-color: var(--standardcolor);
+                    border: none;
+                    outline: none;
+                    column-gap: 10px;
+                    padding: 5px 10px;
+                    min-width: 12em;
+                    border-radius: 20px;
+                    text-decoration: none;
+                    cursor: pointer;
+
+                    p {
+                        color: white;
+                        font-size: 15px;
+                    }
+                    i {
+                        color: white;
+                        font-size: 15px;
+                    }
+                }
+            }
+            .request-quotation a {
+                background-color: transparent;
+                border: 2px solid #ffa500;
+
+                p {
+                    color: #ffa500;
+                }
+                i {
+                    color: #ffa500;
+                }
+            }
+        }
+    }
 }

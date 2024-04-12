@@ -11,20 +11,24 @@ export const getImage = (path) => {
     return `/api/v1/images/${path}`;
 }
 
-export const onTabClick = ({ target, styles, activatedTabClassName = "activated", tabClassName = "tab" }) => {
+
+export const onTabClick = ({
+    target,
+    styles,
+    activatedTabClassName = "activated",
+    tabClassName = "tab"
+}) => {
     if (target.nodeName == "P")
         target = target.parentNode;
     if (target.classList.contains(_css(styles, activatedTabClassName))) return;
     [...document.getElementsByClassName(_css(styles, activatedTabClassName))]
         .forEach((tab) => {
-            if (tab.classList.contains(_css(styles, tabClassName))) {
-                tab.classList.remove(_css(styles, activatedTabClassName));
-                const tabId = tab.getAttribute("data-tab-id");
-                if (tabId) {
-                    let tabElement = document.getElementById(tabId);
-                    if (tabElement)
-                        tabElement.style.display = "none";
-                }
+            tab.classList.remove(_css(styles, activatedTabClassName));
+            const tabId = tab.getAttribute("data-tab-id");
+            if (tabId) {
+                let tabElement = document.getElementById(tabId);
+                if (tabElement)
+                    tabElement.style.display = "none";
             }
         });
     target.classList.add(_css(styles, activatedTabClassName));
@@ -34,4 +38,8 @@ export const onTabClick = ({ target, styles, activatedTabClassName = "activated"
         if (tabElement)
             tabElement.style.display = target.getAttribute("data-default-display") || "flex";
     }
+}
+
+export const randomList = (list) => {
+    return list[Math.floor(Math.random() * list.length)];
 }
