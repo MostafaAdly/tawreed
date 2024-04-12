@@ -17,12 +17,20 @@ const PersonaSelectionPage = () => {
                 </div>
                 <div className={_css(styles, 'title')}><p>الرجاء اختيار نوع الحساب</p></div>
                 <div className={_css(styles, 'personas')}>
+                    <a className={_css(styles, 'persona box-shadow-hover')} href="/profile">
+                        <div className={_css(styles, 'image center')}>
+                            <i className={_css(styles, 'fa-solid fa-gear')}></i>
+                        </div>
+                        <div className={_css(styles, 'info')}>
+                            <p>حسابك - Profile</p>
+                        </div>
+                    </a>
                     <a className={_css(styles, 'persona box-shadow-hover')} href="/c">
                         <div className={_css(styles, 'image center')}>
                             <i className={_css(styles, 'fa-solid fa-user')}></i>
                         </div>
                         <div className={_css(styles, 'info')}>
-                            <p>Customer - زبون</p>
+                            <p>مستورد - Customer</p>
                         </div>
                     </a>
                     <a className={_css(styles, 'persona box-shadow-hover')} href="/s">
@@ -30,7 +38,7 @@ const PersonaSelectionPage = () => {
                             <i className={_css(styles, 'fa-solid fa-building')}></i>
                         </div>
                         <div className={_css(styles, 'info')}>
-                            <p>Supplier - مورد</p>
+                            <p>مورد - Supplier</p>
                         </div>
                     </a>
                 </div>

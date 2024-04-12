@@ -22,6 +22,7 @@ const ImagesAPI_1 = __importDefault(require("./Pages/API/ImagesAPI"));
 const MyRequests_1 = __importDefault(require("./Pages/Personas/Supplier/MyRequests"));
 const CustomerRequests_1 = __importDefault(require("./Pages/Personas/Customer/Profile/CustomerRequests"));
 const VersionControlAPI_1 = __importDefault(require("./Pages/API/VersionControlAPI"));
+const Profile_1 = __importDefault(require("./Pages/User/Profile"));
 class Server {
     constructor(data) {
         this.port = parseInt(process.env.SERVER_PORT + "") || 3000;
@@ -94,6 +95,8 @@ class Server {
             new MyCompany_1.default(this.data),
             new MyProducts_1.default(this.data),
             new MyRequests_1.default(this.data),
+            // USER
+            new Profile_1.default(this.data),
             // Do not remove this.
             new NextWildCard_1.default(this.data),
         ];

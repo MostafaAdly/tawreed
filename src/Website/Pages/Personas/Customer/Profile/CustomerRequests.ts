@@ -17,11 +17,12 @@ export default class CustomerRequests extends Page {
         // ALL SUPPLIERS OF A DEPARTMENT
         this.router.get('/', async (req: any, res: any) => {
             const user = req.session.user;
-            const entity = await new Entity().load({ entityId: req.params.id });
+            const entity = await new Entity().load({ _id: user.entity });
             if (!entity) {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
-            } const products = await mongoose.models.Product.find({ _id: { $in: entity.personas.supplier?.products || [] } });
+            }
+            const products = await mongoose.models.Product.find({ _id: { $in: entity.personas.supplier?.products || [] } });
             this.data.server.next.render(req, res, '/Customer/Profile/CustomerRequests', { data: JSON.stringify({ user, supplier: entity, products }) });
         });
     }

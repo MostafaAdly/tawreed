@@ -22,6 +22,7 @@ import ImagesAPI from './Pages/API/ImagesAPI';
 import MyRequests from './Pages/Personas/Supplier/MyRequests';
 import CustomerRequests from './Pages/Personas/Customer/Profile/CustomerRequests';
 import VersionControlAPI from './Pages/API/VersionControlAPI';
+import Profile from './Pages/User/Profile';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -109,6 +110,9 @@ export default class Server {
             new MyCompany(this.data),
             new MyProducts(this.data),
             new MyRequests(this.data),
+
+            // USER
+            new Profile(this.data),
 
             // Do not remove this.
             new WildCard(this.data),

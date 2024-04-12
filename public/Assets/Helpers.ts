@@ -11,7 +11,9 @@ export const getImage = (path) => {
     return `/api/v1/images/${path}`;
 }
 
-
+export const currentTime = () => new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+export const toFormattedDate = (date = Date.now()) => new Date(date).toISOString().replace('T', ' ').replace(/\.\d+Z$/, '');
+export const toFormattedDateOnly = (date = Date.now()) => new Date(date).toISOString().split("T")[0];
 export const onTabClick = ({
     target,
     styles,
