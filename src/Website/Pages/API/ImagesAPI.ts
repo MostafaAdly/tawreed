@@ -16,6 +16,7 @@ export default class ImagesAPI extends Page {
         this.router.get("/images/:id", (req: any, res: any) => {
             const id = req.params.id;
             const ps = new stream.PassThrough();
+            console.log("Reviewing image", path.join(process.cwd(), `/LocalDatabase/images/${id}`))
             stream.pipeline(
                 fs.createReadStream(path.join(process.cwd(), `/LocalDatabase/images/${id}`)),
                 ps,
