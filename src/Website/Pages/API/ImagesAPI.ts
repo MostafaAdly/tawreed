@@ -15,16 +15,17 @@ export default class ImagesAPI extends Page {
     private run() {
         this.router.get("/:id", (req: any, res: any) => {
             const id = req.params.id;
-            const ps = new stream.PassThrough();
             console.log("Reviewing image", path.join(process.cwd(), `/LocalDatabase/images/${id}`))
-            stream.pipeline(
-                fs.createReadStream(path.join(process.cwd(), `/LocalDatabase/images/${id}`)),
-                ps,
-                (err) => {
-                    if (err)
-                        return res.sendStatus(400);
-                })
-            ps.pipe(res);
+            // const ps = new stream.PassThrough();
+            // stream.pipeline(
+            //     fs.createReadStream(path.join(process.cwd(), `/LocalDatabase/images/${id}`)),
+            //     ps,
+            //     (err) => {
+            //         if (err)
+            //             return res.sendStatus(400);
+            //     })
+            // ps.pipe(res);
+            res.sendFile(path.join(process.cwd(), `/LocalDatabase/images/${id}`));
         })
     }
 }
