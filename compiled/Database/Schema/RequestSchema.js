@@ -32,6 +32,7 @@ class RequestSchema extends mongoose_1.Schema {
         product: { type: mongoose_1.default.Types.ObjectId, ref: 'Product' },
         responseType: { type: String, enum: Object.values(ResponseType_1.ResponseType) },
         requestType: { type: String, enum: Object.values(RequestType_1.RequestType) },
+        rfqSettings: { quantity: Number, supplyTime: Number, paymentCondition: Number },
         entity: { type: mongoose_1.default.Types.ObjectId, ref: 'Entity' },
         user: { type: mongoose_1.default.Types.ObjectId, ref: 'User' }
     } }) {

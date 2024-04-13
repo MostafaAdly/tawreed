@@ -20,18 +20,9 @@ export default class MyRequests extends Page {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierRequestsPage', { data: JSON.stringify({ user, entity }) });
-        });
-
-        // SUPPLIER - MY ORDER 
-        this.router.get('/order/:id', async (req: any, res: any) => {
-            const user = req.session.user;
-            const entity = await new Entity().load({ _id: user.entity });
-            if (!entity) {
-                // TODO: HANDLE ENTITY IF NULL
-                return;
-            }
-            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveOrderPage', { data: JSON.stringify({ user, entity }) });
+            const requests = await mongoose.models.Request.find({ entity: entity._id }).populate('product').exec();
+            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierRequestsPage',
+                { data: JSON.stringify({ user, entity, requests }) });
         });
 
         // SUPPLIER - MY RFQ 
@@ -42,7 +33,20 @@ export default class MyRequests extends Page {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveRFQPage', { data: JSON.stringify({ user, entity }) });
+            const request = await mongoose.models.Request.find({ requestId: req.params.id }).populate('product').exec();
+            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveRFQPage', { data: JSON.stringify({ user, entity, request }) });
         });
+
+        // // SUPPLIER - MY ORDER 
+        // this.router.get('/order/:id', async (req: any, res: any) => {
+        //     const user = req.session.user;
+        //     const entity = await new Entity().load({ _id: user.entity });
+        //     if (!entity) {
+        //         // TODO: HANDLE ENTITY IF NULL
+        //         return;
+        //     }
+        //     this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveOrderPage', { data: JSON.stringify({ user, entity }) });
+        // });
+
     }
 }

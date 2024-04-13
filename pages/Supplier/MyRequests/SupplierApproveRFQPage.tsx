@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyRequests/css/SupplierApproveRFQPage.module.css'
@@ -19,7 +19,7 @@ const SupplierApproveRFQPage = ({ user, entity }) => {
 }
 
 const _self = ({ entity }) => {
-    const [sentForm, setSentForm] = React.useState(false)
+    const [sentForm, setSentForm] = useState(false)
 
     const onSentFormClick = () => {
         setSentForm(false);

@@ -25,9 +25,9 @@ const _self = ({ supplier, product }) => {
                 </div>
                 <div className={_css(styles, 'data center')}>
                     <p>تم استلام طلب عرض السعر بنجاح، سيتم التواصل معك في أقرب وقت ممكن</p>
-                    <p>1 يوم 23 ساعة 59 دقيقة</p>
+                    {/* <p>1 يوم 23 ساعة 59 دقيقة</p> */}
                 </div>
-                <button className={_css(styles, 'center opacity')}>
+                <button className={_css(styles, 'center opacity')} onClick={(e) => location.href = "/c"}>
                     <i className={_css(styles, 'fa-solid fa-arrow-right-long')}></i>
                     <p>العودة للصفحة الرئيسية</p>
                 </button>

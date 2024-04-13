@@ -4,6 +4,7 @@ import Server from "./Server";
 import Entity from "../Instances/Entity";
 import Utils from "../Utils";
 import mongoose from "mongoose";
+import { ObjectId } from "../Types/ObjectId";
 
 export default class SessionHandler {
     private data: any;
@@ -62,9 +63,13 @@ export default class SessionHandler {
 
     validateSessionWithUser(req: any, user: User) {
         if (!req?.session || !user || this.isSessionRegistered(req)) return;
+        user.token = Utils.createToken();
         user.entity = user.entity._id;
         req.session.auth = true;
         req.session.user = user;
-        this.data.redis.set("token:" + user._id.toString(), Utils.createToken());
+        this.data.redis.set("token:" + user._id.toString(), user.token);
+    }
+    validateUserByToken = async (userId: string, token: ObjectId) => {
+        return await this.data.redis.get("token:" + userId) == token.toString();
     }
 }

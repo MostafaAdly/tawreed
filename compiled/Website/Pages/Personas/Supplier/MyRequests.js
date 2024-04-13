@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Entity_1 = __importDefault(require("../../../../Instances/Entity"));
 const Page_1 = __importDefault(require("../../Page"));
+const mongoose_1 = __importDefault(require("mongoose"));
 class MyRequests extends Page_1.default {
     constructor(data, base_url) {
         super(base_url || MyRequests.base_url);
@@ -29,17 +30,8 @@ class MyRequests extends Page_1.default {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierRequestsPage', { data: JSON.stringify({ user, entity }) });
-        }));
-        // SUPPLIER - MY ORDER 
-        this.router.get('/order/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const user = req.session.user;
-            const entity = yield new Entity_1.default().load({ _id: user.entity });
-            if (!entity) {
-                // TODO: HANDLE ENTITY IF NULL
-                return;
-            }
-            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveOrderPage', { data: JSON.stringify({ user, entity }) });
+            const requests = yield mongoose_1.default.models.Request.find({ entity: entity._id }).populate('product').exec();
+            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierRequestsPage', { data: JSON.stringify({ user, entity, requests }) });
         }));
         // SUPPLIER - MY RFQ 
         this.router.get('/rfq/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -49,8 +41,19 @@ class MyRequests extends Page_1.default {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveRFQPage', { data: JSON.stringify({ user, entity }) });
+            const request = yield mongoose_1.default.models.Request.find({ requestId: req.params.id }).populate('product').exec();
+            this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveRFQPage', { data: JSON.stringify({ user, entity, request }) });
         }));
+        // // SUPPLIER - MY ORDER 
+        // this.router.get('/order/:id', async (req: any, res: any) => {
+        //     const user = req.session.user;
+        //     const entity = await new Entity().load({ _id: user.entity });
+        //     if (!entity) {
+        //         // TODO: HANDLE ENTITY IF NULL
+        //         return;
+        //     }
+        //     this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveOrderPage', { data: JSON.stringify({ user, entity }) });
+        // });
     }
 }
 MyRequests.base_url = "/s/requests";

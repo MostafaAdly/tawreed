@@ -1,3 +1,7 @@
+import axios from 'axios'
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "/api/v1";
+
 const cssExceptions = ["page-body", "supplier-body", "center", "box-shadow", "opacity", "opacity-active", "box-shadow-hover"];
 export const _css = (styles, css) => {
     if (css.startsWith("fa-") || css.startsWith("__"))
@@ -18,8 +22,9 @@ export const onTabClick = ({
     target,
     styles,
     activatedTabClassName = "activated",
-    tabClassName = "tab"
-}) => {
+    tabClassName = "tab",
+    onTabChange
+}: { target: any, styles: any, activatedTabClassName?: string, tabClassName?: string, onTabChange?: Function }) => {
     if (target.nodeName == "P")
         target = target.parentNode;
     if (target.classList.contains(_css(styles, activatedTabClassName))) return;
@@ -40,8 +45,40 @@ export const onTabClick = ({
         if (tabElement)
             tabElement.style.display = target.getAttribute("data-default-display") || "flex";
     }
+    if (onTabChange)
+        onTabChange(target);
 }
 
 export const randomList = (list) => {
     return list[Math.floor(Math.random() * list.length)];
+}
+
+export const purchaseProduct = async ({ userId, token, productId, supplierId, type = "purchase", rfqSettings = {} }) => {
+    try {
+        return (await axios.post(`${API_BASE_URL}/product/${type}`, {
+            token, productId, userId, supplierId, type, rfqSettings
+        })).data
+    } catch (error) {
+        return null;
+    }
+}
+
+export const changeRequestState = async ({ requestId, state, token, userId }) => {
+    try {
+        return (await axios.post(`${API_BASE_URL}/request`, {
+            requestId, state, token, userId
+        })).data;
+    } catch (error) {
+        return null;
+    }
+}
+
+export const sendDeleteRequest = async ({ requestId, token, userId }) => {
+    try {
+        return (await axios.delete(`${API_BASE_URL}/request/delete`, {
+            data: { requestId, token, userId }
+        })).data;
+    } catch (error) {
+        return null;
+    }
 }

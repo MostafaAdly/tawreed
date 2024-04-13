@@ -16,6 +16,9 @@ export default class User {
     public role: ObjectId;
     public entity: ObjectId;
 
+    // === VALIDATING INFO
+    public token: string;
+
     constructor(input?: any) {
         if (input) Object.assign(this, input);
     }

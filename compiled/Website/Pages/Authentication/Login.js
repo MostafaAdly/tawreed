@@ -36,13 +36,9 @@ class Login extends Page_1.default {
             const validatedUser = yield this.validateCredentialsToUser(credentials);
             if (!validatedUser)
                 return res.status(200).redirect(`/login?error=${(validatedUser === null || validatedUser === void 0 ? void 0 : validatedUser.entity) ? 2 : 1}`);
-            console.log("-------------");
             const isCustomerValid = this.hasPermissions(validatedUser, 1);
             const isSupplierValid = this.hasPermissions(validatedUser, 2);
             this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
-            console.log("isCustomerValid", isCustomerValid);
-            console.log("isSupplierValid", isSupplierValid);
-            console.log("-------------");
             if (isCustomerValid && isSupplierValid)
                 return res.status(200).redirect("/");
             return res.status(200).redirect(isCustomerValid ? (Home_1.default.base_url + `/#departments`) : MyCompany_1.default.base_url);
@@ -66,8 +62,8 @@ class Login extends Page_1.default {
     }
     validateCredentialsToUser(credentials) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield mongoose_1.default.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
-                .populate({ path: 'entity' }).populate('role');
+            return (yield mongoose_1.default.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
+                .populate({ path: 'entity' }).populate('role')).toObject();
         });
     }
 }

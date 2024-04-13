@@ -1,12 +1,9 @@
 import mongoose from "mongoose";
-import Entity from "../../../Instances/Entity";
 import { Permission } from "../../../Instances/Permission";
 import User from "../../../Instances/User";
 import Page from "../Page";
 import Home from '../Personas/Customer/Home/Home';
 import MyCompany from "../Personas/Supplier/MyCompany";
-import { ObjectId } from "../../../Types/ObjectId";
-import EntityRole from "../../../Instances/EntityRole";
 
 export default class Login extends Page {
     private data: any;
@@ -31,15 +28,9 @@ export default class Login extends Page {
 
             if (!validatedUser)
                 return res.status(200).redirect(`/login?error=${validatedUser?.entity ? 2 : 1}`);
-
-            console.log("-------------")
             const isCustomerValid = this.hasPermissions(validatedUser, 1);
             const isSupplierValid = this.hasPermissions(validatedUser, 2);
             this.data.server.sessionHandler.validateSessionWithUser(req, validatedUser);
-
-            console.log("isCustomerValid", isCustomerValid)
-            console.log("isSupplierValid", isSupplierValid)
-            console.log("-------------")
 
             if (isCustomerValid && isSupplierValid)
                 return res.status(200).redirect("/");
@@ -62,8 +53,8 @@ export default class Login extends Page {
     }
 
     private async validateCredentialsToUser(credentials: { username: string, password: string }): Promise<any> {
-        return await mongoose.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
-            .populate({ path: 'entity' }).populate('role');
+        return (await mongoose.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
+            .populate({ path: 'entity' }).populate('role')).toObject();
     }
 
 }

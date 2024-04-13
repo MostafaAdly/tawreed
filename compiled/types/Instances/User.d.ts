@@ -10,6 +10,7 @@ export default class User {
     };
     role: ObjectId;
     entity: ObjectId;
+    token: string;
     constructor(input?: any);
     setId: (id: mongoose.Types.ObjectId) => this;
     load(withPassword?: boolean, loadRole?: boolean): Promise<void>;

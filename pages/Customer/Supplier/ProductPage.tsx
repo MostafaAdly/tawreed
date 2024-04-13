@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import C_HeaderComponent from "../Global/HeaderComponent";
 import C_FooterComponent from "../Global/FooterComponent";
 import styles from '../../../public/Customer/Supplier/css/ProductPage.module.css'
-import { _css, getImage, onTabClick } from '../../../public/Assets/Helpers';
+import { _css, getImage, onTabClick, purchaseProduct } from '../../../public/Assets/Helpers';
+import SentForm from "../../../public/Assets/Components/SentForm";
 
 const SupplierPage = ({ user, supplier, product }) => {
     return (
@@ -19,9 +20,15 @@ const SupplierPage = ({ user, supplier, product }) => {
 const _self = ({ user, supplier, product }) => {
     const [image, setImage] = useState(product.images[0]);
     const [images, setImages] = useState(product.images.filter(img => img != image));
+    const [sentForm, setSentForm] = useState(false)
+
+    const onSentFormClick = () => {
+        setSentForm(false);
+    }
 
     const onPurchase = (e) => {
-
+        setSentForm(true);
+        purchaseProduct({ userId: user._id, token: user.token, productId: product._id, supplierId: supplier._id })
     }
 
     const onRFQ = (e) => {
@@ -35,6 +42,7 @@ const _self = ({ user, supplier, product }) => {
 
     return (
         <>
+            <SentForm active={sentForm} title='تم ارسال طلبك الى الشركة بنجاح' text='العودة إلى صفحة الطلب الآن' callback={onSentFormClick} />
             <div className={_css(styles, 'container center')}>
                 <section className={_css(styles, 'top-container')}>
                     <div className={_css(styles, 'product-container')}>

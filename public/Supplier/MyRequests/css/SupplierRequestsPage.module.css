@@ -116,10 +116,13 @@
                 }
 
                 .large {
-                    width: 30%;
+                    /* width: 30%; */
+                    padding: 0 2%;
+                    max-width: 15rem;
                 }
 
                 td {
+                    border-top: 0.6rem solid transparent;
                     text-align: center;
                     text-wrap: wrap;
 
@@ -145,7 +148,7 @@
 
                     column-gap: 1em;
 
-                    button {
+                    a {
                         background-color: #fbc63f;
                         border: none;
                         width: 2.2em;
@@ -169,9 +172,10 @@
                 }
 
                 .id {
+                    min-width: 5rem;
                     p {
                         text-align: center;
-                        width: 60%;
+                        /* width: 60%; */
                         border-bottom: 0.5px solid var(--standardcolor);
                     }
                 }
@@ -211,6 +215,10 @@
             }
         }
     }
+}
+
+.choose-order.show {
+    display: block;
 }
 
 .quotations {

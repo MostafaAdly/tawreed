@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import C_HeaderComponent from "../Global/HeaderComponent";
 import C_FooterComponent from "../Global/FooterComponent";
 import styles from '../../../public/Customer/Supplier/css/RequestForQuotation.module.css'
-import { _css, getImage } from "../../../public/Assets/Helpers";
+import { _css, getImage, purchaseProduct } from "../../../public/Assets/Helpers";
+import SentForm from "../../../public/Assets/Components/SentForm";
 
 
 const RequestForQuotation = ({ user, supplier, product }) => {
@@ -10,22 +11,42 @@ const RequestForQuotation = ({ user, supplier, product }) => {
         <>
             <C_HeaderComponent user={user} />
             <div className={_css(styles, 'page-body')}>
-                <_self supplier={supplier} product={product} />
+                <_self user={user} supplier={supplier} product={product} />
                 <C_FooterComponent />
             </div>
         </>
     );
 }
 
-const _self = ({ supplier, product }) => {
+const _self = ({ user, supplier, product }) => {
     const [image, setImage] = useState(product.images[0]);
     const [images, setImages] = useState(product.images.filter(img => img != image));
+    const [sentForm, setSentForm] = useState(false)
+
+    const onSentFormClick = () => {
+        setSentForm(false);
+    }
 
     const onPurchase = (e) => {
-
+        location.href = `/c/suppliers/${supplier.entityId}/products/${product.productId}`;
     }
 
     const onRFQ = (e) => {
+        setSentForm(true);
+        purchaseProduct({
+            type: "rfq", userId: user._id, token: user.token, productId: product._id, supplierId: supplier._id, rfqSettings: getRFQSettings()
+        });
+        setTimeout(() => {
+            if (location) location.href = `/c/suppliers/${supplier.entityId}/products/${product.productId}/rfq/sent`;
+        }, 3000);
+    }
+
+    const getRFQSettings = () => {
+        return {
+            quantity: +((document.getElementById("quantity") as HTMLInputElement)?.value || 1),
+            supplyTime: +((document.getElementById("supplyTime") as HTMLInputElement)?.value || "7"),
+            paymentCondition: +((document.getElementById("payment-condition") as HTMLInputElement)?.value || "1"),
+        };
     }
 
     const onImageSelect = (target) => {
@@ -35,6 +56,7 @@ const _self = ({ supplier, product }) => {
 
     return (
         <>
+            <SentForm active={sentForm} title='' text='تم إرسال طلب العرض بنجاح' callback={onSentFormClick} />
             <div className={_css(styles, 'product-rfq-container')}>
                 <div className={_css(styles, 'page-title')}>
                     <p>طلب عرض سعر</p>
@@ -64,11 +86,11 @@ const _self = ({ supplier, product }) => {
                             </select>
                         </div>
                         <div className={_css(styles, 'controls')}>
-                            <a className={_css(styles, 'center')}>
+                            <a className={_css(styles, 'center')} onClick={onRFQ}>
                                 <i className={_css(styles, 'fa-solid fa-right-to-bracket')}></i>
                                 <p>طلب عرض السعر</p>
                             </a>
-                            <a className={_css(styles, 'center buy-now')} href={`/c/suppliers/${supplier.entityId}/products/${product.productId}`}>
+                            <a className={_css(styles, 'center buy-now')} onClick={onPurchase}>
                                 <i className={_css(styles, 'fa-solid fa-right-to-bracket')}></i>
                                 <p>شراء الآن</p>
                             </a>

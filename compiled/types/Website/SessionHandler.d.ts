@@ -8,4 +8,5 @@ export default class SessionHandler {
     isSessionRegistered(req: any): boolean;
     removeSessionIfExists(req: any): void;
     validateSessionWithUser(req: any, user: User): void;
+    validateUserByToken: (userId: string, token: mongoose.Types.ObjectId) => Promise<boolean>;
 }

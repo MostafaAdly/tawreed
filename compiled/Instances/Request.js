@@ -21,8 +21,22 @@ class Request {
     constructor(input) {
         this._id = new mongoose_1.default.Types.ObjectId();
         this.requestId = Utils_1.default.requestId_prefix + Utils_1.default.createId();
-        this.responseType = ResponseType_1.ResponseType.PENDING;
+        this.responseType = ResponseType_1.ResponseType.PURCHASE_PENDING;
         this.requestType = RequestType_1.RequestType.PURCHASE;
+        this.processPurchase = (requestType, productId, supplierId, userId) => __awaiter(this, void 0, void 0, function* () {
+            this.product = productId;
+            this.entity = supplierId;
+            this.user = userId;
+            this.requestType = requestType;
+            yield this.save();
+            return this;
+        });
+        this.setRfqSettings = (rfqSettings) => {
+            this.rfqSettings = rfqSettings;
+            if (JSON.stringify(rfqSettings) != "{}")
+                this.responseType = ResponseType_1.ResponseType.RFQ_PENDING;
+            return this;
+        };
         this.load = (query) => __awaiter(this, void 0, void 0, function* () {
             const doc = yield ModelManager_1.default.loadOne(this.constructor.name, query);
             if (!doc)

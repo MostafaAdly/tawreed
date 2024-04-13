@@ -23,6 +23,8 @@ import MyRequests from './Pages/Personas/Supplier/MyRequests';
 import CustomerRequests from './Pages/Personas/Customer/Profile/CustomerRequests';
 import VersionControlAPI from './Pages/API/VersionControlAPI';
 import Profile from './Pages/User/Profile';
+import ProductPurchaseAPI from './Pages/API/ProductPurchaseAPI';
+import RequestStateAPI from './Pages/API/RequestStateAPI';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -33,7 +35,7 @@ export default class Server {
     private development: boolean = process.env.ENVIRONMENT != "production";
     // ============== - PUBLIC VARIABLES - ==============
     public next: NextServer = next({ dev: this.development });
-    public static api_base_url: string = "/api/v1";
+    public static api_base_url: string = process.env.API_BASE_URL || "/api/v1";
     public app: any = express();
     public multer: Multer;
 
@@ -126,7 +128,9 @@ export default class Server {
         const apis: Page[] = [
 
             new ImagesAPI(this.data, Server.api_base_url),
-            new VersionControlAPI(this.data, Server.api_base_url)
+            new VersionControlAPI(this.data, Server.api_base_url),
+            new ProductPurchaseAPI(this.data, Server.api_base_url),
+            new RequestStateAPI(this.data, Server.api_base_url),
 
         ];
         for (let api of apis)
