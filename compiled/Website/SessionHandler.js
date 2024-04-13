@@ -35,6 +35,7 @@ class SessionHandler {
     runMiddleware(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             if (req.url.startsWith('/_next') || req.url.startsWith(Server_1.default.api_base_url)) {
+                console.log(req.url);
                 next();
             }
             else if (req.method.toLowerCase() == 'get' && !this.isSessionRegistered(req) && !this.isAuthURL(req.url)) {

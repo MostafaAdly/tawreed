@@ -4,28 +4,19 @@ import fs from 'fs';
 import stream from 'stream'
 
 export default class ImagesAPI extends Page {
-    private data: any;
+
     public static base_url: string = "/images";
     constructor(data: any, base_url?: string) {
         super(base_url + ImagesAPI.base_url);
-        this.data = data;
         this.run();
     }
 
     private run() {
-        this.router.get("/:id", (req: any, res: any) => {
-            const id = req.params.id;
-            console.log("Reviewing image", path.join(process.cwd(), `/LocalDatabase/images/${id}`))
-            // const ps = new stream.PassThrough();
-            // stream.pipeline(
-            //     fs.createReadStream(path.join(process.cwd(), `/LocalDatabase/images/${id}`)),
-            //     ps,
-            //     (err) => {
-            //         if (err)
-            //             return res.sendStatus(400);
-            //     })
-            // ps.pipe(res);
-            res.sendFile(path.join(process.cwd(), `/LocalDatabase/images/${id}`));
+        this.router.get("/:path", (req: any, res: any) => {
+            const imagePath = path.join(process.cwd(), `/LocalDatabase/images/${req.params.path}`);
+            if (fs.existsSync(imagePath)) {
+                res.sendFile(imagePath);
+            } else res.json({ error: "Image not found." })
         })
     }
 }
