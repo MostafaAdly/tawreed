@@ -13,17 +13,20 @@ export default class Request {
     public product: ObjectId;
     public responseType: ResponseType = ResponseType.PURCHASE_PENDING;
     public requestType: RequestType = RequestType.PURCHASE;
+    public payment: ObjectId;
     public rfqSettings: RFQSettings;
-    public entity: ObjectId;
+    public supplier: ObjectId;
+    public customer: ObjectId;
     public user: ObjectId;
 
     constructor(input?: any) {
         if (input) Object.assign(this, input);
     }
 
-    public processPurchase = async (requestType: RequestType, productId: ObjectId, supplierId: ObjectId, userId: ObjectId) => {
+    public processPurchase = async (requestType: RequestType, productId: ObjectId, supplierId: ObjectId, customerId: ObjectId, userId: ObjectId) => {
         this.product = productId;
-        this.entity = supplierId;
+        this.supplier = supplierId;
+        this.customer = customerId;
         this.user = userId;
         this.requestType = requestType;
         await this.save();

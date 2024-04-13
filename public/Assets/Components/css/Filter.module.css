@@ -1,0 +1,69 @@
+.filters {
+    display: flex;
+    margin-top: 2em;
+    flex-direction: row;
+    column-gap: 3em;
+
+    .icon {
+        background-color: transparent;
+        color: var(--standardcolor);
+        border: 2px solid var(--standardcolor);
+        border-radius: 8px;
+        width: 2em;
+        height: 2em;
+        cursor: pointer;
+
+        &.checked {
+            border: none;
+            background-color: #66cc99;
+
+            i {
+                color: white;
+            }
+        }
+    }
+
+    .self {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        column-gap: 1em;
+        row-gap: 1.3em;
+
+        .filter {
+            display: flex;
+            align-items: center;
+            column-gap: 10px;
+            background-color: transparent;
+            border: 1px solid #66cc99;
+            border-radius: 15px;
+            padding: 0px 10px;
+            cursor: pointer;
+            user-select: none;
+
+            p {
+                font-weight: 600;
+                font-size: 18px;
+            }
+        }
+
+        .control {
+            .exit {
+                display: none;
+            }
+            .check {
+                display: block;
+            }
+        }
+
+        .checked {
+            background-color: #66cc99;
+            .check {
+                display: none;
+            }
+            .exit {
+                display: block;
+            }
+        }
+    }
+}

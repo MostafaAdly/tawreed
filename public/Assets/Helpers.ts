@@ -53,10 +53,12 @@ export const randomList = (list) => {
     return list[Math.floor(Math.random() * list.length)];
 }
 
-export const purchaseProduct = async ({ userId, token, productId, supplierId, type = "purchase", rfqSettings = {} }) => {
+export const purchaseProduct = async (
+    { userId, token, productId, supplierId, customerId, type = "purchase", rfqSettings = {} }
+) => {
     try {
         return (await axios.post(`${API_BASE_URL}/product/${type}`, {
-            token, productId, userId, supplierId, type, rfqSettings
+            token, productId, userId, supplierId, customerId, type, rfqSettings
         })).data
     } catch (error) {
         return null;

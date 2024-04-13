@@ -23,14 +23,14 @@ class ProductPurchaseAPI extends Page_1.default {
     }
     run() {
         this.router.post(["/purchase", "/rfq"], (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { productId, token, userId, supplierId, type, rfqSettings } = req.body;
+            const { productId, token, userId, supplierId, customerId, type, rfqSettings } = req.body;
             const requestType = type == "purchase" ? RequestType_1.RequestType.PURCHASE : RequestType_1.RequestType.RFQ;
             if (!productId || !token || !userId || !supplierId)
                 return res.status(400).send({ message: "Invalid request" });
             const isValidToken = yield this.data.server.sessionHandler.validateUserByToken(userId, token);
             if (!isValidToken)
                 return res.status(401).send({ message: "Invalid token", error: 1 });
-            const request = yield new Request_1.default().setRfqSettings(rfqSettings).processPurchase(requestType, productId, supplierId, userId);
+            const request = yield new Request_1.default().setRfqSettings(rfqSettings).processPurchase(requestType, productId, supplierId, customerId, userId);
             return res.send({ message: "Purchase request sent successfully", success: 1, request });
         }));
     }

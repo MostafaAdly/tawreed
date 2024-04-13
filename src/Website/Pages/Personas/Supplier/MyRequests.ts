@@ -20,7 +20,7 @@ export default class MyRequests extends Page {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            const requests = await mongoose.models.Request.find({ entity: entity._id }).populate('product').exec();
+            const requests = await mongoose.models.Request.find({ supplier: entity._id }).populate('product').exec();
             this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierRequestsPage',
                 { data: JSON.stringify({ user, entity, requests }) });
         });

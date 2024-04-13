@@ -24,23 +24,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const ResponseType_1 = require("../../Instances/ResponseType");
-const RequestType_1 = require("../../Instances/RequestType");
+const PaymentMethod_1 = require("../../Instances/PaymentMethod");
 class RequestSchema extends mongoose_1.Schema {
     constructor({ id, options, schema = {
-        requestId: String,
-        product: { type: mongoose_1.default.Types.ObjectId, ref: 'Product' },
-        responseType: { type: String, enum: Object.values(ResponseType_1.ResponseType) },
-        requestType: { type: String, enum: Object.values(RequestType_1.RequestType) },
-        rfqSettings: { quantity: Number, supplyTime: Number, paymentCondition: Number },
-        supplier: { type: mongoose_1.default.Types.ObjectId, ref: 'Entity' },
+        paymentId: String,
+        commission: Number,
+        request: { type: mongoose_1.default.Types.ObjectId, ref: 'Request' },
         customer: { type: mongoose_1.default.Types.ObjectId, ref: 'Entity' },
-        user: { type: mongoose_1.default.Types.ObjectId, ref: 'User' }
+        supplier: { type: mongoose_1.default.Types.ObjectId, ref: 'Entity' },
+        paymentMethod: { type: String, enum: Object.values(PaymentMethod_1.PaymentMethod) },
     } }) {
         if (id === null || id === void 0 ? void 0 : id.enabled)
             schema[id.key] = id.value;
         super(schema, options);
-        this.model = "Request";
+        this.model = "Payment";
     }
 }
 exports.default = RequestSchema;

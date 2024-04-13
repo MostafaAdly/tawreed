@@ -30,7 +30,7 @@ class MyRequests extends Page_1.default {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            const requests = yield mongoose_1.default.models.Request.find({ entity: entity._id }).populate('product').exec();
+            const requests = yield mongoose_1.default.models.Request.find({ supplier: entity._id }).populate('product').exec();
             this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierRequestsPage', { data: JSON.stringify({ user, entity, requests }) });
         }));
         // SUPPLIER - MY RFQ 

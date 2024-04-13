@@ -25,6 +25,7 @@ import VersionControlAPI from './Pages/API/VersionControlAPI';
 import Profile from './Pages/User/Profile';
 import ProductPurchaseAPI from './Pages/API/ProductPurchaseAPI';
 import RequestStateAPI from './Pages/API/RequestStateAPI';
+import MyPayments from './Pages/Personas/Supplier/MyPayments';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -112,6 +113,7 @@ export default class Server {
             new MyCompany(this.data),
             new MyProducts(this.data),
             new MyRequests(this.data),
+            new MyPayments(this.data),
 
             // USER
             new Profile(this.data),

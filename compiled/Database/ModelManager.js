@@ -23,6 +23,7 @@ const EntityCategorySchema_1 = __importDefault(require("./Schema/EntityCategoryS
 const Department_1 = __importDefault(require("../Instances/Department"));
 const CommentSchema_1 = __importDefault(require("./Schema/CommentSchema"));
 const RequestSchema_1 = __importDefault(require("./Schema/RequestSchema"));
+const PaymentSchema_1 = __importDefault(require("./Schema/PaymentSchema"));
 class ModelManager {
     constructor() {
         this.idSchema = {
@@ -51,7 +52,8 @@ class ModelManager {
                 new EntityCategorySchema_1.default(input),
                 new EntityRoleSchema_1.default(input),
                 new CommentSchema_1.default(input),
-                new RequestSchema_1.default(input)
+                new RequestSchema_1.default(input),
+                new PaymentSchema_1.default(input),
             ];
             schemas.forEach(schema => {
                 this.schemaManipulate(schema);

@@ -12,32 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
-const Utils_1 = __importDefault(require("../Utils"));
 const ModelManager_1 = __importDefault(require("../Database/ModelManager"));
-const RequestType_1 = require("./RequestType");
-const ResponseType_1 = require("./ResponseType");
-class Request {
+const Utils_1 = __importDefault(require("../Utils"));
+class Payment {
     constructor(input) {
-        this._id = new mongoose_1.default.Types.ObjectId();
-        this.requestId = Utils_1.default.requestId_prefix + Utils_1.default.createId();
-        this.responseType = ResponseType_1.ResponseType.PURCHASE_PENDING;
-        this.requestType = RequestType_1.RequestType.PURCHASE;
-        this.processPurchase = (requestType, productId, supplierId, customerId, userId) => __awaiter(this, void 0, void 0, function* () {
-            this.product = productId;
-            this.supplier = supplierId;
-            this.customer = customerId;
-            this.user = userId;
-            this.requestType = requestType;
-            yield this.save();
-            return this;
-        });
-        this.setRfqSettings = (rfqSettings) => {
-            this.rfqSettings = rfqSettings;
-            if (JSON.stringify(rfqSettings) != "{}")
-                this.responseType = ResponseType_1.ResponseType.RFQ_PENDING;
-            return this;
-        };
+        this.paymentId = Utils_1.default.paymentId_prefix + Utils_1.default.createId();
+        this.commission = 0;
         this.load = (query) => __awaiter(this, void 0, void 0, function* () {
             const doc = yield ModelManager_1.default.loadOne(this.constructor.name, query);
             if (!doc)
@@ -50,4 +30,4 @@ class Request {
             Object.assign(this, input);
     }
 }
-exports.default = Request;
+exports.default = Payment;

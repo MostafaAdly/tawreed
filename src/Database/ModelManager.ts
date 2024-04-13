@@ -8,6 +8,7 @@ import EntityCategorySchema from "./Schema/EntityCategorySchema";
 import Department from "../Instances/Department";
 import CommentSchema from "./Schema/CommentSchema";
 import RequestSchema from "./Schema/RequestSchema";
+import PaymentSchema from "./Schema/PaymentSchema";
 
 export default class ModelManager {
 
@@ -40,7 +41,9 @@ export default class ModelManager {
             new EntityCategorySchema(input),
             new EntityRoleSchema(input),
             new CommentSchema(input),
-            new RequestSchema(input)
+            new RequestSchema(input),
+            new PaymentSchema(input),
+
         ];
 
         schemas.forEach(schema => {

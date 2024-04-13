@@ -5,6 +5,7 @@ import styles from '../../../public/Supplier/MyRequests/css/SupplierRequestsPage
 import { _css, changeRequestState, onTabClick, sendDeleteRequest, toFormattedDateOnly } from '../../../public/Assets/Helpers';
 import { RequestType } from '../../../src/Instances/RequestType';
 import { ResponseType } from '../../../src/Instances/ResponseType';
+import Filter from '../../../public/Assets/Components/Filter';
 
 const SupplierRequestsPage = ({ user, entity, requests }) => {
 
@@ -67,16 +68,6 @@ const _self = ({ entity, requests, user }) => {
             _setRequests(_requests.filter(request => request._id != requestId));
     }
 
-    const onFilter = (target, state) => {
-        if (target.tagName == "P") target = target.parentNode;
-        else if (target.tagName == "I") target = target.parentNode.parentNode;
-        if (enabledFilters.includes(state)) {
-            setEnabledFilters(enabledFilters.filter(filter => filter != state));
-        } else {
-            setEnabledFilters([...enabledFilters, state]);
-        }
-    }
-
     const filterRequests = () => {
         if (!enabledFilters.length) return _requests;
         return _requests.filter(request => enabledFilters
@@ -110,14 +101,12 @@ const _self = ({ entity, requests, user }) => {
                 </button>
             </section>
             <section className={_css(styles, 'orders')} id="section_orders">
-                <div className={_css(styles, 'filters')}>
-                    <div className={_css(styles, 'icon box-shadow-hover center')}>
-                        <i className={_css(styles, 'fa-solid fa-filter')}></i>
-                    </div>
-                    <div className={_css(styles, 'self')}>
-                        {applyFilterComponent(enabledFilters, "purchase", onFilter)}
-                    </div>
-                </div>
+                <Filter
+                    searchObject={ResponseType}
+                    enabledFilters={enabledFilters}
+                    type="purchase"
+                    setEnabledFilters={setEnabledFilters}
+                    callback={null} />
                 <table>
                     <tbody>
                         <tr>
@@ -171,14 +160,12 @@ const _self = ({ entity, requests, user }) => {
                 </table>
             </section>
             <section className={_css(styles, 'quotations')} id="section_quotations">
-                <div className={_css(styles, 'filters')}>
-                    <div className={_css(styles, 'icon box-shadow-hover center')}>
-                        <i className={_css(styles, 'fa-solid fa-filter')}></i>
-                    </div>
-                    <div className={_css(styles, 'self')}>
-                        {applyFilterComponent(enabledFilters, "rfq", onFilter)}
-                    </div>
-                </div>
+                <Filter
+                    searchObject={ResponseType}
+                    enabledFilters={enabledFilters}
+                    type="rfq"
+                    setEnabledFilters={setEnabledFilters}
+                    callback={null} />
                 <table>
                     <tbody>
                         <tr>
@@ -256,30 +243,6 @@ const ChooseAction = ({ selection = {} }) => {
                 }
             </div>
         </div>
-    )
-}
-
-const applyFilterComponent = (enabledFilters, type, onclick) => {
-    return (
-        Object.keys(ResponseType).filter(state => state.toLowerCase().startsWith(type.toLowerCase())).map((state, index) => {
-            return (
-                <div
-                    className={_css(styles, 'filter box-shadow-hover' + (enabledFilters.includes(state) ? " checked" : ""))}
-                    key={index}
-                    onClick={({ target }: any) => onclick(target, state)}
-                >
-                    <p>{(ResponseType as any)[state]}</p>
-                    <div className={_css(styles, 'control')}>
-                        <div className={_css(styles, 'check')}>
-                            <i className={_css(styles, 'fa-solid fa-circle-check')}></i>
-                        </div>
-                        <div className={_css(styles, 'exit')}>
-                            <i className={_css(styles, 'fa-solid fa-circle-xmark')}></i>
-                        </div>
-                    </div>
-                </div>
-            );
-        })
     )
 }
 

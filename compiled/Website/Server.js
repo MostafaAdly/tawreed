@@ -25,6 +25,7 @@ const VersionControlAPI_1 = __importDefault(require("./Pages/API/VersionControlA
 const Profile_1 = __importDefault(require("./Pages/User/Profile"));
 const ProductPurchaseAPI_1 = __importDefault(require("./Pages/API/ProductPurchaseAPI"));
 const RequestStateAPI_1 = __importDefault(require("./Pages/API/RequestStateAPI"));
+const MyPayments_1 = __importDefault(require("./Pages/Personas/Supplier/MyPayments"));
 class Server {
     constructor(data) {
         this.port = parseInt(process.env.SERVER_PORT + "") || 3000;
@@ -97,6 +98,7 @@ class Server {
             new MyCompany_1.default(this.data),
             new MyProducts_1.default(this.data),
             new MyRequests_1.default(this.data),
+            new MyPayments_1.default(this.data),
             // USER
             new Profile_1.default(this.data),
             // Do not remove this.

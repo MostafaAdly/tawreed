@@ -17,6 +17,7 @@ export default class Global {
     public static personaId_prefix = "PSID" + this.id_suffix;
     public static commentId_prefix = "CID" + this.id_suffix;
     public static requestId_prefix = "RID" + this.id_suffix;
+    public static paymentId_prefix = "PYID" + this.id_suffix;
 
     constructor(data: any) {
         data.utils = this.utils;

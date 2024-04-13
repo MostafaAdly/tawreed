@@ -8,11 +8,13 @@ export default class Request {
     product: ObjectId;
     responseType: ResponseType;
     requestType: RequestType;
+    payment: ObjectId;
     rfqSettings: RFQSettings;
-    entity: ObjectId;
+    supplier: ObjectId;
+    customer: ObjectId;
     user: ObjectId;
     constructor(input?: any);
-    processPurchase: (requestType: RequestType, productId: mongoose.Types.ObjectId, supplierId: mongoose.Types.ObjectId, userId: mongoose.Types.ObjectId) => Promise<this>;
+    processPurchase: (requestType: RequestType, productId: mongoose.Types.ObjectId, supplierId: mongoose.Types.ObjectId, customerId: mongoose.Types.ObjectId, userId: mongoose.Types.ObjectId) => Promise<this>;
     setRfqSettings: (rfqSettings: RFQSettings) => Request;
     load: (query: any) => Promise<this | undefined>;
     save: () => Promise<void>;

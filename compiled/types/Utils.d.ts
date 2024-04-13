@@ -10,6 +10,7 @@ export default class Global {
     static personaId_prefix: string;
     static commentId_prefix: string;
     static requestId_prefix: string;
+    static paymentId_prefix: string;
     constructor(data: any);
     initialize(): void;
     private countSpaces;

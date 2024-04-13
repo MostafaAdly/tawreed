@@ -98,7 +98,7 @@ const _self = ({ product, rfqs }) => {
                     </table>
                 </section>
                 {/* REQUEST FOR QUOTATIONS */}
-                <section className={_css(styles, 'rfqs')} id="rfqs">
+                <section className={_css(styles, 'rfqs')} id="rfqs" style={{ display: "none" }}>
                     <div className={_css(styles, 'filters')}>
                         <div className={_css(styles, 'icon center opacity')}>
                             <i className={_css(styles, 'fa-solid fa-filter')}></i>

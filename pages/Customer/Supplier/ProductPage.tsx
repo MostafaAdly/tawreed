@@ -28,7 +28,7 @@ const _self = ({ user, supplier, product }) => {
 
     const onPurchase = (e) => {
         setSentForm(true);
-        purchaseProduct({ userId: user._id, token: user.token, productId: product._id, supplierId: supplier._id })
+        purchaseProduct({ userId: user._id, token: user.token, productId: product._id, supplierId: supplier._id, customerId: user.entity })
     }
 
     const onRFQ = (e) => {

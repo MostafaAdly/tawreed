@@ -16,6 +16,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const Request_1 = __importDefault(require("../../../Instances/Request"));
 const ResponseType_1 = require("../../../Instances/ResponseType");
 const Page_1 = __importDefault(require("../Page"));
+const Payment_1 = __importDefault(require("../../../Instances/Payment"));
 class RequestStateAPI extends Page_1.default {
     constructor(data, base_url) {
         super(base_url + RequestStateAPI.base_url);
@@ -32,9 +33,22 @@ class RequestStateAPI extends Page_1.default {
                 return res.status(401).send({ message: "Invalid token", error: 1 });
             if (!Object.keys(ResponseType_1.ResponseType).includes(state))
                 return res.status(400).send({ message: "Invalid state" });
-            if (!(yield new Request_1.default().load({ _id: requestId })))
+            const request = yield mongoose_1.default.models.Request.findOne({ _id: requestId }).populate({
+                path: 'product', select: "entity"
+            });
+            if (!request)
                 return res.status(404).send({ message: "Request not found" });
-            mongoose_1.default.models.Request.updateOne({ _id: requestId }, { responseType: ResponseType_1.ResponseType[state] }).exec();
+            const toUpdate = { responseType: ResponseType_1.ResponseType[state] };
+            if (ResponseType_1.ResponseType.PURCHASE_DELIVERED && !request.payment) {
+                var payment = new Payment_1.default({
+                    request: requestId,
+                    customer: request.customer,
+                    supplier: request.supplier,
+                });
+                payment.save();
+                toUpdate.payment = payment._id;
+            }
+            mongoose_1.default.models.Request.updateOne({ _id: requestId }, toUpdate).exec();
             return res.send({ message: "Request state updated successfully", success: 1 });
         }));
         this.router.delete('/delete', (req, res) => __awaiter(this, void 0, void 0, function* () {
