@@ -14,7 +14,6 @@ export default class SessionHandler {
 
     public async runMiddleware(req: any, res: any, next: any) {
         if (req.url.startsWith('/_next') || req.url.startsWith(Server.api_base_url)) {
-            console.log(req.url)
             next();
         }
         else if (req.method.toLowerCase() == 'get' && !this.isSessionRegistered(req) && !this.isAuthURL(req.url)) {
