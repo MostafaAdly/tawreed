@@ -49,7 +49,15 @@ export default class Supplier extends Page {
                 // TODO: HANDLE PRODUCT IF NULL
                 return;
             }
-            this.data.server.next.render(req, res, '/Customer/Supplier/ProductPage', { data: JSON.stringify({ user, supplier: entity, product }) });
+            const comments = await mongoose.models.Comment
+                .find({ product: product._id })
+                .populate({
+                    path: 'user', select: ["displayName", "image"],
+                    populate: [{ path: 'role', select: "name" }, { path: "entity", select: "details.displayName" }]
+                }).exec();
+            user.entity = await new Entity().load({ _id: user.entity });
+            this.data.server.next.render(req, res, '/Customer/Supplier/ProductPage',
+                { data: JSON.stringify({ user, supplier: entity, product, comments }) });
         });
 
         // RFQ FOR PRODUCT BY ID OF SUPPLIER BY ID

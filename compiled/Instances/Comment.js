@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Utils_1 = __importDefault(require("../Utils"));
 const ModelManager_1 = __importDefault(require("../Database/ModelManager"));
-class EntityRole {
+class Comment {
     constructor(input) {
         this._id = new mongoose_1.default.Types.ObjectId();
         this.commentId = Utils_1.default.commentId_prefix + Utils_1.default.createId();
@@ -31,4 +31,4 @@ class EntityRole {
             Object.assign(this, input);
     }
 }
-exports.default = EntityRole;
+exports.default = Comment;

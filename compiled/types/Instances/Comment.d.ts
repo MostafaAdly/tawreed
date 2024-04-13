@@ -1,19 +1,11 @@
 import { ObjectId } from '../Types/ObjectId';
-export default class EntityRole {
+export default class Comment {
     _id: ObjectId;
     commentId: string;
-    name: string;
-    body: string;
+    content: string;
     user: ObjectId;
-    constructor({ id }: {
-        id: string;
-    });
-    constructor({ id, name, body, user }: {
-        id?: string;
-        name: string;
-        body: string;
-        user: string;
-    });
+    product: ObjectId;
+    constructor(input?: any);
     load: (query: any) => Promise<this | undefined>;
     save: () => Promise<void>;
 }

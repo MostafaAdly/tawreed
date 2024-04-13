@@ -3,17 +3,14 @@ import Utils from '../Utils';
 import ModelManager from '../Database/ModelManager';
 import { ObjectId } from '../Types/ObjectId';
 
-export default class EntityRole {
+export default class Comment {
 
     public _id: ObjectId = new mongoose.Types.ObjectId();
     public commentId: string = Utils.commentId_prefix + Utils.createId();
-    public name: string;
-    public body: string;
+    public content: string;
     public user: ObjectId;
+    public product: ObjectId;
 
-    constructor({ id }: { id: string });
-    constructor({ id, name, body, user }:
-        { id?: string, name: string, body: string, user: string });
     constructor(input?: any) {
         if (input) Object.assign(this, input);
     }
@@ -26,5 +23,4 @@ export default class EntityRole {
     };
 
     public save = async () => await ModelManager.save(this.constructor.name, this);
-
 }

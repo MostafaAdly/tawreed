@@ -26,6 +26,7 @@ import Profile from './Pages/User/Profile';
 import ProductPurchaseAPI from './Pages/API/ProductPurchaseAPI';
 import RequestStateAPI from './Pages/API/RequestStateAPI';
 import MyPayments from './Pages/Personas/Supplier/MyPayments';
+import CommentAPI from './Pages/API/CommentAPI';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -133,6 +134,7 @@ export default class Server {
             new VersionControlAPI(this.data, Server.api_base_url),
             new ProductPurchaseAPI(this.data, Server.api_base_url),
             new RequestStateAPI(this.data, Server.api_base_url),
+            new CommentAPI(this.data, Server.api_base_url),
 
         ];
         for (let api of apis)

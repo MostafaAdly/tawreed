@@ -8,9 +8,9 @@ export default class EntityRoleSchema extends Schema {
     constructor({ id, options, schema =
         {
             commentId: String,
-            name: String,
-            body: String,
-            user: { type: mongoose.Types.ObjectId, ref: 'User' }
+            content: String,
+            user: { type: mongoose.Types.ObjectId, ref: 'User' },
+            product: { type: mongoose.Types.ObjectId, ref: 'Product' },
         }
     }: { id?: { enabled: boolean, key: string, value: any }, schema?: any, options?: any }
     ) {

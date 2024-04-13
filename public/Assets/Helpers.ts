@@ -84,3 +84,13 @@ export const sendDeleteRequest = async ({ requestId, token, userId }) => {
         return null;
     }
 }
+
+export const sendComment = async ({ userId, token, productId, content }) => {
+    try {
+        return (await axios.post(`${API_BASE_URL}/comment`, {
+            userId, token, productId, content
+        })).data;
+    } catch (error) {
+        return null;
+    }
+}

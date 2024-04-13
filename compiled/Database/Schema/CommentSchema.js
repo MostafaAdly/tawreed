@@ -27,9 +27,9 @@ const mongoose_1 = __importStar(require("mongoose"));
 class EntityRoleSchema extends mongoose_1.Schema {
     constructor({ id, options, schema = {
         commentId: String,
-        name: String,
-        body: String,
-        user: { type: mongoose_1.default.Types.ObjectId, ref: 'User' }
+        content: String,
+        user: { type: mongoose_1.default.Types.ObjectId, ref: 'User' },
+        product: { type: mongoose_1.default.Types.ObjectId, ref: 'Product' },
     } }) {
         if (id === null || id === void 0 ? void 0 : id.enabled)
             schema[id.key] = id.value;

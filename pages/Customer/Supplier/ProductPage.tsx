@@ -2,25 +2,26 @@ import React, { useState } from "react";
 import C_HeaderComponent from "../Global/HeaderComponent";
 import C_FooterComponent from "../Global/FooterComponent";
 import styles from '../../../public/Customer/Supplier/css/ProductPage.module.css'
-import { _css, getImage, onTabClick, purchaseProduct } from '../../../public/Assets/Helpers';
+import { _css, getImage, onTabClick, purchaseProduct, sendComment } from '../../../public/Assets/Helpers';
 import SentForm from "../../../public/Assets/Components/SentForm";
 
-const SupplierPage = ({ user, supplier, product }) => {
+const SupplierPage = ({ user, supplier, product, comments }) => {
     return (
         <>
             <C_HeaderComponent user={user} />
             <div className={_css(styles, 'page-body')}>
-                <_self user={user} supplier={supplier} product={product} />
+                <_self user={user} supplier={supplier} product={product} comments={comments} />
                 <C_FooterComponent />
             </div>
         </>
     );
 }
 
-const _self = ({ user, supplier, product }) => {
+const _self = ({ user, supplier, product, comments }) => {
     const [image, setImage] = useState(product.images[0]);
     const [images, setImages] = useState(product.images.filter(img => img != image));
-    const [sentForm, setSentForm] = useState(false)
+    const [sentForm, setSentForm] = useState(false);
+    const [_comments, setComments] = useState(comments);
 
     const onSentFormClick = () => {
         setSentForm(false);
@@ -38,6 +39,23 @@ const _self = ({ user, supplier, product }) => {
     const onImageSelect = (target) => {
         setImage(target.src);
         setImages(product.images.filter(img => img != target.src));
+    }
+
+    const onCommentSend = async () => {
+        const contentArea = (document.getElementById("comment-area") as any);
+        if (!contentArea) return;
+        const response = await sendComment({ userId: user._id, token: user.token, productId: product._id, content: contentArea.value });
+        if (response?.success) {
+            setComments([..._comments, { user, content: contentArea.value, createdAt: new Date() }]);
+            contentArea.value = "";
+            showReviewsSection();
+        }
+    }
+
+    const showReviewsSection = () => {
+        const tab = document.getElementById("reviews-tab");
+        if (!tab) return;
+        onTabClick({ styles, target: tab });
     }
 
     return (
@@ -107,7 +125,9 @@ const _self = ({ user, supplier, product }) => {
                                 className={_css(styles, 'tab')}
                                 onClick={(e) => onTabClick({ target: e.target, styles })}
                                 data-tab-id="reviews"
-                                data-default-display="flex">
+                                data-default-display="flex"
+                                id="reviews-tab"
+                            >
                                 <p>تقييمات العملاء</p>
                             </button>
                             <button
@@ -129,24 +149,35 @@ const _self = ({ user, supplier, product }) => {
                             })}
                         </div>
                         <div className={_css(styles, 'reviews')} id="reviews">
-                            <div className={_css(styles, 'review')}>
-                                <div className={_css(styles, 'review-header center')}>
-                                    <div className={_css(styles, 'profile-image')}>
-                                        <img src={getImage("default-profile-picture.png")} alt="" />
-                                    </div>
-                                    <p className={_css(styles, 'profile-name')}>أيمن عبدالرحمن</p>
-                                    <div className={_css(styles, 'profile-info')}>
-                                        <p>مدير مشتريات</p>
-                                        <p>المتحدة للصيانة</p>
-                                    </div>
+                            {
+                                _comments.length == 0 &&
+                                <div className={_css(styles, 'review-info')}>
+                                    <p>لا توجد تعليقات حتى الآن</p>
                                 </div>
-                                <div className={_css(styles, 'review-content')}>
-                                    <p>
-                                        لوريم ايبسوم دولار سيت أميت كونسيكتيتور أدايبا يسكينج أليايت.سيت دو أيوسمود تيمبور
-                                        أنكايديديونتيوت لابوري ات
-                                    </p>
-                                </div>
-                            </div>
+                            }
+                            {
+                                _comments.map((comment, index) => {
+                                    return (
+                                        <div className={_css(styles, 'review')} key={index}>
+                                            <div className={_css(styles, 'review-header center')}>
+                                                <div className={_css(styles, 'profile-image')}>
+                                                    <img src={comment.user.image || getImage("default-profile-picture.png")} alt="" />
+                                                </div>
+                                                <p className={_css(styles, 'profile-name')}>{comment.user.displayName}</p>
+                                                <div className={_css(styles, 'profile-info')}>
+                                                    <p>{comment.user.role.name}</p>
+                                                    <p>{comment.user.entity.details.displayName}</p>
+                                                </div>
+                                            </div>
+                                            <div className={_css(styles, 'review-content')}>
+                                                <p>
+                                                    {comment.content}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            }
                         </div>
                         <div className={_css(styles, 'add-review')} id="add-review">
                             <div className={_css(styles, 'review-title')}>
@@ -157,12 +188,13 @@ const _self = ({ user, supplier, product }) => {
                                 <p>مشاركة تجربتك مع الآخرين يساعدنا على تطوير خدماتنا وتعريق العملاء الأخرين بنا</p>
                             </div>
                             <div className={_css(styles, 'review-content')}>
-                                <textarea placeholder="يعجبني في هذا المنتج ...." />
+                                <textarea id="comment-area" placeholder="يعجبني في هذا المنتج ...." />
                             </div>
                             <div className={_css(styles, 'review-controls')}>
-                                <button className={_css(styles, 'center opacity-active')}>
+                                <button className={_css(styles, 'center opacity-active')} onClick={() => onCommentSend()}>
                                     <i className={_css(styles, 'fa-solid fa-arrow-right')} />
-                                    <p>أرسل تعليقك</p></button>
+                                    <p>أرسل تعليقك</p>
+                                </button>
                             </div>
                         </div>
                     </section>
