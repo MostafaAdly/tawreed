@@ -17,7 +17,6 @@ const SupplierCompanyPage = ({ user, entity }) => {
 }
 
 const _self = ({ user, entity }) => {
-    const usersElement: any[] = [];
 
     return (
         <>
@@ -88,7 +87,7 @@ const _self = ({ user, entity }) => {
                         }
                     </tbody>
                 </table>
-                <a className={_css(styles, 'add-user opacity-active center')} href='/s/profile/create-user'>
+                <a className={_css(styles, 'add-user opacity-active center')} href='/s/profile/add-user'>
                     <i className={_css(styles, 'fa-solid fa-user-plus')}></i>
                 </a>
             </div>

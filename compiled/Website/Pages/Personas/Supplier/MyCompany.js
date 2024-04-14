@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Page_1 = __importDefault(require("../../Page"));
+const Entity_1 = __importDefault(require("../../../../Instances/Entity"));
 class MyCompany extends Page_1.default {
     constructor(data, base_url) {
         super(base_url || MyCompany.base_url);
@@ -24,9 +25,27 @@ class MyCompany extends Page_1.default {
         // SUPPLIER - MY COMPANY PAGE
         this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = (yield mongoose_1.default.models.Entity.findOne({ _id: new mongoose_1.default.Types.ObjectId(user.entity) })).toObject();
-            entity.users = (yield mongoose_1.default.models.User.find({ entity: entity._id }).populate('role').exec());
-            this.data.server.next.render(req, res, '/Supplier/MyCompany/SupplierCompanyPage', { data: JSON.stringify({ user, entity }) });
+            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL   
+                return;
+            }
+            entity.users = (yield mongoose_1.default.models.User
+                .find({ entity: entity._id })
+                .populate('role').exec());
+            this.data.server.next
+                .render(req, res, '/Supplier/MyCompany/SupplierCompanyPage', { data: JSON.stringify({ user, entity }) });
+        }));
+        // SUPPLIER - MY COMPANY PAGE - ADD USER
+        this.router.get('/profile/add-user', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const user = req.session.user;
+            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL   
+                return;
+            }
+            this.data.server.next
+                .render(req, res, '/Supplier/MyCompany/SupplierAddUserPage', { data: JSON.stringify({ user, entity }) });
         }));
     }
 }
