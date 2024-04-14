@@ -3,7 +3,7 @@ import React from 'react';
 import { _css } from '../Helpers';
 import styles from './css/Filter.module.css'
 
-const Filter = ({ searchObject, enabledFilters, callback, type, setEnabledFilters }) => {
+const Filter = ({ searchObject, enabledFilters, callback, type = "", setEnabledFilters }) => {
     const onFilter = (target, state) => {
         if (enabledFilters.includes(state)) {
             setEnabledFilters(enabledFilters.filter(filter => filter != state));

@@ -21,44 +21,44 @@ const _self = ({ user, entity }) => {
 
     return (
         <>
-            <div className={styles.upload}>
+            <div className={_css(styles, 'upload')}>
                 <input type="file" name="banner" id="banner" hidden />
                 <input type="file" name="logo" id="logo" hidden />
-                <label className={styles.banner + " center" + " box-shadow-hover"} htmlFor="banner">
-                    <div className={styles.icon}>
+                <label className={_css(styles, 'banner center box-shadow-hover')} htmlFor="banner">
+                    <div className={_css(styles, 'icon')}>
                         <i className={_css(styles, 'fa-solid fa-arrow-up-from-bracket')}></i>
                     </div>
-                    <div className={styles.title}>
+                    <div className={_css(styles, 'title')}>
                         <p>تحميل صورة الغلاف</p>
                     </div>
-                    <div className={styles.info + " center"}>
+                    <div className={_css(styles, 'info center')}>
                         <p>المقاس المطلوب</p>
                         <p>1440x384</p>
                     </div>
-                    <div className={styles.info + " center"}>
+                    <div className={_css(styles, 'info center')}>
                         <p>الصيغة المدعومة</p>
                         <p dir="ltr">.png, .jpg, .svg</p>
                     </div>
                 </label>
-                <label className={styles.logo + " center" + " box-shadow-hover"} htmlFor="logo">
-                    <div className={styles.icon}>
+                <label className={_css(styles, 'logo center box-shadow-hover')} htmlFor="logo">
+                    <div className={_css(styles, 'icon')}>
                         <i className={_css(styles, 'fa-solid fa-arrow-up-from-bracket')}></i>
                     </div>
-                    <div className={styles.title}>
+                    <div className={_css(styles, 'title')}>
                         <p>تحميل اللوجو</p>
                     </div>
-                    <div className={styles.info + " center"}>
+                    <div className={_css(styles, 'info center')}>
                         <p>المقاس المطلوب</p>
                         <p>256x256</p>
                     </div>
-                    <div className={styles.info + " center"}>
+                    <div className={_css(styles, 'info center')}>
                         <p>الصيغة المدعومة</p>
                         <p dir="ltr">.png, .jpg, .svg</p>
                     </div>
                 </label>
             </div>
-            <div className={styles['users-controller']}>
-                <div className={styles.title}><p>المستخدمين</p></div>
+            <div className={_css(styles, 'users-controller')}>
+                <div className={_css(styles, 'title')}><p>المستخدمين</p></div>
                 <table>
                     <tbody>
                         <tr>
@@ -74,11 +74,11 @@ const _self = ({ user, entity }) => {
                                         <td><p>{user.displayName}</p></td>
                                         <td><p>{user.role.name}</p></td>
                                         <td><p>{user.role.name}</p></td>
-                                        <td className={styles.controls + " center"}>
-                                            <button>
+                                        <td className={_css(styles, 'controls center')}>
+                                            <button className='opacity-active'>
                                                 <i className={_css(styles, 'fa-solid fa-pen')}></i>
                                             </button>
-                                            <button className={styles.trash}>
+                                            <button className={_css(styles, 'trash opacity-active')}>
                                                 <i className={_css(styles, 'fa-solid fa-trash')}></i>
                                             </button>
                                         </td>
@@ -88,10 +88,13 @@ const _self = ({ user, entity }) => {
                         }
                     </tbody>
                 </table>
+                <a className={_css(styles, 'add-user opacity-active center')} href='/s/profile/create-user'>
+                    <i className={_css(styles, 'fa-solid fa-user-plus')}></i>
+                </a>
             </div>
-            <div className={styles.description}>
-                <div className={styles.title}><p>عن الشركة</p></div>
-                <div className={styles.info}><p>اكتب ملخص عن الشركة</p></div>
+            <div className={_css(styles, 'description')}>
+                <div className={_css(styles, 'title')}><p>عن الشركة</p></div>
+                <div className={_css(styles, 'info')}><p>اكتب ملخص عن الشركة</p></div>
                 <textarea
                     typeof="text"
                     defaultValue={entity.details.description}

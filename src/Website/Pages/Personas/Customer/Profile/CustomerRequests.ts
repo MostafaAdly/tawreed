@@ -1,4 +1,3 @@
-import Product from "../../../../../Instances/Product";
 import Page from "../../../Page";
 import Entity from "../../../../../Instances/Entity";
 import mongoose from "mongoose";
@@ -14,7 +13,7 @@ export default class CustomerRequests extends Page {
 
     private run() {
 
-        // ALL SUPPLIERS OF A DEPARTMENT
+        // ALL REQUESTS OF A CUSTOMER ENTITY
         this.router.get('/', async (req: any, res: any) => {
             const user = req.session.user;
             const entity = await new Entity().load({ _id: user.entity });
@@ -22,8 +21,10 @@ export default class CustomerRequests extends Page {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            const products = await mongoose.models.Product.find({ _id: { $in: entity.personas.supplier?.products || [] } });
-            this.data.server.next.render(req, res, '/Customer/Profile/CustomerRequests', { data: JSON.stringify({ user, supplier: entity, products }) });
+            const requests = await mongoose.models.Request
+                .find({ customer: entity._id })
+                .populate('product').exec();
+            this.data.server.next.render(req, res, '/Customer/Profile/CustomerRequests', { data: JSON.stringify({ user, supplier: entity, requests }) });
         });
     }
 }

@@ -1,15 +1,18 @@
 import React from 'react'
 import styles from '../../../public/Customer/Profile/css/CustomerRequests.module.css'
-import { _css, onTabClick } from "../../../public/Assets/Helpers";
+import { _css, onTabClick, sendDeleteRequest } from "../../../public/Assets/Helpers";
 import C_HeaderComponent from '../Global/HeaderComponent';
 import C_FooterComponent from '../Global/FooterComponent';
+import Filter from '../../../public/Assets/Components/Filter';
+import { ResponseType } from '../../../src/Instances/ResponseType';
+import { RequestType } from '../../../src/Instances/RequestType';
 
-const CustomerRequests = ({ user, products, rfqs }) => {
+const CustomerRequests = ({ user, supplier, requests }) => {
     return (
         <>
             <C_HeaderComponent user={user} />
             <div className={_css(styles, 'page-body')}>
-                <_self product={products} rfqs={rfqs} />
+                <_self user={user} supplier={supplier} requests={requests} />
                 <C_FooterComponent />
             </div>
         </>
@@ -17,15 +20,20 @@ const CustomerRequests = ({ user, products, rfqs }) => {
 }
 
 
-const _self = ({ product, rfqs }) => {
+const _self = ({ user, supplier, requests }) => {
+    const [enabledFilters, setEnabledFilters] = React.useState<string[]>([]);
+    const [_requests, setRequests] = React.useState<any[]>(requests);
 
-    const onFiltering = (target) => {
-        if (target.nodeName == "P")
-            target = target.parentNode;
-        if (target.classList.contains(_css(styles, "filter-activated")))
-            target.classList.remove(_css(styles, "filter-activated"));
-        else
-            target.classList.add(_css(styles, "filter-activated"));
+    const filterRequests = () => {
+        if (!enabledFilters.length) return _requests;
+        return _requests.filter(request => enabledFilters
+            .includes(Object.keys(ResponseType).find(key => (ResponseType as any)[key] == request.responseType) as any));
+    }
+
+    const deleteRequest = async (requestId) => {
+        const response = await sendDeleteRequest({ requestId, token: user.token, userId: user._id });
+        if (response?.success)
+            setRequests(_requests.filter(request => request._id != requestId));
     }
 
     return (
@@ -44,106 +52,104 @@ const _self = ({ product, rfqs }) => {
                         onClick={(e) => onTabClick({ target: e.target, styles, activatedTabClassName: "tab-activated" })}
                         data-tab-id="rfqs" data-default-display="flex"
                     >
-                        <p>طلبات عروض تسعير</p>
+                        <p>طلبات تسعير</p>
                     </div>
                 </section>
                 {/* ORDERS */}
                 <section className={_css(styles, 'orders')} id="orders">
-                    <div className={_css(styles, 'filters')}>
-                        <div className={_css(styles, 'icon center opacity')}>
-                            <i className={_css(styles, 'fa-solid fa-filter')}></i>
-                        </div>
-                        <div className={_css(styles, 'self')}>
-                            {
-                                ['جميع الطلبات', 'الطلبات الجديدة', 'جاري التجهيز', 'انتظار الرد', 'تم الموافقة'].map((filter, index) => {
-                                    return (
-                                        <div className={_css(styles, 'filter opacity')} key={index} onClick={(e) => onFiltering(e.target)}>
-                                            <p>{filter}</p>
-                                        </div>
-                                    );
-                                })
-                            }
-                        </div>
-                    </div>
+                    <Filter
+                        searchObject={ResponseType}
+                        enabledFilters={enabledFilters}
+                        type="purchase"
+                        setEnabledFilters={setEnabledFilters}
+                        callback={null} />
                     <table className='center'>
                         <tbody>
                             <tr>
                                 <th><p>#</p></th>
+                                <th><p>كود الطلب</p></th>
                                 <th><p>كود المنتج</p></th>
                                 <th><p>وصف المنتج</p></th>
-                                <th><p>المجموعة</p></th>
                                 <th><p>السعر</p></th>
-                                <th><p>حالة الشراء</p></th>
+                                <th><p>حالة الطلب</p></th>
                                 <th><p>التحكم</p></th>
                             </tr>
-                            <tr>
-                                <td><p><b>1</b></p></td>
-                                <td><p>PID12345Ec</p></td>
-                                <td className='name'><p>لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور</p></td>
-                                <td><p>العدد</p></td>
-                                <td><p>1224 ج.م</p></td>
-                                <td><p>في الطريق</p></td>
-                                <td>
-                                    <div className={_css(styles, 'controls center')}>
-                                        <button className='opacity'>
-                                            <i className={_css(styles, 'fa-solid fa-trash')}></i>
-                                        </button>
-                                        <button className={_css(styles, 'visit opacity')}>
-                                            <i className={_css(styles, 'fa-solid fa-eye')}></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            {
+                                filterRequests().filter(request => request.requestType == RequestType.PURCHASE).map((request: any, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td><p><b>{index + 1}</b></p></td>
+                                            <td><p>{request.requestId}</p></td>
+                                            <td><p>{request.product.productId}</p></td>
+                                            <td className='name'><p>{request.product.name}</p></td>
+                                            <td><p>{request.product.price.cost}</p></td>
+                                            <td><p>{request.responseType}</p></td>
+                                            <td>
+                                                <div className={_css(styles, 'controls center')}>
+                                                    <a className='center opacity-active' onClick={() => deleteRequest(request._id)}>
+                                                        <i className={_css(styles, 'fa-solid fa-trash')}></i>
+                                                    </a>
+                                                    <a className={_css(styles, 'center visit opacity-active')}>
+                                                        <i className={_css(styles, 'fa-solid fa-eye')}></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            }
                         </tbody>
                     </table>
                 </section>
                 {/* REQUEST FOR QUOTATIONS */}
                 <section className={_css(styles, 'rfqs')} id="rfqs" style={{ display: "none" }}>
-                    <div className={_css(styles, 'filters')}>
-                        <div className={_css(styles, 'icon center opacity')}>
-                            <i className={_css(styles, 'fa-solid fa-filter')}></i>
-                        </div>
-                        <div className={_css(styles, 'self')}>
-                            {
-                                ['جميع الطلبات', 'الطلبات الجديدة', 'جاري التجهيز', 'انتظار الرد', 'تم الموافقة'].map((filter, index) => {
-                                    return (
-                                        <div className={_css(styles, 'filter opacity')} key={index} onClick={(e) => onFiltering(e.target)}>
-                                            <p>{filter}</p>
-                                        </div>
-                                    );
-                                })
-                            }
-                        </div>
-                    </div>
+                    <Filter
+                        searchObject={ResponseType}
+                        enabledFilters={enabledFilters}
+                        type="rfq"
+                        setEnabledFilters={setEnabledFilters}
+                        callback={null} />
                     <table className='center'>
                         <tbody>
                             <tr>
                                 <th><p>#</p></th>
+                                <th><p>كود الطلب</p></th>
                                 <th><p>كود المنتج</p></th>
                                 <th><p>وصف المنتج</p></th>
-                                <th><p>المجموعة</p></th>
                                 <th><p>السعر</p></th>
-                                <th><p>حالة الشراء</p></th>
+                                <th><p>حالة الطلب</p></th>
                                 <th><p>التحكم</p></th>
                             </tr>
-                            <tr>
-                                <td><p><b>1</b></p></td>
-                                <td><p>PID12345Ec</p></td>
-                                <td className='name'><p>لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور</p></td>
-                                <td><p>العدد</p></td>
-                                <td><p>1224 ج.م</p></td>
-                                <td><p>في الطريق</p></td>
-                                <td>
-                                    <div className={_css(styles, 'controls center')}>
-                                        <button className='opacity'>
-                                            <i className={_css(styles, 'fa-solid fa-trash')}></i>
-                                        </button>
-                                        <button className={_css(styles, 'visit opacity')}>
-                                            <i className={_css(styles, 'fa-solid fa-eye')}></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            {
+                                filterRequests().filter(request => request.requestType == RequestType.RFQ).map((request: any, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td><p><b>{index + 1}</b></p></td>
+                                            <td><p>{request.requestId}</p></td>
+                                            <td><p>{request.product.productId}</p></td>
+                                            <td className='name'><p>{request.product.name}</p></td>
+                                            <td><p>{request.product.price.cost}</p></td>
+                                            <td><p>{request.responseType}</p></td>
+                                            <td>
+                                                <div className={_css(styles, 'controls center')}>
+                                                    <a className='center opacity-active' onClick={() => deleteRequest(request._id)}>
+                                                        <i className={_css(styles, 'fa-solid fa-trash')}></i>
+                                                    </a>
+                                                    <a className={_css(styles, 'center visit opacity-active')}>
+                                                        <i className={_css(styles, 'fa-solid fa-eye')}></i>
+                                                    </a>
+                                                    {
+                                                        request.responseType == ResponseType.RFQ_REPLY_PENDING ?
+                                                            <a className={_css(styles, 'center approve opacity-active')}>
+                                                                <i className={_css(styles, 'fa-solid fa-check')}></i>
+                                                            </a> : null
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            }
                         </tbody>
                     </table>
                 </section>
@@ -153,3 +159,9 @@ const _self = ({ product, rfqs }) => {
 }
 
 export default CustomerRequests;
+
+export const getServerSideProps = async (context) => {
+    return {
+        props: JSON.parse(context.query.data)
+    };
+}

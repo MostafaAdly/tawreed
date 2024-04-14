@@ -84,12 +84,7 @@ export default class Supplier extends Page {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            const product = await new Product().load({ productId: req.params.productId });
-            if (!product) {
-                // TODO: HANDLE PRODUCT IF NULL
-                return;
-            }
-            this.data.server.next.render(req, res, '/Customer/Supplier/RFQ_Requested', { data: JSON.stringify({ user, supplier: entity, product }) });
+            this.data.server.next.render(req, res, '/Customer/Supplier/RFQ_Requested', { data: JSON.stringify({ user, supplier: entity }) });
         });
 
     }

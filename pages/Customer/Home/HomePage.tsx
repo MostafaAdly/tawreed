@@ -31,23 +31,6 @@ const _self = ({ departments }) => {
         }
     }, []);
 
-    // useEffect(() => {
-    //     if (currentInterval) clearLocalInterval(currentInterval);
-    //     if (!currentCategory) return;
-    //     const element = document.getElementById(currentCategory.departmentId);
-    //     if (!element) return;
-    //     setCurrentInterval(setInterval(() => {
-    //         console.log(currentCategory);
-    //         const img = element.querySelector("img");
-    //         if (img) img.src = randomList(currentCategory.images)
-    //     }, 1000));
-    // }, [currentCategory])
-
-    // const clearLocalInterval = (currentInterval) => {
-    //     clearInterval(currentInterval);
-    //     setCurrentInterval(null);
-    // }
-
     return (
         <>
             <div className={_css(styles, 'container')}>

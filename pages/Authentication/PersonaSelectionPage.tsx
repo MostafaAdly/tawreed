@@ -30,7 +30,7 @@ const PersonaSelectionPage = () => {
                             <i className={_css(styles, 'fa-solid fa-user')}></i>
                         </div>
                         <div className={_css(styles, 'info')}>
-                            <p>مستورد - Customer</p>
+                            <p>عميل - Client</p>
                         </div>
                     </a>
                     <a className={_css(styles, 'persona box-shadow-hover')} href="/s">

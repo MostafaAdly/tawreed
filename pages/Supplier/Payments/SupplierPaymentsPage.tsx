@@ -23,8 +23,6 @@ const SupplierPaymentsPage = ({ user, entity, payments }) => {
 const _self = ({ entity, payments }) => {
     const [enabledFilters, setEnabledFilters] = useState([]);
 
-
-    console.log(payments)
     return (
         <div className={_css(styles, 'container')}>
             <div className={_css(styles, 'page-title')}>

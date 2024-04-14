@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from '../../../public/Customer/Global/css/header.module.css';
-import { _css, getImage } from "../../../public/Assets/Helpers";
+import { _css, getImage, getRequestsCount } from "../../../public/Assets/Helpers";
 
 const C_HeaderComponent = ({ user }) => {
+    const [requestsCount, setRequestsCount] = useState({ total: 0, purchase: 0, rfq: 0 });
+
+    useEffect(() => {
+        (async () => {
+            if (user) setRequestsCount(await getRequestsCount({ userId: user._id, token: user.token, customerId: user.entity }))
+        })();
+    }, []);
+
     return (
         <>
             <div className={_css(styles, 'header')}>
@@ -25,17 +33,26 @@ const C_HeaderComponent = ({ user }) => {
                 </nav >
                 <div className={_css(styles, 'controls center')}>
                     <a className={_css(styles, 'notifications center')} href="/c/requests">
-                        {/* <div className={_css(styles, 'notificationsCount center')}><p>3</p></div> */}
+                        {
+                            requestsCount.purchase > 0 &&
+                            <div className={_css(styles, 'notificationsCount center')}>
+                                <p>{requestsCount.purchase}</p>
+                            </div>
+                        }
                         <i className={_css(styles, 'fa-solid fa-file-export')}></i>
                     </a>
                     <a className={_css(styles, 'notifications center')} href="/c/requests">
-                        {/* <div className={_css(styles, 'notificationsCount center')}><p>3</p></div> */}
+                        {
+                            requestsCount.rfq > 0 &&
+                            <div className={_css(styles, 'notificationsCount center')}>
+                                <p>{requestsCount.rfq}</p>
+                            </div>
+                        }
                         <i className={_css(styles, 'fa-solid fa-file-import')}></i>
                     </a>
                     <div className={_css(styles, 'notifications center')}>
                         {/* <div className={_css(styles, 'notificationsCount center')}><p>3</p></div> */}
                         <i className={_css(styles, 'fa-solid fa-bell')}></i>
-
                     </div>
                     <a className={_css(styles, 'profile center')} href="/logout">
                         <div className={_css(styles, 'profileImage')}>

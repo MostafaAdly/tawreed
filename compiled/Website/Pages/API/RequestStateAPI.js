@@ -17,6 +17,7 @@ const Request_1 = __importDefault(require("../../../Instances/Request"));
 const ResponseType_1 = require("../../../Instances/ResponseType");
 const Page_1 = __importDefault(require("../Page"));
 const Payment_1 = __importDefault(require("../../../Instances/Payment"));
+const RequestType_1 = require("../../../Instances/RequestType");
 class RequestStateAPI extends Page_1.default {
     constructor(data, base_url) {
         super(base_url + RequestStateAPI.base_url);
@@ -58,10 +59,29 @@ class RequestStateAPI extends Page_1.default {
             const isValidToken = yield this.data.server.sessionHandler.validateUserByToken(userId, token);
             if (!isValidToken)
                 return res.status(401).send({ message: "Invalid token", error: 1 });
-            if (!(yield new Request_1.default().load({ _id: requestId })))
+            const request = yield new Request_1.default().load({ _id: requestId });
+            if (!request)
                 return res.status(404).send({ message: "Request not found" });
+            if (request.responseType == ResponseType_1.ResponseType.PURCHASE_DELIVERED)
+                return res.status(400).send({ message: "Delivered orders cannot be deleted.", error: 1 });
             mongoose_1.default.models.Request.deleteOne({ _id: requestId }).exec();
             return res.send({ message: "Request deleted successfully", success: 1 });
+        }));
+        this.router.post('/count', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { userId, customerId, token } = req.body;
+            if (!token || !userId || !customerId)
+                return res.status(400).send({ message: "Invalid request" });
+            const isValidToken = yield this.data.server.sessionHandler.validateUserByToken(userId, token);
+            if (!isValidToken)
+                return res.status(401).send({ message: "Invalid token", error: 1 });
+            const requests = yield mongoose_1.default.models.Request
+                .find({ customer: customerId })
+                .select("requestType").exec();
+            return res.send({
+                total: requests.length,
+                purchase: requests.filter(request => request.requestType == RequestType_1.RequestType.PURCHASE).length,
+                rfq: requests.filter(request => request.requestType == RequestType_1.RequestType.RFQ).length
+            });
         }));
     }
 }

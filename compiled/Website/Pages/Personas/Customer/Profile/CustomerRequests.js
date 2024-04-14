@@ -22,17 +22,18 @@ class CustomerRequests extends Page_1.default {
         this.run();
     }
     run() {
-        // ALL SUPPLIERS OF A DEPARTMENT
+        // ALL REQUESTS OF A CUSTOMER ENTITY
         this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
             const user = req.session.user;
             const entity = yield new Entity_1.default().load({ _id: user.entity });
             if (!entity) {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            const products = yield mongoose_1.default.models.Product.find({ _id: { $in: ((_a = entity.personas.supplier) === null || _a === void 0 ? void 0 : _a.products) || [] } });
-            this.data.server.next.render(req, res, '/Customer/Profile/CustomerRequests', { data: JSON.stringify({ user, supplier: entity, products }) });
+            const requests = yield mongoose_1.default.models.Request
+                .find({ customer: entity._id })
+                .populate('product').exec();
+            this.data.server.next.render(req, res, '/Customer/Profile/CustomerRequests', { data: JSON.stringify({ user, supplier: entity, requests }) });
         }));
     }
 }

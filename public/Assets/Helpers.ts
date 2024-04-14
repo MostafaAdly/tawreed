@@ -94,3 +94,14 @@ export const sendComment = async ({ userId, token, productId, content }) => {
         return null;
     }
 }
+
+export const getRequestsCount = async ({ customerId, token, userId }) => {
+    const def = { total: 0, purchase: 0, rfq: 0 };
+    try {
+        return (await axios.post(`${API_BASE_URL}/request/count`, {
+            customerId, token, userId
+        })).data || def;
+    } catch (error) {
+        return def;
+    }
+}

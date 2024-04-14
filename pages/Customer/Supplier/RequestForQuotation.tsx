@@ -21,7 +21,8 @@ const RequestForQuotation = ({ user, supplier, product }) => {
 const _self = ({ user, supplier, product }) => {
     const [image, setImage] = useState(product.images[0]);
     const [images, setImages] = useState(product.images.filter(img => img != image));
-    const [sentForm, setSentForm] = useState(false)
+    const [sentForm, setSentForm] = useState(false);
+    const [teleporting, setTeleporting] = useState(false);
 
     const onSentFormClick = () => {
         setSentForm(false);
@@ -34,9 +35,17 @@ const _self = ({ user, supplier, product }) => {
     const onRFQ = (e) => {
         setSentForm(true);
         purchaseProduct({
-            type: "rfq", userId: user._id, token: user.token, productId: product._id, supplierId: supplier._id, rfqSettings: getRFQSettings()
+            type: "rfq",
+            userId: user._id,
+            token: user.token,
+            productId: product._id,
+            supplierId: supplier._id,
+            customerId: user.entity,
+            rfqSettings: getRFQSettings()
         });
         setTimeout(() => {
+            if (teleporting) return;
+            setTeleporting(true);
             if (location) location.href = `/c/suppliers/${supplier.entityId}/products/${product.productId}/rfq/sent`;
         }, 3000);
     }
