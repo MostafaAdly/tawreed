@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "/api/v1";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "/api/v1";
 
 const cssExceptions = ["page-body", "supplier-body", "center", "box-shadow", "opacity", "opacity-active", "box-shadow-hover"];
 export const _css = (styles, css) => {
@@ -103,5 +103,24 @@ export const getRequestsCount = async ({ customerId, token, userId }) => {
         })).data || def;
     } catch (error) {
         return def;
+    }
+}
+
+export const saveEntityDescription = async ({ userId, token, entityId, description }) => {
+    try {
+        return (await axios.post(`${API_BASE_URL}/entity/description`, {
+            userId, token, entityId, description
+        })).data;
+    } catch (error) {
+        return null;
+    }
+}
+export const saveCategoryDescription = async ({ userId, token, categoryId, description }) => {
+    try {
+        return (await axios.post(`${API_BASE_URL}/category/description`, {
+            userId, token, categoryId, description
+        })).data;
+    } catch (error) {
+        return null;
     }
 }

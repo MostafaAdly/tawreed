@@ -27,6 +27,9 @@ import ProductPurchaseAPI from './Pages/API/ProductPurchaseAPI';
 import RequestStateAPI from './Pages/API/RequestStateAPI';
 import MyPayments from './Pages/Personas/Supplier/MyPayments';
 import CommentAPI from './Pages/API/CommentAPI';
+import SupplierProfileAPI from './Pages/API/SupplierProfileAPI';
+import EntityData from './Pages/API/EntityData';
+import CategoryData from './Pages/API/CategoryData';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -135,6 +138,9 @@ export default class Server {
             new ProductPurchaseAPI(this.data, Server.api_base_url),
             new RequestStateAPI(this.data, Server.api_base_url),
             new CommentAPI(this.data, Server.api_base_url),
+            new SupplierProfileAPI(this.data, Server.api_base_url),
+            new EntityData(this.data, Server.api_base_url),
+            new CategoryData(this.data, Server.api_base_url),
 
         ];
         for (let api of apis)

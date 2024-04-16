@@ -1,0 +1,94 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+
+    .user-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.5rem;
+        background-color: #f2f3f3;
+        padding: 3rem 1rem;
+        border-radius: 1.5rem;
+
+        .container-title {
+            color: #4d5258;
+
+            p {
+                font-size: 1.75rem;
+                font-weight: 700;
+            }
+        }
+
+        .fields {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            column-gap: 1.5rem;
+            row-gap: 2rem;
+
+            .field {
+                display: flex;
+                flex-direction: column;
+                width: 30%;
+                flex-basis: 40rem;
+                max-width: 50rem;
+                /* row-gap: 10px; */
+
+                .label {
+                    font-size: 1.25rem;
+                    font-weight: 400;
+                    color: var(--standardcolor);
+                }
+
+                .input {
+                    display: flex;
+                    align-items: center;
+                    column-gap: 1rem;
+                    background-color: #fefefe;
+                    border-radius: 5px;
+                    padding: 1rem 0.5rem;
+                    padding-right: 1.25rem;
+                    width: 100%;
+
+                    i {
+                        font-size: 1.5rem;
+                        color: #4d5258;
+                    }
+
+                    input,
+                    select {
+                        outline: none;
+                        border: none;
+                        height: 100%;
+                        width: 100%;
+                        font-size: 1rem;
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana,
+                            sans-serif;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+
+    .controls {
+        button {
+            min-width: 20%;
+            column-gap: 1rem;
+            padding: 0.6rem 1.5rem;
+            background-color: var(--standardcolor);
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            cursor: pointer;
+
+            i,
+            p {
+                font-size: 1.25rem;
+                font-weight: 500;
+                color: white;
+            }
+        }
+    }
+}

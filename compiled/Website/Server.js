@@ -27,6 +27,9 @@ const ProductPurchaseAPI_1 = __importDefault(require("./Pages/API/ProductPurchas
 const RequestStateAPI_1 = __importDefault(require("./Pages/API/RequestStateAPI"));
 const MyPayments_1 = __importDefault(require("./Pages/Personas/Supplier/MyPayments"));
 const CommentAPI_1 = __importDefault(require("./Pages/API/CommentAPI"));
+const SupplierProfileAPI_1 = __importDefault(require("./Pages/API/SupplierProfileAPI"));
+const EntityData_1 = __importDefault(require("./Pages/API/EntityData"));
+const CategoryData_1 = __importDefault(require("./Pages/API/CategoryData"));
 class Server {
     constructor(data) {
         this.port = parseInt(process.env.SERVER_PORT + "") || 3000;
@@ -115,6 +118,9 @@ class Server {
             new ProductPurchaseAPI_1.default(this.data, Server.api_base_url),
             new RequestStateAPI_1.default(this.data, Server.api_base_url),
             new CommentAPI_1.default(this.data, Server.api_base_url),
+            new SupplierProfileAPI_1.default(this.data, Server.api_base_url),
+            new EntityData_1.default(this.data, Server.api_base_url),
+            new CategoryData_1.default(this.data, Server.api_base_url),
         ];
         for (let api of apis)
             this.app.use(api.base_url, api.router);

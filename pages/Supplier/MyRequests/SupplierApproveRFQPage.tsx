@@ -2,23 +2,23 @@ import React, { useState } from 'react'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyRequests/css/SupplierApproveRFQPage.module.css'
-import { _css, getImage } from '../../../public/Assets/Helpers';
+import { _css, getImage, toFormattedDateOnly } from '../../../public/Assets/Helpers';
 import SentForm from '../../../public/Assets/Components/SentForm';
 
-const SupplierApproveRFQPage = ({ user, entity }) => {
+const SupplierApproveRFQPage = ({ user, entity, request }) => {
 
     return (
         <>
             <S_HeaderComponent user={user} entity={entity} />
             <S_SidebarComponent />
             <div className={_css(styles, 'supplier-body')}>
-                <_self entity={entity} />
+                <_self user={user} entity={entity} request={request} />
             </div>
         </>
     );
 }
 
-const _self = ({ entity }) => {
+const _self = ({ user, entity, request }) => {
     const [sentForm, setSentForm] = useState(false)
 
     const onSentFormClick = () => {
@@ -37,19 +37,19 @@ const _self = ({ entity }) => {
                     <div className={_css(styles, 'title')}>
                         <p>رقم العملية</p>
                     </div>
-                    <p>123456789</p>
+                    <p>{request?.requestId}</p>
                 </div>
                 <div className={_css(styles, 'info')}>
                     <div className={_css(styles, 'title')}>
                         <p>تاريخ الطلب</p>
                     </div>
-                    <p>11/1/2024</p>
+                    <p>{toFormattedDateOnly(request?.createdAt)}</p>
                 </div>
                 <div className={_css(styles, 'info')}>
                     <div className={_css(styles, 'title')}>
                         <p>مقدم إلى</p>
                     </div>
-                    <p>شركة الإيمان للبلاستيك</p>
+                    <p>{request?.customer?.details?.displayName}</p>
                 </div>
             </section>
             <div className={_css(styles, 'divider')}></div>
@@ -73,27 +73,23 @@ const _self = ({ entity }) => {
                                     <div className={_css(styles, 'image-container')}>
                                         <div className={_css(styles, 'rfq-image-container')}>
                                             <img
-                                                src={getImage("background.jpeg")}
+                                                src={request.product.images[0]}
                                                 alt=""
                                                 draggable="false"
                                             />
-                                            <p><b>RFQ12eq56c</b></p>
+                                            <p><b>{request.product.productId}</b></p>
                                         </div>
                                     </div>
                                 </td>
                                 <td className={_css(styles, 'product-name')}>
                                     <p>
-                                        لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور
-                                        أدايبا يسكينج أليايت,سيت دو أيوسمود
-                                        تيمبور لوريم ايبسوم دولار سيت أميت
-                                        ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو
-                                        أيوسمود تيمبور
+                                        {request.product.name}
                                     </p>
                                 </td>
-                                <td><p>دستة</p></td>
-                                <td><p>100</p></td>
-                                <td><p><b>1,500 ج.م</b></p></td>
-                                <td><p>150,000 ج.م</p></td>
+                                <td><p>{request.product.price.unit}</p></td>
+                                <td><p>{request.product.price.quantity}</p></td>
+                                <td><p>{request.product.price.cost} ج.م</p></td>
+                                <td><p><b>{request.product.price.cost} ج.م</b></p></td>
                             </tr>
                         </tbody>
                     </table>
@@ -105,28 +101,28 @@ const _self = ({ entity }) => {
                     <p>شروط العرض</p>
                 </div>
                 <div className={_css(styles, 'data')}>
-                    <div className={_css(styles, 'info')}>
+                    {/* <div className={_css(styles, 'info')}>
                         <div className={_css(styles, 'name')}>
                             <p>الإجمالي قبل الضريبة</p>
                         </div>
                         <div className={_css(styles, 'result')}>
                             <p>487,000 ج.م</p>
                         </div>
-                    </div>
-                    <div className={_css(styles, 'info')}>
+                    </div> */}
+                    {/* <div className={_css(styles, 'info')}>
                         <div className={_css(styles, 'name')}>
                             <p>ضريبة القيمة المضافة</p>
                         </div>
                         <div className={_css(styles, 'result')}>
                             <p>63,000 ج.م</p>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={_css(styles, 'info')}>
                         <div className={_css(styles, 'name')}>
                             <p>الإجمالي</p>
                         </div>
                         <div className={_css(styles, 'result')}>
-                            <p>450,000 ج.م</p>
+                            <p>{request.product.price.cost} ج.م</p>
                         </div>
                     </div>
                     <div className={_css(styles, 'info')}>

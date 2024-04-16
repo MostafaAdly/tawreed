@@ -133,6 +133,7 @@
     .label {
         display: flex;
         column-gap: 1em;
+        margin-bottom: 1rem;
 
         p {
             font-size: 17px;
@@ -147,6 +148,7 @@
     .input {
         border-radius: 8px;
         border: 1px solid var(--font-color);
+        margin-bottom: 1rem;
         /* min-height: 150px; */
         /* padding: 10px;
             padding-bottom: 0; */

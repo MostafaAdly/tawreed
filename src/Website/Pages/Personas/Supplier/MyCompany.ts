@@ -28,10 +28,10 @@ export default class MyCompany extends Page {
                     { data: JSON.stringify({ user, entity }) });
         });
 
-        // SUPPLIER - MY COMPANY PAGE - ADD USER
+        // SUPPLIER - MY COMPANY PAGE - ADD USER - GET REQUEST
         this.router.get('/profile/add-user', async (req: any, res: any) => {
             const user = req.session.user;
-            const entity = await new Entity().load({ _id: user.entity }) as any;
+            const entity = await mongoose.models.Entity.findOne({ _id: user.entity }).populate('roles');
             if (!entity) {
                 // TODO: HANDLE ENTITY IF NULL   
                 return;
@@ -40,8 +40,5 @@ export default class MyCompany extends Page {
                 .render(req, res, '/Supplier/MyCompany/SupplierAddUserPage',
                     { data: JSON.stringify({ user, entity }) });
         });
-
-
-
     }
 }

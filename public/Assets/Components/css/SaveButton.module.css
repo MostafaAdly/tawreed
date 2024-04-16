@@ -1,0 +1,19 @@
+.controls {
+    button {
+        min-width: 20%;
+        column-gap: 1rem;
+        padding: 0.6rem 1.5rem;
+        background-color: var(--standardcolor);
+        color: white;
+        border: none;
+        border-radius: 1rem;
+        cursor: pointer;
+
+        i,
+        p {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: white;
+        }
+    }
+}

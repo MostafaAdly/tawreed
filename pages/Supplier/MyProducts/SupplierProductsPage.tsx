@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyProducts/css/SupplierProductsPage.module.css'
-import { faker } from '@faker-js/faker/locale/ar';
-import { _css } from '../../../public/Assets/Helpers';
+import { _css, onTabClick, saveCategoryDescription } from '../../../public/Assets/Helpers';
+import SaveButton from '../../../public/Assets/Components/SaveButton';
+import Filter from '../../../public/Assets/Components/Filter';
 
 const SupplierProductsPage = ({ user, entity, categories, products }) => {
 
@@ -20,17 +21,14 @@ const SupplierProductsPage = ({ user, entity, categories, products }) => {
 
 const _self = ({ user, entity, categories, entityProducts }) => {
     const [ancestry, setAncestry] = useState("");
-    const [category, setCategory] = useState(null);
     const [products, setProducts] = useState<any[]>([]);
-
-
+    // const [enabledFilters, setEnabledFilters] = useState([]);
 
     useEffect(() => {
         const pros: any[] = [];
         for (var cat of categories.filter(c => (c.ancestry + "/" + c.categoryId).includes(ancestry))) {
             // console.log(cat)
             for (var product of cat.products) {
-                console.log(product)
                 if (pros.find(p => p._id == product)) continue;
                 const pro = entityProducts.find(p => p._id == product);
                 if (pro)
@@ -46,16 +44,53 @@ const _self = ({ user, entity, categories, entityProducts }) => {
             return;
         }
         setAncestry(category.ancestry + "/" + category.categoryId);
-        console.log("Filtering Categories to show:", ancestry)
+        // console.log("Filtering Categories to show:", ancestry);
+        resetCurrentTab();
+    }
+
+    const resetCurrentTab = () => {
+        // RESET CURRENT TAB
+        const currentTab = document.getElementById('current-tab') as any;
+        currentTab.classList.remove(_css(styles, 'current-tab'))
+        onTabClick({
+            styles,
+            target: currentTab,
+            activatedTabClassName: "current-tab",
+            tabClassName: "tab"
+        });
     }
 
     const getCurrentCategory = () => {
         return ancestry == "" ? null : categories.filter(c => c.categoryId == ancestry.split("/").pop())[0];
     }
+
+
+    const onSave = async () => {
+        const description = document.getElementById('description') as any;
+        const currentCategory = getCurrentCategory();
+        if (!description || !currentCategory) return;
+        console.log(currentCategory);
+        if (entity.details.description == description.value) return;
+        const response = await saveCategoryDescription({
+            categoryId: currentCategory._id,
+            userId: user._id,
+            token: user.token,
+            description: description.value
+        });
+        if (response?.error) {
+            alert("حدث خطأ أثناء تحديث الوصف");
+            return;
+        } else if (response?.success) {
+            alert("تم تحديث الوصف بنجاح");
+            categories.find(c => c.categoryId == currentCategory.categoryId).description = description.value;
+        }
+        resetCurrentTab();
+    }
+
     return (
         <>
-            <section className={styles.categories}>
-                <div className={styles.path}>
+            <section className={_css(styles, 'categories')}>
+                <div className={_css(styles, 'path')}>
                     <p onClick={() => filterCategories(null)}>جميع المنتجات</p>
                     {ancestry.split("/").filter(id => id != "").map((id, index) => {
                         const category = categories.find(category => category.categoryId == id);
@@ -69,11 +104,11 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                         );
                     })}
                 </div>
-                <div className={styles['categories-self']}>
+                <div className={_css(styles, 'categories-self')}>
                     {categories.filter(cat => cat.ancestry == ancestry).map((cat, index) => {
                         return (
-                            <div className={styles.category} key={index} onClick={() => filterCategories(cat)}>
-                                <div className={styles.icon}>
+                            <div className={_css(styles, 'category')} key={index} onClick={() => filterCategories(cat)}>
+                                <div className={_css(styles, 'icon')}>
                                     <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
                                 </div>
                                 <p>{cat.name}</p>
@@ -82,12 +117,13 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                     })}
                 </div>
             </section>
-            <section className={styles.tabs} id="section_tabs">
+            <section className={_css(styles, 'tabs')} id="section_tabs">
                 <button
+                    id='current-tab'
                     className={_css(styles, 'tab current-tab')}
-                    id="tab_products"
-                    onClick={(e) => onTabClick(e)}
-                    data-section="section_products"
+                    onClick={(e) => onTabClick({ styles, target: e.target, activatedTabClassName: "current-tab", tabClassName: "tab" })}
+                    data-tab-id="section_products"
+                    data-default-display="block"
                 >
                     <p>المنتجات</p>
                 </button>
@@ -95,77 +131,40 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                     ancestry != "" ?
                         <button
                             className={_css(styles, 'tab')}
-                            id="tab_description"
-                            onClick={(e) => onTabClick(e)}
-                            data-section="section_description"
+                            onClick={(e) => onTabClick({ styles, target: e.target, activatedTabClassName: "current-tab", tabClassName: "tab" })}
+                            data-tab-id="section_description"
+                            data-default-display="block"
                         >
                             <p>وصف المجموعة</p>
                         </button>
                         : null
                 }
             </section>
-            <section className={styles.description} id="section_description">
-                <div className={styles.title} ><p>وصف {getCurrentCategory()?.name}</p></div>
-                <div className={styles.label}>
+            <section className={_css(styles, 'description')} id="section_description">
+                <div className={_css(styles, 'label')}>
                     <p>اكتب ملخص عن المجموعة</p>
-                    <button>
-                        <i className={_css(styles, 'fa-solid fa-pen')}></i>
-                        <p>SAVE</p>
-                    </button>
                 </div>
-                <div className={styles.input}>
+                <div className={_css(styles, 'input')}>
                     <textarea
                         name="description"
                         id="description"
                         placeholder="اكتب ملخص عن هذه المجموعة"
-                        defaultValue={faker.commerce.productDescription()}
-                        value={getCurrentCategory()?.description}
+                        defaultValue={getCurrentCategory()?.description}
                     >
                     </textarea>
                 </div>
+                <SaveButton onSave={onSave} />
             </section>
-            <section className={styles.products} id="section_products">
-                <div className={styles.filters} >
-                    <div className={styles.icon + " box-shadow-hover center"}>
-                        <i className={_css(styles, 'fa-solid fa-filter')}></i>
-                    </div>
-                    <div className={styles.self}>
-                        <div className={styles.filter + " " + styles.checked + " box-shadow-hover"}>
-                            <p>جميع المنتجات</p>
-                            <div className={styles.control}>
-                                <div className={styles.check}>
-                                    <i className={_css(styles, 'fa-solid fa-circle-check')}></i>
-                                </div>
-                                <div className={styles.exit}>
-                                    <i className={_css(styles, 'fa-solid fa-circle-xmark')}></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.filter + " box-shadow-hover"}>
-                            <p>منتجات مفعلة</p>
-                            <div className={styles.control}>
-                                <div className={styles.check}>
-                                    <i className={_css(styles, 'fa-solid fa-circle-check')}></i>
-                                </div>
-                                <div className={styles.exit}>
-                                    <i className={_css(styles, 'fa-solid fa-circle-xmark')}></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.filter + " box-shadow-hover"}>
-                            <p>منتجات غير مفعلة</p>
-                            <div className={styles.control}>
-                                <div className={styles.check}>
-                                    <i className={_css(styles, 'fa-solid fa-circle-check')}></i>
-                                </div>
-                                <div className={styles.exit}>
-                                    <i className={_css(styles, 'fa-solid fa-circle-xmark')}></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles['upload-controls']}>
+            <section className={_css(styles, 'products')} id="section_products">
+                {/*
+                    <Filter
+                        searchObject={products}
+                        enabledFilters={enabledFilters}
+                        setEnabledFilters={setEnabledFilters}
+                        callback={() => { }}
+                    />
+                */}
+                <div className={_css(styles, 'upload-controls')}>
                     <button className={"center box-shadow-hover"}>
                         <i className={_css(styles, 'fa-solid fa-arrow-up-from-bracket')}></i>
                         <p>تحميل مجمع</p>
@@ -180,7 +179,7 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                         <tr>
                             <th><p><b>#</b></p></th>
                             <th><p>كود المنتج</p></th>
-                            <th className={styles.large}><p>وصف المنتج</p></th>
+                            <th className={_css(styles, 'large')}><p>وصف المنتج</p></th>
                             <th><p>السعر</p></th>
                             <th><p>الوحدة</p></th>
                             <th><p>الحالة</p></th>
@@ -190,7 +189,7 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                             return (
                                 <tr key={index}>
                                     <td><p><b>{index + 1}</b></p></td>
-                                    <td className={styles.id}>
+                                    <td className={_css(styles, 'id')}>
                                         <div className={"center"}><p>{product.productId}</p></div>
                                     </td>
                                     <td>
@@ -218,30 +217,6 @@ const _self = ({ user, entity, categories, entityProducts }) => {
             </section>
         </>
     );
-}
-
-
-const onTabClick = (e) => {
-    const tabs = document.getElementById("section_tabs")?.children;
-    if (!tabs?.length) return;
-    var target = e.target;
-    if (e.target.tagName.toLowerCase() == "p")
-        target = e.target.parentNode
-    for (var all of tabs)
-        if (all) {
-            all.classList.remove(styles['current-tab']);
-            const sectionId = all.getAttribute("data-section");
-            if (!sectionId) continue;
-            const section = document.getElementById(sectionId);
-            if (section)
-                section.style.display = "none";
-        }
-    target.classList.add(styles['current-tab']);
-    const sectionId = target.getAttribute("data-section");
-    if (!sectionId) return;
-    const section = document.getElementById(sectionId);
-    if (section)
-        section.style.display = "block";
 }
 
 export default SupplierProductsPage;

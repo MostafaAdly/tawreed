@@ -36,10 +36,10 @@ class MyCompany extends Page_1.default {
             this.data.server.next
                 .render(req, res, '/Supplier/MyCompany/SupplierCompanyPage', { data: JSON.stringify({ user, entity }) });
         }));
-        // SUPPLIER - MY COMPANY PAGE - ADD USER
+        // SUPPLIER - MY COMPANY PAGE - ADD USER - GET REQUEST
         this.router.get('/profile/add-user', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
-            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            const entity = yield mongoose_1.default.models.Entity.findOne({ _id: user.entity }).populate('roles');
             if (!entity) {
                 // TODO: HANDLE ENTITY IF NULL   
                 return;

@@ -33,7 +33,15 @@ export default class MyRequests extends Page {
                 // TODO: HANDLE ENTITY IF NULL
                 return;
             }
-            const request = await mongoose.models.Request.find({ requestId: req.params.id }).populate('product').exec();
+            const request = await mongoose.models.Request
+                .findOne({ requestId: req.params.id })
+                .populate('product')
+                .populate('customer')
+                .exec();
+            if (!request) {
+                // TODO: HANDLE REQUEST IF NULL
+                return;
+            }
             this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveRFQPage', { data: JSON.stringify({ user, entity, request }) });
         });
 

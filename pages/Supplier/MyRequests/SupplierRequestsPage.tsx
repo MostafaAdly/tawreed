@@ -209,7 +209,7 @@ const _self = ({ entity, requests, user }) => {
                                                 <a className={_css(styles, 'center box-shadow')} onClick={() => deleteRequest(request._id)}>
                                                     <i className={_css(styles, 'fa-solid fa-trash')}></i>
                                                 </a>
-                                                <a className={_css(styles, 'center edit box-shadow')} href={`/s/requests/rfq/${request.product.productId}`}>
+                                                <a className={_css(styles, 'center edit box-shadow')} href={`/s/requests/rfq/${request.requestId}`}>
                                                     <i className={_css(styles, 'fa-solid fa-pen')}></i>
                                                 </a>
                                                 <a className={_css(styles, 'center view box-shadow')} href={`/c/suppliers/${entity.entityId}/products/${request.product.productId}/rfq`}>

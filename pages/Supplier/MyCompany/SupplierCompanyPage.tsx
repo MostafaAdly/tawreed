@@ -2,7 +2,8 @@ import React from 'react'
 import styles from '../../../public/Supplier/MyCompany/css/SupplierCompanyPage.module.css'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
-import { _css } from '../../../public/Assets/Helpers';
+import { _css, saveEntityDescription } from '../../../public/Assets/Helpers';
+import SaveButton from '../../../public/Assets/Components/SaveButton';
 
 const SupplierCompanyPage = ({ user, entity }) => {
     return (
@@ -17,6 +18,14 @@ const SupplierCompanyPage = ({ user, entity }) => {
 }
 
 const _self = ({ user, entity }) => {
+
+    const onSave = async () => {
+        const description = document.getElementById('description') as any;
+        if (!description) return;
+        // description check
+        if (entity.details.description != description.value)
+            await saveEntityDescription({ entityId: entity._id, userId: user._id, token: user.token, description: description.value });
+    }
 
     return (
         <>
@@ -71,7 +80,7 @@ const _self = ({ user, entity }) => {
                                 return (
                                     <tr key={index}>
                                         <td><p>{user.displayName}</p></td>
-                                        <td><p>{user.role.name}</p></td>
+                                        <td><p>{user.details?.nickname || user.role.name}</p></td>
                                         <td><p>{user.role.name}</p></td>
                                         <td className={_css(styles, 'controls center')}>
                                             <button className='opacity-active'>
@@ -96,10 +105,12 @@ const _self = ({ user, entity }) => {
                 <div className={_css(styles, 'info')}><p>اكتب ملخص عن الشركة</p></div>
                 <textarea
                     typeof="text"
+                    id='description'
                     defaultValue={entity.details.description}
                     rows={8}
                     placeholder="اكتب وصف عن الشركة"
                 ></textarea>
+                <SaveButton onSave={onSave} />
             </div >
         </>
     );
