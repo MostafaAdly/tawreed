@@ -51,18 +51,20 @@ export default class Server {
     }
     initialize() {
         this.sessionHandler = new SessionHandler(this.data);
-        // this.multer = multer({
-        //     storage: multer.diskStorage({
-        //         destination: (req, file, cb) => {
-        //             cb(null, `views/LocalDatabase`)
-        //         },
-        //         filename: (req: any, file, cb) => {
-        //             const title = req.body.email ?? file.fieldname;
-        //             const fileType = file.mimetype.split("/")[file.mimetype.split("/").length - 1] ?? "png";
-        //             cb(null, `${df.format(new Date(), 'YYYY-MM-DD-HH-mm-ss')}_${uuid().split("-")[0]}_${title}.${fileType}`);
-        //         }
-        //     })
-        // });
+        this.multer = multer({
+            storage: multer.diskStorage({
+                destination: (req, file, cb) => {
+                    cb(null, 'LocalDatabase/images/products')
+                },
+                filename: (req: any, file, cb) => {
+                    console.log(req.url);
+                    const fileType = file.mimetype.split("/")[file.mimetype.split("/").length - 1] ?? "png";
+                    cb(null, `${df.format(new Date(),
+                        'YYYY-MM-DD-HH-mm-ss'
+                    )}_${uuid().split("-")[0]}.${fileType}`);
+                }
+            })
+        });
     }
     load_Middleware() {
         this.app.use(bodyParser.json());

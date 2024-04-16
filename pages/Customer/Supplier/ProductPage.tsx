@@ -21,15 +21,26 @@ const _self = ({ user, supplier, product, comments }) => {
     const [image, setImage] = useState(product.images[0]);
     const [images, setImages] = useState(product.images.filter(img => img != image));
     const [sentForm, setSentForm] = useState(false);
+    const [errorForm, setErrorForm] = useState(false);
+    const [formTitle, setFormTitle] = useState("تم تأكيد طلب العرض بنجاح");
     const [_comments, setComments] = useState(comments);
 
     const onSentFormClick = () => {
         setSentForm(false);
     }
 
-    const onPurchase = (e) => {
+    const onPurchase = async (e) => {
         setSentForm(true);
-        purchaseProduct({ userId: user._id, token: user.token, productId: product._id, supplierId: supplier._id, customerId: user.entity })
+        const response = await purchaseProduct({
+            userId: user._id,
+            token: user.token,
+            productId: product._id,
+            supplierId: supplier._id,
+            customerId: user.entity
+        }) || {};
+        setFormTitle(response.success ? 'تم ارسال طلبك الى الشركة بنجاح' : 'حدث خطأ');
+        setErrorForm(!response.success);
+        setSentForm(true);
     }
 
     const onRFQ = (e) => {
@@ -60,7 +71,7 @@ const _self = ({ user, supplier, product, comments }) => {
 
     return (
         <>
-            <SentForm active={sentForm} title='تم ارسال طلبك الى الشركة بنجاح' text='العودة إلى صفحة الطلب الآن' callback={onSentFormClick} />
+            <SentForm active={sentForm} title={formTitle} text='العودة إلى صفحة الطلب الآن' error={errorForm} callback={onSentFormClick} />
             <div className={_css(styles, 'container center')}>
                 <section className={_css(styles, 'top-container')}>
                     <div className={_css(styles, 'product-container')}>

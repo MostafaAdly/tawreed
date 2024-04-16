@@ -5,4 +5,5 @@ export default class MyProducts extends Page {
     constructor(data: any, base_url?: string);
     private run;
     private getAllProducts;
+    private getEndCategories;
 }

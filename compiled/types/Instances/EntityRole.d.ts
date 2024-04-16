@@ -5,13 +5,15 @@ export default class EntityRole {
     roleId: string;
     name: string;
     permissions: Permission[];
+    priority: number;
     constructor({ id }: {
         id: string;
     });
-    constructor({ id, name, permissions }: {
+    constructor({ id, name, permissions, priority }: {
         id?: string;
         name: string;
         permissions: Permission[];
+        priority: number;
     });
     load: (query: any) => Promise<this | undefined>;
     save: () => Promise<void>;

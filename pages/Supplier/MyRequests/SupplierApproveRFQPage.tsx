@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyRequests/css/SupplierApproveRFQPage.module.css'
-import { _css, getImage, toFormattedDateOnly } from '../../../public/Assets/Helpers';
+import { _css, changeRequestState, toFormattedDateOnly } from '../../../public/Assets/Helpers';
 import SentForm from '../../../public/Assets/Components/SentForm';
+import { ResponseType } from '../../../src/Instances/ResponseType';
 
 const SupplierApproveRFQPage = ({ user, entity, request }) => {
 
@@ -19,19 +20,40 @@ const SupplierApproveRFQPage = ({ user, entity, request }) => {
 }
 
 const _self = ({ user, entity, request }) => {
-    const [sentForm, setSentForm] = useState(false)
+    const [sentForm, setSentForm] = useState(false);
+    const [errorForm, setErrorForm] = useState(false);
+    const [formTitle, setFormTitle] = useState("تم تأكيد طلب العرض بنجاح");
+    const [teleporting, setTeleporting] = useState(false);
 
     const onSentFormClick = () => {
         setSentForm(false);
     }
 
-    const onRFQSend = () => {
+    const onRFQSend = async () => {
+        if (teleporting) return;
+        const response = (await changeRequestState({
+            userId: user._id, token: user.token, requestId: request._id, state: "RFQ_REPLY_PENDING"
+        })) || {};
+        setFormTitle(response.error ? 'حدث خطأ' : "تم تأكيد طلب العرض بنجاح");
+        setErrorForm(response.error);
         setSentForm(true);
+        if (!response.success) return;
+        setTeleporting(response.success);
+        setTimeout(() => {
+            if (teleporting) return;
+            if (location)
+                location.href = "/s/requests"
+        }, 1500);
     }
 
     return (
         <>
-            <SentForm active={sentForm} title='تم تأكيد طلب العرض بنجاح' text='العودة إلى طلباتي الآن' callback={onSentFormClick} />
+            <SentForm active={sentForm}
+                title={formTitle}
+                text='العودة إلى عرض السعر الآن'
+                callback={onSentFormClick}
+                error={errorForm}
+            />
             <section className={_css(styles, 'order-info')}>
                 <div className={_css(styles, 'info')}>
                     <div className={_css(styles, 'title')}>

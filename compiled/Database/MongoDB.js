@@ -61,6 +61,9 @@ class MongoDB {
             yield mongoose_1.default.models.Product.deleteMany({});
             yield mongoose_1.default.models.EntityCategory.deleteMany({});
             yield mongoose_1.default.models.EntityRole.deleteMany({});
+            yield mongoose_1.default.models.Comment.deleteMany({});
+            yield mongoose_1.default.models.Request.deleteMany({});
+            yield mongoose_1.default.models.Payment.deleteMany({});
         });
         this.deleteAllDepartments = () => __awaiter(this, void 0, void 0, function* () {
             yield mongoose_1.default.models.Department.deleteMany({});
@@ -68,15 +71,25 @@ class MongoDB {
         this.deleteAllUsers = () => __awaiter(this, void 0, void 0, function* () {
             yield mongoose_1.default.models.User.deleteMany({});
         });
+        this.createEntityRoles = () => __awaiter(this, void 0, void 0, function* () {
+            yield mongoose_1.default.models.EntityRole.deleteMany();
+            const roles = [
+                new EntityRole_1.default({ name: "مدير الشركة", permissions: [Permission_1.Permission.CUSTOMER_ALL, Permission_1.Permission.SUPPLIER_ALL], priority: 5 }),
+                new EntityRole_1.default({ name: "مدير قسم المشتريات", permissions: [Permission_1.Permission.CUSTOMER_ALL], priority: 50 }),
+                new EntityRole_1.default({ name: "مدير قسم المبيعات", permissions: [Permission_1.Permission.SUPPLIER_ALL], priority: 50 })
+            ];
+            for (const role of roles)
+                yield role.save();
+        });
         this.createFakerDummyData = (erase = true) => __awaiter(this, void 0, void 0, function* () {
             const timeTook_start = Date.now();
             if (erase)
                 yield this.eraseDatabase();
             const deps = yield this.import_departments_intoMySQL();
             const roles = [
-                new EntityRole_1.default({ name: "مدير الشركة", permissions: [Permission_1.Permission.CUSTOMER_ALL, Permission_1.Permission.SUPPLIER_ALL] }),
-                new EntityRole_1.default({ name: "مدير قسم المشتريات", permissions: [Permission_1.Permission.CUSTOMER_ALL] }),
-                new EntityRole_1.default({ name: "مدير قسم المبيعات", permissions: [Permission_1.Permission.SUPPLIER_ALL] })
+                new EntityRole_1.default({ name: "مدير الشركة", permissions: [Permission_1.Permission.CUSTOMER_ALL, Permission_1.Permission.SUPPLIER_ALL], priority: 5 }),
+                new EntityRole_1.default({ name: "مدير قسم المشتريات", permissions: [Permission_1.Permission.CUSTOMER_ALL], priority: 50 }),
+                new EntityRole_1.default({ name: "مدير قسم المبيعات", permissions: [Permission_1.Permission.SUPPLIER_ALL], priority: 50 })
             ];
             for (const role of roles)
                 yield role.save();

@@ -7,6 +7,7 @@ export default class MongoDB {
     eraseDatabase: () => Promise<void>;
     deleteAllDepartments: () => Promise<void>;
     deleteAllUsers: () => Promise<void>;
+    createEntityRoles: () => Promise<void>;
     createFakerDummyData: (erase?: boolean) => Promise<void>;
     random: (list: any[]) => any;
     createDefaultDeveloperUser: (entities: any[], roles: any[]) => Promise<void>;

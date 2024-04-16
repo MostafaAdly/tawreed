@@ -18,8 +18,8 @@ export default class ProductPurchaseAPI extends Page {
             if (!productId || !token || !userId || !supplierId) return res.status(400).send({ message: "Invalid request" });
             const isValidToken = await this.data.server.sessionHandler.validateUserByToken(userId, token);
             if (!isValidToken) return res.status(401).send({ message: "Invalid token", error: 1 });
-            const request = await new Request().setRfqSettings(rfqSettings).processPurchase(requestType, productId, supplierId, customerId, userId);
-            return res.send({ message: "Purchase request sent successfully", success: 1, request })
+            await new Request().setRfqSettings(rfqSettings).processPurchase(requestType, productId, supplierId, customerId, userId);
+            return res.send({ message: "Purchase request sent successfully", success: 1 })
         });
     }
 }

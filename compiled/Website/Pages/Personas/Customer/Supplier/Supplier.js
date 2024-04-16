@@ -16,6 +16,7 @@ const Product_1 = __importDefault(require("../../../../../Instances/Product"));
 const Page_1 = __importDefault(require("../../../Page"));
 const Entity_1 = __importDefault(require("../../../../../Instances/Entity"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const Home_1 = __importDefault(require("../Home/Home"));
 class Supplier extends Page_1.default {
     constructor(data, base_url) {
         super(base_url || Supplier.base_url);
@@ -25,7 +26,7 @@ class Supplier extends Page_1.default {
     run() {
         // ALL SUPPLIERS OF A DEPARTMENT
         this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            return res.status(200).redirect('/home#departments');
+            return res.status(200).redirect(Home_1.default.base_url + '#departments');
         }));
         // SUPPLIER BY ID
         this.router.get('/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {

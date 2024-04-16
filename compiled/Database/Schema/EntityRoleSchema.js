@@ -6,6 +6,7 @@ class EntityRoleSchema extends mongoose_1.Schema {
         roleId: String,
         name: String,
         permissions: [String],
+        priority: Number
     } }) {
         if (id === null || id === void 0 ? void 0 : id.enabled)
             schema[id.key] = id.value;

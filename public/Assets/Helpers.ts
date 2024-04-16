@@ -11,8 +11,8 @@ export const _css = (styles, css) => {
         css.split(" ").forEach(str => cssExceptions.includes(str) ? array.push(str) : array.push(styles[str]));
     return array.join(" ");
 }
-export const getImage = (path) => {
-    return `/api/v1/images/${path}`;
+export const getImage = (path: string) => {
+    return path.startsWith("http") ? path : `/api/v1/images${(path.startsWith("/") ? "" : "/") + path}`;
 }
 
 export const currentTime = () => new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -119,6 +119,16 @@ export const saveCategoryDescription = async ({ userId, token, categoryId, descr
     try {
         return (await axios.post(`${API_BASE_URL}/category/description`, {
             userId, token, categoryId, description
+        })).data;
+    } catch (error) {
+        return null;
+    }
+}
+
+export const createProduct = async ({ userId, token, product }) => {
+    try {
+        return (await axios.post(`${API_BASE_URL}/profile/product`, {
+            userId, token, product
         })).data;
     } catch (error) {
         return null;

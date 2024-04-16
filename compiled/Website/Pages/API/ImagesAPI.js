@@ -12,8 +12,8 @@ class ImagesAPI extends Page_1.default {
         this.run();
     }
     run() {
-        this.router.get("/:path", (req, res) => {
-            const imagePath = path_1.default.join(process.cwd(), `/LocalDatabase/images/${req.params.path}`);
+        this.router.get("/*", (req, res) => {
+            const imagePath = path_1.default.join(process.cwd(), `/LocalDatabase/images/${req.url}`);
             if (fs_1.default.existsSync(imagePath)) {
                 res.sendFile(imagePath);
             }

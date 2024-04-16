@@ -4,6 +4,7 @@ import { ResponseType } from '../../../Instances/ResponseType';
 import Page from "../Page";
 import Payment from "../../../Instances/Payment";
 import { RequestType } from "../../../Instances/RequestType";
+import MyRequests from "../Personas/Supplier/MyRequests";
 
 export default class RequestStateAPI extends Page {
     private data: any;
@@ -37,8 +38,9 @@ export default class RequestStateAPI extends Page {
                 toUpdate.payment = payment._id;
             }
             mongoose.models.Request.updateOne({ _id: requestId }, toUpdate).exec();
-            return res.send({ message: "Request state updated successfully", success: 1 });
+            return res.status(200).send({ message: "Request state updated successfully", success: 1 });
         });
+
         this.router.delete('/delete', async (req: any, res: any) => {
             const { requestId, userId, token } = req.body;
             if (!requestId || !token || !userId) return res.status(400).send({ message: "Invalid request" });

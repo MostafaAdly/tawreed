@@ -19,6 +19,7 @@ class EntityRole {
     constructor(input) {
         this._id = new mongoose_1.default.Types.ObjectId();
         this.roleId = Utils_1.default.roleId_prefix + Utils_1.default.createId();
+        this.priority = 100;
         this.load = (query) => __awaiter(this, void 0, void 0, function* () {
             const doc = yield ModelManager_1.default.loadOne(this.constructor.name, query);
             if (!doc)

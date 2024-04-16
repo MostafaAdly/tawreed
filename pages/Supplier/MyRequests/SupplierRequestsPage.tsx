@@ -62,6 +62,17 @@ const _self = ({ entity, requests, user }) => {
         }
     }
 
+    const onRFQReject = async ({ requestId }) => {
+        const response = (await changeRequestState({
+            userId: user._id, token: user.token, requestId, state: "RFQ_REJECTED"
+        })) || {};
+        if (response.success) {
+            _setRequests(_requests.map(request => {
+                if (request._id == requestId) request.responseType = ResponseType.RFQ_REJECTED;
+                return request;
+            }));
+        }
+    }
     const deleteRequest = async (requestId) => {
         const response = await sendDeleteRequest({ requestId, token: user.token, userId: user._id });
         if (response?.success)
@@ -76,6 +87,71 @@ const _self = ({ entity, requests, user }) => {
 
     const onTabChange = () => {
         setEnabledFilters([]);
+    }
+
+    const handleIconForRequestState = (state) => {
+        const object = (() => {
+            switch (state) {
+                case ResponseType.PURCHASE_CANCELLED:
+                    return {
+                        icon: 'xmark',
+                        className: 'cancelled invert'
+                    }
+                case ResponseType.PURCHASE_DELIVERED:
+                    return {
+                        icon: 'truck-ramp-box',
+                        className: 'delivered'
+                    }
+                case ResponseType.PURCHASE_IN_DELIVERY:
+                    return {
+                        icon: 'truck-fast',
+                        className: 'in-delivery'
+                    }
+                case ResponseType.PURCHASE_OUT_OF_STOCK:
+                    return {
+                        icon: 'pallet',
+                        className: 'out-of-stock'
+                    }
+                case ResponseType.PURCHASE_PENDING:
+                    return {
+                        icon: 'business-time',
+                        className: 'pending'
+                    }
+                case ResponseType.PURCHASE_RETURNED:
+                    return {
+                        icon: 'rotate-left',
+                        className: 'returned'
+                    }
+                case ResponseType.RFQ_APPROVED:
+                    return {
+                        icon: 'thumbs-up',
+                        className: 'approved invert'
+                    }
+                case ResponseType.RFQ_PENDING:
+                    return {
+                        icon: 'hourglass-half',
+                        className: 'pending'
+                    }
+                case ResponseType.RFQ_REPLY_PENDING:
+                    return {
+                        icon: 'clock',
+                        className: 'reply-pending invert'
+                    }
+                case ResponseType.RFQ_REJECTED:
+                    return {
+                        icon: 'xmark',
+                        className: 'rejected'
+                    }
+            }
+            return {
+                icon: 'file-export',
+                className: ''
+            }
+        })() as any;
+        return {
+            icon: <i className={`fa-solid fa-${object.icon}`}></i>,
+            className: object.className
+        }
     }
 
     return (
@@ -118,43 +194,46 @@ const _self = ({ entity, requests, user }) => {
                             <th><p>عرض التفاصيل</p></th>
                         </tr>
                         {
-                            filterRequests().filter(request => request.requestType == RequestType.PURCHASE).map((request, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td className={_css(styles, 'id')}>
-                                            <div className={_css(styles, 'center')}><p>{request.requestId}</p></div>
-                                        </td>
-                                        <td className={_css(styles, 'large')}>
-                                            <p>
-                                                {request.product.name}
-                                            </p>
-                                        </td>
-                                        <td><p>{request.product.price.quantity}</p></td>
-                                        <td><p>{toFormattedDateOnly(request.createdAt)}</p></td>
-                                        <td>
-                                            <div className={_css(styles, 'center')}>
-                                                <div className={_css(styles, 'box center box-shadow-hover')} onClick={handleShowPopUpOnClick} id={`state:${request._id.toString()}`}>
-                                                    <ChooseAction selection={
-                                                        getActions("purchase", request._id, request.responseType, Object.keys(ResponseType))
-                                                    } />
-                                                    <p>{request.responseType}</p>
-                                                    <i className={_css(styles, 'fa-solid fa-file-export')}></i>
+                            filterRequests()
+                                .filter(request => request.requestType == RequestType.PURCHASE)
+                                .map((request, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td className={_css(styles, 'id')}>
+                                                <div className={_css(styles, 'center')}><p>{request.requestId}</p></div>
+                                            </td>
+                                            <td className={_css(styles, 'large')}>
+                                                <p>
+                                                    {request.product.name}
+                                                </p>
+                                            </td>
+                                            <td><p>{request.product.price.quantity}</p></td>
+                                            <td><p>{toFormattedDateOnly(request.createdAt)}</p></td>
+                                            <td>
+                                                <div className={_css(styles, 'center')}>
+                                                    <div className={_css(styles, 'box center box-shadow-hover ' + handleIconForRequestState(request.responseType).className)}
+                                                        onClick={handleShowPopUpOnClick} id={`state:${request._id.toString()}`}>
+                                                        <ChooseAction selection={
+                                                            getActions("purchase", request._id, request.responseType, Object.keys(ResponseType))
+                                                        } />
+                                                        <p>{request.responseType}</p>
+                                                        {handleIconForRequestState(request.responseType).icon}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div className={_css(styles, 'controls')}>
-                                                <a className={_css(styles, 'center box-shadow')} onClick={() => deleteRequest(request._id)}>
-                                                    <i className={_css(styles, 'fa-solid fa-trash')}></i>
-                                                </a>
-                                                <a className={_css(styles, 'center view box-shadow')} href={`/c/suppliers/${entity.entityId}/products/${request.product.productId}`}>
-                                                    <i className={_css(styles, 'fa-solid fa-eye')}></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                );
-                            })
+                                            </td>
+                                            <td>
+                                                <div className={_css(styles, 'controls')}>
+                                                    <a className={_css(styles, 'center box-shadow')} onClick={() => deleteRequest(request._id)}>
+                                                        <i className={_css(styles, 'fa-solid fa-trash')}></i>
+                                                    </a>
+                                                    <a className={_css(styles, 'center view box-shadow')} href={`/c/suppliers/${entity.entityId}/products/${request.product.productId}`}>
+                                                        <i className={_css(styles, 'fa-solid fa-eye')}></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
                         }
                     </tbody>
                 </table>
@@ -196,10 +275,10 @@ const _self = ({ entity, requests, user }) => {
                                         <td><p>الدفع عند الإستلام</p></td>
                                         <td>
                                             <div className={_css(styles, 'center')}>
-                                                <div className={_css(styles, 'box center box-shadow-hover')}
+                                                <div className={_css(styles, 'box center box-shadow-hover ' + handleIconForRequestState(request.responseType).className)}
                                                     onClick={handleShowPopUpOnClick} id={`state:${request._id.toString()}`}>
                                                     <p>{request.responseType}</p>
-                                                    <i className={_css(styles, 'fa-solid fa-file-export')}></i>
+                                                    {handleIconForRequestState(request.responseType).icon}
                                                 </div>
 
                                             </div>
@@ -209,10 +288,23 @@ const _self = ({ entity, requests, user }) => {
                                                 <a className={_css(styles, 'center box-shadow')} onClick={() => deleteRequest(request._id)}>
                                                     <i className={_css(styles, 'fa-solid fa-trash')}></i>
                                                 </a>
-                                                <a className={_css(styles, 'center edit box-shadow')} href={`/s/requests/rfq/${request.requestId}`}>
-                                                    <i className={_css(styles, 'fa-solid fa-pen')}></i>
-                                                </a>
-                                                <a className={_css(styles, 'center view box-shadow')} href={`/c/suppliers/${entity.entityId}/products/${request.product.productId}/rfq`}>
+                                                {
+                                                    request.responseType != ResponseType.RFQ_PENDING && request.responseType != ResponseType.RFQ_REPLY_PENDING ? null :
+                                                        (
+                                                            <>
+                                                                <a className={_css(styles, 'center reject box-shadow')} onClick={() => onRFQReject({ requestId: request._id })}>
+                                                                    <i className={_css(styles, 'fa-solid fa-xmark')}></i>
+                                                                </a>
+                                                                {
+                                                                    request.responseType != ResponseType.RFQ_PENDING ? null :
+                                                                        <a className={_css(styles, 'center edit box-shadow')} href={`/s/requests/rfq/${request.requestId}`}>
+                                                                            <i className={_css(styles, 'fa-solid fa-pen')}></i>
+                                                                        </a>
+                                                                }
+                                                            </>
+                                                        )
+                                                }
+                                                <a className={_css(styles, 'center view box-shadow')} href={`/c/suppliers/${entity.entityId}/products/${request.product.productId}`}>
                                                     <i className={_css(styles, 'fa-solid fa-eye')}></i>
                                                 </a>
                                             </div>

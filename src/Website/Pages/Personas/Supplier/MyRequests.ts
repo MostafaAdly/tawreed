@@ -1,4 +1,5 @@
 import Entity from "../../../../Instances/Entity";
+import { ResponseType } from "../../../../Instances/ResponseType";
 import Page from "../../Page";
 import mongoose from "mongoose";
 
@@ -42,6 +43,7 @@ export default class MyRequests extends Page {
                 // TODO: HANDLE REQUEST IF NULL
                 return;
             }
+            if (request.responseType != ResponseType.RFQ_PENDING) res.status(300).redirect(MyRequests.base_url);
             this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveRFQPage', { data: JSON.stringify({ user, entity, request }) });
         });
 

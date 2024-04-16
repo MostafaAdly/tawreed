@@ -37,7 +37,7 @@ class MyCompany extends Page_1.default {
                 .render(req, res, '/Supplier/MyCompany/SupplierCompanyPage', { data: JSON.stringify({ user, entity }) });
         }));
         // SUPPLIER - MY COMPANY PAGE - ADD USER - GET REQUEST
-        this.router.get('/profile/add-user', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.router.get('/profile/user', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
             const entity = yield mongoose_1.default.models.Entity.findOne({ _id: user.entity }).populate('roles');
             if (!entity) {
@@ -46,6 +46,26 @@ class MyCompany extends Page_1.default {
             }
             this.data.server.next
                 .render(req, res, '/Supplier/MyCompany/SupplierAddUserPage', { data: JSON.stringify({ user, entity }) });
+        }));
+        // SUPPLIER - MY COMPANY PAGE - EDIT USER - GET REQUEST
+        this.router.get('/profile/user/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const user = req.session.user;
+            const entity = yield mongoose_1.default.models.Entity.findOne({ _id: user.entity }).populate('roles');
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL   
+                return;
+            }
+            const editedUser = yield mongoose_1.default.models.User.findOne({ userId: req.params.id }).populate('role');
+            if (!editedUser) {
+                // TODO: HANDLE EDITED USER IF NULL
+                return;
+            }
+            if (entity._id.toString() != editedUser.entity.toString()) {
+                // TODO: HANDLE EDITED USER IF NOT IN THE SAME ENTITY
+                return;
+            }
+            this.data.server.next
+                .render(req, res, '/Supplier/MyCompany/SupplierAddUserPage', { data: JSON.stringify({ user, entity, editedUser }) });
         }));
     }
 }

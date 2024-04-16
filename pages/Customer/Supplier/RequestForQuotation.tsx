@@ -22,6 +22,8 @@ const _self = ({ user, supplier, product }) => {
     const [image, setImage] = useState(product.images[0]);
     const [images, setImages] = useState(product.images.filter(img => img != image));
     const [sentForm, setSentForm] = useState(false);
+    const [errorForm, setErrorForm] = useState(false);
+    const [formTitle, setFormTitle] = useState("تم تأكيد طلب العرض بنجاح");
     const [teleporting, setTeleporting] = useState(false);
 
     const onSentFormClick = () => {
@@ -32,9 +34,9 @@ const _self = ({ user, supplier, product }) => {
         location.href = `/c/suppliers/${supplier.entityId}/products/${product.productId}`;
     }
 
-    const onRFQ = (e) => {
-        setSentForm(true);
-        purchaseProduct({
+    const onRFQ = async (e) => {
+        if (teleporting) return;
+        const response = await purchaseProduct({
             type: "rfq",
             userId: user._id,
             token: user.token,
@@ -42,12 +44,16 @@ const _self = ({ user, supplier, product }) => {
             supplierId: supplier._id,
             customerId: user.entity,
             rfqSettings: getRFQSettings()
-        });
+        }) || {};
+        setFormTitle(response.success ? "تم الإرسال" : 'حدث خطأ');
+        setErrorForm(!response.success);
+        setSentForm(true);
+        if (!response.success) return;
+        setTeleporting(true);
         setTimeout(() => {
-            if (teleporting) return;
-            setTeleporting(true);
-            if (location) location.href = `/c/suppliers/${supplier.entityId}/products/${product.productId}/rfq/sent`;
-        }, 3000);
+            if (location)
+                location.href = `/c/suppliers/${supplier.entityId}/products/${product.productId}/rfq/sent`;
+        }, 1500);
     }
 
     const getRFQSettings = () => {
@@ -65,7 +71,7 @@ const _self = ({ user, supplier, product }) => {
 
     return (
         <>
-            <SentForm active={sentForm} title='' text='تم إرسال طلب العرض بنجاح' callback={onSentFormClick} />
+            <SentForm active={sentForm} title={formTitle} text='تم إرسال طلب العرض بنجاح' callback={onSentFormClick} error={errorForm} />
             <div className={_css(styles, 'product-rfq-container')}>
                 <div className={_css(styles, 'page-title')}>
                     <p>طلب عرض سعر</p>

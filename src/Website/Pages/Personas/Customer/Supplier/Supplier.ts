@@ -2,6 +2,7 @@ import Product from "../../../../../Instances/Product";
 import Page from "../../../Page";
 import Entity from "../../../../../Instances/Entity";
 import mongoose from "mongoose";
+import Home from "../Home/Home";
 
 export default class Supplier extends Page {
     private data: any;
@@ -16,7 +17,7 @@ export default class Supplier extends Page {
 
         // ALL SUPPLIERS OF A DEPARTMENT
         this.router.get('/', async (req: any, res: any) => {
-            return res.status(200).redirect('/home#departments');
+            return res.status(200).redirect(Home.base_url + '#departments');
         });
 
         // SUPPLIER BY ID

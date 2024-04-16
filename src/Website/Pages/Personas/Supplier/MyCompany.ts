@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Page from "../../Page";
 import Entity from "../../../../Instances/Entity";
+import User from "../../../../Instances/User";
 
 export default class MyCompany extends Page {
     private data: any;
@@ -29,7 +30,7 @@ export default class MyCompany extends Page {
         });
 
         // SUPPLIER - MY COMPANY PAGE - ADD USER - GET REQUEST
-        this.router.get('/profile/add-user', async (req: any, res: any) => {
+        this.router.get('/profile/user', async (req: any, res: any) => {
             const user = req.session.user;
             const entity = await mongoose.models.Entity.findOne({ _id: user.entity }).populate('roles');
             if (!entity) {
@@ -39,6 +40,28 @@ export default class MyCompany extends Page {
             this.data.server.next
                 .render(req, res, '/Supplier/MyCompany/SupplierAddUserPage',
                     { data: JSON.stringify({ user, entity }) });
+        });
+
+        // SUPPLIER - MY COMPANY PAGE - EDIT USER - GET REQUEST
+        this.router.get('/profile/user/:id', async (req: any, res: any) => {
+            const user = req.session.user;
+            const entity = await mongoose.models.Entity.findOne({ _id: user.entity }).populate('roles');
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL   
+                return;
+            }
+            const editedUser = await mongoose.models.User.findOne({ userId: req.params.id }).populate('role');
+            if (!editedUser) {
+                // TODO: HANDLE EDITED USER IF NULL
+                return;
+            }
+            if (entity._id.toString() != editedUser.entity.toString()) {
+                // TODO: HANDLE EDITED USER IF NOT IN THE SAME ENTITY
+                return;
+            }
+            this.data.server.next
+                .render(req, res, '/Supplier/MyCompany/SupplierAddUserPage',
+                    { data: JSON.stringify({ user, entity, editedUser }) });
         });
     }
 }

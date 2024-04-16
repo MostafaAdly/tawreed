@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Department_1 = __importDefault(require("../../../../../Instances/Department"));
 const Page_1 = __importDefault(require("../../../Page"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const Home_1 = __importDefault(require("../Home/Home"));
 class Departments extends Page_1.default {
     constructor(data, base_url) {
         super(base_url || Departments.base_url);
@@ -24,7 +25,7 @@ class Departments extends Page_1.default {
     run() {
         // ALL DEPARTMENTS
         this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            return res.status(200).redirect('/home#departments');
+            return res.status(200).redirect(Home_1.default.base_url + '#departments');
         }));
         // DEPARTMENT BY ID
         this.router.get('/:departmentId', (req, res) => __awaiter(this, void 0, void 0, function* () {

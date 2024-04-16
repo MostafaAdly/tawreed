@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const User_1 = __importDefault(require("../../../Instances/User"));
 const Page_1 = __importDefault(require("../Page"));
+const Product_1 = __importDefault(require("../../../Instances/Product"));
+const MyProducts_1 = __importDefault(require("../Personas/Supplier/MyProducts"));
 class SupplierProfileAPI extends Page_1.default {
     constructor(data, base_url) {
         super(base_url + SupplierProfileAPI.base_url);
@@ -22,16 +24,14 @@ class SupplierProfileAPI extends Page_1.default {
         this.run();
     }
     run() {
-        this.router.post('/add-user', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { userId, token, entityId } = req.body;
+        this.router.post('/user', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { userId, token, entityId, user_id } = req.body;
             if (!token || !userId || !entityId)
                 return res.status(400).send({ message: "Invalid request" });
             const isValidToken = yield this.data.server.sessionHandler.validateUserByToken(userId, token);
             if (!isValidToken)
                 return res.status(401).send({ message: "Invalid token", error: 1 });
-            if (yield new User_1.default()._load({ $or: [{ "credentials.username": req.body.username }, { "details.email": req.body.email }] }))
-                return res.status(400).send({ message: "User already exists", error: 1 });
-            const user = new User_1.default({
+            const userBody = {
                 displayName: req.body.displayName,
                 details: {
                     nickname: req.body.nickname,
@@ -44,9 +44,48 @@ class SupplierProfileAPI extends Page_1.default {
                 },
                 entity: new mongoose_1.default.Types.ObjectId(entityId),
                 role: new mongoose_1.default.Types.ObjectId(req.body.role)
-            });
-            yield user.save();
+            };
+            if (!user_id) {
+                if (yield new User_1.default()._load({ $or: [{ "credentials.username": req.body.username }, { "details.email": req.body.email }] }))
+                    return res.status(400).send({ message: "User already exists", error: 1 });
+                const user = new User_1.default(userBody);
+                yield user.save();
+            }
+            else {
+                if (!(yield new User_1.default()._load({ _id: req.body.user_id })))
+                    return res.status(404).send({ message: "User not found", error: 1 });
+                yield mongoose_1.default.models.User.updateOne({ _id: req.body.user_id }, userBody);
+                return res.send({ message: "User successfully updated", success: 1 });
+            }
             return res.send({ message: "User successfully created", success: 1 });
+        }));
+        this.router.post('/product', this.data.server.multer.array('images', 12), (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { userId, token } = req.body;
+            if (!token || !userId)
+                return res.status(400).send({ message: "Invalid request" });
+            const isValidToken = yield this.data.server.sessionHandler.validateUserByToken(userId, token);
+            if (!isValidToken)
+                return res.status(401).send({ message: "Invalid token", error: 1 });
+            const category = yield mongoose_1.default.models.EntityCategory.findOne({ _id: req.body.category });
+            if (!category)
+                return res.status(404).send({ message: "Category not found", error: 1 });
+            const productToSave = new Product_1.default({
+                name: req.body.name,
+                description: req.body.description,
+                details: req.body.details || {},
+                price: {
+                    cost: req.body.cost,
+                    quantity: req.body.quantity,
+                    unit: req.body.unit
+                },
+                images: req.files.map((file) => "/products/" + file.filename)
+            });
+            yield productToSave.save();
+            const product = yield mongoose_1.default.models.Product.findOne({
+                productId: productToSave.productId
+            });
+            yield mongoose_1.default.models.EntityCategory.updateOne({ _id: category._id }, { $push: { products: product._id } }).exec();
+            return res.status(301).redirect(MyProducts_1.default.base_url);
         }));
     }
 }

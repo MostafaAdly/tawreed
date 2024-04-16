@@ -23,7 +23,8 @@ export default class MyPayments extends Page {
             const payments = await mongoose.models.Payment
                 .find({ supplier: entity._id })
                 .populate({ path: 'request', populate: { path: 'product', select: ["price", "productId"] } })
-                .populate({ path: 'supplier', select: 'entityId' }).exec();
+                .populate({ path: 'supplier', select: 'entityId' })
+                .exec();
             this.data.server.next
                 .render(req, res, '/Supplier/Payments/SupplierPaymentsPage',
                     { data: JSON.stringify({ user, entity, payments }) });

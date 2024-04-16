@@ -24,6 +24,20 @@ class MyProducts extends Page_1.default {
                 products = products.concat(category.products);
             return products.filter((item, index) => products.indexOf(item) === index);
         };
+        this.getEndCategories = (categories) => {
+            let endCategories = [];
+            let maxLength = 0;
+            for (let category of categories) {
+                const current = category.ancestry.split("/");
+                if (current.length >= maxLength) {
+                    if (current.length > maxLength)
+                        endCategories = [];
+                    maxLength = current.length;
+                    endCategories.push({ name: category.name, _id: category._id });
+                }
+            }
+            return endCategories;
+        };
         this.data = data;
         this.run();
     }
@@ -39,6 +53,18 @@ class MyProducts extends Page_1.default {
             const categories = yield mongoose_1.default.models.EntityCategory.find({ entity: entity._id });
             const products = yield mongoose_1.default.models.Product.find({ _id: { $in: this.getAllProducts(categories) } });
             this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierProductsPage', { data: JSON.stringify({ user, entity, categories, products }) });
+        }));
+        // SUPPLIER - add PRODUCT
+        this.router.get('/new', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const user = req.session.user;
+            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL   
+                return;
+            }
+            const categories = this.getEndCategories(yield mongoose_1.default.models.EntityCategory
+                .find({ entity: entity }).select(["name", "ancestry"]).exec());
+            this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierAddProductPage', { data: JSON.stringify({ user, entity, categories }) });
         }));
     }
 }

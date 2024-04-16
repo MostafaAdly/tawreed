@@ -12,13 +12,7 @@ export default class Product {
     constructor({ id }: {
         id: string;
     });
-    constructor({ name, description, details, price, images }: {
-        name: string;
-        description: string;
-        details: any;
-        price: Price;
-        images: string[];
-    });
+    constructor({ name, description, details, price, images }: any);
     load: (query: any) => Promise<this | undefined>;
     save: () => Promise<void>;
 }

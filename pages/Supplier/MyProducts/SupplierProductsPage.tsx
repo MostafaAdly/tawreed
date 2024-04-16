@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyProducts/css/SupplierProductsPage.module.css'
-import { _css, onTabClick, saveCategoryDescription } from '../../../public/Assets/Helpers';
+import { _css, getImage, onTabClick, saveCategoryDescription } from '../../../public/Assets/Helpers';
 import SaveButton from '../../../public/Assets/Components/SaveButton';
 import Filter from '../../../public/Assets/Components/Filter';
 
@@ -35,6 +35,7 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                     pros.push(pro);
             }
         }
+        console.log(products.map((p) => getImage(p.images[0])))
         setProducts(pros);
     }, [ancestry])
 
@@ -69,7 +70,6 @@ const _self = ({ user, entity, categories, entityProducts }) => {
         const description = document.getElementById('description') as any;
         const currentCategory = getCurrentCategory();
         if (!description || !currentCategory) return;
-        console.log(currentCategory);
         if (entity.details.description == description.value) return;
         const response = await saveCategoryDescription({
             categoryId: currentCategory._id,
@@ -165,14 +165,16 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                     />
                 */}
                 <div className={_css(styles, 'upload-controls')}>
-                    <button className={"center box-shadow-hover"}>
+                    <a className={"center box-shadow-hover"}>
                         <i className={_css(styles, 'fa-solid fa-arrow-up-from-bracket')}></i>
                         <p>تحميل مجمع</p>
-                    </button>
-                    <button className={"center box-shadow-hover " + styles['single-upload']}>
+                    </a>
+                    <a className={"center box-shadow-hover " + styles['single-upload']}
+                        href='/s/products/new'
+                    >
                         <i className={_css(styles, 'fa-solid fa-plus')}></i>
-                        <p>اضافة منتجات</p>
-                    </button>
+                        <p>اضافة منتج</p>
+                    </a>
                 </div>
                 <table>
                     <tbody>
@@ -203,7 +205,7 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                                     <td className='center'>
                                         {product.images.length &&
                                             <img
-                                                src={product.images[0]}
+                                                src={getImage(product.images[0])}
                                                 alt=""
                                                 key={index}
                                             />

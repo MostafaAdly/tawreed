@@ -13,6 +13,9 @@ const SessionHandler_1 = __importDefault(require("./SessionHandler"));
 const Home_1 = __importDefault(require("./Pages/Personas/Customer/Home/Home"));
 const Logout_1 = __importDefault(require("./Pages/Authentication/Logout"));
 const Departments_1 = __importDefault(require("./Pages/Personas/Customer/Department/Departments"));
+const multer_1 = __importDefault(require("multer"));
+const date_and_time_1 = __importDefault(require("date-and-time"));
+const uuid_1 = require("uuid");
 const NextWildCard_1 = __importDefault(require("./Pages/WildCards/NextWildCard"));
 const Supplier_1 = __importDefault(require("./Pages/Personas/Customer/Supplier/Supplier"));
 const PersonaSelector_1 = __importDefault(require("./Pages/Personas/Selector/PersonaSelector"));
@@ -45,18 +48,19 @@ class Server {
     }
     initialize() {
         this.sessionHandler = new SessionHandler_1.default(this.data);
-        // this.multer = multer({
-        //     storage: multer.diskStorage({
-        //         destination: (req, file, cb) => {
-        //             cb(null, `views/LocalDatabase`)
-        //         },
-        //         filename: (req: any, file, cb) => {
-        //             const title = req.body.email ?? file.fieldname;
-        //             const fileType = file.mimetype.split("/")[file.mimetype.split("/").length - 1] ?? "png";
-        //             cb(null, `${df.format(new Date(), 'YYYY-MM-DD-HH-mm-ss')}_${uuid().split("-")[0]}_${title}.${fileType}`);
-        //         }
-        //     })
-        // });
+        this.multer = (0, multer_1.default)({
+            storage: multer_1.default.diskStorage({
+                destination: (req, file, cb) => {
+                    cb(null, 'LocalDatabase/images/products');
+                },
+                filename: (req, file, cb) => {
+                    var _a;
+                    console.log(req.url);
+                    const fileType = (_a = file.mimetype.split("/")[file.mimetype.split("/").length - 1]) !== null && _a !== void 0 ? _a : "png";
+                    cb(null, `${date_and_time_1.default.format(new Date(), 'YYYY-MM-DD-HH-mm-ss')}_${(0, uuid_1.v4)().split("-")[0]}.${fileType}`);
+                }
+            })
+        });
     }
     load_Middleware() {
         this.app.use(body_parser_1.default.json());

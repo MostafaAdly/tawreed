@@ -1,7 +1,6 @@
 import Page from "../Page";
 import path from 'path'
 import fs from 'fs';
-import stream from 'stream'
 
 export default class ImagesAPI extends Page {
 
@@ -12,11 +11,11 @@ export default class ImagesAPI extends Page {
     }
 
     private run() {
-        this.router.get("/:path", (req: any, res: any) => {
-            const imagePath = path.join(process.cwd(), `/LocalDatabase/images/${req.params.path}`);
+        this.router.get("/*", (req: any, res: any) => {
+            const imagePath = path.join(process.cwd(), `/LocalDatabase/images/${req.url}`);
             if (fs.existsSync(imagePath)) {
                 res.sendFile(imagePath);
             } else res.json({ error: "Image not found." })
-        })
+        });
     }
 }

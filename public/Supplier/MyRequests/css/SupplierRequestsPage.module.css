@@ -129,14 +129,78 @@
                     .box {
                         column-gap: 5px;
                         border: 1px solid var(--standardcolor);
+                        background-color: var(--standardcolor);
                         border-radius: 15px;
                         padding: 0.1em 1em;
-                        width: min-content;
+                        min-width: 50%;
                         cursor: pointer;
                         user-select: none;
 
-                        p {
+                        p,
+                        i {
                             text-wrap: nowrap;
+                        }
+                    }
+
+                    .in-delivery {
+                        background-color: #fbc63f;
+                        border-color: #f3f3f3;
+                    }
+
+                    .delivered {
+                        background-color: #4bd358;
+                        border-color: #f3f3f3;
+                    }
+
+                    .returned,
+                    .cancelled {
+                        background-color: rgb(255, 49, 49);
+                        border-color: #f3f3f3;
+
+                        &.invert {
+                            background-color: white;
+                            border-color: red;
+                            p,
+                            i {
+                                color: red;
+                            }
+                        }
+                    }
+
+                    .out-of-stock {
+                        background-color: #66cc99;
+                        border-color: #f3f3f3;
+                    }
+
+                    .pending {
+                        p,
+                        i {
+                            color: white;
+                        }
+                    }
+
+                    .approved {
+                        background-color: #4bd358;
+                        border-color: #f3f3f3;
+
+                        &.invert {
+                            background-color: white;
+                            border-color: #4bd358;
+                            p,
+                            i {
+                                color: #4bd358;
+                            }
+                        }
+                    }
+
+                    .reply-pending {
+                        &.invert {
+                            background-color: white;
+                            border-color: #674aff;
+                            p,
+                            i {
+                                color: #674aff;
+                            }
                         }
                     }
                 }
@@ -168,6 +232,10 @@
 
                     .view {
                         background-color: #674aff;
+                    }
+
+                    .reject {
+                        background-color: red;
                     }
                 }
 

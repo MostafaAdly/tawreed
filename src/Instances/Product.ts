@@ -23,10 +23,7 @@ export default class Product {
             details,
             price,
             images
-        }: {
-            name: string, description: string,
-            details: any, price: Price, images: string[]
-        });
+        }: any);
     constructor(input?: any) {
         if (input) Object.assign(this, input);
     }

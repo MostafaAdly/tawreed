@@ -83,12 +83,12 @@ const _self = ({ user, entity }) => {
                                         <td><p>{user.details?.nickname || user.role.name}</p></td>
                                         <td><p>{user.role.name}</p></td>
                                         <td className={_css(styles, 'controls center')}>
-                                            <button className='opacity-active'>
-                                                <i className={_css(styles, 'fa-solid fa-pen')}></i>
-                                            </button>
-                                            <button className={_css(styles, 'trash opacity-active')}>
+                                            <a className={_css(styles, 'center trash opacity-active')}>
                                                 <i className={_css(styles, 'fa-solid fa-trash')}></i>
-                                            </button>
+                                            </a>
+                                            <a className='center opacity-active' href={`/s/profile/user/${user.userId}`}>
+                                                <i className={_css(styles, 'fa-solid fa-pen')}></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 );
@@ -96,7 +96,7 @@ const _self = ({ user, entity }) => {
                         }
                     </tbody>
                 </table>
-                <a className={_css(styles, 'add-user opacity-active center')} href='/s/profile/add-user'>
+                <a className={_css(styles, 'add-user opacity-active center')} href='/s/profile/user'>
                     <i className={_css(styles, 'fa-solid fa-user-plus')}></i>
                 </a>
             </div>

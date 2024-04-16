@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Entity_1 = __importDefault(require("../../../../Instances/Entity"));
+const ResponseType_1 = require("../../../../Instances/ResponseType");
 const Page_1 = __importDefault(require("../../Page"));
 const mongoose_1 = __importDefault(require("mongoose"));
 class MyRequests extends Page_1.default {
@@ -50,6 +51,8 @@ class MyRequests extends Page_1.default {
                 // TODO: HANDLE REQUEST IF NULL
                 return;
             }
+            if (request.responseType != ResponseType_1.ResponseType.RFQ_PENDING)
+                res.status(300).redirect(MyRequests.base_url);
             this.data.server.next.render(req, res, '/Supplier/MyRequests/SupplierApproveRFQPage', { data: JSON.stringify({ user, entity, request }) });
         }));
         // // SUPPLIER - MY ORDER 

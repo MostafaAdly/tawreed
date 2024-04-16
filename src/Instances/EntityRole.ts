@@ -10,9 +10,10 @@ export default class EntityRole {
     public roleId: string = Utils.roleId_prefix + Utils.createId();
     public name: string;
     public permissions: Permission[];
+    public priority: number = 100;
 
     constructor({ id }: { id: string });
-    constructor({ id, name, permissions }: { id?: string, name: string, permissions: Permission[] });
+    constructor({ id, name, permissions, priority }: { id?: string, name: string, permissions: Permission[], priority: number });
     constructor(input?: any) {
         if (input) Object.assign(this, input);
     }

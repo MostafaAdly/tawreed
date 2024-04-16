@@ -1,6 +1,7 @@
 import Department from "../../../../../Instances/Department";
 import Page from "../../../Page";
 import mongoose from "mongoose";
+import Home from "../Home/Home";
 
 export default class Departments extends Page {
     private data: any;
@@ -14,7 +15,7 @@ export default class Departments extends Page {
     private run() {
         // ALL DEPARTMENTS
         this.router.get('/', async (req: any, res: any) => {
-            return res.status(200).redirect('/home#departments');
+            return res.status(200).redirect(Home.base_url + '#departments');
         });
         // DEPARTMENT BY ID
         this.router.get('/:departmentId', async (req: any, res: any) => {

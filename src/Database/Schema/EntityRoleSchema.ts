@@ -10,6 +10,7 @@ export default class EntityRoleSchema extends Schema {
             roleId: String,
             name: String,
             permissions: [String],
+            priority: Number
         }
     }: { id?: { enabled: boolean, key: string, value: any }, schema?: any, options?: any }
     ) {

@@ -1,0 +1,169 @@
+.container-title {
+    margin-bottom: 2em;
+    p {
+        text-align: center;
+        font-size: 28px;
+        color: var(--standardcolor);
+        font-weight: 700;
+    }
+}
+
+.product {
+    .fields {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 10%;
+        row-gap: 1em;
+
+        .field {
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            min-width: 15em;
+            flex-basis: 30em;
+
+            .input {
+                height: 3em;
+                display: flex;
+                border: 1px solid #b3b5b7;
+                border-radius: 8px;
+
+                .title {
+                    min-width: 10em;
+                    margin-right: 10px;
+                    p {
+                        color: var(--standardcolor);
+                        text-align: right;
+                        font-size: 20px;
+                        font-weight: 600;
+                    }
+                }
+
+                input,
+                select {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    border-right: 0.5px solid #b3b5b793;
+                    font-size: 20px;
+                    font-weight: 400;
+                    padding: 0 0.5em;
+                }
+
+                .icon {
+                    margin-left: 1em;
+                    border: 0.5px solid #b3b5b793;
+                    border-radius: 50%;
+                    width: 2em;
+                    height: 2em;
+                }
+            }
+        }
+    }
+
+    .images {
+        margin-top: 2em;
+
+        .self {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 1em;
+            row-gap: 1.5em;
+
+            .image,
+            .add-image {
+                height: 10em;
+                aspect-ratio: 1;
+                background-color: #f2f3f3;
+                cursor: pointer;
+                border-radius: 15px;
+                overflow: hidden;
+                user-select: none;
+            }
+
+            .image {
+                position: relative;
+
+                .product-image {
+                    width: 100%;
+                    height: 100%;
+                    i {
+                        font-size: 36px;
+                        color: var(--standardcolor);
+                        font-weight: 900;
+                        margin-bottom: 10px;
+                    }
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .info {
+                    position: absolute;
+                    bottom: 5px;
+                    display: flex;
+                    justify-content: center;
+                    column-gap: 10px;
+                    width: 100%;
+
+                    p {
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana,
+                            sans-serif;
+                    }
+                }
+            }
+
+            .add-image {
+                i {
+                    font-size: 4em;
+                    color: var(--inactive-font);
+                }
+            }
+        }
+    }
+
+    .description {
+        margin-top: 2em;
+
+        .self {
+            padding: 16px;
+            border-radius: 24px;
+            border: 1px solid #999c9f;
+
+            textarea {
+                border: none;
+                outline: none;
+                width: 100%;
+                resize: vertical;
+                min-height: 10em;
+                font-size: 18px;
+                font-weight: 400;
+            }
+        }
+    }
+
+    .submit {
+        margin-top: 2em;
+
+        button {
+            min-width: 20em;
+            column-gap: 10px;
+            border-radius: 16px;
+            background-color: var(--standardcolor);
+            border: none;
+            outline: none;
+            cursor: pointer;
+
+            p,
+            i {
+                color: white;
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+    }
+}

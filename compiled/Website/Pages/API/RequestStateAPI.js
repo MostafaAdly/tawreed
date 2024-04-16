@@ -50,7 +50,7 @@ class RequestStateAPI extends Page_1.default {
                 toUpdate.payment = payment._id;
             }
             mongoose_1.default.models.Request.updateOne({ _id: requestId }, toUpdate).exec();
-            return res.send({ message: "Request state updated successfully", success: 1 });
+            return res.status(200).send({ message: "Request state updated successfully", success: 1 });
         }));
         this.router.delete('/delete', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { requestId, userId, token } = req.body;

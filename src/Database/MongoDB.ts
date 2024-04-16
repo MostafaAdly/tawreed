@@ -49,12 +49,25 @@ export default class MongoDB {
         await mongoose.models.Product.deleteMany({});
         await mongoose.models.EntityCategory.deleteMany({});
         await mongoose.models.EntityRole.deleteMany({});
+        await mongoose.models.Comment.deleteMany({});
+        await mongoose.models.Request.deleteMany({});
+        await mongoose.models.Payment.deleteMany({});
     }
     deleteAllDepartments = async () => {
         await mongoose.models.Department.deleteMany({});
     }
     deleteAllUsers = async () => {
         await mongoose.models.User.deleteMany({});
+    }
+    createEntityRoles = async () => {
+        await mongoose.models.EntityRole.deleteMany();
+        const roles = [
+            new EntityRole({ name: "مدير الشركة", permissions: [Permission.CUSTOMER_ALL, Permission.SUPPLIER_ALL], priority: 5 }),
+            new EntityRole({ name: "مدير قسم المشتريات", permissions: [Permission.CUSTOMER_ALL], priority: 50 }),
+            new EntityRole({ name: "مدير قسم المبيعات", permissions: [Permission.SUPPLIER_ALL], priority: 50 })
+        ];
+        for (const role of roles)
+            await role.save();
     }
     createFakerDummyData = async (erase = true) => {
         const timeTook_start = Date.now();
@@ -63,9 +76,9 @@ export default class MongoDB {
         const deps = await this.import_departments_intoMySQL();
 
         const roles = [
-            new EntityRole({ name: "مدير الشركة", permissions: [Permission.CUSTOMER_ALL, Permission.SUPPLIER_ALL] }),
-            new EntityRole({ name: "مدير قسم المشتريات", permissions: [Permission.CUSTOMER_ALL] }),
-            new EntityRole({ name: "مدير قسم المبيعات", permissions: [Permission.SUPPLIER_ALL] })
+            new EntityRole({ name: "مدير الشركة", permissions: [Permission.CUSTOMER_ALL, Permission.SUPPLIER_ALL], priority: 5 }),
+            new EntityRole({ name: "مدير قسم المشتريات", permissions: [Permission.CUSTOMER_ALL], priority: 50 }),
+            new EntityRole({ name: "مدير قسم المبيعات", permissions: [Permission.SUPPLIER_ALL], priority: 50 })
         ];
 
         for (const role of roles)
