@@ -19,6 +19,9 @@ export default class User {
     // === VALIDATING INFO
     public token: string;
 
+    // === ADMIN INFO
+    public admin: boolean = false;
+
     constructor(input?: any) {
         if (input) Object.assign(this, input);
     }

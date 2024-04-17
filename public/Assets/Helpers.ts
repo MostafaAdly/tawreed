@@ -134,3 +134,8 @@ export const createProduct = async ({ userId, token, product }) => {
         return null;
     }
 }
+
+export const soonFeature = ({ text }) => {
+    return alert(text || `هذه الخاصية ستتوفر قريبا`
+    )
+}

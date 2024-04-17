@@ -1,3 +1,4 @@
+import Entity from "../../../../Instances/Entity";
 import Page from "../../Page";
 
 export default class PersonaSelector extends Page {
@@ -10,9 +11,15 @@ export default class PersonaSelector extends Page {
     }
 
     private run() {
-        // Persona Selector PAGE
+        // PERSONA SELECTOR PAGE
         this.router.get("/", async (req: any, res: any) => {
-            this.data.server.next.render(req, res, '/Authentication/PersonaSelectionPage', {});
+            const user = req.session.user;
+            const entity = await new Entity().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL
+                return;
+            }
+            return this.data.server.next.render(req, res, '/Authentication/PersonaSelectionPage', { data: JSON.stringify({ user, entity }) });
         });
     }
 }

@@ -30,6 +30,8 @@ import CommentAPI from './Pages/API/CommentAPI';
 import SupplierProfileAPI from './Pages/API/SupplierProfileAPI';
 import EntityData from './Pages/API/EntityData';
 import CategoryData from './Pages/API/CategoryData';
+import AdminDashboard from './Pages/AdminPanel/AdminDashboard';
+import MyDashboard from './Pages/Personas/Supplier/MyDashboard';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -116,6 +118,7 @@ export default class Server {
             new CustomerRequests(this.data),
 
             // SUPPLIER
+            new MyDashboard(this.data),
             new MyCompany(this.data),
             new MyProducts(this.data),
             new MyRequests(this.data),
@@ -123,6 +126,9 @@ export default class Server {
 
             // USER
             new Profile(this.data),
+
+            // ADMIN PANEL
+            new AdminDashboard(this.data),
 
             // Do not remove this.
             new WildCard(this.data),

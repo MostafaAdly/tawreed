@@ -34,6 +34,7 @@ class UserSchema extends mongoose_1.Schema {
         },
         entity: { type: mongoose_1.default.Types.ObjectId, required: true, ref: 'Entity' },
         role: { type: mongoose_1.default.Types.ObjectId, required: true, ref: 'EntityRole' },
+        admin: Boolean
     } }) {
         if (id === null || id === void 0 ? void 0 : id.enabled)
             schema[id.key] = id.value;

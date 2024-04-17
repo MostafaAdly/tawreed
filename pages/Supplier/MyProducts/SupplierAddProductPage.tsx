@@ -174,7 +174,7 @@ const Image = ({ image, checked = false }) => {
     );
 }
 
-const Field = ({ label, name, title, value = "", placeHolder, select = null, disabled = false, type = "text" }) => {
+const Field = ({ label, name, title, value = "", placeHolder, select = null, disabled = false, type = "text", minValue = 0 }) => {
     return (
         <div className={_css(styles, 'field')}>
             <div className={_css(styles, 'info')}>
@@ -190,6 +190,7 @@ const Field = ({ label, name, title, value = "", placeHolder, select = null, dis
                             id={name}
                             placeholder={placeHolder}
                             defaultValue={value}
+                            min={minValue}
                             disabled={disabled}
                             required
                         />

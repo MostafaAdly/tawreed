@@ -33,6 +33,8 @@ const CommentAPI_1 = __importDefault(require("./Pages/API/CommentAPI"));
 const SupplierProfileAPI_1 = __importDefault(require("./Pages/API/SupplierProfileAPI"));
 const EntityData_1 = __importDefault(require("./Pages/API/EntityData"));
 const CategoryData_1 = __importDefault(require("./Pages/API/CategoryData"));
+const AdminDashboard_1 = __importDefault(require("./Pages/AdminPanel/AdminDashboard"));
+const MyDashboard_1 = __importDefault(require("./Pages/Personas/Supplier/MyDashboard"));
 class Server {
     constructor(data) {
         this.port = parseInt(process.env.SERVER_PORT + "") || 3000;
@@ -103,12 +105,15 @@ class Server {
             new Supplier_1.default(this.data),
             new CustomerRequests_1.default(this.data),
             // SUPPLIER
+            new MyDashboard_1.default(this.data),
             new MyCompany_1.default(this.data),
             new MyProducts_1.default(this.data),
             new MyRequests_1.default(this.data),
             new MyPayments_1.default(this.data),
             // USER
             new Profile_1.default(this.data),
+            // ADMIN PANEL
+            new AdminDashboard_1.default(this.data),
             // Do not remove this.
             new NextWildCard_1.default(this.data),
         ];

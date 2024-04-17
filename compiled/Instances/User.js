@@ -21,6 +21,8 @@ class User {
     constructor(input) {
         this._id = new mongoose_1.default.Types.ObjectId();
         this.userId = Utils_1.default.userId_prefix + Utils_1.default.createId();
+        // === ADMIN INFO
+        this.admin = false;
         this.setId = (id) => {
             this._id = id;
             return this;

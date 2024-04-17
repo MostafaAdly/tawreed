@@ -12,26 +12,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Entity_1 = __importDefault(require("../../../../Instances/Entity"));
 const Page_1 = __importDefault(require("../../Page"));
-class PersonaSelector extends Page_1.default {
+const Entity_1 = __importDefault(require("../../../../Instances/Entity"));
+class MyDashboard extends Page_1.default {
     constructor(data, base_url) {
-        super(base_url || PersonaSelector.base_url);
+        super(base_url || MyDashboard.base_url);
         this.data = data;
         this.run();
     }
     run() {
-        // PERSONA SELECTOR PAGE
-        this.router.get("/", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        // SUPPLIER - DASHBOARD PAGE
+        this.router.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
             const entity = yield new Entity_1.default().load({ _id: user.entity });
             if (!entity) {
-                // TODO: HANDLE ENTITY IF NULL
+                // TODO: HANDLE ENTITY IF NULL   
                 return;
             }
-            return this.data.server.next.render(req, res, '/Authentication/PersonaSelectionPage', { data: JSON.stringify({ user, entity }) });
+            this.data.server.next
+                .render(req, res, '/Supplier/Dashboard/SupplierDashboardPage', { data: JSON.stringify({ user, entity }) });
         }));
     }
 }
-PersonaSelector.base_url = "";
-exports.default = PersonaSelector;
+MyDashboard.base_url = "/s/dashboard";
+exports.default = MyDashboard;

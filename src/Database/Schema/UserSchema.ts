@@ -15,6 +15,7 @@ export default class UserSchema extends Schema {
             },
             entity: { type: mongoose.Types.ObjectId, required: true, ref: 'Entity' },
             role: { type: mongoose.Types.ObjectId, required: true, ref: 'EntityRole' },
+            admin: Boolean
         }
     }: { id?: { enabled: boolean, key: string, value: any }, schema?: any, options?: any }
     ) {

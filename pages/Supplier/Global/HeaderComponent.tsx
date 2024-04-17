@@ -2,37 +2,37 @@ import React from "react";
 import styles from '../../../public/Supplier/Global/css/header.module.css';
 import { _css, getImage } from "../../../public/Assets/Helpers";
 
-const S_HeaderComponent = ({ user, entity }) => {
+const S_HeaderComponent = ({ user, entity, title = entity?.details?.displayName, icon = "building" }) => {
     return (
-        <div className={styles.header}>
-            <div className={styles['logo-section']}>
+        <div className={_css(styles, 'header')}>
+            <div className={_css(styles, 'logo-section')}>
                 <img src="../../Global/imgs/logo.png" alt="" />
             </div>
-            <div className={styles.title + " " + styles.center}>
-                <div className={styles.icon}>
-                    <i className={_css(styles, 'fa-solid fa-building')}></i>
+            <div className={_css(styles, 'title center')}>
+                <div className={_css(styles, 'icon')}>
+                    <i className={_css(styles, 'fa-solid fa-' + icon)}></i>
                 </div>
-                <p>{entity.details.displayName}</p>
+                <p>{title}</p>
             </div>
-            <div className={styles['search-section'] + " " + styles.center}>
-                <div className={styles.icon + " " + styles.center}>
+            <div className={_css(styles, 'search-section center')}>
+                <div className={_css(styles, 'icon center')}>
                     <i className={_css(styles, 'fa-solid fa-magnifying-glass')}></i>
                 </div>
                 <input type="text" placeholder="اكتب أي شيئ للبحث" />
-                <div className={styles['search-by-image'] + " " + styles.center}>
+                <div className={_css(styles, 'search-by-image center')}>
                     <i className={_css(styles, 'fa-solid fa-camera')}></i>
                 </div>
             </div>
-            <div className={styles['profile-section']}>
-                <div className={styles.notifications}>
-                    <div className={styles.count + " " + styles.count}>
+            <div className={_css(styles, 'profile-section')}>
+                <div className={_css(styles, 'notifications')}>
+                    <div className={_css(styles, 'count count')}>
                         {/* <p>3</p> */}
                     </div>
-                    <div className={styles.icon}>
+                    <div className={_css(styles, 'icon')}>
                         <i className={_css(styles, 'fa-solid fa-bell')}></i>
                     </div>
                 </div>
-                <div className={styles.profile + " box-shadow"}>
+                <div className={_css(styles, 'profile box-shadow')}>
                     <img src={getImage("default-profile-picture.png")} alt="" />
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { _css, getImage } from "../../public/Assets/Helpers";
 import { LoginFooter } from "./LoginPage";
 
 
-const PersonaSelectionPage = () => {
+const PersonaSelectionPage = ({ user, entity }) => {
     return (
         <>
             <main className={_css(styles, 'container center')}>
@@ -33,14 +33,34 @@ const PersonaSelectionPage = () => {
                             <p>عميل - Client</p>
                         </div>
                     </a>
-                    <a className={_css(styles, 'persona box-shadow-hover')} href="/s">
-                        <div className={_css(styles, 'image center')}>
-                            <i className={_css(styles, 'fa-solid fa-building')}></i>
-                        </div>
-                        <div className={_css(styles, 'info')}>
-                            <p>مورد - Supplier</p>
-                        </div>
-                    </a>
+                    {
+                        entity?.personas?.supplier ?
+                            (
+                                <a className={_css(styles, 'persona box-shadow-hover')} href="/s">
+                                    <div className={_css(styles, 'image center')}>
+                                        <i className={_css(styles, 'fa-solid fa-building')}></i>
+                                    </div>
+                                    <div className={_css(styles, 'info')}>
+                                        <p>مورد - Supplier</p>
+                                    </div>
+                                </a>
+                            )
+                            : null
+                    }
+                    {
+                        user?.admin ?
+                            (
+                                <a className={_css(styles, 'persona box-shadow-hover')} href="/a">
+                                    <div className={_css(styles, 'image center')}>
+                                        <i className={_css(styles, 'fa-solid fa-truck-fast')}></i>
+                                    </div>
+                                    <div className={_css(styles, 'info')}>
+                                        <p>التحكم - Dashboard</p>
+                                    </div>
+                                </a>
+                            )
+                            : null
+                    }
                 </div>
                 <LoginFooter />
             </main >
@@ -49,3 +69,9 @@ const PersonaSelectionPage = () => {
 }
 
 export default PersonaSelectionPage;
+
+export const getServerSideProps = async (context) => {
+    return {
+        props: JSON.parse(context.query.data)
+    };
+}
