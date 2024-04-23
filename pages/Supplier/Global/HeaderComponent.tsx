@@ -6,7 +6,7 @@ const S_HeaderComponent = ({ user, entity, title = entity?.details?.displayName,
     return (
         <div className={_css(styles, 'header')}>
             <div className={_css(styles, 'logo-section')}>
-                <img src="../../Global/imgs/logo.png" alt="" />
+                <img src={getImage("logo.png")} alt="" />
             </div>
             <div className={_css(styles, 'title center')}>
                 <div className={_css(styles, 'icon')}>

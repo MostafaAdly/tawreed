@@ -49,7 +49,7 @@ export default class Server {
     constructor(data: any) {
         this.data = data;
         this.data.server = this;
-        this.data.utils.print("Running in " + (process.env.ENVIRONMENT as String).toUpperCase()[this.development ? "cyan" : "green"] + " mode.");
+        this.data.utils.print("Running in " + (process.env.ENVIRONMENT as String).toUpperCase()[this.development ? "cyan" : "green"] + " mode");
     }
     initialize() {
         this.sessionHandler = new SessionHandler(this.data);

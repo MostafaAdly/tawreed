@@ -38,17 +38,17 @@ class User {
         if (input)
             Object.assign(this, input);
     }
-    load(withPassword = false, loadRole = true) {
-        return __awaiter(this, void 0, void 0, function* () {
+    load() {
+        return __awaiter(this, arguments, void 0, function* (withPassword = false, loadRole = true) {
             yield this._load({ _id: this._id });
             if (loadRole)
                 yield this.afterLoad(withPassword);
             // console.log(`Loaded User: ${user.userId}`, user);
         });
     }
-    afterLoad(withPassword = false) {
-        var _a;
-        return __awaiter(this, void 0, void 0, function* () {
+    afterLoad() {
+        return __awaiter(this, arguments, void 0, function* (withPassword = false) {
+            var _a;
             const roles = (_a = (yield new Entity_1.default().load({ _id: this.entity }))) === null || _a === void 0 ? void 0 : _a.roles;
             if (!roles)
                 return this;

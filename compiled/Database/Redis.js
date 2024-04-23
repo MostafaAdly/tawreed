@@ -23,10 +23,15 @@ class RedisClient {
             }
             this.data.redis = new ioredis_1.default(endPoint);
             this.data.redis.on("error", (err) => this.onError(err));
+            this.data.redis.on('connect', () => this.onConnection());
         });
+        this.onConnection = () => {
+            this.data.utils.print('Redis Client Connected', 'Redis');
+        };
         this.onError = (err) => {
-            this.data.utils.print('Redis Client Error\n', 'Redis');
-            console.error(err);
+            this.data.utils.print('Redis Client Error', 'Redis');
+            // console.error(err);
+            // process.exit(1);
         };
         this.data = data;
     }

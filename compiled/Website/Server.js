@@ -46,7 +46,7 @@ class Server {
         this.listen = () => this.app.listen(this.port, () => this.data.utils.print("Website is running on " + (this.port + "")["yellow"]));
         this.data = data;
         this.data.server = this;
-        this.data.utils.print("Running in " + process.env.ENVIRONMENT.toUpperCase()[this.development ? "cyan" : "green"] + " mode.");
+        this.data.utils.print("Running in " + process.env.ENVIRONMENT.toUpperCase()[this.development ? "cyan" : "green"] + " mode");
     }
     initialize() {
         this.sessionHandler = new SessionHandler_1.default(this.data);
@@ -96,7 +96,7 @@ class Server {
         const pages = [
             // AUTHENTICATION
             new Login_1.default(this.data),
-            new Logout_1.default(this.data),
+            new Logout_1.default(this.data), // API CALL
             // PERSONA SELECTOR
             new PersonaSelector_1.default(this.data),
             // CUSTOMER

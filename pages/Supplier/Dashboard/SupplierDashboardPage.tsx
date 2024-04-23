@@ -21,7 +21,7 @@ const _self = ({ user, entity }) => {
     return (
         <>
             <section className={_css(styles, 'top')}>
-
+                
             </section>
         </>
     );

@@ -54,8 +54,8 @@ class Login extends Page_1.default {
         return user.role != null && user.role.permissions != null && permissions.every((permission) => user.role.permissions.includes(permission));
     }
     static validateCredentials(credentials) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const user = (yield new User_1.default()._load({ 'credentials.username': credentials.username.toLowerCase() }));
             return ((_a = user === null || user === void 0 ? void 0 : user.credentials) === null || _a === void 0 ? void 0 : _a.password) == credentials.password;
         });

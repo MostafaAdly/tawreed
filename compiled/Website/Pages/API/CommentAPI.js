@@ -25,11 +25,9 @@ class CommentAPI extends Page_1.default {
             const { productId, token, userId, content } = req.body;
             if (!productId || !token || !userId || !content || content.replaceAll(" ", "") == "")
                 return res.status(400).send({ message: "Invalid request" });
-            console.log("test");
             const isValidToken = yield this.data.server.sessionHandler.validateUserByToken(userId, token);
             if (!isValidToken)
                 return res.status(401).send({ message: "Invalid token", error: 1 });
-            console.log("asd");
             yield new Comment_1.default({ content, user: userId, product: productId }).save();
             return res.send({ message: "Comment added successfully", success: 1 });
         }));

@@ -30,7 +30,7 @@ class MongoDB {
             if (!process.env.MONGODB_CONNECTION_STRING)
                 return;
             mongoose_1.default.connect(process.env.MONGODB_CONNECTION_STRING).then(() => __awaiter(this, void 0, void 0, function* () {
-                this.data.utils.print("Connected to MongoDB.");
+                this.data.utils.print("Connected to MongoDB.", "MongoDB");
                 // await this.eraseDatabase();
                 // this.createFakerDummyData(false);
                 // await this.deleteAllDepartments()
@@ -81,7 +81,7 @@ class MongoDB {
             for (const role of roles)
                 yield role.save();
         });
-        this.createFakerDummyData = (erase = true) => __awaiter(this, void 0, void 0, function* () {
+        this.createFakerDummyData = (...args_1) => __awaiter(this, [...args_1], void 0, function* (erase = true) {
             const timeTook_start = Date.now();
             if (erase)
                 yield this.eraseDatabase();

@@ -19,7 +19,7 @@ export default class MongoDB {
     connect = async () => {
         if (!process.env.MONGODB_CONNECTION_STRING) return;
         mongoose.connect(process.env.MONGODB_CONNECTION_STRING).then(async () => {
-            this.data.utils.print("Connected to MongoDB.");
+            this.data.utils.print("Connected to MongoDB.", "MongoDB");
             // await this.eraseDatabase();
             // this.createFakerDummyData(false);
             // await this.deleteAllDepartments()
