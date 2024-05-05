@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 import Utils from '../Utils';
 import ModelManager from '../Database/ModelManager';
 import { ObjectId } from '../Types/ObjectId';
-import { RequestType } from './RequestType';
-import { ResponseType } from './ResponseType';
+import { RequestType } from './enums/RequestType';
+import { ResponseType } from './enums/ResponseType';
 import RFQSettings from './RFQSettings';
 
 export default class Request {
@@ -18,6 +18,7 @@ export default class Request {
     public supplier: ObjectId;
     public customer: ObjectId;
     public user: ObjectId;
+    public instant: boolean = false;
 
     constructor(input?: any) {
         if (input) Object.assign(this, input);

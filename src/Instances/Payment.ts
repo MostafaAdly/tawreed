@@ -1,7 +1,7 @@
 import ModelManager from "../Database/ModelManager";
 import { ObjectId } from "../Types/ObjectId";
 import Utils from '../Utils'
-import { PaymentMethod } from "./PaymentMethod";
+import { PaymentMethod } from "./enums/PaymentMethod";
 
 export default class Payment {
     public _id: ObjectId;

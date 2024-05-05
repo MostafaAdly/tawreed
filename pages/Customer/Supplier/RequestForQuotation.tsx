@@ -2,23 +2,23 @@ import React, { useState } from "react";
 import C_HeaderComponent from "../Global/HeaderComponent";
 import C_FooterComponent from "../Global/FooterComponent";
 import styles from '../../../public/Customer/Supplier/css/RequestForQuotation.module.css'
-import { _css, getImage, purchaseProduct } from "../../../public/Assets/Helpers";
+import { _css, purchaseProduct } from "../../../public/Assets/Helpers";
 import SentForm from "../../../public/Assets/Components/SentForm";
+import TawreedTime from '../../../src/Instances/enums/TawreedTime.json';
 
-
-const RequestForQuotation = ({ user, supplier, product }) => {
+const RequestForQuotation = ({ user, supplier, product, instant }) => {
     return (
         <>
             <C_HeaderComponent user={user} />
             <div className={_css(styles, 'page-body')}>
-                <_self user={user} supplier={supplier} product={product} />
+                <_self user={user} supplier={supplier} product={product} instant={instant} />
                 <C_FooterComponent />
             </div>
         </>
     );
 }
 
-const _self = ({ user, supplier, product }) => {
+const _self = ({ user, supplier, product, instant }) => {
     const [image, setImage] = useState(product.images[0]);
     const [images, setImages] = useState(product.images.filter(img => img != image));
     const [sentForm, setSentForm] = useState(false);
@@ -91,7 +91,11 @@ const _self = ({ user, supplier, product }) => {
                         <label htmlFor="quantity">فترة التوريد</label>
                         <div className={_css(styles, 'product-input')}>
                             <select name="supply-time" id="supply-time">
-                                <option value="7">التوريد خلال 7 أيام</option>
+                                {
+                                    (instant ? Object.values(TawreedTime) : Object.values(TawreedTime).reverse()).map((time: any, index: any) => {
+                                        return <option key={index} value={time.value}>{time.name}</option>;
+                                    })
+                                }
                             </select>
                         </div>
                         <label htmlFor="payment-condition">شروط الدفع</label>

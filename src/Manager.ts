@@ -4,7 +4,7 @@ import MongoDB from './Database/MongoDB';
 import RedisClient from "./Database/Redis";
 import TestClient from "./Test/TestClient";
 import ModelManager from "./Database/ModelManager";
-import { ResponseType } from "./Instances/ResponseType";
+import { ResponseType } from "./Instances/enums/ResponseType";
 
 export default class Manager {
 	private data: any = { project_name: "Tawreed" };

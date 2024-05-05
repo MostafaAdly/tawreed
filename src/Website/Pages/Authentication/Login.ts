@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Permission } from "../../../Instances/Permission";
+import { Permission } from "../../../Instances/enums/Permission";
 import User from "../../../Instances/User";
 import Page from "../Page";
 import Home from '../Personas/Customer/Home/Home';

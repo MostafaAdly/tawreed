@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import Request from "../../../Instances/Request";
-import { ResponseType } from '../../../Instances/ResponseType';
+import { ResponseType } from '../../../Instances/enums/ResponseType';
 import Page from "../Page";
 import Payment from "../../../Instances/Payment";
-import { RequestType } from "../../../Instances/RequestType";
+import { RequestType } from "../../../Instances/enums/RequestType";
 import MyRequests from "../Personas/Supplier/MyRequests";
 
 export default class RequestStateAPI extends Page {

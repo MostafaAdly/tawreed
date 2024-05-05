@@ -218,6 +218,7 @@
                 border-radius: 1rem 1rem 0 0;
                 overflow: hidden;
                 box-shadow: 8px 4px 24px 0px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
 
                 img {
                     width: 100%;
@@ -227,6 +228,7 @@
             }
 
             .product-name {
+                cursor: pointer;
                 p {
                     color: #4d5258;
                     font-size: 1.25rem;

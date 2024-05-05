@@ -17,13 +17,13 @@ const Department_1 = __importDefault(require("../Instances/Department"));
 const User_1 = __importDefault(require("../Instances/User"));
 const Entity_1 = __importDefault(require("../Instances/Entity"));
 const EntityRole_1 = __importDefault(require("../Instances/EntityRole"));
-const Permission_1 = require("../Instances/Permission");
+const Permission_1 = require("../Instances/enums/Permission");
 const Product_1 = __importDefault(require("../Instances/Product"));
 const SupplierType_1 = __importDefault(require("../Instances/Personas/SupplierType"));
 const Price_1 = __importDefault(require("../Instances/Price"));
 const ar_1 = require("@faker-js/faker/locale/ar");
-const EntityCategory_1 = __importDefault(require("../Instances/EntityCategory"));
 const departments_json_1 = __importDefault(require("../DefaultData/departments.json"));
+const EntityCategory_1 = __importDefault(require("../Instances/EntityCategory"));
 class MongoDB {
     constructor(data) {
         this.connect = () => __awaiter(this, void 0, void 0, function* () {
@@ -37,6 +37,7 @@ class MongoDB {
                 // await this.import_departments_intoMySQL();
                 // await this.createDummySuppliers();
                 // await this.createSemiRealData();
+                // await this.createData();
             })).catch((err) => {
                 this.data.utils.error("Failed to connect to MongoDB");
                 console.error(err);
@@ -53,6 +54,49 @@ class MongoDB {
             }
             ;
             return deps;
+        });
+        this.createData = () => __awaiter(this, void 0, void 0, function* () {
+            const roles = yield mongoose_1.default.models.EntityRole.find();
+            const entityCategory = new EntityCategory_1.default({
+                name: "المنتجات",
+                description: "قسم المنتجات",
+                entity: new mongoose_1.default.Types.ObjectId(),
+                products: [],
+                ancestry: ""
+            });
+            const entity = new Entity_1.default({
+                details: {
+                    displayName: "المتكاملة للسفتي ",
+                    logo: "https://www.almotkamelasafety.com/wp-content/uploads/2021/05/logo.png",
+                    banner: "https://www.almotkamelasafety.com/wp-content/uploads/2021/05/logo.png",
+                    description: `
+Company Name: المتكاملة للسفتي (Integrated Safety Solutions)
+
+Company Description:
+Integrated Safety Solutions is a pioneering supplier company dedicated to providing comprehensive safety solutions tailored to meet the diverse needs of industries and businesses. With a commitment to excellence and innovation, we specialize in delivering top-of-the-line safety equipment, training, and consultancy services to ensure the highest standards of safety and security across various sectors.
+
+At المتكاملة للسفتي, we understand the paramount importance of safety in every workplace environment. Therefore, our mission is to empower organizations with the tools and knowledge necessary to mitigate risks, prevent accidents, and foster a culture of safety awareness.
+                `
+                },
+                personas: {
+                    supplier: new SupplierType_1.default({ products: [] }),
+                    customer: { requests: [] }
+                },
+                roles: roles.map(role => role._id),
+                categories: [],
+                departments: [new mongoose_1.default.Types.ObjectId("661e4b90496d7f617643f3fa")]
+            });
+            entityCategory.entity = entity._id;
+            yield entityCategory.save();
+            entity.categories.push(entityCategory._id);
+            yield entity.save();
+            const user = new User_1.default({
+                displayName: "Safety Islam",
+                credentials: { username: "safety_islam", password: "123123" },
+                entity: entity._id,
+                role: roles[0]._id
+            });
+            yield user.save();
         });
         this.eraseDatabase = () => __awaiter(this, void 0, void 0, function* () {
             yield mongoose_1.default.models.User.deleteMany({});

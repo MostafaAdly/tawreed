@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Entity from "../../../../Instances/Entity";
 import Page from "../../Page";
 import { ObjectId } from "../../../../Types/ObjectId";
-import { Unit } from "../../../../Instances/Unit";
+import { Unit } from "../../../../Instances/enums/Unit";
 
 export default class MyProducts extends Page {
     private data: any;

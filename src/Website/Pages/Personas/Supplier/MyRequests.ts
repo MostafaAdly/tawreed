@@ -1,5 +1,5 @@
 import Entity from "../../../../Instances/Entity";
-import { ResponseType } from "../../../../Instances/ResponseType";
+import { ResponseType } from "../../../../Instances/enums/ResponseType";
 import Page from "../../Page";
 import mongoose from "mongoose";
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Utils from '../Utils';
-import { Permission } from './Permission';
+import { Permission } from './enums/Permission';
 import ModelManager from '../Database/ModelManager';
 import { ObjectId } from '../Types/ObjectId';
 

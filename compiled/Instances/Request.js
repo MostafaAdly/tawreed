@@ -15,14 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Utils_1 = __importDefault(require("../Utils"));
 const ModelManager_1 = __importDefault(require("../Database/ModelManager"));
-const RequestType_1 = require("./RequestType");
-const ResponseType_1 = require("./ResponseType");
+const RequestType_1 = require("./enums/RequestType");
+const ResponseType_1 = require("./enums/ResponseType");
 class Request {
     constructor(input) {
         this._id = new mongoose_1.default.Types.ObjectId();
         this.requestId = Utils_1.default.requestId_prefix + Utils_1.default.createId();
         this.responseType = ResponseType_1.ResponseType.PURCHASE_PENDING;
         this.requestType = RequestType_1.RequestType.PURCHASE;
+        this.instant = false;
         this.processPurchase = (requestType, productId, supplierId, customerId, userId) => __awaiter(this, void 0, void 0, function* () {
             this.product = productId;
             this.supplier = supplierId;

@@ -2,7 +2,7 @@ import SupplierType from "./Personas/SupplierType";
 import CustomerType from './Personas/CustomerType';
 import EntityRole from "./EntityRole";
 import User from "./User";
-import { Permission } from "./Permission";
+import { Permission } from "./enums/Permission";
 import { ObjectId } from '../Types/ObjectId';
 export default class Entity {
     _id: ObjectId;

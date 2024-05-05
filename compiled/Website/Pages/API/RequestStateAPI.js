@@ -14,10 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Request_1 = __importDefault(require("../../../Instances/Request"));
-const ResponseType_1 = require("../../../Instances/ResponseType");
+const ResponseType_1 = require("../../../Instances/enums/ResponseType");
 const Page_1 = __importDefault(require("../Page"));
 const Payment_1 = __importDefault(require("../../../Instances/Payment"));
-const RequestType_1 = require("../../../Instances/RequestType");
+const RequestType_1 = require("../../../Instances/enums/RequestType");
 class RequestStateAPI extends Page_1.default {
     constructor(data, base_url) {
         super(base_url + RequestStateAPI.base_url);

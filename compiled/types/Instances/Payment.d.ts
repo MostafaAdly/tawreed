@@ -1,5 +1,5 @@
 import { ObjectId } from "../Types/ObjectId";
-import { PaymentMethod } from "./PaymentMethod";
+import { PaymentMethod } from "./enums/PaymentMethod";
 export default class Payment {
     _id: ObjectId;
     paymentId: string;

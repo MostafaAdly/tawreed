@@ -3,8 +3,8 @@ import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyRequests/css/SupplierRequestsPage.module.css'
 import { _css, changeRequestState, onTabClick, sendDeleteRequest, toFormattedDateOnly } from '../../../public/Assets/Helpers';
-import { RequestType } from '../../../src/Instances/RequestType';
-import { ResponseType } from '../../../src/Instances/ResponseType';
+import { RequestType } from '../../../src/Instances/enums/RequestType';
+import { ResponseType } from '../../../src/Instances/enums/ResponseType';
 import Filter from '../../../public/Assets/Components/Filter';
 
 const SupplierRequestsPage = ({ user, entity, requests }) => {

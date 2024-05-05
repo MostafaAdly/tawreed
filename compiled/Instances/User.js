@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Entity_1 = __importDefault(require("./Entity"));
-const Permission_1 = require("./Permission");
+const Permission_1 = require("./enums/Permission");
 const ModelManager_1 = __importDefault(require("../Database/ModelManager"));
 const Utils_1 = __importDefault(require("../Utils"));
 class User {

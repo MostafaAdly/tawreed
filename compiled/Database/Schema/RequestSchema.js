@@ -24,8 +24,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const ResponseType_1 = require("../../Instances/ResponseType");
-const RequestType_1 = require("../../Instances/RequestType");
+const ResponseType_1 = require("../../Instances/enums/ResponseType");
+const RequestType_1 = require("../../Instances/enums/RequestType");
 class RequestSchema extends mongoose_1.Schema {
     constructor({ id, options, schema = {
         requestId: String,

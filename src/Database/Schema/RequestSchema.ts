@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import { ResponseType } from "../../Instances/ResponseType";
-import { RequestType } from "../../Instances/RequestType";
+import { ResponseType } from "../../Instances/enums/ResponseType";
+import { RequestType } from "../../Instances/enums/RequestType";
 import RFQSettings from "../../Instances/RFQSettings";
 
 export default class RequestSchema extends Schema {

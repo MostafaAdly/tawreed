@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Entity_1 = __importDefault(require("../../../../Instances/Entity"));
-const ResponseType_1 = require("../../../../Instances/ResponseType");
+const ResponseType_1 = require("../../../../Instances/enums/ResponseType");
 const Page_1 = __importDefault(require("../../Page"));
 const mongoose_1 = __importDefault(require("mongoose"));
 class MyRequests extends Page_1.default {

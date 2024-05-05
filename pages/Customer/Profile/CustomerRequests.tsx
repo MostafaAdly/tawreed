@@ -4,8 +4,8 @@ import { _css, changeRequestState, onTabClick, sendDeleteRequest } from "../../.
 import C_HeaderComponent from '../Global/HeaderComponent';
 import C_FooterComponent from '../Global/FooterComponent';
 import Filter from '../../../public/Assets/Components/Filter';
-import { ResponseType } from '../../../src/Instances/ResponseType';
-import { RequestType } from '../../../src/Instances/RequestType';
+import { ResponseType } from '../../../src/Instances/enums/ResponseType';
+import { RequestType } from '../../../src/Instances/enums/RequestType';
 import SentForm from '../../../public/Assets/Components/SentForm';
 
 const CustomerRequests = ({ user, supplier, requests }) => {

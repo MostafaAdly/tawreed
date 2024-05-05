@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const Permission_1 = require("../../../Instances/Permission");
+const Permission_1 = require("../../../Instances/enums/Permission");
 const User_1 = __importDefault(require("../../../Instances/User"));
 const Page_1 = __importDefault(require("../Page"));
 const Home_1 = __importDefault(require("../Personas/Customer/Home/Home"));

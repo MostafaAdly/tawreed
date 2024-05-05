@@ -1,5 +1,5 @@
 import Request from "../../../Instances/Request";
-import { RequestType } from "../../../Instances/RequestType";
+import { RequestType } from "../../../Instances/enums/RequestType";
 import Page from "../Page";
 
 export default class ProductPurchaseAPI extends Page {

@@ -4,6 +4,7 @@ export default class MongoDB {
     connect: () => Promise<void>;
     disconnect: () => Promise<void>;
     import_departments_intoMySQL: () => Promise<any[]>;
+    createData: () => Promise<void>;
     eraseDatabase: () => Promise<void>;
     deleteAllDepartments: () => Promise<void>;
     deleteAllUsers: () => Promise<void>;

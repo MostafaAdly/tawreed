@@ -69,6 +69,7 @@ class Supplier extends Page_1.default {
         // RFQ FOR PRODUCT BY ID OF SUPPLIER BY ID
         this.router.get('/:supplierId/products/:productId/rfq', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
+            const instant = req.query.instant == 1;
             const entity = yield new Entity_1.default().load({ entityId: req.params.supplierId });
             if (!entity) {
                 // TODO: HANDLE ENTITY IF NULL
@@ -79,7 +80,7 @@ class Supplier extends Page_1.default {
                 // TODO: HANDLE PRODUCT IF NULL
                 return;
             }
-            this.data.server.next.render(req, res, '/Customer/Supplier/RequestForQuotation', { data: JSON.stringify({ user, supplier: entity, product }) });
+            this.data.server.next.render(req, res, '/Customer/Supplier/RequestForQuotation', { data: JSON.stringify({ user, supplier: entity, product, instant }) });
         }));
         // RFQ REQUESTED FOR PRODUCT BY ID FOR A SUPPLIER BY ID
         this.router.get('/:supplierId/products/:productId/rfq/sent', (req, res) => __awaiter(this, void 0, void 0, function* () {

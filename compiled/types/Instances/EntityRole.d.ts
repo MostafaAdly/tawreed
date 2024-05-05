@@ -1,4 +1,4 @@
-import { Permission } from './Permission';
+import { Permission } from './enums/Permission';
 import { ObjectId } from '../Types/ObjectId';
 export default class EntityRole {
     _id: ObjectId;

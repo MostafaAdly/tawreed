@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Request_1 = __importDefault(require("../../../Instances/Request"));
-const RequestType_1 = require("../../../Instances/RequestType");
+const RequestType_1 = require("../../../Instances/enums/RequestType");
 const Page_1 = __importDefault(require("../Page"));
 class ProductPurchaseAPI extends Page_1.default {
     constructor(data, base_url) {
