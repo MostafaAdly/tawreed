@@ -4,7 +4,7 @@ import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyPayments/css/SupplierPaymentsPage.module.css'
 import { _css, toFormattedDate, toFormattedDateOnly } from '../../../public/Assets/Helpers';
 import Filter from '../../../public/Assets/Components/Filter';
-import { PaymentMethod } from '../../../src/Instances/PaymentMethod';
+import { PaymentMethod } from '../../../src/Instances/enums/PaymentMethod';
 
 
 const SupplierPaymentsPage = ({ user, entity, payments }) => {

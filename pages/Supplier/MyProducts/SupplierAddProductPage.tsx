@@ -3,7 +3,7 @@ import S_HeaderComponent from '../Global/HeaderComponent';
 import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyProducts/css/SupplierAddProductPage.module.css'
 import { _css, API_BASE_URL } from '../../../public/Assets/Helpers';
-import { Unit } from '../../../src/Instances/Unit';
+import { Unit } from '../../../src/Instances/enums/Unit';
 
 const SupplierAddProductPage = ({ user, entity, categories }) => {
 
