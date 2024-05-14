@@ -1,5 +1,6 @@
 import Entity from "../../../Instances/Entity";
 import EntityCategory from "../../../Instances/EntityCategory";
+import { EntityType } from "../../../Instances/enums/EntityType";
 import CustomerType from "../../../Instances/Personas/CustomerType";
 import SupplierType from "../../../Instances/Personas/SupplierType";
 import User from "../../../Instances/User";
@@ -26,6 +27,7 @@ export default class EntityData extends Page {
             const loadedUser = await mongoose.models.User.findOne({ 'credentials.username': userData.username }).exec();
             if (loadedUser) return res.status(400).send({ message: "User already exists", error: 1 });
             const entity = new Entity({
+                type: entityData.type,
                 details: {
                     description: entityData.description,
                     displayName: entityData.displayName,
@@ -33,12 +35,12 @@ export default class EntityData extends Page {
                     banner: "https://w7.pngwing.com/pngs/29/173/png-transparent-null-pointer-symbol-computer-icons-pi-miscellaneous-angle-trademark.png"
                 },
                 personas: {
+                    supplier: new SupplierType({ products: [] }),
+                    customer: new CustomerType({ requests: [] }),
                 },
                 roles: await mongoose.models.EntityRole.find({}).exec(),
                 departments: [department._id],
             });
-            if (entityData.type == 0 || entityData.type == 2) entity.personas.supplier = new SupplierType({ products: [] });
-            if (entityData.type == 1 || entityData.type == 2) entity.personas.customer = new CustomerType({ requests: [] });
             entity.categories.push(await this.createDefaultCategory(entity));
             const user = new User({
                 displayName: userData.displayName,

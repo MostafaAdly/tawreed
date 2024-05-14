@@ -4,9 +4,11 @@ import EntityRole from "./EntityRole";
 import User from "./User";
 import { Permission } from "./enums/Permission";
 import { ObjectId } from '../Types/ObjectId';
+import { EntityType } from './enums/EntityType';
 export default class Entity {
     _id: ObjectId;
     entityId: string;
+    type: EntityType;
     details: {
         displayName: string;
         logo: string;
@@ -23,6 +25,7 @@ export default class Entity {
     categories: ObjectId[];
     constructor();
     constructor({ details, personas, roles, categories }: {
+        type: EntityType;
         details: {
             displayName: string;
             logo: string;

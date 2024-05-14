@@ -33,6 +33,7 @@ class Login extends Page_1.default {
         });
         this.router.post("/", (req, res) => __awaiter(this, void 0, void 0, function* () {
             const credentials = req.body;
+            console.log(credentials);
             const validatedUser = yield this.validateCredentialsToUser(credentials);
             if (!validatedUser)
                 return res.status(200).redirect(`/login?error=${(validatedUser === null || validatedUser === void 0 ? void 0 : validatedUser.entity) ? 2 : 1}`);
@@ -62,8 +63,9 @@ class Login extends Page_1.default {
     }
     validateCredentialsToUser(credentials) {
         return __awaiter(this, void 0, void 0, function* () {
-            return (yield mongoose_1.default.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
-                .populate({ path: 'entity' }).populate('role')).toObject();
+            var _a;
+            return (_a = (yield mongoose_1.default.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
+                .populate({ path: 'entity' }).populate('role'))) === null || _a === void 0 ? void 0 : _a.toObject();
         });
     }
 }

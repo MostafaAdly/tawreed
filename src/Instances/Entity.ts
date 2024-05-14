@@ -7,10 +7,12 @@ import { Permission } from "./enums/Permission";
 import Utils from "../Utils";
 import ModelManager from "../Database/ModelManager";
 import { ObjectId } from '../Types/ObjectId';
+import { EntityType } from './enums/EntityType';
 
 export default class Entity {
     public _id: ObjectId = new mongoose.Types.ObjectId();
     public entityId: string = Utils.entityId_prefix + Utils.createId();
+    public type: EntityType = 1;
     public details: {
         displayName: string,
         logo: string,
@@ -26,6 +28,7 @@ export default class Entity {
     constructor();
     constructor({ details, personas, roles, categories }:
         {
+            type: EntityType,
             details: {
                 displayName: string,
                 logo: string,

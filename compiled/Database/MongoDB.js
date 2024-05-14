@@ -24,6 +24,7 @@ const Price_1 = __importDefault(require("../Instances/Price"));
 const ar_1 = require("@faker-js/faker/locale/ar");
 const departments_json_1 = __importDefault(require("../DefaultData/departments.json"));
 const EntityCategory_1 = __importDefault(require("../Instances/EntityCategory"));
+const EntityType_1 = require("../Instances/enums/EntityType");
 class MongoDB {
     constructor(data) {
         this.connect = () => __awaiter(this, void 0, void 0, function* () {
@@ -65,6 +66,7 @@ class MongoDB {
                 ancestry: ""
             });
             const entity = new Entity_1.default({
+                type: EntityType_1.EntityType.GENERAL,
                 details: {
                     displayName: "المتكاملة للسفتي ",
                     logo: "https://www.almotkamelasafety.com/wp-content/uploads/2021/05/logo.png",
@@ -160,6 +162,7 @@ At المتكاملة للسفتي, we understand the paramount importance of sa
                     entityProducts.push(this.random(products)._id);
                 }
                 const entity = new Entity_1.default({
+                    type: EntityType_1.EntityType.GENERAL,
                     details: {
                         displayName: ar_1.faker.company.name(),
                         logo: ar_1.faker.image.avatar(),

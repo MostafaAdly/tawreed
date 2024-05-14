@@ -27,6 +27,7 @@ const mongoose_1 = __importStar(require("mongoose"));
 class EntitySchema extends mongoose_1.Schema {
     constructor({ id, options, schema = {
         entityId: String,
+        type: Number,
         details: {
             displayName: String,
             logo: String,

@@ -149,3 +149,7 @@ export const registerNewEntity = async ({ token, userId, entity, user }) => {
         return null;
     }
 }
+
+export const isSupplier = (entity) => entity.type == 0 || entity.type == 2;
+export const isCustomer = (entity) => entity.type == 1 || entity.type == 2;
+export const isGeneral = (entity) => entity.type == 2;

@@ -10,6 +10,7 @@ import Price from "../Instances/Price";
 import { faker } from '@faker-js/faker/locale/ar';
 import departments from '../DefaultData/departments.json'
 import EntityCategory from "../Instances/EntityCategory";
+import { EntityType } from "../Instances/enums/EntityType";
 
 export default class MongoDB {
     private data: any;
@@ -58,6 +59,7 @@ export default class MongoDB {
         )
 
         const entity = new Entity({
+            type: EntityType.GENERAL,
             details: {
                 displayName: "المتكاملة للسفتي ",
                 logo: "https://www.almotkamelasafety.com/wp-content/uploads/2021/05/logo.png",
@@ -159,6 +161,7 @@ At المتكاملة للسفتي, we understand the paramount importance of sa
                 entityProducts.push(this.random(products)._id);
             }
             const entity = new Entity({
+                type: EntityType.GENERAL,
                 details:
                 {
                     displayName: faker.company.name(),

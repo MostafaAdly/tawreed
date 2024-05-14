@@ -50,20 +50,20 @@ class EntityData extends Page_1.default {
             if (loadedUser)
                 return res.status(400).send({ message: "User already exists", error: 1 });
             const entity = new Entity_1.default({
+                type: entityData.type,
                 details: {
                     description: entityData.description,
                     displayName: entityData.displayName,
                     logo: "https://w7.pngwing.com/pngs/29/173/png-transparent-null-pointer-symbol-computer-icons-pi-miscellaneous-angle-trademark.png",
                     banner: "https://w7.pngwing.com/pngs/29/173/png-transparent-null-pointer-symbol-computer-icons-pi-miscellaneous-angle-trademark.png"
                 },
-                personas: {},
+                personas: {
+                    supplier: new SupplierType_1.default({ products: [] }),
+                    customer: new CustomerType_1.default({ requests: [] }),
+                },
                 roles: yield mongoose_1.default.models.EntityRole.find({}).exec(),
                 departments: [department._id],
             });
-            if (entityData.type == 0 || entityData.type == 2)
-                entity.personas.supplier = new SupplierType_1.default({ products: [] });
-            if (entityData.type == 1 || entityData.type == 2)
-                entity.personas.customer = new CustomerType_1.default({ requests: [] });
             entity.categories.push(yield this.createDefaultCategory(entity));
             const user = new User_1.default({
                 displayName: userData.displayName,

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from '../../public/Authentication/css/PersonaSelectionPage.module.css';
-import { _css, getImage } from "../../public/Assets/Helpers";
+import { _css, getImage, isCustomer, isSupplier } from "../../public/Assets/Helpers";
 import { LoginFooter } from "./LoginPage";
 
 
@@ -25,16 +25,19 @@ const PersonaSelectionPage = ({ user, entity }) => {
                             <p>حسابك - Profile</p>
                         </div>
                     </a>
-                    <a className={_css(styles, 'persona box-shadow-hover')} href="/c">
-                        <div className={_css(styles, 'image center')}>
-                            <i className={_css(styles, 'fa-solid fa-user')}></i>
-                        </div>
-                        <div className={_css(styles, 'info')}>
-                            <p>عميل - Client</p>
-                        </div>
-                    </a>
                     {
-                        entity?.personas?.supplier ?
+                        isCustomer(entity) ?
+                            <a className={_css(styles, 'persona box-shadow-hover')} href="/c">
+                                <div className={_css(styles, 'image center')}>
+                                    <i className={_css(styles, 'fa-solid fa-user')}></i>
+                                </div>
+                                <div className={_css(styles, 'info')}>
+                                    <p>عميل - Client</p>
+                                </div>
+                            </a> : null
+                    }
+                    {
+                        isSupplier(entity) ?
                             (
                                 <a className={_css(styles, 'persona box-shadow-hover')} href="/s">
                                     <div className={_css(styles, 'image center')}>

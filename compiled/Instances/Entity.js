@@ -20,6 +20,7 @@ class Entity {
     constructor(input) {
         this._id = new mongoose_1.default.Types.ObjectId();
         this.entityId = Utils_1.default.entityId_prefix + Utils_1.default.createId();
+        this.type = 1;
         this.personas = { customer: new CustomerType_1.default({ requests: [] }) };
         this.users = [];
         this.roles = [];

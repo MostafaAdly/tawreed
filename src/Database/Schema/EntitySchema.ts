@@ -8,6 +8,7 @@ export default class EntitySchema extends Schema {
     constructor({ id, options, schema =
         {
             entityId: String,
+            type: Number,
             details: {
                 displayName: String,
                 logo: String,

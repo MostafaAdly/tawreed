@@ -24,6 +24,7 @@ export default class Login extends Page {
 
         this.router.post("/", async (req: any, res: any) => {
             const credentials = req.body;
+            console.log(credentials)
             const validatedUser = await this.validateCredentialsToUser(credentials);
 
             if (!validatedUser)
@@ -54,7 +55,7 @@ export default class Login extends Page {
 
     private async validateCredentialsToUser(credentials: { username: string, password: string }): Promise<any> {
         return (await mongoose.models.User.findOne({ 'credentials.username': credentials.username.toLowerCase(), 'credentials.password': credentials.password })
-            .populate({ path: 'entity' }).populate('role')).toObject();
+            .populate({ path: 'entity' }).populate('role'))?.toObject();
     }
 
 }

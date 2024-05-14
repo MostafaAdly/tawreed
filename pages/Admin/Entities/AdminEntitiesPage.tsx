@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import A_HeaderComponent from '../Global/HeaderComponent';
 import A_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/AdminPanel/Entities/css/AdminEntitiesPage.module.css'
-import { _css, API_BASE_URL, onTabClick, registerNewEntity } from '../../../public/Assets/Helpers'
+import { _css, API_BASE_URL, isCustomer, isGeneral, isSupplier, onTabClick, registerNewEntity } from '../../../public/Assets/Helpers'
 
 
 const AdminEntitiesPage = ({ user, users, entities, roles, departments }) => {
@@ -47,10 +47,7 @@ const _self = ({ user, users, entities, roles, departments }) => {
         setCurrentPopup(popupId);
     };
 
-    const determineEntityType = ({ entity }) => entity.personas.supplier != null ? (entity.personas.customer != null ? 2 : 0) : 1;
-
     const sendRegisterNewEntity = async (target: any) => {
-        console.log(target)
         const entity = {
             displayName: target.entity_displayName.value,
             description: target.entity_description.value,
@@ -117,13 +114,12 @@ const _self = ({ user, users, entities, roles, departments }) => {
                         </tr>
                         {
                             entities.map((entity, index) => {
-                                const type = determineEntityType({ entity });
                                 return <tr key={index}>
                                     <td><p>{entity.entityId}</p></td>
                                     <td><p>{entity.details.displayName}</p></td>
                                     <td>
-                                        <div className={_css(styles, `account ${type == 1 ? "customer" : (type == 0 ? "supplier" : "general")}-account center`)}>
-                                            <p className='center'>حساب {type == 1 ? "مشتري" : (type == 0 ? "بائع" : "مزدوج")}</p>
+                                        <div className={_css(styles, `account ${isGeneral(entity) ? "general" : (isSupplier(entity) ? "supplier" : "customer")}-account center`)}>
+                                            <p className='center'>حساب {isGeneral(entity) ? "مزدوج" : (isSupplier(entity) ? "بائع" : "مشتري")}</p>
                                         </div>
                                     </td>
                                     <td><p>{entity.personas.supplier.products.length} أصناف</p></td>
@@ -165,7 +161,6 @@ const _self = ({ user, users, entities, roles, departments }) => {
                 method='POST'
                 encType='multipart/form-data'
                 onSubmit={(e) => {
-                    console.log(e.target)
                     e.preventDefault();
                     sendRegisterNewEntity(e.target);
                 }}
@@ -178,9 +173,9 @@ const _self = ({ user, users, entities, roles, departments }) => {
                     <SelectMenuInput id='entity_type' title="نوع الشركة"
                         selection={
                             [
-                                { id: "0", name: "بائع" },
-                                { id: "1", name: "مشتري" },
-                                { id: "2", name: "مزدوج" },
+                                { _id: "0", name: "بائع" },
+                                { _id: "1", name: "مشتري" },
+                                { _id: "2", name: "مزدوج" },
                             ]
                         } />
                     <div className={_css(styles, 'string-textarea')}>
