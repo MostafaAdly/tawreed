@@ -54,7 +54,8 @@ const _self = ({ user, users, entities, roles, departments }) => {
         const entity = {
             displayName: target.entity_displayName.value,
             description: target.entity_description.value,
-            department: target.department.value
+            department: target.department.value,
+            type: target.entity_type.value,
         };
 
         // check password if it matches the confirmation
@@ -174,6 +175,14 @@ const _self = ({ user, users, entities, roles, departments }) => {
                         <p>معلومات الشركة</p>
                     </div>
                     <StringInput id='entity_displayName' title='إسم الشركة' placeHolder='أدخل إسم الشركة' />
+                    <SelectMenuInput id='entity_type' title="نوع الشركة"
+                        selection={
+                            [
+                                { id: "0", name: "بائع" },
+                                { id: "1", name: "مشتري" },
+                                { id: "2", name: "مزدوج" },
+                            ]
+                        } />
                     <div className={_css(styles, 'string-textarea')}>
                         <label>اكتب ملخص عن الشركة</label>
                         <textarea name='description' id='entity_description' placeholder='أدخل وصف الشركة' required
