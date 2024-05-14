@@ -26,7 +26,7 @@ const LoginPage = ({ error }) => {
                                         placeholder="رقم الهاتف أو البريد الالكتروني"
                                         id="username" name="username"
                                         dir="ltr"
-                                        defaultValue={"MostafaAdly"}
+                                        defaultValue={"tawreed"}
                                     />
                                 </div>
                             </div>
@@ -43,7 +43,7 @@ const LoginPage = ({ error }) => {
                                         id="password"
                                         name="password"
                                         dir="ltr"
-                                        defaultValue={"123123"} />
+                                        defaultValue={"tawreed"} />
                                 </div>
                             </div>
                             {error ? <p className={_css(styles, 'error')}>خطأ في البيانات! الرجاء إعادة إدخال بياناتك</p> : null}
