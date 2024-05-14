@@ -35,6 +35,7 @@ const EntityData_1 = __importDefault(require("./Pages/API/EntityData"));
 const CategoryData_1 = __importDefault(require("./Pages/API/CategoryData"));
 const AdminDashboard_1 = __importDefault(require("./Pages/AdminPanel/AdminDashboard"));
 const MyDashboard_1 = __importDefault(require("./Pages/Personas/Supplier/MyDashboard"));
+const Entities_1 = __importDefault(require("./Pages/AdminPanel/Entities"));
 class Server {
     constructor(data) {
         this.port = parseInt(process.env.SERVER_PORT + "") || 3000;
@@ -114,6 +115,7 @@ class Server {
             new Profile_1.default(this.data),
             // ADMIN PANEL
             new AdminDashboard_1.default(this.data),
+            new Entities_1.default(this.data),
             // Do not remove this.
             new NextWildCard_1.default(this.data),
         ];

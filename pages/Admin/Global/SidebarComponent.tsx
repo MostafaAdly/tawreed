@@ -19,7 +19,7 @@ const A_SidebarComponent = ({ }) => {
                 {
                     label: "المستخدمين",
                     icon: "users",
-                    href: "/a"
+                    href: "/entities"
                 },
                 {
                     label: "المدفوعات",

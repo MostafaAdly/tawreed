@@ -32,6 +32,7 @@ import EntityData from './Pages/API/EntityData';
 import CategoryData from './Pages/API/CategoryData';
 import AdminDashboard from './Pages/AdminPanel/AdminDashboard';
 import MyDashboard from './Pages/Personas/Supplier/MyDashboard';
+import Entities from './Pages/AdminPanel/Entities';
 
 export default class Server {
     // ============== - PRIVATE VARIABLES - ==============
@@ -129,6 +130,7 @@ export default class Server {
 
             // ADMIN PANEL
             new AdminDashboard(this.data),
+            new Entities(this.data),
 
             // Do not remove this.
             new WildCard(this.data),
