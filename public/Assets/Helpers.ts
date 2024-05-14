@@ -139,3 +139,13 @@ export const soonFeature = ({ text }) => {
     return alert(text || `هذه الخاصية ستتوفر قريبا`
     )
 }
+
+export const registerNewEntity = async ({ token, userId, entity, user }) => {
+    try {
+        return (await axios.post(`${API_BASE_URL}/entity/create`, {
+            token, userId, entity, user
+        })).data;
+    } catch (error) {
+        return null;
+    }
+}

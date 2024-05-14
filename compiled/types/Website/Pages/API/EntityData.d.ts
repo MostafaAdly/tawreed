@@ -4,4 +4,5 @@ export default class EntityData extends Page {
     static base_url: string;
     constructor(data: any, base_url?: string);
     private run;
+    private createDefaultCategory;
 }

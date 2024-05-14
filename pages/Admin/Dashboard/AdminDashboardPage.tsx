@@ -19,7 +19,7 @@ const AdminDashboardPage = ({ user }) => {
 const _self = ({ user }) => {
     return (
         <>
-            <section className={_css(styles, 'info')}>
+            <section className={_css(styles, 'info')} style={{ display: 'none' }}>
                 <InfoBox label="شكوى جديدة" number={3} color="#674AFF" fontColor='white' />
                 <InfoBox label="مستخدم جديد" number={65} color="#66cc99" fontColor='white' />
                 <InfoBox label="طلب توريد" number={122} color="#fefefe" fontColor='#ffa500' />

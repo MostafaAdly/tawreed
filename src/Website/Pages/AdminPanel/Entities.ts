@@ -17,11 +17,17 @@ export default class Entities extends Page {
             const user = req.session.user;
             if (!user.admin)
                 return res.status(301).redirect("/");
-            const entities = await mongoose.models.Entity.find({});
+            const entities = await mongoose.models.Entity.find({}).exec();
+            const roles = await mongoose.models.EntityRole.find({ priority: { $lte: 10 } }).select('name id').exec();
+            const users = await mongoose.models.User.find({}).populate({ path: 'role', select: 'name priority' }).select('name id entity displayName role').exec();
+            const departments = await mongoose.models.Department.find({}).select('name id').exec();
             this.data.server.next.render(req, res, '/Admin/Entities/AdminEntitiesPage', {
                 data: JSON.stringify({
                     user,
-                    entities
+                    users,
+                    entities,
+                    roles,
+                    departments
                 })
             });
         });

@@ -26,11 +26,17 @@ class Entities extends Page_1.default {
             const user = req.session.user;
             if (!user.admin)
                 return res.status(301).redirect("/");
-            const entities = yield mongoose_1.default.models.Entity.find({});
+            const entities = yield mongoose_1.default.models.Entity.find({}).exec();
+            const roles = yield mongoose_1.default.models.EntityRole.find({ priority: { $lte: 10 } }).select('name id').exec();
+            const users = yield mongoose_1.default.models.User.find({}).populate({ path: 'role', select: 'name priority' }).select('name id entity displayName role').exec();
+            const departments = yield mongoose_1.default.models.Department.find({}).select('name id').exec();
             this.data.server.next.render(req, res, '/Admin/Entities/AdminEntitiesPage', {
                 data: JSON.stringify({
                     user,
-                    entities
+                    users,
+                    entities,
+                    roles,
+                    departments
                 })
             });
         }));
