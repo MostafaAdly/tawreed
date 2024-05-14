@@ -33,7 +33,6 @@ class Login extends Page_1.default {
         });
         this.router.post("/", (req, res) => __awaiter(this, void 0, void 0, function* () {
             const credentials = req.body;
-            console.log(credentials);
             const validatedUser = yield this.validateCredentialsToUser(credentials);
             if (!validatedUser)
                 return res.status(200).redirect(`/login?error=${(validatedUser === null || validatedUser === void 0 ? void 0 : validatedUser.entity) ? 2 : 1}`);

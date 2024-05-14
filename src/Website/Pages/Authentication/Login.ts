@@ -24,7 +24,6 @@ export default class Login extends Page {
 
         this.router.post("/", async (req: any, res: any) => {
             const credentials = req.body;
-            console.log(credentials)
             const validatedUser = await this.validateCredentialsToUser(credentials);
 
             if (!validatedUser)
