@@ -112,7 +112,7 @@ const _self = ({ user, entity, categories }) => {
                                 type="file"
                                 name="images"
                                 id="images"
-                                accept=".png"
+                                accept=".png,.jpg,jpeg,.webp"
                                 multiple
                                 hidden
                                 required
