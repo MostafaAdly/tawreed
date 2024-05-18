@@ -125,10 +125,10 @@ export const saveCategoryDescription = async ({ userId, token, categoryId, descr
     }
 }
 
-export const createProduct = async ({ userId, token, product }) => {
+export const createProduct = async (data) => {
     try {
         return (await axios.post(`${API_BASE_URL}/profile/product`, {
-            userId, token, product
+            ...data
         })).data;
     } catch (error) {
         return null;
@@ -144,6 +144,16 @@ export const registerNewEntity = async ({ token, userId, entity, user }) => {
     try {
         return (await axios.post(`${API_BASE_URL}/entity/create`, {
             token, userId, entity, user
+        })).data;
+    } catch (error) {
+        return null;
+    }
+}
+
+export const createNewCategory = async ({ userId, token, entity, name, description, ancestry }) => {
+    try {
+        return (await axios.post(`${API_BASE_URL}/category/create`, {
+            token, userId, entity, name, description, ancestry
         })).data;
     } catch (error) {
         return null;

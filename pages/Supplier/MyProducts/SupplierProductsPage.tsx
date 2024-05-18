@@ -4,7 +4,6 @@ import S_SidebarComponent from '../Global/SidebarComponent';
 import styles from '../../../public/Supplier/MyProducts/css/SupplierProductsPage.module.css'
 import { _css, getImage, onTabClick, saveCategoryDescription } from '../../../public/Assets/Helpers';
 import SaveButton from '../../../public/Assets/Components/SaveButton';
-import Filter from '../../../public/Assets/Components/Filter';
 
 const SupplierProductsPage = ({ user, entity, categories, products }) => {
 
@@ -35,7 +34,7 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                     pros.push(pro);
             }
         }
-        console.log(products.map((p) => getImage(p.images[0])))
+        // console.log(products.map((p) => getImage(p.images[0])))
         setProducts(pros);
     }, [ancestry])
 
@@ -111,10 +110,19 @@ const _self = ({ user, entity, categories, entityProducts }) => {
                                 <div className={_css(styles, 'icon')}>
                                     <i className={_css(styles, 'fa-solid fa-screwdriver-wrench')}></i>
                                 </div>
-                                <p>{cat.name}</p>
+                                <p>{cat.name.substring(0, 15)}</p>
                             </div>
                         );
                     })}
+                    {
+                        ancestry != "" && <div className={_css(styles, 'category')} onClick={
+                            () => window.location.href = `/s/products/create-category?ancestry=${ancestry.replace('/', '-') || 0}`}
+                        >
+                            <div className={_css(styles, 'icon')}>
+                                <i className='fa-solid fa-plus' />
+                            </div>
+                        </div>
+                    }
                 </div>
             </section>
             <section className={_css(styles, 'tabs')} id="section_tabs">

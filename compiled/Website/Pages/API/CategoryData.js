@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const EntityCategory_1 = __importDefault(require("../../../Instances/EntityCategory"));
 const Page_1 = __importDefault(require("../Page"));
 const mongoose_1 = __importDefault(require("mongoose"));
 class CategoryData extends Page_1.default {
@@ -21,6 +22,17 @@ class CategoryData extends Page_1.default {
         this.run();
     }
     run() {
+        this.router.post('/create', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { token, userId, entity, ancestry, name, description } = req.body;
+            if (!token || !userId || !entity || !ancestry || !name || description.replaceAll(" ", "") == "")
+                return res.status(400).send({ message: "Invalid request", error: 1 });
+            const isValidToken = yield this.data.server.sessionHandler.validateUserByToken(userId, token);
+            if (!isValidToken)
+                return res.status(401).send({ message: "Invalid token", error: 1 });
+            const category = new EntityCategory_1.default({ name, description, entity, ancestry });
+            yield category.save();
+            return res.send({ message: "Category created successfully", success: 1 });
+        }));
         this.router.post('/description', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { token, userId, categoryId, description } = req.body;
             if (!token || !userId || !categoryId || description.replaceAll(" ", "") == "")

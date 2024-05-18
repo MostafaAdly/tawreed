@@ -30,7 +30,6 @@ const _self = ({ user, entity, categories }) => {
             var fr = new FileReader();
             fr.onload = function () {
                 setImages([...images, fr.result]);
-                console.log(images)
             }
             fr.readAsDataURL(files[0]);
         }
@@ -45,7 +44,7 @@ const _self = ({ user, entity, categories }) => {
                 method="post"
                 action={`${API_BASE_URL}/profile/product`}
                 encType="multipart/form-data"
-                target="_blank"
+                target="_parent"
             >
                 <div className={_css(styles, 'fields')}>
                     <Field

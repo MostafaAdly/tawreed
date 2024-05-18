@@ -27,7 +27,7 @@ export default class MyProducts extends Page {
             this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierProductsPage', { data: JSON.stringify({ user, entity, categories, products }) });
         });
 
-        // SUPPLIER - add PRODUCT
+        // SUPPLIER - ADD PRODUCT
         this.router.get('/new', async (req: any, res: any) => {
             const user = req.session.user;
             const entity = await new Entity().load({ _id: user.entity });
@@ -40,6 +40,19 @@ export default class MyProducts extends Page {
                     .find({ entity: entity }).select(["name", "ancestry"]).exec());
             this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierAddProductPage',
                 { data: JSON.stringify({ user, entity, categories }) });
+        });
+
+        // SUPPLIER - ADD CATEGORY
+        this.router.get('/create-category', async (req: any, res: any) => {
+            const user = req.session.user;
+            const entity = await new Entity().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL   
+                return;
+            }
+            const ancestry = !req.query.ancestry ? "" : req.query.ancestry.replace('-', '/');
+            this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierCreateCategoryPage',
+                { data: JSON.stringify({ user, entity, ancestry }) });
         });
     }
 

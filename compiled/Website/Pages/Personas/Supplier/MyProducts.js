@@ -54,7 +54,7 @@ class MyProducts extends Page_1.default {
             const products = yield mongoose_1.default.models.Product.find({ _id: { $in: this.getAllProducts(categories) } });
             this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierProductsPage', { data: JSON.stringify({ user, entity, categories, products }) });
         }));
-        // SUPPLIER - add PRODUCT
+        // SUPPLIER - ADD PRODUCT
         this.router.get('/new', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = req.session.user;
             const entity = yield new Entity_1.default().load({ _id: user.entity });
@@ -65,6 +65,17 @@ class MyProducts extends Page_1.default {
             const categories = this.getEndCategories(yield mongoose_1.default.models.EntityCategory
                 .find({ entity: entity }).select(["name", "ancestry"]).exec());
             this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierAddProductPage', { data: JSON.stringify({ user, entity, categories }) });
+        }));
+        // SUPPLIER - ADD CATEGORY
+        this.router.get('/create-category', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const user = req.session.user;
+            const entity = yield new Entity_1.default().load({ _id: user.entity });
+            if (!entity) {
+                // TODO: HANDLE ENTITY IF NULL   
+                return;
+            }
+            const ancestry = !req.query.ancestry ? "" : req.query.ancestry.replace('-', '/');
+            this.data.server.next.render(req, res, '/Supplier/MyProducts/SupplierCreateCategoryPage', { data: JSON.stringify({ user, entity, ancestry }) });
         }));
     }
 }
