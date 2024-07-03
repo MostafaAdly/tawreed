@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import bcrypt from 'bcrypt';
 export default class Helpers {
     static findFileInDir = (dirPath: string, fileName: string): string | null => {
         const filesAndDirs = fs.readdirSync(dirPath);
@@ -18,4 +19,10 @@ export default class Helpers {
     }
 
     static getAPIVersion = () => `/api/v${process.env.API_VERSION || 1}`;
+
+    static hash = async (password: string, salt?: number) => {
+        return await bcrypt.hash(password, salt || 10);
+    }
+
+    static isEnvProduction = () => process.env.ENVIRONMENT === 'production';
 }

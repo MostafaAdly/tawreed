@@ -6,8 +6,8 @@ import Head from 'next/head'
 
 // ================================================================= [ Assets ]
 
-import '../public/tailwind/tailwind.config.css'
 import '../public/tailwind/tailwind.output.css'
+import '../public/assets/css/styles.css'
 
 // ================================================================= [ Main Application ]
 export default function MyApp({ Component, pageProps }: AppProps) {

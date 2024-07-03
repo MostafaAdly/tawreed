@@ -4,8 +4,8 @@ import RouterManager from './routes/base.router.manager';
 import ControllersManager from './controllers/base.controller.manager';
 import next from 'next';
 import NextServerManager from './next';
+import BaseMiddleware from './middlewares/base.middleware';
 export default class Server {
-    private developmentMode: boolean = process.env.ENVIRONMENT == "development";
     private app: Application = express();
     private nextServer: NextServerManager = new NextServerManager();
     private port: number = parseInt(process.env.PORT || '3000');
@@ -16,8 +16,8 @@ export default class Server {
         await this.initNextServer();
         this.listen();
         this.setupControllers();
-        this.setupRoutes();
         this.setupMiddlewares();
+        this.setupRoutes();
     }
 
     setupControllers = () => {
@@ -29,7 +29,7 @@ export default class Server {
     }
 
     setupMiddlewares = () => {
-        this.app.use(express.json());
+        BaseMiddleware.setupDefaultMiddlewares(this.app);
     }
 
     initNextServer = async () => {

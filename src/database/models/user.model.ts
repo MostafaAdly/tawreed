@@ -14,6 +14,6 @@ export default class User extends BaseModel {
     @Column()
     email: string
 
-    @Column('jsonb')
-    metadata: object
+    @Column('jsonb', { default: {} })
+    metadata: object = {};
 }

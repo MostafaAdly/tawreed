@@ -1,8 +1,9 @@
 import { Application, Request, Response } from 'express';
 import next from 'next';
 import { NextServer } from 'next/dist/server/next';
+import Helpers from './utils/helpers';
 export default class NextServerManager {
-    private static nextServer: NextServer = next({ dev: process.env.ENVIRONMENT == "development" });
+    private static nextServer: NextServer = next({ dev: !Helpers.isEnvProduction() });
 
     initNextServer = async (app: Application) => {
         await NextServerManager.nextServer.prepare()

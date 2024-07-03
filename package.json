@@ -4,11 +4,11 @@
 	"description": "",
 	"main": "./build/dev/index.js",
 	"scripts": {
-		"start": "nodemon . -e ts,css --exec \"ts-node -r tsconfig-paths/register index.ts\"",
+		"start": "nodemon . -e ts --exec \"ts-node -r tsconfig-paths/register index.ts\" --erase",
 		"migrate": "ts-node -r tsconfig-paths/register index.ts --migrate",
 		"run": "ts-node -r tsconfig-paths/register main.ts --startup",
 		"build": "tsc",
-		"all": "nodemon . -e ts,css --exec \"ts-node -r tsconfig-paths/register index.ts --migrate --start\"",
+		"all": "nodemon . -e ts --exec \"ts-node -r tsconfig-paths/register index.ts --migrate --start\"",
 		"tailwind": "npx tailwindcss -i ./public/tailwind/tailwind.config.css -o ./public/tailwind/tailwind.output.css --watch",
 		"typeorm": "typeorm-ts-node-commonjs",
 		"migration:create": "npm run typeorm migration:create",
@@ -37,6 +37,7 @@
 	"dependencies": {
 		"@types/express": "^4.17.21",
 		"@types/node": "^20.14.9",
+		"bcrypt": "^5.1.1",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",
 		"jsonwebtoken": "^9.0.2",

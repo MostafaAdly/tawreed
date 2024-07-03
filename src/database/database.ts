@@ -1,5 +1,6 @@
 import Logger from "../utils/logger";
 import { AppDataSource } from "./orm.config";
+import BaseSeeder from "./seeders/base.seeder";
 
 export default class Database {
     private driver: string = "postgres";
@@ -8,6 +9,7 @@ export default class Database {
         try {
             await AppDataSource.initialize()
             Logger.log(`Connected to ${this.driver} database`);
+            this.onConnect();
             return true;
         } catch (error) {
             this.onError(error);
@@ -23,6 +25,10 @@ export default class Database {
 
     disconnect = () => {
         Logger.log(`Disconnected from ${this.driver} database`);
+    }
+
+    onConnect = () => {
+        new BaseSeeder().init();
     }
 
     onError = (error: Error) => {
