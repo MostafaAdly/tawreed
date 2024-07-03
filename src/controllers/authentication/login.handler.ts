@@ -1,4 +1,3 @@
-import NextServerManager from "src/next";
 import AuthenticationController from "./auth.controller";
 import { Request, Response } from "express";
 import UsersService from "src/services/users.service";
@@ -6,8 +5,8 @@ import InfraResponse from "../infrastructure/Response";
 
 export default class LoginHandler extends AuthenticationController {
     login = {
-        'GET': (req: Request, res: Response) => {
-            NextServerManager.render({ req, res, page: '/authentication/login', data: {} });
+        'GET': () => {
+            // Handled by Automated Render.
         },
         'POST': async (req: Request, res: Response) => {
             const { email, password } = req.body || {};
@@ -27,7 +26,13 @@ export default class LoginHandler extends AuthenticationController {
                     error: true
                 });
             }
-            return InfraResponse.redirect(res, '/');
+            this.signAndCookie(res, { userId: user.id });
+            // return InfraResponse.redirect(res, '/');
+            return InfraResponse.send(res, {
+                statusCode: 200,
+                message: 'User authenticated',
+                data: { userId: user.id }
+            });
         }
     }
 }

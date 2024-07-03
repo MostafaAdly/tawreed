@@ -2,7 +2,6 @@ import express, { Application } from 'express';
 import Logger from './utils/logger';
 import RouterManager from './routes/base.router.manager';
 import ControllersManager from './controllers/base.controller.manager';
-import next from 'next';
 import NextServerManager from './next';
 import BaseMiddleware from './middlewares/base.middleware';
 export default class Server {

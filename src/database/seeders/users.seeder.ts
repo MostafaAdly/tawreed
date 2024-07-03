@@ -6,6 +6,7 @@ import Helpers from "src/utils/helpers";
 export default class UserSeeder implements EntitySeeder {
     init = async () => {
         const isTableEmpty = await this.checkIfTableIsEmpty();
+        Logger.log(`Users table state of empty: ${isTableEmpty}`)
         if (isTableEmpty) {
             this.startSeeding();
         }

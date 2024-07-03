@@ -13,12 +13,12 @@ export default class NextServerManager {
         app.get('*', (req: Request, res: Response) => NextServerManager.nextServer.getRequestHandler()(req, res));
     }
 
-    static render = ({ req, res, page, data }: { req: Request, res: Response, page: string, data: object }) => {
+    static render = ({ req, res, page, data }: { req: Request, res: Response, page: string, data?: object }) => {
         NextServerManager.nextServer.render(
             req,
             res,
             page,
-            { data: JSON.stringify(data) }
+            { data: data ? JSON.stringify(data) : null }
         );
     }
 }

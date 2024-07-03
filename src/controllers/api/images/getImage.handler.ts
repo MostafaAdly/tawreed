@@ -1,4 +1,3 @@
-import NextServerManager from "src/next";
 import { Request, Response } from "express";
 import ImagesController from "./images.controller";
 

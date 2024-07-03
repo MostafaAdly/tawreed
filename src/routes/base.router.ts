@@ -5,12 +5,13 @@ export default class Route {
     path: string = "/";
     api: boolean = false;
     method: HttpMethod = HttpMethod.GET;
-    controller: string | undefined;
-    handler: string = "";
+    controller?: string;
+    render?: string;
+    handler?: string;
     middlewares: string[] = [];
     skipMiddlewares: string[] = [];
     routes: Route[] = [];
-    constructor(data: { path: string, api?: boolean, method?: string, controller?: string, handler?: string, middlewares?: string[], skipMiddlewares?: string[], routes?: Route[] }) {
+    constructor(data: { path: string, api?: boolean, method?: string, controller?: string, render?: string, handler?: string, middlewares?: string[], skipMiddlewares?: string[], routes?: Route[] }) {
         data.path = data.api ? Helpers.getAPIVersion() + data.path : data.path;
         Object.assign(this, data);
     }

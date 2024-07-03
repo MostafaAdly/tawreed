@@ -2,6 +2,18 @@ import { HttpMethod } from "../controllers/base.controller";
 import Route from "./base.router";
 
 export default {
+    render: new Route({
+        path: "/test",
+        controller: "render",
+        routes: [
+            new Route({
+                path: "/",
+                method: HttpMethod.GET,
+                handler: "index",
+                render: "client/home/_index",
+            }),
+        ]
+    }),
     dashboard: new Route({
         path: "/",
         middlewares: [],
@@ -12,6 +24,7 @@ export default {
                 routes: [
                     new Route({
                         path: "/",
+                        render: "authentication/login",
                         method: HttpMethod.GET,
                         handler: "index",
                     }),
@@ -39,6 +52,7 @@ export default {
                 path: "/login",
                 method: HttpMethod.GET,
                 handler: "login",
+                render: "authentication/login",
                 middlewares: [],
                 skipMiddlewares: [],
             }),

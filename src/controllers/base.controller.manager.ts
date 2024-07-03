@@ -22,7 +22,7 @@ export default class ControllersManager {
     }
 
     setupController = (route: Route) => {
-        if (!route.controller && route.routes.length != 0) {
+        if (!route.controller && route.routes.length != 0 && !route.handler) {
             for (let childRoute of route.routes) {
                 this.setupController(childRoute);
             }

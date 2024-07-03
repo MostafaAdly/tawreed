@@ -1,3 +1,5 @@
+import { GetServerSideProps } from "next";
+
 const cssExceptions = ["auth-page-body", "supplier-page-body", "center", "box-shadow", "opacity", "opacity-active", "box-shadow-hover"];
 export const _css = (styles, css) => {
     if (css.startsWith("fa-") || css.startsWith("__"))
@@ -15,3 +17,9 @@ export const getAssetImage = (image: string) => {
 }
 
 export const getAPIURL = (url?: string) => `/api/v${process.env.API_VERSION || 1}` + (url ? (url.startsWith('/') ? '' : '/') + url : '');
+
+export const getSSProps: GetServerSideProps = async (context) => {
+    return {
+        props: JSON.parse((context.query as unknown)["data"])
+    };
+}
