@@ -19,10 +19,11 @@ export default class BaseSeeder {
     }
 
     seed = () => {
-        this.seeders.forEach(async (seeder) => await seeder.init());
+        this.seeders.forEach(async (seeder) => seeder.init());
     }
 
     erase = () => {
-        this.seeders.forEach(async (seeder) => await seeder.deleteAll());
+        Logger.warn("Erasing database.")
+        this.seeders.forEach(async (seeder) => seeder.deleteAll());
     }
 }

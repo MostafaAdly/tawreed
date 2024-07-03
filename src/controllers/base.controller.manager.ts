@@ -13,15 +13,24 @@ export default class ControllersManager {
     private handlerSuffix: string = '.handler.ts';
     private controllersDirectory: string = path.join(__dirname, '../controllers');
 
-    constructor() {
+    setupControllers = () => {
+        for (let route in baseRouterConfig) {
+            const router = baseRouterConfig[route];
+            router.setupChildrenRoutes();
+            this.setupController(router);
+        }
     }
 
-    setupControllers() {
-        for (let route in baseRouterConfig) {
-            let controller = this.loadController(baseRouterConfig[route]);
-            if (controller) {
-                this.controllers.set(baseRouterConfig[route].controller, controller);
+    setupController = (route: Route) => {
+        if (!route.controller && route.routes.length != 0) {
+            for (let childRoute of route.routes) {
+                this.setupController(childRoute);
             }
+            return;
+        }
+        let controller = this.loadController(route);
+        if (controller) {
+            this.controllers.set(route.controller, controller);
         }
     }
 
@@ -36,6 +45,7 @@ export default class ControllersManager {
     }
 
     private loadController = (route: Route): ControllerConfig | null => {
+        if (!route.controller) return null;
         const controllerFile = Helpers.findFileInDir(this.controllersDirectory, route.controller + this.controllerSuffix);
         if (!controllerFile) {
             Logger.error(`Controller ${route.controller} not found`);

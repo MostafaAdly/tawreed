@@ -25,4 +25,8 @@ export default class Helpers {
     }
 
     static isEnvProduction = () => process.env.ENVIRONMENT === 'production';
+
+    static combinePaths = (...paths: string[]) => {
+        return path.join(...paths).replaceAll("\\", "/")
+    };
 }

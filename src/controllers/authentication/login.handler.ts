@@ -27,12 +27,7 @@ export default class LoginHandler extends AuthenticationController {
                     error: true
                 });
             }
-            return InfraResponse.send(res, {
-                statusCode: 200,
-                message: 'Login successful',
-                error: false,
-                data: user
-            });
+            return InfraResponse.redirect(res, '/');
         }
     }
 }

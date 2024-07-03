@@ -2,6 +2,34 @@ import { HttpMethod } from "../controllers/base.controller";
 import Route from "./base.router";
 
 export default {
+    dashboard: new Route({
+        path: "/",
+        middlewares: [],
+        routes: [
+            new Route({
+                path: "/client",
+                controller: "client_home",
+                routes: [
+                    new Route({
+                        path: "/",
+                        method: HttpMethod.GET,
+                        handler: "index",
+                    }),
+                ]
+            }),
+            new Route({
+                path: "/supplier",
+                controller: "supplier_home",
+                routes: [
+                    new Route({
+                        path: "/",
+                        method: HttpMethod.GET,
+                        handler: "index",
+                    }),
+                ]
+            }),
+        ]
+    }),
     auth: new Route({
         path: "/",
         controller: "auth",

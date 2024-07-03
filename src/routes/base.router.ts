@@ -5,7 +5,7 @@ export default class Route {
     path: string = "/";
     api: boolean = false;
     method: HttpMethod = HttpMethod.GET;
-    controller: string = "";
+    controller: string | undefined;
     handler: string = "";
     middlewares: string[] = [];
     skipMiddlewares: string[] = [];
@@ -13,12 +13,14 @@ export default class Route {
     constructor(data: { path: string, api?: boolean, method?: string, controller?: string, handler?: string, middlewares?: string[], skipMiddlewares?: string[], routes?: Route[] }) {
         data.path = data.api ? Helpers.getAPIVersion() + data.path : data.path;
         Object.assign(this, data);
-        this.setupChildrenRoutes();
     }
 
     setupChildrenRoutes = () => {
         for (let route of this.routes) {
-            route.controller = this.controller;
+            if (this.controller) {
+                route.controller = this.controller;
+            }
+            route.path = Helpers.combinePaths(this.path, route.path);
             route.setupChildrenRoutes();
         }
     }

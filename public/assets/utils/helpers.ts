@@ -2,7 +2,7 @@ const cssExceptions = ["auth-page-body", "supplier-page-body", "center", "box-sh
 export const _css = (styles, css) => {
     if (css.startsWith("fa-") || css.startsWith("__"))
         return css;
-    const array: any = [];
+    const array: string[] = [];
     if (css)
         css.split(" ").forEach(str => cssExceptions.includes(str) ? array.push(str) : array.push(styles[str]));
     return array.join(" ");

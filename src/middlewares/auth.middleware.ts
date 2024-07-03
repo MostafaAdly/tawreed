@@ -2,6 +2,13 @@ import jwt from 'jsonwebtoken';
 import { NextFunction, RequestHandler, Request, Response } from "express";
 
 export default class AuthenticationMiddleware {
+    checkAuthentication: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
+        const token = req.headers['authorization']
+        if (!token) {
+            return res.status(403).send({ auth: false, message: 'No token provided.' })
+        }
+        this.verify(token, req, res, next)
+    }
     authenticate: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
         const token = req.headers['authorization']
         if (!token) {
@@ -16,6 +23,7 @@ export default class AuthenticationMiddleware {
                 return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' })
             }
             req['userId'] = decoded.id
+            // req['token'] = token
             next();
         })
     }

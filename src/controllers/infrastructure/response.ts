@@ -17,6 +17,9 @@ export default class InfraResponse {
             data?: unknown
         }
     ) => {
-        return res.json(response)
+        const { statusCode, ...rest } = response;
+        return res.status(statusCode).json(rest)
     }
+
+    static redirect = (res: Response, url: string) => res.redirect(url);
 }
