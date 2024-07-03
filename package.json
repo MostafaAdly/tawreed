@@ -1,28 +1,52 @@
 {
-  "name": "tawreed",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon . -e ts,html,css,tsx --exec bun index.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.14.9",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2",
-    "pg": "^8.12.0",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20"
-  }
+	"name": "tawreed",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./build/dev/index.js",
+	"scripts": {
+		"start": "nodemon . -e ts,css --exec \"ts-node -r tsconfig-paths/register index.ts\"",
+		"migrate": "ts-node -r tsconfig-paths/register index.ts --migrate",
+		"run": "ts-node -r tsconfig-paths/register main.ts --startup",
+		"build": "tsc",
+		"all": "nodemon . -e ts,css --exec \"ts-node -r tsconfig-paths/register index.ts --migrate --start\"",
+		"tailwind": "npx tailwindcss -i ./public/tailwind/tailwind.config.css -o ./public/tailwind/tailwind.output.css --watch",
+		"typeorm": "typeorm-ts-node-commonjs",
+		"migration:create": "npm run typeorm migration:create",
+		"migration:generate": "npm run typeorm migration:generate -- -d ./src/database/orm.config.ts",
+		"migration:generate:init": "npm run typeorm migration:generate -- -d ./src/database/orm.config.ts ./src/database/migrations/init",
+		"migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./src/database/orm.config.ts",
+		"migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ./src/database/orm.config.ts",
+		"migration:show": "npm run typeorm migration:show -- -d src/database/orm.config.ts",
+		"typeorm-uml": "ts-node -r ts-node/register \"C:\\Program Files\\nodejs\\node_modules\\typeorm-uml\\bin\\run\" ./src/database/orm.config.ts",
+		"db:diagram": "npm run typeorm-uml"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/react": "18.3.3",
+		"autoprefixer": "^10.4.19",
+		"postcss": "^8.4.39",
+		"tailwindcss": "^3.4.4",
+		"tsconfig-paths": "^4.2.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@types/express": "^4.17.21",
+		"@types/node": "^20.14.9",
+		"dotenv": "^16.4.5",
+		"express": "^4.19.2",
+		"jsonwebtoken": "^9.0.2",
+		"minimist": "^1.2.8",
+		"next": "^14.2.4",
+		"pg": "^8.12.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"reflect-metadata": "^0.2.2",
+		"ts-node": "^10.9.2",
+		"typeorm": "^0.3.20"
+	}
 }

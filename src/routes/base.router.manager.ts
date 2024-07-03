@@ -2,8 +2,9 @@ import { Application } from 'express';
 import configRouter from './base.router.config';
 import Route from './base.router';
 import Logger from '../utils/logger';
-import { Request, Response } from 'express';
 import ControllersManager from '../controllers/base.controller.manager';
+import NextServerManager from 'src/next';
+import Helpers from 'src/utils/helpers';
 
 export default class RouterManager {
     private app: Application;
@@ -13,13 +14,18 @@ export default class RouterManager {
         this.app = app;
         this.controllerManager = controllerManager;
     }
-    public loadRoutes = () => {
+    loadRoutes = (nextServer: NextServerManager) => {
         console.log('====================================');
         Logger.log("Loading routes...");
         for (let route in configRouter) {
             this.setupParentRouter(configRouter[route], 1);
         }
+        this.setupWildcardRoute(nextServer);
         console.log('====================================');
+    }
+
+    setupWildcardRoute = (nextServer: NextServerManager) => {
+        nextServer.setupWildcardRoute(this.app)
     }
 
     private setupParentRouter = (parentRoute: Route, count: number) => {

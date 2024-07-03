@@ -1,14 +1,17 @@
+import Helpers from "src/utils/helpers";
 import { HttpMethod } from "../controllers/base.controller";
 
 export default class Route {
     path: string = "/";
+    api: boolean = false;
     method: HttpMethod = HttpMethod.GET;
     controller: string = "";
     handler: string = "";
     middlewares: string[] = [];
     skipMiddlewares: string[] = [];
     routes: Route[] = [];
-    constructor(data: { path: string, method?: string, controller?: string, handler?: string, middlewares?: string[], skipMiddlewares?: string[], routes?: Route[] }) {
+    constructor(data: { path: string, api?: boolean, method?: string, controller?: string, handler?: string, middlewares?: string[], skipMiddlewares?: string[], routes?: Route[] }) {
+        data.path = data.api ? Helpers.getAPIVersion() + data.path : data.path;
         Object.assign(this, data);
         this.setupChildrenRoutes();
     }

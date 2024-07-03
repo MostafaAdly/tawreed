@@ -16,4 +16,6 @@ export default class Helpers {
         }
         return null;
     }
+
+    static getAPIVersion = () => `/api/v${process.env.API_VERSION || 1}`;
 }

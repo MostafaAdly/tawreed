@@ -1,5 +1,5 @@
 import "dotenv/config";
-import Server from "./src/server";
+import Manager from "src/Manager";
 
-const server = new Server();
-server.startServer();
+
+new Manager().init();
