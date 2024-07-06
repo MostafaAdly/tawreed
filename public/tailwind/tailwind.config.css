@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.center {
+		@apply flex content-center justify-center;
+	}
+
+	.red {
+		@apply bg-red-600;
+	}
+}

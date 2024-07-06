@@ -1,4 +1,4 @@
-import AuthLayout from 'components/layouts/auth.layout';
+import AuthLayout from 'layouts/auth.layout';
 import { getAPIURL, getAssetImage } from 'public/assets/utils/helpers';
 import React from 'react'
 import { _css } from 'public/assets/utils/helpers';

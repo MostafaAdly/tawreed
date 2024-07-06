@@ -23,7 +23,7 @@ export default class UserSeeder implements EntitySeeder {
                 email: "MostafaAdlyAmar@gmail.com",
                 username: "MostafaAdly",
                 hashed_password: await Helpers.hash("123123"),
-            }
+            },
         ] as { email: string, hashed_password: string, username: string }[])
             .forEach(async (data) => await this.seed(data));
     }

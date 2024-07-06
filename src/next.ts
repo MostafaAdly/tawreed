@@ -18,7 +18,7 @@ export default class NextServerManager {
             req,
             res,
             page,
-            { data: data ? JSON.stringify(data) : null }
+            { data: JSON.stringify(data || {}) }
         );
     }
 }

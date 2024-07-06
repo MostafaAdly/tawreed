@@ -4,9 +4,11 @@ export default function Document() {
 
   return (
     <Html
-    // lang="ar" dir='rtl'
+      lang="ar" dir='rtl'
     >
-      <Head />
+      <Head>
+        <script src="https://kit.fontawesome.com/e6c13277a1.js" crossOrigin="anonymous"></script>
+      </Head>
       <body>
         <Main />
         <NextScript />

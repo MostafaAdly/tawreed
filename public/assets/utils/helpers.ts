@@ -19,7 +19,13 @@ export const getAssetImage = (image: string) => {
 export const getAPIURL = (url?: string) => `/api/v${process.env.API_VERSION || 1}` + (url ? (url.startsWith('/') ? '' : '/') + url : '');
 
 export const getSSProps: GetServerSideProps = async (context) => {
+    try {
+        var props = JSON.parse(context.query.data as string);
+    } catch (error) {
+        console.error(error);
+        props = {};
+    }
     return {
-        props: JSON.parse((context.query as unknown)["data"])
+        props
     };
 }

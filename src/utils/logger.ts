@@ -14,19 +14,4 @@ export default class Logger {
     static date = () => new Date().toISOString()
         .replace(/T/, ' ')
         .replace(/\..+/, '');
-
-    static LogOutput = (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-        const originalMethod = descriptor.value;
-
-        descriptor.value = function (...args: any[]) {
-            Logger.log({ call: `Calling ${propertyKey} with arguments:`, args });
-
-            const result = originalMethod.apply(this, args);
-
-            Logger.log({ call: `Result from ${propertyKey}:`, result });
-            return result;
-        };
-
-        return descriptor;
-    }
 }
