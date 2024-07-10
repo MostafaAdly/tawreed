@@ -45,7 +45,7 @@ const SidebarComponent = ({ // Default values are for /client
     ]
     return (
         <div
-            className='bg-primary w-[14%] h-full fixed right-0 z-100 overflow-x-hidden pt-[20px] flex flex-col'>
+            className='bg-primary w-[20%] h-full fixed right-0 z-50 overflow-x-hidden pt-[20px] flex flex-col'>
             <div className='w-full h-20 center'>
                 <img
                     className='flex justify-center mb-2 w-20 h-20'

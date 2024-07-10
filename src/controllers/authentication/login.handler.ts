@@ -1,7 +1,7 @@
 import AuthenticationController from "./auth.controller";
 import { Request, Response } from "express";
 import UsersService from "src/services/users.service";
-import InfraResponse from "../infrastructure/Response";
+import InfraResponse from "../infrastructure/response";
 
 export default class LoginHandler extends AuthenticationController {
     login = {

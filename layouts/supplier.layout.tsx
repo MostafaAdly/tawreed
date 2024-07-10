@@ -2,6 +2,7 @@ import React from 'react';
 import { getSSProps } from '../public/assets/utils/helpers';
 import HeaderComponent from 'components/main/header.component';
 import SidebarComponent, { SidebarNavBar } from '../components/main/sidebar.component';
+import DashboardBody from './dashboard.body';
 
 
 const SupplierLayout = ({ children }) => {
@@ -17,13 +18,11 @@ const SupplierLayout = ({ children }) => {
                 ]}
                 bottomSection={[
                     SidebarNavBar({ icon: 'sign-out', text: 'تغير كلمة المرور', url: '/supplier/profile/change-password' }),
-                    SidebarNavBar({ icon: 'sign-out', text: 'تغيير اللوجو', url: '/supplier/profile/change-logo' }),
+                    SidebarNavBar({ icon: 'sign-out', text: 'تغيير اللوجو', url: '/supplier`/profile/change-logo' }),
                     SidebarNavBar({ icon: 'sign-out', text: 'تسجيل الخروج', url: '/logout' }),
                 ]}
             />
-            <main className='dashboard-layout'>
-                {children}
-            </main>
+            <DashboardBody>{children}</DashboardBody>
         </>
     );
 }

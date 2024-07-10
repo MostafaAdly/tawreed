@@ -2,6 +2,7 @@ import React from 'react';
 import { getSSProps } from '../public/assets/utils/helpers';
 import HeaderComponent from 'components/main/header.component';
 import SidebarComponent from '../components/main/sidebar.component';
+import DashboardBody from './dashboard.body';
 
 
 const ClientLayout = ({ children }) => {
@@ -9,9 +10,7 @@ const ClientLayout = ({ children }) => {
         <>
             <HeaderComponent />
             <SidebarComponent />
-            <main className='dashboard-layout'>
-                {children}
-            </main>
+            <DashboardBody>{children}</DashboardBody>
         </>
     );
 }

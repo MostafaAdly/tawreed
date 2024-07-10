@@ -61,6 +61,7 @@ const NewRFQ = ({ user }) => {
             </div>
 
         </ClientLayout>
+
     );
 }
 

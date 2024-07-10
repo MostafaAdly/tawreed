@@ -4,7 +4,7 @@ import { _css, getAssetImage } from 'public/assets/utils/helpers';
 
 const HeaderComponent = ({ }) => {
     return (
-        <header className='fixed right-[14%] left-0 w-auto h-[4em] bg-gray-200 z-100 pr-10 pl-10 flex items-center justify-between z-50 shadow'>
+        <header className='fixed right-0 pr-[22%] left-0 w-auto h-[4em] bg-gray-200 z-100 pl-10 flex items-center justify-between z-50 shadow'>
             <h1 className='text-2xl font-bold w-fit h-full flex items-center'>الصفحة الرئيسية</h1>
             {/* LEFT SIDE */}
             <div className='w-[60%] flex justify-end gap-x-10'>
