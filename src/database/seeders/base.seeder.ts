@@ -1,13 +1,12 @@
 import Logger from "src/utils/logger";
 import EntitySeeder from "./entity.seeder";
-import UserSeeder from "./users.seeder";
 import Helpers from "src/utils/helpers";
 import Validators from "src/utils/validators";
 
 export default class BaseSeeder {
 
     seeders: EntitySeeder[] = [
-        new UserSeeder(),
+        // new UserSeeder(),
     ];
 
     init = () => {

@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
 	synchronize: false,
 	logging: false,//!Helpers.isEnvProduction(),
 	entities: [
-		path.join(process.cwd(), "src/database/models/*.model.ts")
+		path.join(process.cwd(), "/src/database/models/*.model.ts")
 	],
 	subscribers: [],
 	migrations: [

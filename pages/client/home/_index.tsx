@@ -1,12 +1,43 @@
 import ClientLayout from 'layouts/client.layout';
-import { _css, getSSProps } from 'public/assets/utils/helpers';
+import { getSSProps } from 'public/assets/utils/helpers';
 import React from 'react';
-// import styles from 'public/pages/client/home/index.module.css';
 
 const Index = ({ user }) => {
+    const links = [
+        {
+            title: 'طلب توريد جديد',
+            url: '/client/rfqs/new'
+        },
+        {
+            title: 'العروض الواردة',
+            url: '/client/rfqs/incoming'
+        },
+        {
+            title: 'العروض الصادرة',
+            url: '/client/rfqs/outgoing'
+        },
+        {
+            title: 'المعاملات السابقة',
+            url: '/client/rfqs/history'
+        },
+        {
+            title: 'إرسال مقترحات',
+            url: '/client/send-proposals'
+        },
+        {
+            title: "تغيير كلمة المرور",
+            url: "/client/profile/change-password"
+        }
+    ]
     return (
         <ClientLayout>
-            <div className='bg-red-100 h-[100px]'>home</div>
+            <div className='flex flex-col gap-y-5'>
+                {links.map((link, index) => (
+                    <a key={index} href={link.url} className='center w-[30%] py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-slate-200 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-150'>
+                        <h5 className='text-black text-xl'>{link.title}</h5>
+                    </a>
+                ))}
+            </div>
         </ClientLayout>
     );
 }

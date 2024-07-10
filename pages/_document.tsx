@@ -1,5 +1,6 @@
 import React from 'react'
 import { Html, Head, Main, NextScript } from 'next/document'
+import Scripts from 'components/scripts'
 export default function Document() {
 
   return (
@@ -8,10 +9,12 @@ export default function Document() {
     >
       <Head>
         <script src="https://kit.fontawesome.com/e6c13277a1.js" crossOrigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
       </Head>
       <body>
         <Main />
         <NextScript />
+        <Scripts />
       </body>
     </Html>
   )

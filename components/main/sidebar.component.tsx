@@ -4,12 +4,12 @@ import Divider from 'components/generic/ui/divider.component';
 
 
 
-const Bar = ({ icon, text }) => {
+export const SidebarNavBar = ({ icon, text, url }) => {
     return (
-        <div className='flex pt-[0.5em] pb-[0.5em] pr-[10%] min-w-14 justify-self-end items-center gap-x-5 rounded-xl transition-colors duration-150 hover:bg-[#353f66] cursor-pointer'>
+        <a href={url} className='flex pt-[0.5em] pb-[0.5em] pr-[10%] min-w-14 justify-self-end items-center gap-x-5 rounded-xl transition-colors duration-150 hover:bg-[#353f66] cursor-pointer'>
             <i className={`fa-solid fa-${icon} text-white center`} />
             <h6 className='text-white'>{text}</h6>
-        </div>
+        </a>
     )
 }
 
@@ -22,21 +22,21 @@ const NavSection = ({ children }: { children: ReactElement[] }) => {
 }
 
 
-const SidebarComponent = ({
+const SidebarComponent = ({ // Default values are for /client
     upperSection = [
-        Bar({ icon: 'home', text: 'طلب توريد جديد' }),
-        Bar({ icon: 'user', text: 'العروض الواردة' }),
-        Bar({ icon: 'cog', text: 'العروض الصادرة' }),
-        Bar({ icon: 'sign-out', text: 'المعاملات السابقة' }),
+        SidebarNavBar({ icon: 'home', text: 'طلب توريد جديد', url: '/client/rfqs/new' }),
+        SidebarNavBar({ icon: 'user', text: 'العروض الواردة', url: '/client/rfqs/incoming' }),
+        SidebarNavBar({ icon: 'cog', text: 'العروض الصادرة', url: '/client/rfqs/outgoing' }),
+        SidebarNavBar({ icon: 'sign-out', text: 'المعاملات السابقة', url: '/client/rfqs/history' }),
     ],
     bottomSection = [
-        Bar({ icon: 'home', text: 'من نحن' }),
-        Bar({ icon: 'user', text: 'الشروط والأحكام' }),
-        Bar({ icon: 'cog', text: 'معلومات الاتصال' }),
-        Bar({ icon: 'sign-out', text: 'الخدمات القادمة' }),
-        Bar({ icon: 'sign-out', text: 'سياسة الإسترجاع' }),
-        Bar({ icon: 'sign-out', text: 'المقترحات والشكاوي' }),
-        Bar({ icon: 'sign-out', text: 'تسجيل الخروج' }),
+        SidebarNavBar({ icon: 'home', text: 'من نحن', url: '/about' }),
+        SidebarNavBar({ icon: 'user', text: 'الشروط والأحكام', url: '/terms' }),
+        SidebarNavBar({ icon: 'cog', text: 'معلومات الاتصال', url: '/contact' }),
+        SidebarNavBar({ icon: 'sign-out', text: 'الخدمات القادمة', url: '/services' }),
+        SidebarNavBar({ icon: 'sign-out', text: 'سياسة الإسترجاع', url: '/refund-policy' }),
+        SidebarNavBar({ icon: 'sign-out', text: 'المقترحات والشكاوي', url: '/suggestions-complaints' }),
+        SidebarNavBar({ icon: 'sign-out', text: 'تسجيل الخروج', url: '/logout' }),
     ]
 }: { upperSection?: ReactElement[], bottomSection?: ReactElement[] }) => {
     const sections = [
@@ -52,20 +52,11 @@ const SidebarComponent = ({
                     src={getAssetImage('grey-logo.png')} alt="Logo | Grey" />
             </div>
 
-            <Divider color='bg-gray-100' addons='mt-5' />
+            <Divider width='[100%]' height='px' color='bg-slate-50' addons='mt-5 bg-gray-50' />
             <div className='m-5 mt-15 mb-15 h-full flex flex-col justify-between'>
-                {sections}
+                {sections.map((navSection, index) => <div key={index}>{navSection}</div>)}
             </div>
         </div>
-        // <nav className={_css(styles, 'sidebar')}>
-        //     <div className={_css(styles, 'logo')}>
-        //         <img src={getAssetImage('grey-logo.png')} alt="logo" />
-        //     </div>
-        //     <div className={_css(styles, 'divider')}></div>
-        //     <div className={_css(styles, 'controls')}>
-        //         {sections.map((section, index) => <section key={index} />)}
-        //     </div>
-        // </nav>
     );
 }
 

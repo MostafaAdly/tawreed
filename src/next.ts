@@ -2,6 +2,7 @@ import { Application, Request, Response } from 'express';
 import next from 'next';
 import { NextServer } from 'next/dist/server/next';
 import Helpers from './utils/helpers';
+import path from 'path';
 export default class NextServerManager {
     private static nextServer: NextServer = next({ dev: !Helpers.isEnvProduction() });
 
@@ -17,7 +18,7 @@ export default class NextServerManager {
         NextServerManager.nextServer.render(
             req,
             res,
-            page,
+            path.join('/', page).replaceAll('\\', '/'),
             { data: JSON.stringify(data || {}) }
         );
     }
