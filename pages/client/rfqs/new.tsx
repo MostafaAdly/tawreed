@@ -1,7 +1,7 @@
 import ClientLayout from 'layouts/client.layout';
 import { getSSProps } from 'public/assets/utils/helpers';
 import React, { useState } from 'react';
-import { SimpleModal } from '../../../../components/generic/ui/modal.component';
+import { SimpleModal } from '../../../components/generic/ui/modal.component';
 
 const NewRFQ = ({ user }) => {
     const [openModal, setOpenModal] = useState(false);

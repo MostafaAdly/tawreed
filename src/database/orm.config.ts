@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import "dotenv/config";
 import path from "path";
+import Helpers from "src/utils/helpers";
 
 export const AppDataSource = new DataSource({
 	type: "postgres",
@@ -10,7 +11,7 @@ export const AppDataSource = new DataSource({
 	password: process.env.DATABASE_PASSWORD || "123123",
 	database: process.env.DATABASE_NAME || "app",
 	synchronize: false,
-	logging: false,//!Helpers.isEnvProduction(),
+	logging: !Helpers.isEnvProduction(),
 	entities: [
 		path.join(process.cwd(), "/src/database/models/*.model.ts")
 	],

@@ -5,6 +5,7 @@
 	"main": "./build/dev/index.js",
 	"scripts": {
 		"bun": "nodemon -e ts --exec \"bun run .\"",
+		"start:bun": "nodemon . -e ts --exec \"bun run index.ts -r tsconfig-paths/register\"",
 		"start": "nodemon . -e ts --exec \"ts-node -r tsconfig-paths/register index.ts\"",
 		"dev": "nodemon . -e ts --exec \"ts-node -r tsconfig-paths/register index.ts\" --erase",
 		"migrate": "ts-node -r tsconfig-paths/register index.ts --migrate",

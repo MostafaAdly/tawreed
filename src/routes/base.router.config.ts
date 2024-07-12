@@ -19,6 +19,48 @@ export default {
         middlewares: [],
         routes: [
             new Route({
+                path: "/admin",
+                controller: "admin_home",
+                routes: [
+                    new Route({ // /admin
+                        path: '/',
+                        method: HttpMethod.GET,
+                        handler: "index",
+                        render: "admin/home/_index",
+                    }),
+                    new Route({ // /admin/users
+                        path: '/users',
+                        method: HttpMethod.GET,
+                        routes: [
+                            new Route({ // /admin/users/edit
+                                path: '/',
+                                method: HttpMethod.GET,
+                                handler: "index",
+                                render: "admin/users/_index",
+                            }),
+                            new Route({ // /admin/users/new-client
+                                path: '/new',
+                                method: HttpMethod.GET,
+                                handler: "index",
+                                render: "admin/users/new",
+                            }),
+                        ]
+                    }),
+                    new Route({
+                        path: '/rfqs',
+                        controller: "rfqs",
+                        routes: [
+                            new Route({ // /admin/rfqs
+                                path: '/',
+                                method: HttpMethod.GET,
+                                handler: "index",
+                                render: "admin/rfqs/_index",
+                            }),
+                        ]
+                    })
+                ]
+            }),
+            new Route({
                 path: "/client",
                 controller: "client_home",
                 routes: [
@@ -36,25 +78,25 @@ export default {
                                 path: "/new", // /client/rfqs/new
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/home/rfqs/new",
+                                render: "client/rfqs/new",
                             }),
                             new Route({ // /client/rfqs/incoming
                                 path: "/incoming",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/home/rfqs/incoming",
+                                render: "client/rfqs/incoming",
                             }),
                             new Route({ // /client/rfqs/outgoing
                                 path: "/outgoing",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/home/rfqs/outgoing",
+                                render: "client/rfqs/outgoing",
                             }),
                             new Route({ // /client/rfqs/history
                                 path: "/history",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/home/rfqs/history",
+                                render: "client/rfqs/history",
                             }),
                         ]
                     })
@@ -78,37 +120,37 @@ export default {
                                 path: "/incoming",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/home/rfqs/incoming",
+                                render: "supplier/rfqs/incoming",
                             }),
                             new Route({ // /supplier/rfqs/outgoing
                                 path: "/outgoing",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/home/rfqs/outgoing",
+                                render: "supplier/rfqs/outgoing",
                             }),
                             new Route({ // /supplier/rfqs/completed
                                 path: "/completed",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/home/rfqs/completed",
+                                render: "supplier/rfqs/completed",
                             }),
                             new Route({ // /supplier/rfqs/in-progress
                                 path: "/in-progress",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/home/rfqs/in-progress",
+                                render: "supplier/rfqs/in-progress",
                             }),
                             new Route({ // /supplier/rfqs/waiting
                                 path: "/waiting",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/home/rfqs/waiting",
+                                render: "supplier/rfqs/waiting",
                             }),
                             new Route({ // /supplier/rfqs/edit/:id
                                 path: "/edit/:id",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/home/rfqs/edit",
+                                render: "supplier/rfqs/edit",
                             }),
                         ]
                     })
