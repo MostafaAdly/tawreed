@@ -1,6 +1,6 @@
 import Logger from "src/utils/logger";
 import User from "../models/user.model";
-import EntitySeeder from "./entity.seeder";
+import EntitySeeder from "./seeder.interface";
 import Helpers from "src/utils/helpers";
 
 export default class UserSeeder implements EntitySeeder {
@@ -23,8 +23,9 @@ export default class UserSeeder implements EntitySeeder {
                 email: "MostafaAdlyAmar@gmail.com",
                 username: "MostafaAdly",
                 hashed_password: await Helpers.hash("123123"),
+                phone: "01000000000",
             },
-        ] as { email: string, hashed_password: string, username: string }[])
+        ] as { email: string, hashed_password: string, username: string, phone: string }[])
             .forEach(async (data) => await this.seed(data));
     }
 

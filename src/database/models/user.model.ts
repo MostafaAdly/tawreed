@@ -14,6 +14,9 @@ export default class User extends BaseModel {
     @Column()
     email: string
 
+    @Column({ length: 11 })
+    phone: string
+
     @Column('jsonb', { default: {} })
     metadata: object = {};
 }

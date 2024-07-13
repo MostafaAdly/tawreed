@@ -14,14 +14,8 @@ export default class Manager {
     init = async () => {
         this.validateCommandArguments();
         await this.initDatabase();
-        if (!this.connected) {
+        if (!this.connected || !this.regularStartup) {
             return;
-        }
-        if (this.runMigrations) {
-            this.runDatabaseMigrations();
-            if (!this.regularStartup) {
-                return;
-            }
         }
         await this.initServer();
     }
@@ -40,10 +34,6 @@ export default class Manager {
 
     initDatabase = async () => {
         Logger.log("Database initialized");
-        this.connected = await this.database.connect();
-    }
-
-    runDatabaseMigrations = async () => {
-        await this.database.runMigrations();
+        this.connected = await this.database.connect(this.runMigrations);
     }
 }

@@ -1,14 +1,15 @@
 import Logger from "src/utils/logger";
-import EntitySeeder from "./entity.seeder";
+import EntitySeeder from "./seeder.interface";
 import Helpers from "src/utils/helpers";
 import Validators from "src/utils/validators";
-// import UserSeeder from "./users.seeder";
+import fs from 'fs';
 
 export default class BaseSeeder {
 
-    seeders: EntitySeeder[] = [
-        // new UserSeeder(),
-    ];
+    seeders: EntitySeeder[] = fs
+        .readdirSync(__dirname)
+        .filter((file) => !['base.seeder.ts', 'seeder.interface.ts'].includes(file))
+        .map((file) => new (require(`./${file}`).default));
 
     init = () => {
         Logger.log("Seeding database.");

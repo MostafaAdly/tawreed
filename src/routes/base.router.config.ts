@@ -2,15 +2,15 @@ import { HttpMethod } from "../controllers/base.controller";
 import Route from "./base.router";
 
 export default {
-    render: new Route({
-        path: "/test",
-        controller: "render",
+    users: new Route({
+        path: "/users",
+        controller: "users_api",
+        api: true,
         routes: [
-            new Route({ // /test
+            new Route({ // /api/v1/users/edit
                 path: "/",
                 method: HttpMethod.GET,
-                handler: "index",
-                render: "client/home/_index",
+                handler: "search",
             }),
         ]
     }),

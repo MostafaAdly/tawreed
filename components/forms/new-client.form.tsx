@@ -2,9 +2,9 @@ import React from 'react';
 import { InlineFormField, InlineFormSelect } from './inline-form-field';
 import companySizeConfig from 'src/config/core/company-size.config';
 
-const NewClientForm = () => {
+const NewClientForm = ({ user, formAction }: { user?, formAction: string }) => {
     return (
-        <form>
+        <form action={formAction}>
             <div className="grid gap-6 mb-6 md:grid-cols-2 py-3">
                 <InlineFormField id="companyName" type='text' title="إسم الشركة" placeholder="مثال: شركة" />
                 <InlineFormField id="email" type='text' title="البريد الإلكتروني" placeholder="example@email.com" />

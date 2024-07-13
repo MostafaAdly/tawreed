@@ -5,11 +5,11 @@ import BaseSeeder from "./seeders/base.seeder";
 export default class Database {
     private driver: string = "postgres";
 
-    connect = async (): Promise<boolean> => {
+    connect = async (migrate: boolean): Promise<boolean> => {
         try {
             await AppDataSource.initialize()
             Logger.log(`Connected to ${this.driver} database`);
-            this.onConnect();
+            await this.onConnect(migrate);
             return true;
         } catch (error) {
             this.onError(error);
@@ -27,7 +27,10 @@ export default class Database {
         Logger.log(`Disconnected from ${this.driver} database`);
     }
 
-    onConnect = () => {
+    onConnect = async (migrate: boolean) => {
+        if (migrate) {
+            await this.runMigrations();
+        }
         new BaseSeeder().init();
     }
 
