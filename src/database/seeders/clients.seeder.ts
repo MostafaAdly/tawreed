@@ -1,42 +1,42 @@
 import Logger from "src/utils/logger";
-import User from "../models/user.model";
 import EntitySeeder from "./seeder.interface";
 import Helpers from "src/utils/helpers";
+import Client from "../models/client.model";
 
-export default class UserSeeder implements EntitySeeder {
+export default class ClientSeeder implements EntitySeeder {
     init = async () => {
         const isTableEmpty = await this.checkIfTableIsEmpty();
-        Logger.log(`Users table state of empty: ${isTableEmpty}`)
+        Logger.log(`Clients table state of empty: ${isTableEmpty}`)
         if (isTableEmpty) {
-            await this.startSeeding();
+            this.startSeeding();
         }
     }
 
     checkIfTableIsEmpty = async (): Promise<boolean> => {
-        return (await User.find({})).length == 0;
+        return (await Client.find({})).length == 0;
     }
 
     startSeeding = async () => {
-        Logger.log("Seeding users table");
+        Logger.log("Seeding User:client table");
         ([
             {
-                email: "MostafaAdlyAmar@gmail.com",
-                username: "MostafaAdly",
+                email: "the-yassmin-tegara@gmail.com",
+                username: "شركة الياسمين للتجارة",
                 hashed_password: await Helpers.hash("123123"),
-                phone: "01000000000",
+                phone: "01235000862",
             },
         ] as { email: string, hashed_password: string, username: string, phone: string }[])
             .forEach(async (data) => await this.seed(data));
     }
 
     seed = async (data: { email: string, hashed_password: string, username: string }) => {
-        const user = new User();
-        Object.assign(user, data);
-        await user.save();
+        const model = new Client();
+        Object.assign(model, data);
+        await model.save();
     }
 
 
     deleteAll = async () => {
-        await User.delete({})
+        await Client.delete({})
     }
 }

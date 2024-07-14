@@ -7,7 +7,7 @@
 		"bun": "nodemon -e ts --exec \"bun run .\"",
 		"start:bun": "nodemon . -e ts --exec \"bun run index.ts -r tsconfig-paths/register\"",
 		"start": "nodemon . -e ts --exec \"ts-node -r tsconfig-paths/register index.ts\"",
-		"dev": "nodemon . -e ts --exec \"ts-node -r tsconfig-paths/register index.ts\" --erase",
+		"dev": "nodemon -e ts --exec \"ts-node -r tsconfig-paths/register index.ts --erase=true\"",
 		"migrate": "ts-node -r tsconfig-paths/register index.ts --migrate",
 		"run": "ts-node -r tsconfig-paths/register main.ts --startup",
 		"build": "tsc",

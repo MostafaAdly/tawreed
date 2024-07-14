@@ -11,20 +11,22 @@ export default class BaseSeeder {
         .filter((file) => !['base.seeder.ts', 'seeder.interface.ts'].includes(file))
         .map((file) => new (require(`./${file}`).default));
 
-    init = () => {
+    init = async () => {
         Logger.log("Seeding database.");
-        if (!Helpers.isEnvProduction() && Validators.validateCommandArgument("erase", true)) {
-            this.erase();
+        if (!Helpers.isEnvProduction() && Validators.validateCommandArgument("erase", 'true')) {
+            await this.erase();
         }
-        this.seed();
+        await this.seed();
     }
 
-    seed = () => {
-        this.seeders.forEach(async (seeder) => seeder.init());
+    seed = async () => {
+        setTimeout(() => {
+            this.seeders.forEach(async (seeder) => await seeder.init());
+        }, 500);
     }
 
-    erase = () => {
+    erase = async () => {
         Logger.warn("Erasing database.")
-        this.seeders.forEach(async (seeder) => seeder.deleteAll());
+        this.seeders.forEach(async (seeder) => await seeder.deleteAll());
     }
 }

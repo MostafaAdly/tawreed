@@ -35,3 +35,11 @@ export const isClientSide = () => typeof window != 'undefined';
 export const getElementById = (id: string) => {
     return isClientSide() ? document.getElementById(id) : null;
 }
+
+export const isClientUser = (user) => {
+    return user && user.type == 'Client';
+}
+
+export const isSupplierUser = (user) => {
+    return user && user.type == 'Supplier';
+}
