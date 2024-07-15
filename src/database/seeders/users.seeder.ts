@@ -19,11 +19,10 @@ export default class UserSeeder implements EntitySeeder {
 	startSeeding = async () => {
 		Logger.log("- Seeding USER table");
 		const list: unknown[] = [{
-			email: "MostafaAdlyAmar@gmail.com",
+			email: "MostafaAdlyAmar@gmail.com".toLowerCase(),
 			username: "MostafaAdly",
 			hashed_password: await Helpers.hash("123123"),
 			phone: "01000000000",
-			isCompany: true,
 		}];
 		list.forEach(async (data) => await this.seed(data));
 	}

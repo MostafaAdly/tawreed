@@ -56,6 +56,18 @@ export default {
                                 handler: "index",
                                 render: "admin/rfqs/_index",
                             }),
+                            new Route({ // /admin/rfqs/requests
+                                path: '/requests',
+                                method: HttpMethod.GET,
+                                handler: "index",
+                                render: "admin/rfqs/requests",
+                            }),
+                            new Route({ // /admin/rfqs/offers
+                                path: '/offers',
+                                method: HttpMethod.GET,
+                                handler: "index",
+                                render: "admin/rfqs/offers",
+                            }),
                         ]
                     })
                 ]

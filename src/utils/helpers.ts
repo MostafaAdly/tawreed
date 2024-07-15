@@ -31,4 +31,6 @@ export default class Helpers {
     };
 
     static random = (num: number) => Math.floor(Math.random() * num);
+    static randomBetween = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
+    static fakePhoneNumber = () => Helpers.randomBetween(100000000, 999999999);
 }

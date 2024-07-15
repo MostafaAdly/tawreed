@@ -48,7 +48,6 @@ const OutgoingRFQs = () => {
                     </tbody>
                 </table>
             </div>
-
         </ClientLayout>
     )
 }

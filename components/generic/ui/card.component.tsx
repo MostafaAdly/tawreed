@@ -1,9 +1,9 @@
 import React from 'react'
 
 
-const CardComponent = ({ children, width = "full", height = "full", color = "bg-gray-200", addons = null }) => {
+const CardComponent = ({ children }) => {
     return (
-        <div className={`rounded-xl h-${height} w-${width} ${color}${addons ? " " + addons : ""}`}>
+        <div className="block w-full p-6 mb-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             {children}
         </div>
     )

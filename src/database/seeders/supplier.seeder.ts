@@ -21,22 +21,23 @@ export default class SupplierSeeder implements EntitySeeder {
   }
 
   startSeeding = async () => {
-    Logger.log("- Seeding USER@Supplier table");
+    const count = Helpers.random(250);
+    Logger.log(`- Seeding USER@Supplier table with ${count} records`);
     const list: unknown[] = [];
-    for (var i = 0; i < Helpers.random(100); i++)
+    for (var i = 0; i < count; i++)
       list.push({
-        email: faker.internet.email(),
+        email: faker.internet.email().toLowerCase(),
         username: faker.internet.userName(),
         hashed_password: await Helpers.hash("123123"),
-        phone: parsePhoneNumber(faker.phone.number().split(" ")[0], 'EG').number,
-        isCompany: true,
+        phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
         company: {
           size: companySizeConfig[Helpers.random(companySizeConfig.length)].name,
           address: faker.location.streetAddress(),
-          notes: faker.lorem.sentence()
+          notes: faker.lorem.sentence(),
+          industry: companySizeConfig[Helpers.random(companySizeConfig.length)].name
         }
       });
-    list.forEach(async (data) => await this.seed(data));
+    list.forEach(async (data) => this.seed(data));
   }
 
   seed = async (data: unknown) => {

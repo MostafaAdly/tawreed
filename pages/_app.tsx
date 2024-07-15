@@ -8,6 +8,7 @@ import Head from 'next/head'
 
 import '../public/tailwind/tailwind.output.css'
 import '../public/assets/css/styles.css'
+import { getAssetImage } from 'public/assets/utils/helpers'
 
 // ================================================================= [ Main Application ]
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -17,7 +18,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {/* <link rel="icon" type="image/x-icon" href={getImage("grey-logo.png")}></link> */}
+        <link rel="icon" type="image/x-icon" href={getAssetImage("grey-logo.png")} />
         <meta name="keywords" content="Tawreed, توريد, مشتريات, مبيعات, مصر" />
         <meta name="description" content={description} />
 
