@@ -22,7 +22,7 @@ export default class BaseSeeder {
     seed = async () => {
         setTimeout(() => {
             this.seeders.forEach(async (seeder) => await seeder.init());
-        }, 500);
+        }, 2000);
     }
 
     erase = async () => {

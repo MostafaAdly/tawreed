@@ -18,14 +18,14 @@ export default class User extends BaseModel {
     @Column()
     email: string
 
-    @Column({ length: 11 })
+    @Column({ length: 15 })
     phone: string
 
     @Column({ default: false })
     isCompany: boolean
 
-    @Column({ type: 'jsonb', default: JSON.stringify({ companySize: companySizeConfig[0].name }) })
-    company: { companySize: string, companyAddress?: string, notes?: string };
+    @Column({ type: 'jsonb', default: JSON.stringify({ size: companySizeConfig[0].name }) })
+    company: { size: string, address?: string, notes?: string };
 
     @Column('jsonb', { default: {} })
     metadata: object = {};

@@ -29,4 +29,6 @@ export default class Helpers {
     static combinePaths = (...paths: string[]) => {
         return path.join(...paths).replaceAll("\\", "/")
     };
+
+    static random = (num: number) => Math.floor(Math.random() * num);
 }
