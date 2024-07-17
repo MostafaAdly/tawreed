@@ -14,6 +14,24 @@ export default {
             }),
         ]
     }),
+    posts: new Route({
+        path: "/posts",
+        api: true,
+        routes: [
+            new Route({ // /api/v1/posts
+                path: '/offers',
+                controller: "offers",
+                routes: [
+                    new Route({ // /api/v1/posts/offers
+                        path: '/',
+                        method: HttpMethod.GET,
+                        handler: "search",
+                    }),
+                ]
+            }),
+        ]
+
+    }),
     dashboard: new Route({
         path: "/",
         middlewares: [],
