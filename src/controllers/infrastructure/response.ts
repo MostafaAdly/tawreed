@@ -3,6 +3,7 @@ import { Response } from 'express';
 export default class InfraResponse {
     statusCode: number = 200;
     message: string = '';
+    redirect: string;
     error: boolean = false;
     data: unknown = {};
     constructor(data: { statusCode: number, message: string, error: boolean, data: unknown }) {
@@ -13,6 +14,7 @@ export default class InfraResponse {
         response: {
             statusCode: number,
             message: string,
+            redirect?: string,
             error?: boolean,
             data?: unknown
         }

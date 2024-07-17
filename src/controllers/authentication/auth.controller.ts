@@ -7,8 +7,8 @@ import Helpers from 'src/utils/helpers';
 
 export default class AuthenticationController extends BaseController {
 
-    checkPassword = (user: User, password: string) => {
-        return bcrypt.compare(password, user?.hashed_password);
+    checkPassword = async (user: User, password: string) => {
+        return await bcrypt.compare(password, user?.hashed_password);
     }
 
     signAndCookie = (res: Response, user: unknown) => {

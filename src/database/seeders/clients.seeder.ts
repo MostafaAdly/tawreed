@@ -23,7 +23,20 @@ export default class ClientSeeder implements EntitySeeder {
     startSeeding = async () => {
         const count = Helpers.random(250);
         Logger.log(`- Seeding USER@Client table with ${count} records`);
-        const list: unknown[] = [];
+        const list: unknown[] = [
+            {
+                email: "MostafaAdlyAmar@gmail.com".toLowerCase(),
+                username: "MostafaAdly",
+                hashed_password: await Helpers.hash("123123"),
+                phone: "01000000000",
+                company: {
+                    size: companySizeConfig[Helpers.random(companySizeConfig.length)].name,
+                    address: faker.location.streetAddress(),
+                    notes: faker.lorem.sentence(),
+                    industry: categoriesConfig[Helpers.random(categoriesConfig.length)].name,
+                }
+            }
+        ];
         for (var i = 0; i < count; i++)
             list.push({
                 email: faker.internet.email().toLowerCase(),

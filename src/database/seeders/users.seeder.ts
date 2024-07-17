@@ -1,7 +1,7 @@
 import Logger from "src/utils/logger";
 import User from "../models/user.model";
 import EntitySeeder from "./seeder.interface";
-import Helpers from "src/utils/helpers";
+// import Helpers from "src/utils/helpers";
 
 export default class UserSeeder implements EntitySeeder {
 	init = async () => {
@@ -18,12 +18,14 @@ export default class UserSeeder implements EntitySeeder {
 
 	startSeeding = async () => {
 		Logger.log("- Seeding USER table");
-		const list: unknown[] = [{
-			email: "MostafaAdlyAmar@gmail.com".toLowerCase(),
-			username: "MostafaAdly",
-			hashed_password: await Helpers.hash("123123"),
-			phone: "01000000000",
-		}];
+		const list: unknown[] = [
+			// {
+			// 	email: "MostafaAdlyAmar@gmail.com".toLowerCase(),
+			// 	username: "MostafaAdly",
+			// 	hashed_password: await Helpers.hash("123123"),
+			// 	phone: "01000000000",
+			// }
+		];
 		list.forEach(async (data) => await this.seed(data));
 	}
 
