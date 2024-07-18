@@ -57,6 +57,9 @@ export default class RouterManager {
             Logger.error(`Method ${route.method} not found in handler for route: ${route.path}`);
             return;
         }
+        console.log(route.middlewares)
+        console.log(route.skipMiddlewares)
+        console.log(...(route.middlewares.filter(m => !route.skipMiddlewares.includes(m))))
         this.app[route.method.toLowerCase()](
             route.path,
             ...(route.middlewares.filter(m => !route.skipMiddlewares.includes(m))),

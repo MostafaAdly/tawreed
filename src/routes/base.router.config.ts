@@ -34,7 +34,9 @@ export default {
     }),
     dashboard: new Route({
         path: "/",
-        middlewares: [],
+        middlewares: [
+            "authenticate",
+        ],
         routes: [
             new Route({
                 path: "/admin",
