@@ -1,22 +1,7 @@
-import type { Application, RequestHandler } from "express";
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import session from 'express-session'
-import Helpers from "src/utils/helpers";
+import type { RequestHandler } from "express";
 
 export default class BaseMiddleware {
     baseMiddleware: RequestHandler = (req, res, next) => {
         next();
-    }
-
-    static setupDefaultMiddlewares = (app: Application) => {
-        app.use(express.json());
-        app.use(cookieParser());
-        app.use(session({
-            secret: process.env.SESSION_SECRET,
-            resave: false,
-            saveUninitialized: true,
-            cookie: { secure: Helpers.isEnvProduction() }
-        }));
     }
 }

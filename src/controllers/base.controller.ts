@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
+import User from "src/database/models/user.model";
 
 export default class BaseController {
+    getCurrentUser = (req: Request): User => req['session']?.user;
 }
 
 

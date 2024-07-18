@@ -2,10 +2,23 @@ import { HttpMethod } from "../controllers/base.controller";
 import Route from "./base.router";
 
 export default {
+    home: new Route({
+        path: "/",
+        controller: "home",
+        middlewares: ['authenticateSession'],
+        routes: [
+            new Route({
+                path: "/",
+                method: HttpMethod.GET,
+                handler: "index",
+            }),
+        ]
+    }),
     users: new Route({
         path: "/users",
         controller: "users_api",
         api: true,
+        middlewares: ['authenticateSession'],
         routes: [
             new Route({ // /api/v1/users/edit
                 path: "/",
@@ -17,6 +30,7 @@ export default {
     posts: new Route({
         path: "/posts",
         api: true,
+        middlewares: ['authenticateSession'],
         routes: [
             new Route({ // /api/v1/posts
                 path: '/offers',
@@ -34,9 +48,7 @@ export default {
     }),
     dashboard: new Route({
         path: "/",
-        middlewares: [
-            "authenticate",
-        ],
+        middlewares: ['authenticateSession'],
         routes: [
             new Route({
                 path: "/admin",
@@ -196,11 +208,18 @@ export default {
         middlewares: [],
         routes: [
             new Route({
+                path: '/logout',
+                method: HttpMethod.GET,
+                handler: "logout",
+            }),
+            new Route({
                 path: "/login",
                 method: HttpMethod.GET,
                 handler: "login",
                 render: "authentication/login",
-                middlewares: [],
+                middlewares: [
+                    "revertBack",
+                ],
                 skipMiddlewares: [],
             }),
             new Route({

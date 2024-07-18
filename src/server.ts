@@ -3,13 +3,14 @@ import Logger from './utils/logger';
 import RouterManager from './routes/base.router.manager';
 import ControllersManager from './controllers/base.controller.manager';
 import NextServerManager from './next';
-import BaseMiddleware from './middlewares/base.middleware';
+import MiddlewareManager from './middlewares/middleware.manager';
 export default class Server {
     private app: Application = express();
     private nextServer: NextServerManager = new NextServerManager();
     private port: number = parseInt(process.env.PORT || '3000');
     private controllersManager: ControllersManager = new ControllersManager();
-    private routerManager: RouterManager = new RouterManager(this.app, this.controllersManager);
+    private middlewareManager: MiddlewareManager = new MiddlewareManager();
+    private routerManager: RouterManager = new RouterManager(this.app, this.controllersManager, this.middlewareManager);
 
     startServer = async () => {
         await this.initNextServer();
@@ -28,7 +29,8 @@ export default class Server {
     }
 
     setupMiddlewares = () => {
-        BaseMiddleware.setupDefaultMiddlewares(this.app);
+        this.middlewareManager.loadMiddlewares();
+        this.middlewareManager.setupDefaultMiddlewares(this.app);
     }
 
     initNextServer = async () => {

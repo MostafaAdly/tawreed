@@ -1,4 +1,7 @@
-import { Application, Request, Response } from 'express';
+import {
+    Application,
+    // Request, Response 
+} from 'express';
 import configRouter from './base.router.config';
 import Route from './base.router';
 import Logger from '../utils/logger';
@@ -6,15 +9,18 @@ import ControllersManager from '../controllers/base.controller.manager';
 import NextServerManager from 'src/next';
 import colors from 'colors'
 import IndexRenderHandler from '../controllers/render.dev/index.handler';
+import MiddlewareManager from '../middlewares/middleware.manager';
 
 export default class RouterManager {
     private app: Application;
     private controllerManager: ControllersManager;
     private renderHandler: IndexRenderHandler = new IndexRenderHandler();
+    private middlewareManager: MiddlewareManager;
 
-    constructor(app: Application, controllerManager: ControllersManager) {
+    constructor(app: Application, controllerManager: ControllersManager, middlewareManager: MiddlewareManager) {
         this.app = app;
         this.controllerManager = controllerManager;
+        this.middlewareManager = middlewareManager;
     }
     loadRoutes = (nextServer: NextServerManager) => {
         Logger.log('====================================');
@@ -34,9 +40,9 @@ export default class RouterManager {
         Logger.log(` ${'-'.repeat(count - 1)}> Parent: ${colors.cyan(parentRoute.path)}, Method: ${parentRoute.method}`)
         count++;
         for (let childRoute of parentRoute.routes) {
+            childRoute.middlewares = [...childRoute.middlewares, ...parentRoute.middlewares]
+            childRoute.skipMiddlewares = [...childRoute.skipMiddlewares, ...parentRoute.skipMiddlewares]
             if (childRoute.routes.length > 0) {
-                childRoute.middlewares = [...childRoute.middlewares, ...parentRoute.middlewares]
-                childRoute.skipMiddlewares = [...childRoute.skipMiddlewares, ...parentRoute.skipMiddlewares]
                 childRoute.controller = parentRoute.controller;
                 this.setupParentRouter(childRoute, count);
             } else {
@@ -57,14 +63,15 @@ export default class RouterManager {
             Logger.error(`Method ${route.method} not found in handler for route: ${route.path}`);
             return;
         }
-        console.log(route.middlewares)
-        console.log(route.skipMiddlewares)
-        console.log(...(route.middlewares.filter(m => !route.skipMiddlewares.includes(m))))
-        this.app[route.method.toLowerCase()](
-            route.path,
-            ...(route.middlewares.filter(m => !route.skipMiddlewares.includes(m))),
-            (req: Request, res: Response) => handler(req, res, route.render)
-        );
+        try {
+            this.app[route.method.toLowerCase()](
+                route.path,
+                ...this.middlewareManager.getMiddlewares(route.middlewares.filter(m => !route.skipMiddlewares.includes(m))),
+                (req: Request, res: Response) => handler(req, res, route.render)
+            );
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 }
