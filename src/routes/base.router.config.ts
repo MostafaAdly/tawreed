@@ -14,37 +14,66 @@ export default {
             }),
         ]
     }),
-    users: new Route({
-        path: "/users",
-        controller: "users_api",
+    api: new Route({
+        path: '/',
         api: true,
-        middlewares: ['authenticateSession'],
+        middlewares: ["authenticateJWT"],
         routes: [
-            new Route({ // /api/v1/users/edit
-                path: "/",
-                method: HttpMethod.GET,
-                handler: "search",
-            }),
-        ]
-    }),
-    posts: new Route({
-        path: "/posts",
-        api: true,
-        middlewares: ['authenticateSession'],
-        routes: [
-            new Route({ // /api/v1/posts
-                path: '/offers',
-                controller: "offers",
+            new Route({
+                path: '/rfqs',
+                controller: "rfqs",
+                middlewares: ['acceptFiles'],
+                skipMiddlewares: ["authenticateJWT"], // TEMPORARY: REMOVE THIS LINE
                 routes: [
-                    new Route({ // /api/v1/posts/offers
-                        path: '/',
-                        method: HttpMethod.GET,
-                        handler: "search",
-                    }),
+                    new Route({
+                        path: '/new',
+                        method: HttpMethod.POST,
+                        handler: "create",
+                    })
                 ]
             }),
-        ]
+            new Route({
+                path: "/posts",
+                routes: [
+                    new Route({ // /api/v1/posts
+                        path: '/offers',
+                        controller: "offers",
+                        routes: [
+                            new Route({ // /api/v1/posts/offers
+                                path: '/',
+                                method: HttpMethod.GET,
+                                handler: "search",
+                            }),
+                        ]
+                    }),
+                ]
 
+            }),
+            new Route({ // /api/v1/users/edit
+                path: "/users",
+                controller: "users_api",
+                middlewares: ['authenticateJWT'],
+                routes: [
+                    new Route({
+                        path: '/edit',
+                        method: HttpMethod.GET,
+                        handler: "search",
+                    })
+                ]
+            }),
+            new Route({
+                path: "/images",
+                controller: "images",
+                skipMiddlewares: ["authenticateJWT"],
+                routes: [
+                    new Route({
+                        path: "/:filename",
+                        method: HttpMethod.GET,
+                        handler: "getImage",
+                    }),
+                ]
+            })
+        ]
     }),
     dashboard: new Route({
         path: "/",
@@ -220,46 +249,13 @@ export default {
                 middlewares: [
                     "revertBack",
                 ],
-                skipMiddlewares: [],
             }),
             new Route({
-                path: "/login",
+                path: "/auth/login",
                 api: true,
                 method: HttpMethod.POST,
                 handler: "login",
-                middlewares: [],
-                skipMiddlewares: [],
-            }),
-            new Route({
-                path: "/register",
-                method: HttpMethod.GET,
-                handler: "register",
-                middlewares: [],
-                skipMiddlewares: [],
-            }),
-            new Route({
-                path: "/register",
-                api: true,
-                method: HttpMethod.POST,
-                handler: "register",
-                middlewares: [],
-                skipMiddlewares: [],
             }),
         ],
     }),
-    images: new Route({
-        path: "/",
-        controller: "images",
-        middlewares: [],
-        routes: [
-            new Route({
-                path: "/images/:filename",
-                api: true,
-                method: HttpMethod.GET,
-                handler: "getImage",
-                middlewares: [],
-                skipMiddlewares: [],
-            }),
-        ]
-    })
 };

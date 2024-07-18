@@ -1,0 +1,16 @@
+meta {
+  name: test
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{url}}/test
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  name: Mostafa
+  images: @file(/home/mostafaadly/Downloads/trees-background.png)
+}

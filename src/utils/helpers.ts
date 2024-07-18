@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import bcrypt from 'bcrypt';
+import { randomUUID } from 'crypto';
 export default class Helpers {
     static findFileInDir = (dirPath: string, fileName: string): string | null => {
         const filesAndDirs = fs.readdirSync(dirPath);
@@ -33,6 +34,11 @@ export default class Helpers {
     static random = (num: number) => Math.floor(Math.random() * num);
     static randomBetween = (min: number, max: number) => Math.floor(Math.random() * (max - min)) + min;
     static fakePhoneNumber = () => Helpers.randomBetween(100000000, 999999999);
+
+    static generateId = (split: boolean = false) => {
+        const uuid = randomUUID();
+        return split ? uuid.split('-')[0] : uuid;
+    }
 
     static toInt = (str: string, def: number) => {
         if (!str) return def;

@@ -43,14 +43,14 @@ export default class LoginHandler extends AuthenticationController {
                     error: true
                 });
             }
-            this.signAndCookie(res, { userId: user.id });
+            const token = this.signAndCookie(res, { userId: user.id });
             this.storeInSession(req, user);
             // return InfraResponse.redirect(res, '/');
             return InfraResponse.send(res, {
                 statusCode: 200,
                 message: 'User authenticated',
                 redirect: `/${user.type.toLowerCase()}`,
-                data: { userId: user.id }
+                data: { userId: user.id, token }
             });
         }
     }

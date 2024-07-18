@@ -11,9 +11,10 @@ export default class AuthenticationController extends BaseController {
         return await bcrypt.compare(password, user?.hashed_password);
     }
 
-    signAndCookie = (res: Response, user: unknown) => {
+    signAndCookie = (res: Response, user: unknown): string => {
         const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '1800s' });
         res.cookie('token', token, { httpOnly: true, secure: Helpers.isEnvProduction() });
+        return token;
     }
 
     storeInSession = (req: Request, user: User) => {

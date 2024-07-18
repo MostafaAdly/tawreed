@@ -34,7 +34,7 @@ export default class Server {
     }
 
     initNextServer = async () => {
-        await this.nextServer.initNextServer(this.app);
+        this.nextServer.initNextServer(this.app);
     }
 
     listen = () => {

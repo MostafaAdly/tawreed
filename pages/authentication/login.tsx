@@ -18,7 +18,7 @@ const LoginPage = ({ }) => {
         }
         const email = emailRef?.current['value'];
         const password = passwordRef.current['value'];
-        var response = (await axios.post(getAPIURL('/login'), { email, password })).data;
+        var response = (await axios.post(getAPIURL('/auth/login'), { email, password })).data;
         if (response?.error) {
             alert(response.responseCode == 404 ? "إسم المستخدم أو كلمة المرور غير صحيحة" : response.message);
             return;

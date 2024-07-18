@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import User from "src/database/models/user.model";
+import UsersService from "src/services/users.service";
 
 export default class BaseController {
-    getCurrentUser = (req: Request): User => req['session']?.user;
+    getCurrentUser = async (req: Request): Promise<User> => {
+        return req['session']?.user ?? await UsersService.getUserById(req['userId']);
+    }
 }
 
 

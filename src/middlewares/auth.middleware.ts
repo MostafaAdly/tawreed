@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, RequestHandler, Request, Response } from "express";
+import InfraResponse from 'src/controllers/infrastructure/response';
 
 export default class AuthenticationMiddleware {
 
@@ -33,16 +34,15 @@ export default class AuthenticationMiddleware {
         const token = req.cookies['token'];
         console.log(token)
         if (!token) {
-            return res.redirect('/login');
+            return InfraResponse.send(res, { statusCode: 401, message: 'Unauthorized: Failed to authenticate token.', error: true });
         }
         this._verify(token, req, res, next);
     }
 
     private _verify = (token: string, req: Request, res: Response, next: NextFunction) => {
         jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
-            if (err) {
-                return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' })
-            }
+            if (err)
+                return InfraResponse.send(res, { statusCode: 500, message: 'Failed to authenticate token.', error: true });
             req['userId'] = decoded.id
             console.log(decoded)
             // req['token'] = token
