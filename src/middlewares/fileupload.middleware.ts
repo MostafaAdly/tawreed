@@ -9,11 +9,10 @@ export default class FileUploadMiddleware {
         cb(null, path.join(process.cwd(), './src/database/local/storage'));
       },
       filename: (req: any, file, cb) => {
-        console.log(req.url);
         const fileType = file.mimetype.split("/")[file.mimetype.split("/").length - 1] ?? "png";
         cb(null, `${dayjs(new Date()).format(
-          'YYYY-MM-DD HH-mm-ss'
-        )}_${Helpers.generateId()}.${fileType}`);
+          'YYYY-MM-DD_HH-mm-ss'
+        )}__${Helpers.generateId(true)}.${fileType}`);
       }
     })
   });

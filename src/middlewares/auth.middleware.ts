@@ -12,16 +12,6 @@ export default class AuthenticationMiddleware {
         }
     }
 
-    // authenticate: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
-    //     console.log('authenticating', req.url, this._isValidSession(req))
-    //     if (this._isValidSession(req)) {
-    //         next();
-    //     } else {
-    //         res.redirect('/login')
-    //         this.authenticateJWT(req, res, next);
-    //     }
-    // }
-
     authenticateSession: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
         if (this._isValidSession(req)) {
             next()
@@ -32,7 +22,6 @@ export default class AuthenticationMiddleware {
 
     authenticateJWT: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
         const token = req.cookies['token'];
-        console.log(token)
         if (!token) {
             return InfraResponse.send(res, { statusCode: 401, message: 'Unauthorized: Failed to authenticate token.', error: true });
         }
@@ -44,8 +33,6 @@ export default class AuthenticationMiddleware {
             if (err)
                 return InfraResponse.send(res, { statusCode: 500, message: 'Failed to authenticate token.', error: true });
             req['userId'] = decoded.id
-            console.log(decoded)
-            // req['token'] = token
             next();
         })
     }

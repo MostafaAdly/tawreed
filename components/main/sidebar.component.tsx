@@ -7,7 +7,7 @@ import Divider from 'components/generic/ui/divider.component';
 export const SidebarNavBar = ({ icon, text, url }) => {
     return (
         <a href={url} className='flex pt-[0.5em] pb-[0.5em] pr-[10%] min-w-14 justify-self-end items-center gap-x-5 rounded-xl transition-colors duration-150 hover:bg-[#353f66] cursor-pointer'>
-            <i className={`fa-solid fa-${icon} text-white center`} />
+            <i aria-hidden className={`fa-solid fa-${icon} text-white center`} />
             <h6 className='text-white'>{text}</h6>
         </a>
     )

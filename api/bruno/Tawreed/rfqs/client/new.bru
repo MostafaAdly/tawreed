@@ -1,0 +1,16 @@
+meta {
+  name: new
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{api_url}}/rfqs/new
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  name: MostafaAdly
+  files: @file(D:\Programming\Discord Programming\asuna pfp manga spirit project logo.jpg|D:\Programming\Discord Programming\discord pfp 2 - Copy.png)
+}
