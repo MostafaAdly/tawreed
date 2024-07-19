@@ -19,6 +19,13 @@ export default class OffersService extends BaseService {
     })
   }
 
+  static createOffer = async (data) => {
+    const offer = new Offer();
+    Object.assign(offer, data);
+    console.log(offer)
+    return await offer.save();
+  }
+
 
   static getOffersByClientId = async ({ clientId }: { clientId: string }) => {
     return Offer.find({ where: { client: { id: clientId } } })

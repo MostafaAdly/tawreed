@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import bcrypt from 'bcrypt';
 import { randomUUID } from 'crypto';
+import Logger from './logger';
 export default class Helpers {
     static findFileInDir = (dirPath: string, fileName: string): string | null => {
         const filesAndDirs = fs.readdirSync(dirPath);
@@ -17,6 +18,26 @@ export default class Helpers {
             }
         }
         return null;
+    }
+
+    static searchFilesWithFunction = (directory: string, functionName: string): string[] => {
+        const filesWithFunction: string[] = [];
+        const files = fs.readdirSync(directory);
+        for (const file of files) {
+            const filePath = path.join(directory, file);
+            const stats = fs.statSync(filePath);
+            if (stats.isDirectory()) {
+                const nestedFiles = this.searchFilesWithFunction(filePath, functionName);
+                filesWithFunction.push(...nestedFiles);
+            } else if (stats.isFile()) {
+                try {
+                    if (Object.keys(new ((require(filePath)).default)()).includes(functionName)) filesWithFunction.push(filePath);
+                } catch (error) {
+                    Logger.error(`Error loading file ${filePath}: ${error}`);
+                }
+            }
+        }
+        return filesWithFunction;
     }
 
     static getAPIVersion = () => `/api/v${process.env.API_VERSION || 1}`;

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, RequestHandler, Request, Response } from "express";
-import InfraResponse from 'src/controllers/infrastructure/response';
+import InfraResponse from 'src/controllers/base/response';
 
 export default class AuthenticationMiddleware {
 

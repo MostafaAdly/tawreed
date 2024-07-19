@@ -4,13 +4,8 @@ meta {
   seq: 2
 }
 
-post {
-  url: {{url}}/test
+get {
+  url: {{url}}/error
   body: multipartForm
   auth: none
-}
-
-body:multipart-form {
-  name: Mostafa
-  images: @file(/home/mostafaadly/Downloads/trees-background.png)
 }

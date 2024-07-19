@@ -29,4 +29,4 @@ const SupplierLayout = ({ children }) => {
 
 export default SupplierLayout;
 
-export const getServerSideProps = getSSProps
+export const getServerSideProps = getSSProps;

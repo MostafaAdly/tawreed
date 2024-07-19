@@ -1,5 +1,5 @@
 import User from 'src/database/models/user.model';
-import BaseController from '../base.controller';
+import BaseController from '../base/base.controller';
 import bcrypt from 'bcrypt';
 import { Response, Request } from 'express';
 import jwt from 'jsonwebtoken';

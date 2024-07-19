@@ -1,11 +1,11 @@
-import ClientLayout from 'layouts/client.layout'
+import SupplierLayout from 'layouts/supplier.layout'
 import { GetServerSideProps } from 'next'
 import { getSSProps } from 'public/assets/utils/helpers'
 import React from 'react'
 
 const RfqsHistory = ({ }) => {
     return (
-        <ClientLayout>
+        <SupplierLayout>
             <div className="flex flex-col mb-5">
                 <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">المعاملات السابقة</h1>
                 <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض معاملاتك السابقة مع الموردين</p>
@@ -47,7 +47,7 @@ const RfqsHistory = ({ }) => {
                 </table>
             </div>
 
-        </ClientLayout>
+        </SupplierLayout>
     )
 }
 

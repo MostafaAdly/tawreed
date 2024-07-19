@@ -83,13 +83,6 @@ const LoginPage = ({ }) => {
                     </form>
                 </CardComponent>
             </AuthLayout>
-            {/* <form className={_css(styles, 'form')} action={getAPIURL('login')} method='post'>
-                <div className={_css(styles, 'fields center')}>
-                    <input className={_css(styles, 'input')} type='email' name='email' placeholder='البريد الإلكتروني' />
-                    <input className={_css(styles, 'input')} type='password' name='password' placeholder='كلمة المرور' />
-                </div>
-
-            </form> */}
         </>
     )
 }

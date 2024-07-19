@@ -14,10 +14,11 @@ const NewRFQ = ({ user }) => {
     const [openModal, setOpenModal] = useState(false);
 
     const onSubmit = async () => {
+        console.log(user)
         try {
             const response = (
                 await axios.post(
-                    getAPIURL('/rfqs/new'),
+                    getAPIURL('/posts/offers/new'),
                     new FormData(document.getElementById('new-rfq') as HTMLFormElement),
                     {
                         headers: {
@@ -39,21 +40,22 @@ const NewRFQ = ({ user }) => {
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title='لقد تم ارسال الطلب بنجاح' button='الصفحة الرئيسية' href='/client' />
                 <div className='flex flex-col gap-y-5'>
                     <h1 className='text-3xl font-bold'>طلب تسعير جديد</h1>
-                    <h3 className='text-2xl font-bold'>
+                    {/* <h3 className='text-2xl font-bold'>
                         رقم: <span className='font-normal'>0x020231</span>
-                    </h3>
+                    </h3> */}
 
                     <form onSubmit={handleSubmit(onSubmit)} id='new-rfq'>
                         <div className="grid gap-6 mb-6 md:grid-cols-2">
-                            <InlineFormField id="productName" type='text' title="إسم المنتج" placeholder="مسامير" />
-                            <InlineFormField id="description" type='text' title="المواصفات" placeholder="حجم, لون, معدن, إلخ" />
-                            <InlineFormField id="quantity" type='text' title="الكمية" placeholder="22 قطعة" />
-                            {/* <!-- Dropdown menu --> */}
-                            <InlineFormSelect id="categories" title="القسم" items={
+                            <InlineFormField id="name" type='text' title="إسم المنتج" placeholder="مسامير" value='مسامير' />
+                            <InlineFormField id="description" type='text' title="المواصفات" placeholder="حجم, لون, معدن, إلخ" value='عايز الحجم يكون كبير بس مش صغير اوي' />
+                            <InlineFormField id="quantity" type='text' title="الكمية" placeholder="22 قطعة" value='34 قطعة' />
+                            {/* Dropdown menu */}
+                            <InlineFormSelect id="industry" title="القسم" items={
                                 [...categoriesConfig].map((category) => <option key={category.name} value={category.name}>{category.name}</option>)
                             } />
+                            {/* END OF DROPDOWN */}
                         </div>
-                        <InlineFilesField id="files" name='files' multiple={true} label='إرفاق صور' />
+                        <InlineFilesField required id="files" multiple={true} label='إرفاق صور' />
                         <div className="center mt-10">
                             <button type="submit" className="w-[30%] text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">أرسل الطلب</button>
                         </div>

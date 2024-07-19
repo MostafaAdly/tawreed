@@ -1,15 +1,16 @@
 import {
     Application,
-    // Request, Response 
+    Request, Response
 } from 'express';
 import configRouter from './base.router.config';
 import Route from './base.router';
 import Logger from '../utils/logger';
-import ControllersManager from '../controllers/base.controller.manager';
+import ControllersManager from '../controllers/base/base.controller.manager';
 import NextServerManager from 'src/next';
 import colors from 'colors'
-import IndexRenderHandler from '../controllers/render.dev/index.handler';
+import IndexRenderHandler from '../controllers/base/automatic_render/index.handler';
 import MiddlewareManager from '../middlewares/middleware.manager';
+import BaseDTOManager from 'src/controllers/base/base.dto.manager';
 
 export default class RouterManager {
     private app: Application;
@@ -22,11 +23,11 @@ export default class RouterManager {
         this.controllerManager = controllerManager;
         this.middlewareManager = middlewareManager;
     }
-    loadRoutes = (nextServer: NextServerManager) => {
+    loadRoutes = async (nextServer: NextServerManager) => {
         Logger.log('====================================');
         Logger.log("Loading routes...");
         for (let route in configRouter) {
-            this.setupParentRouter(configRouter[route], 1);
+            await this.setupParentRouter(configRouter[route], 1);
         }
         this.setupWildcardRoute(nextServer);
         Logger.log('====================================');
@@ -36,7 +37,7 @@ export default class RouterManager {
         nextServer.setupWildcardRoute(this.app)
     }
 
-    private setupParentRouter = (parentRoute: Route, count: number) => {
+    private setupParentRouter = async (parentRoute: Route, count: number) => {
         Logger.log(` ${'-'.repeat(count - 1)}> Parent: ${colors.cyan(parentRoute.path)}, Method: ${parentRoute.method}`)
         count++;
         for (let childRoute of parentRoute.routes) {
@@ -44,14 +45,14 @@ export default class RouterManager {
             childRoute.skipMiddlewares = [...childRoute.skipMiddlewares, ...parentRoute.skipMiddlewares]
             if (childRoute.routes.length > 0) {
                 childRoute.controller = parentRoute.controller;
-                this.setupParentRouter(childRoute, count);
+                await this.setupParentRouter(childRoute, count);
             } else {
-                this.setupChildRouter(childRoute, count);
+                await this.setupChildRouter(childRoute, count);
             }
         }
     }
 
-    private setupChildRouter = (route: Route, count: number) => {
+    private setupChildRouter = async (route: Route, count: number) => {
         const handlerConfig = this.controllerManager.getHandlerByRoute(route);
         if (!handlerConfig) {
             Logger.error(`Handler not found for route: ${route.path}`);
@@ -63,6 +64,7 @@ export default class RouterManager {
             Logger.error(`Method ${route.method} not found in handler for route: ${route.path}`);
             return;
         }
+        await BaseDTOManager.loadDTO(route);
         try {
             this.app[route.method.toLowerCase()](
                 route.path,
@@ -70,8 +72,6 @@ export default class RouterManager {
                 (req: Request, res: Response) => handler(req, res, route.render)
             );
         } catch (error) {
-            console.error(error)
         }
     }
-
 }

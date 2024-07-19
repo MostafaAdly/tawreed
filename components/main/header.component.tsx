@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { _css, getAssetImage } from 'public/assets/utils/helpers';
+import { getAssetImage } from 'public/assets/utils/helpers';
 
 const HeaderComponent = ({ }) => {
     return (

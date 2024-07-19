@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import Logger from './utils/logger';
 import RouterManager from './routes/base.router.manager';
-import ControllersManager from './controllers/base.controller.manager';
+import ControllersManager from './controllers/base/base.controller.manager';
 import NextServerManager from './next';
 import MiddlewareManager from './middlewares/middleware.manager';
 export default class Server {
@@ -34,7 +34,7 @@ export default class Server {
     }
 
     initNextServer = async () => {
-        this.nextServer.initNextServer(this.app);
+        await this.nextServer.initNextServer(this.app);
     }
 
     listen = () => {

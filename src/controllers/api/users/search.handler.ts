@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import UsersAPIController from "./users_api.controller";
-import InfraResponse from "src/controllers/infrastructure/response";
+import InfraResponse from "src/controllers/base/response";
 import UsersService from "src/services/users.service";
 
 export default class EditHandler extends UsersAPIController {

@@ -1,5 +1,5 @@
 import Helpers from 'src/utils/helpers';
-import BaseController from '../../base.controller';
+import BaseController from '../../base/base.controller';
 import path from 'path';
 
 export default class ImagesController extends BaseController {

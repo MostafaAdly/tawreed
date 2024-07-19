@@ -17,13 +17,13 @@ export default class Post extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   industry: string;
 
-  @Column({ type: 'integer', nullable: false })
-  quantity: number;
+  @Column({ type: 'varchar', nullable: false })
+  quantity: string;
 
-  @Column({ type: 'jsonb', nullable: false })
+  @Column({ type: 'jsonb', nullable: false, default: [] })
   images: string[];
 
-  @Column({ type: 'jsonb', default: {} })
+  @Column({ type: 'jsonb', nullable: false, default: {} })
   metadata: object;
 
   @ManyToOne(() => User, user => user.posts)

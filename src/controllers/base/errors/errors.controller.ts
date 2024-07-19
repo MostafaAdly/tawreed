@@ -1,4 +1,4 @@
 import BaseController from "src/controllers/base/base.controller";
 
-export default class ClientHomeController extends BaseController {
+export default class ErrorController extends BaseController {
 }

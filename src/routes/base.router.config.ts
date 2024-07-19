@@ -1,4 +1,4 @@
-import { HttpMethod } from "../controllers/base.controller";
+import { HttpMethod } from "../controllers/base/base.controller";
 import Route from "./base.router";
 
 export default {
@@ -17,28 +17,23 @@ export default {
     api: new Route({
         path: '/',
         api: true,
-        middlewares: ["authenticateJWT"],
+        middlewares: ["authenticateJWT", "validateBody"],
         routes: [
             new Route({
-                path: '/rfqs',
-                controller: "rfqs",
+                path: "/posts",
                 middlewares: ['acceptFiles'],
                 skipMiddlewares: ["authenticateJWT"], // TEMPORARY: REMOVE THIS LINE
-                routes: [
-                    new Route({
-                        path: '/new',
-                        method: HttpMethod.POST,
-                        handler: "create",
-                    })
-                ]
-            }),
-            new Route({
-                path: "/posts",
                 routes: [
                     new Route({ // /api/v1/posts
                         path: '/offers',
                         controller: "offers",
                         routes: [
+                            new Route({
+                                path: '/new',
+                                method: HttpMethod.POST,
+                                handler: "create",
+                                dto: "new_offer",
+                            }),
                             new Route({ // /api/v1/posts/offers
                                 path: '/',
                                 method: HttpMethod.GET,

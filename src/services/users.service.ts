@@ -12,9 +12,12 @@ export default class UsersService extends BaseService {
         return await User.findOne({ where: { email: email.toLowerCase() } });
     }
 
-    static getUserById = async (id: string) => {
+    static getUserById = async (id: string, secured: boolean = true) => {
         if (!id) return null;
-        return await User.findOne({ where: { id } });
+        const user = await User.findOne({ where: { id } });
+        if (secured)
+            delete user.hashed_password;
+        return user;
     }
 
     static createUser = async (data: User) => {

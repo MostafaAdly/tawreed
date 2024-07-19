@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { _css, getAssetImage } from 'public/assets/utils/helpers';
+import { getAssetImage } from 'public/assets/utils/helpers';
 import Divider from 'components/generic/ui/divider.component';
 
 

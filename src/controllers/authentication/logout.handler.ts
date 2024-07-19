@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import AuthenticationController from "./auth.controller";
 import AuthenticationMiddleware from "src/middlewares/auth.middleware";
-import InfraResponse from "../infrastructure/response";
+import InfraResponse from "../base/response";
 
 export default class LogoutHandler extends AuthenticationController {
   logout = {

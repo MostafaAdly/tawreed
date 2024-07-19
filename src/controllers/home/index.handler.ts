@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import HomeController from "./home.controller";
-import InfraResponse from "../infrastructure/response";
+import InfraResponse from "../base/response";
 
 export default class HomeIndexHandler extends HomeController {
   index = {
