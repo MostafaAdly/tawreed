@@ -20,8 +20,15 @@ export default class InfraResponse {
             data?: unknown
         }
     ) => {
-        const { statusCode, ...rest } = response;
-        return res.status(statusCode).json(rest)
+        return res.status(response.statusCode).json({
+            message: response.message,
+            statusCode: response.statusCode,
+            date: new Date().toISOString(),
+            path: res.req.url,
+            redirect: response.redirect,
+            error: response.error || false,
+            data: response.data || {},
+        })
     }
 
     static render = (

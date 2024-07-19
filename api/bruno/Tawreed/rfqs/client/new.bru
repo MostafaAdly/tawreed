@@ -5,12 +5,16 @@ meta {
 }
 
 post {
-  url: {{api_url}}/rfqs/new
+  url: {{api_url}}/posts/offers/new
   body: multipartForm
   auth: none
 }
 
 body:multipart-form {
   name: MostafaAdly
-  files: @file(D:\Programming\Discord Programming\asuna pfp manga spirit project logo.jpg|D:\Programming\Discord Programming\discord pfp 2 - Copy.png)
+  files: @file(D:\Programming\Discord Programming\cic logo.jpg)
+  description: test
+  quantity: 2
+  industry: test
+  clientId: 00834162-99be-435c-a077-78d6ade64ac5
 }

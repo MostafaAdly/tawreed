@@ -13,9 +13,8 @@ export default class LoginHandler extends AuthenticationController {
             const { email, password } = req.body || {};
             const user = await UsersService.getUserByEmail(email);
             if (!user) {
-                2
                 return InfraResponse.send(res, {
-                    statusCode: 204,
+                    statusCode: 202,
                     message: 'User not found',
                     error: true
                 });
@@ -45,7 +44,6 @@ export default class LoginHandler extends AuthenticationController {
             }
             const token = this.signAndCookie(res, { userId: user.id });
             this.storeInSession(req, user);
-            // return InfraResponse.redirect(res, '/');
             return InfraResponse.send(res, {
                 statusCode: 200,
                 message: 'User authenticated',

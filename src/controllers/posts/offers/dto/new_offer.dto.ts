@@ -6,6 +6,7 @@ export default class NewOfferDTO implements IBaseDTO {
   description = 'string';
   quantity = 'string';
   industry = 'string';
+  clientId = 'string';
 
   __onCheck__ = (req: Request) => {
     const images = req['files'].map(file => file.path);

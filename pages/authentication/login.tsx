@@ -1,38 +1,32 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { getAPIURL, getAssetImage } from 'public/assets/utils/helpers';
 import CardComponent from 'components/generic/ui/card.component';
 import AuthLayout from 'layouts/auth.layout';
 import TitleComponent from 'components/generic/ui/title.component';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 
 const LoginPage = ({ }) => {
-    const emailRef = useRef();
-    const passwordRef = useRef();
+    const { register, handleSubmit } = useForm();
 
     const onLogin = async (form) => {
-        form.preventDefault();
-        if (!emailRef.current || !passwordRef.current) {
+        if (!form.email || !form.password) {
             alert(`أكمل البيانات المطلوبة لتسجيل الدخول`);
             return;
         }
-        const email = emailRef?.current['value'];
-        const password = passwordRef.current['value'];
-        var response = (await axios.post(getAPIURL('/auth/login'), { email, password })).data;
-        if (response?.error) {
-            alert(response.responseCode == 404 ? "إسم المستخدم أو كلمة المرور غير صحيحة" : response.message);
-            return;
-        }
-        if (response.redirect) {
+        var response = (await axios.post(getAPIURL('/auth/login'), { email: form.email, password: form.password })).data;
+        if (response?.error)
+            return alert("إسم المستخدم أو كلمة المرور غير صحيحة");
+        if (response.redirect)
             window.location.href = response.redirect;
-        }
     }
 
     return (
         <>
             <AuthLayout>
                 <CardComponent className="w-[40%]">
-                    <form onSubmit={onLogin}>
+                    <form onSubmit={handleSubmit(onLogin)}>
                         <div className="center">
                             <img className=' w-[130px] h-[100px]' src={getAssetImage('logo')} alt="Logo" />
                         </div>
@@ -49,11 +43,10 @@ const LoginPage = ({ }) => {
                             </span>
                             <input
                                 required
-                                ref={emailRef}
                                 type="text"
                                 dir='ltr'
                                 id="email"
-                                name='email'
+                                {...register('email', { required: true })}
                                 defaultValue={'MostafaAdlyAmar@gmail.com'}
                                 className="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username@tec-tawreed.com" />
                         </div>
@@ -66,11 +59,10 @@ const LoginPage = ({ }) => {
                             </span>
                             <input
                                 required
-                                ref={passwordRef}
                                 type="password"
                                 dir='ltr'
                                 id="password"
-                                name='password'
+                                {...register('password', { required: true })}
                                 defaultValue={'123123'}
                                 className="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="********" />
                         </div>

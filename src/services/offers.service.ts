@@ -19,11 +19,14 @@ export default class OffersService extends BaseService {
     })
   }
 
-  static createOffer = async (data) => {
+  static createOffer = async (user, data) => {
+    if (!user) return null;
     const offer = new Offer();
     Object.assign(offer, data);
-    console.log(offer)
-    return await offer.save();
+    offer.client = user;
+    await offer.save();
+    delete offer.client;
+    return offer;
   }
 
 

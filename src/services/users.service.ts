@@ -7,21 +7,33 @@ export default class UsersService extends BaseService {
         return await User.find({ where: [{ email: email.toLowerCase() }, { phone }, { username }, { type }] });
     }
 
-    static getUserByEmail = async (email: string) => {
+    static getUserByEmail = async (email: string): Promise<(User | null)> => {
         if (!email) return null;
-        return await User.findOne({ where: { email: email.toLowerCase() } });
+        try {
+            return await User.findOne({ where: { email: email.toLowerCase() } });
+        } catch (error) {
+            return null;
+        }
     }
 
-    static getUserById = async (id: string, secured: boolean = true) => {
+    static getUserById = async (id: string, secured: boolean = true): Promise<(User | null)> => {
         if (!id) return null;
-        const user = await User.findOne({ where: { id } });
-        if (secured)
-            delete user.hashed_password;
-        return user;
+        try {
+            const user = await User.findOne({ where: { id } });
+            if (user && secured)
+                delete user.hashed_password;
+            return user;
+        } catch (error) {
+            return null;
+        }
     }
 
-    static createUser = async (data: User) => {
+    static createUser = async (data: User): Promise<(User | null)> => {
         if (!data) return null;
-        return User.create(data);
+        try {
+            return User.create(data);
+        } catch (error) {
+            return null;
+        }
     }
 }
