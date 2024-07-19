@@ -8,7 +8,8 @@ export default class BaseSeeder {
 
     seeders: EntitySeeder[] = fs
         .readdirSync(__dirname)
-        .filter((file) => !['base.seeder.ts', 'seeder.interface.ts'].includes(file))
+        .filter((file) => !['base.seeder.ts', 'seeder.interface.ts'].includes(file)) // filters out base and interface files
+        .filter((file) => file.endsWith('.ts') && !file.startsWith('_')) // filters out files that start with '_'
         .map((file) => new (require(`./${file}`).default));
 
     init = async () => {

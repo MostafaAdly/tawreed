@@ -1,22 +1,26 @@
 import Offer from "src/database/models/offer.model";
 import BaseService from "./base.service";
 import Helpers from "src/utils/helpers";
+import Post from "src/database/models/post.model";
 
 export default class OffersService extends BaseService {
 
-  static getOffers = async ({ id, clientId, supplierId, name, industry }:
-    { id?: number | string, clientId?: string, supplierId?: string, name?: string, industry?: string }) => {
-    return await Offer.find({
-      where: [
-        { id: Helpers.toInt(id as string, -1) },
-        { client: { id: clientId } },
-        {
-          supplier: { id: supplierId }
-        },
-        { name: name },
-        { industry }
-      ]
-    })
+  static getOffers = async ({ id, clientId, supplierId, name, industry, selectClient }:
+    { id?: number | string, clientId?: string, supplierId?: string, name?: string, industry?: string, selectClient?: boolean }) => {
+    const where = [
+      { id: Helpers.toInt(id as string, null) },
+      { client: { id: clientId } },
+      { supplier: { id: supplierId } },
+      { name },
+      { industry }
+    ];
+    const relations = selectClient ? ['client'] : [];
+    const offers = await Post.find({ where, relations })
+    if (selectClient)
+      offers.forEach(offer => {
+        delete offer.client?.hashed_password
+      })
+    return offers;
   }
 
   static createOffer = async (user, data) => {

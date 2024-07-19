@@ -1,9 +1,37 @@
+import axios from 'axios'
 import SupplierLayout from 'layouts/supplier.layout'
 import { GetServerSideProps } from 'next'
-import { getSSProps } from 'public/assets/utils/helpers'
-import React from 'react'
+import { getAPIURL, getSSProps } from 'public/assets/utils/helpers'
+import React, { useEffect, useState } from 'react'
+import { InlineFormSelect } from '../../../components/forms/inline-form-field';
+import categoriesConfig from 'src/config/core/categories.config'
+
+// GLOBAL FOR THIS FILE
+const maxDescriptionLength = 30;
 
 const IncomingRFQs = ({ }) => {
+    const [offers, setOffers] = useState([]);
+    const [offerName, setOfferName] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = (await axios.get(getAPIURL('/posts/offers?selectClient=true'))).data;
+                if (response?.data) {
+                    setOffers(response.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        })();
+
+    }, []);
+
+    const onCompanyChange = ({ target }) => {
+        setCategoryFilter(target.value);
+    }
+
     return (
         <SupplierLayout>
             <div className="flex flex-col mb-5">
@@ -19,9 +47,19 @@ const IncomingRFQs = ({ }) => {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input
-                            type="text" id="table-search" className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="أبحث" />
+                        <div className="flex flex-row gap-x-5">
+                            <input
+                                type="text"
+                                id="table-search"
+                                onChange={({ target }) => setOfferName(target.value.toLowerCase())}
+                                placeholder="أبحث"
+                                className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            />
+                            <InlineFormSelect id='filter' className='w-10 h-auto' items={
+                                categoriesConfig.map((category) => <option key={category.name} value={category.name}>{category.name}</option>)
+                            } hideLabel onChange={onCompanyChange} />
+                            <button onClick={() => setCategoryFilter(null)} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">أمسح التصفية</button>
+                        </div>
                     </div>
                 </div>
                 <table className="w-full text-[18px] text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -37,16 +75,23 @@ const IncomingRFQs = ({ }) => {
                                 العميل
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                الكمية
+                                المواصفات
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                المواصفات
+                                القسم
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-bold">
+                                عدد الصور
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow id="Rfx00123c" name='بطيخ' client='ابطخ' quantity='123' price='321' />
+                        {
+                            offers
+                                .filter(offer => !categoryFilter || offer.industry == categoryFilter)
+                                .filter(offer => (offer.name || '').toLowerCase().includes(offerName))
+                                .map((offer, index) => <TableRow key={index} index={index} offer={offer} />)}
                     </tbody>
                 </table>
             </div>
@@ -55,23 +100,27 @@ const IncomingRFQs = ({ }) => {
     )
 }
 
-const TableRow = ({ id, name, client, quantity, price }) => {
+const TableRow = ({ index, offer }) => {
+    console.log(offer)
     return (
         <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-slate-100 even:dark:bg-gray-800 border-b dark:border-gray-700">
             <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {id}
+                {index + 1}
             </td>
             <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {name}
+                {offer.name}
             </td>
             <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {client}
+                {offer.client?.username}
             </td>
             <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {quantity}
+                {(offer.description || '').substring(0, maxDescriptionLength) + (offer.description.length > maxDescriptionLength ? '...' : '')}
             </td>
             <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {price}
+                {offer.industry}
+            </td>
+            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {offer.images?.length || 0}
             </td>
             <td scope="row" className="px-1 py-4 flex justify-evenly">
                 <a href="#" className="font-medium text-green-600 dark:text-blue-500 hover:underline">تعديل</a>
