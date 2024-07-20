@@ -6,23 +6,23 @@ const Index = () => {
     const links = [
         {
             title: 'طلبات تسعير جديدة',
-            url: '/supplier/rfqs/incoming'
+            url: '/supplier/posts/incoming'
         },
         {
             title: 'قيد التنفيذ',
-            url: '/supplier/rfqs/in-progress'
+            url: '/supplier/posts/in-progress'
         },
         {
             title: 'عروض مرسلة',
-            url: '/supplier/rfqs/outgoing'
+            url: '/supplier/posts/outgoing'
         },
         {
             title: 'المعاملات المكتملة',
-            url: '/supplier/rfqs/completed'
+            url: '/supplier/posts/completed'
         },
         {
             title: 'معاملات لم يتم استلام النقد',
-            url: '/supplier/rfqs/waiting'
+            url: '/supplier/posts/waiting'
         }
     ]
     return (

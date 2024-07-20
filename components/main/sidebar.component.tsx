@@ -24,10 +24,10 @@ const NavSection = ({ children }: { children: ReactElement[] }) => {
 
 const SidebarComponent = ({ // Default values are for /client
     upperSection = [
-        SidebarNavBar({ icon: 'home', text: 'طلب توريد جديد', url: '/client/rfqs/new' }),
-        SidebarNavBar({ icon: 'user', text: 'العروض الواردة', url: '/client/rfqs/incoming' }),
-        SidebarNavBar({ icon: 'cog', text: 'العروض الصادرة', url: '/client/rfqs/outgoing' }),
-        SidebarNavBar({ icon: 'sign-out', text: 'المعاملات السابقة', url: '/client/rfqs/history' }),
+        SidebarNavBar({ icon: 'home', text: 'طلب توريد جديد', url: '/client/posts/new' }),
+        SidebarNavBar({ icon: 'user', text: 'العروض الواردة', url: '/client/posts/incoming' }),
+        SidebarNavBar({ icon: 'cog', text: 'العروض الصادرة', url: '/client/posts/outgoing' }),
+        SidebarNavBar({ icon: 'sign-out', text: 'المعاملات السابقة', url: '/client/posts/history' }),
     ],
     bottomSection = [
         SidebarNavBar({ icon: 'home', text: 'من نحن', url: '/about' }),

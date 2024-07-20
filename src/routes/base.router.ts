@@ -20,7 +20,7 @@ export default class Route {
 
     setupChildrenRoutes = () => {
         for (let route of this.routes) {
-            if (this.controller) {
+            if (this.controller && !route.controller) {
                 route.controller = this.controller;
             }
             route.path = Helpers.combinePaths(this.path, route.path);

@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { getSSProps } from 'public/assets/utils/helpers';
 import React from 'react';
 import { InlineFormSelect } from '../../../components/forms/inline-form-field';
-import { RequestOperation } from 'src/config/enums/request-operation.enum';
+import { OfferStatus } from 'src/config/enums/offer_status.enum';
 import CardComponent from 'components/generic/ui/card.component';
 import TitleComponent from 'components/generic/ui/title.component';
 
@@ -79,7 +79,7 @@ const TableRow = ({ index, request }) => {
             </td>
             <td className="px-3 py-4 flex gap-x-6 center">
                 <InlineFormSelect id={index} key={index} marginBottom='0' width='[100%]' items={
-                    Object.entries(RequestOperation).map(([key, value]) => {
+                    Object.entries(OfferStatus).map(([key, value]) => {
                         return <option key={key} value={key}>{value}</option>
                     })
                 } />

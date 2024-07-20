@@ -3,12 +3,12 @@ import { GetServerSideProps } from 'next'
 import { getSSProps } from 'public/assets/utils/helpers'
 import React from 'react'
 
-const OutgoingRFQs = () => {
+const PostsHistory = ({ }) => {
     return (
         <ClientLayout>
             <div className="flex flex-col mb-5">
-                <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">العروض الصادرة</h1>
-                <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض الصادرة منك</p>
+                <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">المعاملات السابقة</h1>
+                <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض معاملاتك السابقة مع الموردين</p>
             </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <div className="pb-4 bg-white dark:bg-gray-900">
@@ -39,8 +39,6 @@ const OutgoingRFQs = () => {
                             <th scope="col" className="px-6 py-3 font-bold">
                                 السعر
                             </th>
-                            <th scope="col" className="px-6 py-3 font-bold">
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,15 +66,13 @@ const TableRow = ({ name, supplier, quantity, price }) => {
             <td className="px-6 py-4">
                 {price}
             </td>
-            <td className="px-3 py-4 flex gap-x-6 center">
-                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">موافقة</a>
-                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">رفض</a>
-            </td>
         </tr>
     )
 }
 
+export default PostsHistory
 
-export default OutgoingRFQs
+
+
 
 export const getServerSideProps: GetServerSideProps = getSSProps

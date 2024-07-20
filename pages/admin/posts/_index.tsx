@@ -11,11 +11,11 @@ const Index = () => {
     const links = [
         {
             title: 'الطلبات',
-            url: '/admin/rfqs/requests'
+            url: '/admin/posts/requests'
         },
         {
             title: 'العروض',
-            url: '/admin/rfqs/offers'
+            url: '/admin/posts/offers'
         }
     ]
     return (

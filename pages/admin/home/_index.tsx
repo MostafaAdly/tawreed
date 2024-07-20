@@ -10,7 +10,7 @@ const Index = ({ user }) => {
         },
         {
             title: 'إدارة الطلبات',
-            url: '/admin/rfqs'
+            url: '/admin/posts'
         },
         {
             title: 'إدارة المدفوعات',
@@ -18,7 +18,7 @@ const Index = ({ user }) => {
         },
         {
             title: 'إدارة العروض',
-            url: '/admin/rfqs'
+            url: '/admin/posts'
         },
         {
             title: 'إدارة المحتوى',

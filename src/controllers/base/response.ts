@@ -33,8 +33,8 @@ export default class InfraResponse {
 
     static render = (
         { req, res, page, data }:
-            { req: Request, res: Response, page: string, data: object }
-    ) => NextServerManager.render({ req, res, page, data });
+            { req: Request, res: Response, page: string, data?: object }
+    ) => NextServerManager.render({ req, res, page, data: data || {} });
 
     static redirect = (res: Response, url: string) => res.redirect(url);
 }

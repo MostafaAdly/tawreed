@@ -9,7 +9,7 @@ import categoriesConfig from 'src/config/core/categories.config'
 // GLOBAL FOR THIS FILE
 const maxDescriptionLength = 30;
 
-const IncomingRFQs = ({ }) => {
+const IncomingPosts = ({ offersIDs }) => {
     const [offers, setOffers] = useState([]);
     const [offerName, setOfferName] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
@@ -17,7 +17,9 @@ const IncomingRFQs = ({ }) => {
     useEffect(() => {
         (async () => {
             try {
-                const response = (await axios.get(getAPIURL('/posts/offers?selectClient=true'))).data;
+                console.log(offersIDs)
+                const response = (await axios.post(getAPIURL('/posts/offers'), { offersIDs })).data;
+                console.log(response)
                 if (response?.data) {
                     setOffers(response.data);
                 }
@@ -28,7 +30,7 @@ const IncomingRFQs = ({ }) => {
 
     }, []);
 
-    const onCompanyChange = ({ target }) => {
+    const onCategoryChange = ({ target }) => {
         setCategoryFilter(target.value);
     }
 
@@ -57,7 +59,7 @@ const IncomingRFQs = ({ }) => {
                             />
                             <InlineFormSelect id='filter' className='w-10 h-auto' items={
                                 categoriesConfig.map((category) => <option key={category.name} value={category.name}>{category.name}</option>)
-                            } hideLabel onChange={onCompanyChange} />
+                            } hideLabel onChange={onCategoryChange} />
                             <button onClick={() => setCategoryFilter(null)} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">أمسح التصفية</button>
                         </div>
                     </div>
@@ -123,14 +125,14 @@ const TableRow = ({ index, offer }) => {
                 {offer.images?.length || 0}
             </td>
             <td scope="row" className="px-1 py-4 flex justify-evenly">
-                <a href="#" className="font-medium text-green-600 dark:text-blue-500 hover:underline">تعديل</a>
+                <a href={`/supplier/posts/edit/${offer.id}`} className="font-medium text-green-600 dark:text-blue-500 hover:underline">تعديل</a>
                 <a href="#" className="font-medium text-red-600 dark:text-blue-500 hover:underline">رفض</a>
             </td>
         </tr>
     )
 }
 
-export default IncomingRFQs
+export default IncomingPosts
 
 
 export const getServerSideProps: GetServerSideProps = getSSProps

@@ -39,6 +39,11 @@ export default {
                                 method: HttpMethod.GET,
                                 handler: "search",
                             }),
+                            new Route({ // /api/v1/posts/offers
+                                path: '/',
+                                method: HttpMethod.POST,
+                                handler: "search",
+                            }),
                         ]
                     }),
                 ]
@@ -103,26 +108,25 @@ export default {
                         ]
                     }),
                     new Route({
-                        path: '/rfqs',
-                        controller: "rfqs",
+                        path: '/posts',
                         routes: [
-                            new Route({ // /admin/rfqs
+                            new Route({ // /admin/posts
                                 path: '/',
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "admin/rfqs/_index",
+                                render: "admin/posts/_index",
                             }),
-                            new Route({ // /admin/rfqs/requests
+                            new Route({ // /admin/posts/requests
                                 path: '/requests',
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "admin/rfqs/requests",
+                                render: "admin/posts/requests",
                             }),
-                            new Route({ // /admin/rfqs/offers
+                            new Route({ // /admin/posts/offers
                                 path: '/offers',
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "admin/rfqs/offers",
+                                render: "admin/posts/offers",
                             }),
                         ]
                     })
@@ -138,33 +142,32 @@ export default {
                         handler: "index",
                         render: "client/home/_index",
                     }),
-                    new Route({ // /client/rfqs
-                        path: "/rfqs",
-                        controller: "rfqs",
+                    new Route({ // /client/posts
+                        path: "/posts",
                         routes: [
                             new Route({
-                                path: "/new", // /client/rfqs/new
+                                path: "/new", // /client/posts/new
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/rfqs/new",
+                                render: "client/posts/new",
                             }),
-                            new Route({ // /client/rfqs/incoming
+                            new Route({ // /client/posts/incoming
                                 path: "/incoming",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/rfqs/incoming",
+                                render: "client/posts/incoming",
                             }),
-                            new Route({ // /client/rfqs/outgoing
+                            new Route({ // /client/posts/outgoing
                                 path: "/outgoing",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/rfqs/outgoing",
+                                render: "client/posts/outgoing",
                             }),
-                            new Route({ // /client/rfqs/history
+                            new Route({ // /client/posts/history
                                 path: "/history",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/rfqs/history",
+                                render: "client/posts/history",
                             }),
                         ]
                     })
@@ -172,53 +175,54 @@ export default {
             }),
             new Route({
                 path: "/supplier",
-                controller: "supplier_home",
                 routes: [
                     new Route({ // /supplier
                         path: "/",
-                        method: HttpMethod.GET,
-                        handler: "index",
-                        render: "supplier/home/_index",
-                    }),
-                    new Route({
-                        path: "/rfqs",
-                        controller: "rfqs",
+                        controller: "supplier_home",
                         routes: [
-                            new Route({ // /supplier/rfqs/incoming
-                                path: "/incoming",
+                            new Route({
+                                path: "/",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/rfqs/incoming",
+                                render: "supplier/home/_index",
+                            })
+                        ]
+                    }),
+                    new Route({
+                        path: "/posts",
+                        controller: "supplier_offers",
+                        routes: [
+                            new Route({ // /supplier/posts/incoming
+                                path: "/incoming",
+                                method: HttpMethod.GET,
+                                handler: "incoming",
                             }),
-                            new Route({ // /supplier/rfqs/outgoing
+                            new Route({ // /supplier/posts/edit/:id
+                                path: "/edit/:offerId",
+                                method: HttpMethod.GET,
+                                handler: "edit",
+                            }),
+                            new Route({ // /supplier/posts/in-progress
+                                path: "/in-progress",
+                                method: HttpMethod.GET,
+                                handler: "inProgress",
+                            }),
+                            new Route({ // /supplier/posts/outgoing
                                 path: "/outgoing",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/rfqs/outgoing",
                             }),
-                            new Route({ // /supplier/rfqs/completed
+                            new Route({ // /supplier/posts/completed
                                 path: "/completed",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/rfqs/completed",
+                                render: "supplier/posts/completed",
                             }),
-                            new Route({ // /supplier/rfqs/in-progress
-                                path: "/in-progress",
-                                method: HttpMethod.GET,
-                                handler: "index",
-                                render: "supplier/rfqs/in-progress",
-                            }),
-                            new Route({ // /supplier/rfqs/waiting
+                            new Route({ // /supplier/posts/waiting
                                 path: "/waiting",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "supplier/rfqs/waiting",
-                            }),
-                            new Route({ // /supplier/rfqs/edit/:id
-                                path: "/edit/:id",
-                                method: HttpMethod.GET,
-                                handler: "index",
-                                render: "supplier/rfqs/edit",
+                                render: "supplier/posts/waiting",
                             }),
                         ]
                     })

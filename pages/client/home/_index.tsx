@@ -6,19 +6,19 @@ const Index = ({ user }) => {
     const links = [
         {
             title: 'طلب توريد جديد',
-            url: '/client/rfqs/new'
+            url: '/client/posts/new'
         },
         {
             title: 'العروض الواردة',
-            url: '/client/rfqs/incoming'
+            url: '/client/posts/incoming'
         },
         {
             title: 'العروض الصادرة',
-            url: '/client/rfqs/outgoing'
+            url: '/client/posts/outgoing'
         },
         {
             title: 'المعاملات السابقة',
-            url: '/client/rfqs/history'
+            url: '/client/posts/history'
         },
         {
             title: 'إرسال مقترحات',

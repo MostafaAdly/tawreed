@@ -11,10 +11,10 @@ const SupplierLayout = ({ children }) => {
             <HeaderComponent />
             <SidebarComponent
                 upperSection={[
-                    SidebarNavBar({ icon: 'home', text: 'طلبات تسعير واردة', url: '/supplier/rfqs/incoming' }),
-                    SidebarNavBar({ icon: 'user', text: 'قيد التنفيذ', url: '/supplier/rfqs/in-progress' }),
-                    SidebarNavBar({ icon: 'cog', text: 'عروض مرسلة', url: '/supplier/rfqs/outgoing' }),
-                    SidebarNavBar({ icon: 'sign-out', text: 'المعاملات', url: '/supplier/rfqs/completed' }),
+                    SidebarNavBar({ icon: 'home', text: 'طلبات تسعير واردة', url: '/supplier/posts/incoming' }),
+                    SidebarNavBar({ icon: 'user', text: 'قيد التنفيذ', url: '/supplier/posts/in-progress' }),
+                    SidebarNavBar({ icon: 'cog', text: 'عروض مرسلة', url: '/supplier/posts/outgoing' }),
+                    SidebarNavBar({ icon: 'sign-out', text: 'المعاملات', url: '/supplier/posts/completed' }),
                 ]}
                 bottomSection={[
                     SidebarNavBar({ icon: 'sign-out', text: 'تغير كلمة المرور', url: '/supplier/profile/change-password' }),

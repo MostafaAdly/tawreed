@@ -1,5 +1,6 @@
 import Database from "./database/database";
 import Server from "./server";
+import Helpers from "./utils/helpers";
 import Logger from "./utils/logger";
 import minimist from "minimist";
 
@@ -13,11 +14,19 @@ export default class Manager {
 
     init = async () => {
         this.validateCommandArguments();
-        await this.initDatabase();
-        if (!this.connected || !this.regularStartup) {
-            return;
+        if (Helpers.isEnvProduction()) {
+            await this.initDatabase();
+            if (!this.connected || !this.regularStartup) {
+                return;
+            }
+            await this.initServer();
+        } else {
+            this.initServer();
+            await this.initDatabase();
+            if (!this.connected || !this.regularStartup) {
+                return;
+            }
         }
-        await this.initServer();
     }
 
     validateCommandArguments = () => {

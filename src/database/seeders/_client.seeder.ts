@@ -25,10 +25,10 @@ export default class ClientSeeder implements EntitySeeder {
         Logger.log(`- Seeding USER@Client table with ${count} records`);
         const list: unknown[] = [
             {
-                email: "MostafaAdlyAmar@gmail.com".toLowerCase(),
-                username: "MostafaAdly",
+                email: "client@gmail.com".toLowerCase(),
+                username: "الاميرة للسراميك",
                 hashed_password: await Helpers.hash("123123"),
-                phone: "01000000000",
+                phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
                 company: {
                     size: companySizeConfig[Helpers.random(companySizeConfig.length)].name,
                     address: faker.location.streetAddress(),
@@ -56,7 +56,7 @@ export default class ClientSeeder implements EntitySeeder {
     seed = async (data: unknown) => {
         const model = new Client();
         Object.assign(model, data);
-        await model.save();
+        model.save();
     }
 
 

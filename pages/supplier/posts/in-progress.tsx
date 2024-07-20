@@ -1,11 +1,33 @@
-import ClientLayout from 'layouts/client.layout'
+import axios from 'axios'
+import SupplierLayout from 'layouts/supplier.layout'
 import { GetServerSideProps } from 'next'
-import { getSSProps } from 'public/assets/utils/helpers'
-import React from 'react'
+import { getAPIURL, getSSProps } from 'public/assets/utils/helpers'
+import React, { useEffect, useState } from 'react'
 
-const RfqsHistory = ({ }) => {
+const PostsHistory = ({ offersIDs }) => {
+    const [offers, setOffers] = useState([]);
+    const [offerName, setOfferName] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = (await axios.post(getAPIURL('/posts/offers'), { offersIDs })).data;
+                if (response?.data) {
+                    setOffers(response.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        })();
+
+    }, []);
+
+    const onCategoryChange = ({ target }) => {
+        setCategoryFilter(target.value);
+    }
     return (
-        <ClientLayout>
+        <SupplierLayout>
             <div className="flex flex-col mb-5">
                 <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">المعاملات السابقة</h1>
                 <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض معاملاتك السابقة مع الموردين</p>
@@ -47,7 +69,7 @@ const RfqsHistory = ({ }) => {
                 </table>
             </div>
 
-        </ClientLayout>
+        </SupplierLayout>
     )
 }
 
@@ -70,7 +92,7 @@ const TableRow = ({ name, supplier, quantity, price }) => {
     )
 }
 
-export default RfqsHistory
+export default PostsHistory
 
 
 

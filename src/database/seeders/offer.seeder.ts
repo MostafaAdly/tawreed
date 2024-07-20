@@ -3,6 +3,8 @@ import EntitySeeder from "./seeder.interface";
 import Helpers from "src/utils/helpers";
 import { faker } from "@faker-js/faker/locale/ar";
 import Offer from "../models/offer.model";
+import { OfferStatus } from "src/config/enums/offer_status.enum";
+import Client from "../models/client.model";
 
 export default class OfferSeeder implements EntitySeeder {
   init = async () => {
@@ -23,7 +25,7 @@ export default class OfferSeeder implements EntitySeeder {
     const list: unknown[] = [];
     for (var i = 0; i < count; i++)
       list.push({
-        status: faker.lorem.word(),
+        status: OfferStatus[Helpers.random(Object.keys(OfferStatus).length)],
         name: faker.lorem.word(),
         description: faker.lorem.sentence(),
         industry: faker.lorem.word(),
@@ -33,13 +35,21 @@ export default class OfferSeeder implements EntitySeeder {
           key: faker.lorem.word()
         }
       });
-    list.forEach((data) => this.seed(data));
+    const owner = await Client.findOne({ where: { email: "client@gmail.com" } });
+    console.log(owner);
+    list.forEach((data) => this.seed(data, owner));
+    owner?.save();
   }
 
-  seed = async (data: unknown) => {
+  seed = async (data: unknown, owner: any) => {
     const model = new Offer();
     Object.assign(model, data);
-    await model.save();
+    if (owner) {
+      model.client = owner;
+      console.log(owner);
+      owner.offers.push(model);
+    }
+    model.save();
   }
 
 

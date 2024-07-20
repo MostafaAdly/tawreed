@@ -3,12 +3,12 @@ import { GetServerSideProps } from 'next'
 import { getSSProps } from 'public/assets/utils/helpers'
 import React from 'react'
 
-const OutgoingRFQs = ({ }) => {
+const OutgoingPosts = () => {
     return (
         <SupplierLayout>
             <div className="flex flex-col mb-5">
-                <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">طلبات تسعير جديدة</h1>
-                <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة طلبات التسعير الجديدة</p>
+                <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">العروض الصادرة</h1>
+                <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض الصادرة منك</p>
             </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <div className="pb-4 bg-white dark:bg-gray-900">
@@ -28,28 +28,23 @@ const OutgoingRFQs = ({ }) => {
                     <thead className="text-[18px] text-gray-700 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                #
-                            </th>
-                            <th scope="col" className="px-6 py-3 font-bold">
                                 إسم السلعة
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                العميل
+                                المورد
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
                                 الكمية
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                المواصفات
-                            </th>
-                            <th scope="col" className="px-6 py-3 font-bold">
                                 السعر
                             </th>
-                            <th scope="col" className="px-6 py-3 font-bold"></th>
+                            <th scope="col" className="px-6 py-3 font-bold">
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow id="Rfx00123c" name='بطيخ' client='ابطخ' quantity='123' price='321' />
+                        <TableRow name='بطيخ' supplier='ابطخ' quantity='123' price='321' />
                     </tbody>
                 </table>
             </div>
@@ -58,35 +53,30 @@ const OutgoingRFQs = ({ }) => {
     )
 }
 
-const TableRow = ({ id, name, client, quantity, price }) => {
+const TableRow = ({ name, supplier, quantity, price }) => {
     return (
         <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-slate-100 even:dark:bg-gray-800 border-b dark:border-gray-700">
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {id}
-            </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {name}
+            </th>
+            <td className="px-6 py-4">
+                {supplier}
             </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {client}
-            </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <td className="px-6 py-4">
                 {quantity}
             </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <td className="px-6 py-4">
                 {price}
             </td>
-            <td scope="row" className="px-1 py-4 flex justify-evenly">
-                <a href="#" className="font-medium text-green-600 dark:text-blue-500 hover:underline">تعديل</a>
-                <a href="#" className="font-medium text-red-600 dark:text-blue-500 hover:underline">رفض</a>
+            <td className="px-3 py-4 flex gap-x-6 center">
+                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">موافقة</a>
+                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">رفض</a>
             </td>
         </tr>
     )
 }
 
-export default OutgoingRFQs
 
-
-
+export default OutgoingPosts
 
 export const getServerSideProps: GetServerSideProps = getSSProps

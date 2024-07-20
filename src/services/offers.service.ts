@@ -1,25 +1,47 @@
 import Offer from "src/database/models/offer.model";
 import BaseService from "./base.service";
 import Helpers from "src/utils/helpers";
-import Post from "src/database/models/post.model";
+import { In } from "typeorm";
 
 export default class OffersService extends BaseService {
 
-  static getOffers = async ({ id, clientId, supplierId, name, industry, selectClient }:
-    { id?: number | string, clientId?: string, supplierId?: string, name?: string, industry?: string, selectClient?: boolean }) => {
+  static getOffers = async ({ id, clientId, supplierId, name, industry, selectClient, select, status }:
+    {
+      id?: number | string,
+      clientId?: string,
+      supplierId?: string,
+      name?: string,
+      industry?: string,
+      selectClient?: boolean,
+      select?: object,
+      status?: string
+    }) => {
     const where = [
       { id: Helpers.toInt(id as string, null) },
       { client: { id: clientId } },
       { supplier: { id: supplierId } },
       { name },
-      { industry }
+      { industry },
+      { status }
     ];
+    if (status)
+      where.filter(item => !item.status).forEach(item => item.status = status)
     const relations = selectClient ? ['client'] : [];
-    const offers = await Post.find({ where, relations })
+    const offers = await Offer.find({ where, relations, select })
     if (selectClient)
       offers.forEach(offer => {
         delete offer.client?.hashed_password
       })
+    return offers;
+  }
+
+  static getOffersByIDs = async ({ offersIDs, select, relations, secured }: { offersIDs: string[], select?: object, relations?: string[], secured?: boolean }) => {
+    if (!offersIDs?.length) return [];
+    const offers = await Offer.find({ where: { id: In(offersIDs) }, select, relations });
+    if (secured && relations.includes('client'))
+      offers.map(offer => {
+        delete offer.client?.hashed_password;
+      });
     return offers;
   }
 

@@ -1,0 +1,19 @@
+meta {
+  name: search by ids
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{api_url}}/posts/offers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "offersIDs": [
+      1,2,3,4,5,6,7
+    ]
+  }
+}
