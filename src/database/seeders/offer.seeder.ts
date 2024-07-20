@@ -36,19 +36,13 @@ export default class OfferSeeder implements EntitySeeder {
         }
       });
     const owner = await Client.findOne({ where: { email: "client@gmail.com" } });
-    console.log(owner);
     list.forEach((data) => this.seed(data, owner));
-    owner?.save();
   }
 
   seed = async (data: unknown, owner: any) => {
     const model = new Offer();
     Object.assign(model, data);
-    if (owner) {
-      model.client = owner;
-      console.log(owner);
-      owner.offers.push(model);
-    }
+    if (owner) model.client = owner;
     model.save();
   }
 

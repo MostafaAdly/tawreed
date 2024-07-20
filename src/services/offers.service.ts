@@ -5,6 +5,14 @@ import { In } from "typeorm";
 
 export default class OffersService extends BaseService {
 
+  static getOfferById = async ({ id, status, relations, select, secured = true }:
+    { id: number, status: string, relations?: string[], select?: object, secured?: boolean }) => {
+    const offer = await Offer.findOne({ where: { id, status }, relations, select });
+    if (secured)
+      delete offer.client?.hashed_password;
+    return offer;
+  }
+
   static getOffers = async ({ id, clientId, supplierId, name, industry, selectClient, select, status }:
     {
       id?: number | string,

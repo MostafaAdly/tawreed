@@ -33,3 +33,7 @@ export const isClientUser = (user) => {
 export const isSupplierUser = (user) => {
     return user && user.type == 'Supplier';
 }
+
+export const getFormData = (formId): FormData => {
+    return new FormData(document.getElementById(formId) as HTMLFormElement);
+}

@@ -3,12 +3,13 @@ import EntitySeeder from "./seeder.interface";
 import Helpers from "src/utils/helpers";
 import Validators from "src/utils/validators";
 import fs from 'fs';
+import DefaultSeeder from "./default.seeder";
 
 export default class BaseSeeder {
 
     seeders: EntitySeeder[] = fs
         .readdirSync(__dirname)
-        .filter((file) => !['base.seeder.ts', 'seeder.interface.ts'].includes(file)) // filters out base and interface files
+        .filter((file) => !['base.seeder.ts', 'seeder.interface.ts', 'default.seeder.ts'].includes(file)) // filters out base and interface files
         .filter((file) => file.endsWith('.ts') && !file.startsWith('_')) // filters out files that start with '_'
         .map((file) => new (require(`./${file}`).default));
 
@@ -17,7 +18,12 @@ export default class BaseSeeder {
         if (!Helpers.isEnvProduction() && Validators.validateCommandArgument("erase", 'true')) {
             await this.erase();
         }
+        await this.seedDefaultSeeder();
         await this.seed();
+    }
+
+    seedDefaultSeeder = async () => {
+        await new DefaultSeeder().startSeeding();
     }
 
     seed = async () => {
@@ -27,7 +33,7 @@ export default class BaseSeeder {
     }
 
     erase = async () => {
-        Logger.warn("Erasing database.")
+        Logger.warn('Erasing database.');
         this.seeders.forEach(async (seeder) => await seeder.deleteAll());
     }
 }
