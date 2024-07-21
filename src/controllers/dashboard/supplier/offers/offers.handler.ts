@@ -21,6 +21,7 @@ export default class SupplierOffersHandler extends SupplierOffersController {
 
   edit = {
     'GET': async (req: Request, res: Response) => {
+      const user = await this.getCurrentUser(req);
       const { offerId } = req.params;
       if (Helpers.toInt(offerId, -1) == -1)
         return InfraResponse.send(res, {
@@ -37,7 +38,7 @@ export default class SupplierOffersHandler extends SupplierOffersController {
         req,
         res,
         page: 'supplier/posts/edit',
-        data: { offer }
+        data: { offer, user }
       });
     }
   };

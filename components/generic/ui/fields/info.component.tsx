@@ -11,6 +11,10 @@ export const InfoField = ({ title, value }) => {
     )
 }
 
+export const HiddenInfoField = ({ id, value }) => {
+    return <input type="text" hidden id={id} name={id} defaultValue={value} />
+}
+
 export const InfoFields = ({ fields, center = true }: { fields: { title: string, value: string }[], center?: boolean }) => {
     return (
         <div className={`flex flex-wrap justify-start w-auto gap-3${(center ? ' center' : "")}`}>

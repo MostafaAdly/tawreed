@@ -1,0 +1,26 @@
+meta {
+  name: create response
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{api_url}}/posts/offers/
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  price: 123
+  vat: 123
+  total_price: 123
+  quantity: 123
+  paymentTerms: 123
+  comment: 123
+  startDate: 07/03/2024
+  endDate: 07/03/2024
+  paymentMethod: CASH
+  files: @file(D:\Programming\Discord Programming\asuna pfp manga spirit project logo.jpg)
+  offerId: 1328
+  supplierId: 859d4aa0-4d55-4dd9-afa7-faf39ee4122b
+}

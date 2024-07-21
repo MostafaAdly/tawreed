@@ -1,15 +1,8 @@
 import { Request, Response } from 'express';
 import NextServerManager from 'src/next';
+import BaseController from './base.controller';
 
-export default class InfraResponse {
-    statusCode: number = 200;
-    message: string = '';
-    redirect: string;
-    error: boolean = false;
-    data: unknown = {};
-    constructor(data: { statusCode: number, message: string, error: boolean, data: unknown }) {
-        Object.assign(this, data);
-    }
+export default class InfraResponse extends BaseController {
 
     static send = (res: Response,
         response: {

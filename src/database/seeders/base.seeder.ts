@@ -3,7 +3,7 @@ import EntitySeeder from "./seeder.interface";
 import Helpers from "src/utils/helpers";
 import Validators from "src/utils/validators";
 import fs from 'fs';
-import DefaultSeeder from "./default.seeder";
+import DefaultSeeder from "./_default.seeder";
 
 export default class BaseSeeder {
 
@@ -23,6 +23,7 @@ export default class BaseSeeder {
     }
 
     seedDefaultSeeder = async () => {
+        if (fs.readdirSync(__dirname).includes('_default.seeder.ts')) return;
         await new DefaultSeeder().startSeeding();
     }
 

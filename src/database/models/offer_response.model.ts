@@ -15,10 +15,16 @@ export default class OfferResponse extends Post {
   total_price: number;
 
   @Column({ type: 'varchar', default: 'CASH' })
+  paymentTerms: string;
+
+  @Column({ type: 'varchar', default: 'CASH' })
   paymentMethod: string;
 
   @Column({ type: 'date', default: new Date() })
-  deliveryDate: Date;
+  startDate: Date;
+
+  @Column({ type: 'date', default: new Date() })
+  endDate: Date;
 
   @Column({ type: 'text', nullable: false })
   comment: string;

@@ -23,7 +23,7 @@ export default class DTOValidatorMiddleware {
       .filter(field => !this._isFieldMethod(field))
       .filter(field => typeof dto[field] !== typeof req.body[field])
       .filter(field => !(typeof dto[field] === 'number' && !isNaN(req.body[field])));
-    dto.__onCheck__(req);
+    dto?.__onCheck__(req);
     return errors;
   }
 

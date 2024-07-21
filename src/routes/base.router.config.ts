@@ -45,9 +45,10 @@ export default {
                                 handler: "search",
                             }),
                             new Route({ // /api/v1/posts/offers/:offerId
-                                path: '/:offerId',
+                                path: '/',
                                 method: HttpMethod.PUT,
                                 handler: "edit",
+                                dto: "new_offer_response",
                             }),
                         ]
                     }),
