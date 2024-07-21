@@ -82,9 +82,6 @@ const IncomingPosts = ({ offersIDs }) => {
                             <th scope="col" className="px-6 py-3 font-bold">
                                 القسم
                             </th>
-                            <th scope="col" className="px-6 py-3 font-bold">
-                                عدد الصور
-                            </th>
                             <th scope="col" className="px-6 py-3 font-bold"></th>
                         </tr>
                     </thead>
@@ -120,9 +117,6 @@ const TableRow = ({ index, offer }) => {
             </td>
             <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {offer.industry}
-            </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {offer.images?.length || 0}
             </td>
             <td scope="row" className="px-1 py-4 flex justify-evenly">
                 <a href={`/supplier/posts/edit/${offer.id}`} className="font-medium text-green-600 dark:text-blue-500 hover:underline">تعديل</a>

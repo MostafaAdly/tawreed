@@ -44,6 +44,11 @@ export default {
                                 method: HttpMethod.POST,
                                 handler: "search",
                             }),
+                            new Route({ // /api/v1/posts/offers/:offerId
+                                path: '/:offerId',
+                                method: HttpMethod.PUT,
+                                handler: "edit",
+                            }),
                         ]
                     }),
                 ]

@@ -6,7 +6,7 @@ export const InfoField = ({ title, value }) => {
         <div className="flex flex-row border w-fit px-5 rounded-lg hover:bg-slate-50 transition-colors duration-150">
             <div className="font-bold py-4 min-w-[90px]">{title}</div>
             <Divider width='[1px]' height='[100%]' color='bg-gray-600' addons='m-2.5' />
-            <div className="font-normal py-4 text-gray-600 min-w-40" dir='ltr'>{value}</div>
+            <div className="font-normal py-4 text-gray-600 min-w-40">{value}</div>
         </div>
     )
 }

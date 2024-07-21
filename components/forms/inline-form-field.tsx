@@ -9,8 +9,8 @@ export const InlineFormField = ({ id, type = "text", title, placeholder, marginB
     )
 }
 
-export const InlineFormSelect = ({ id, title, marginBottom = "0", items, hideLabel = false, width = "full", className = "", onChange }:
-    { id: string, title?: string, placeholder?: string, marginBottom?: string, items: ReactElement[], hideLabel?: boolean, width?: string, className?: string, onChange?}) => {
+export const InlineFormSelect = ({ id, title, marginBottom = "0", items, hideLabel = false, width = "full", className = "", onChange, required = true }:
+    { id: string, title?: string, placeholder?: string, marginBottom?: string, items: ReactElement[], hideLabel?: boolean, width?: string, className?: string, onChange?, required?: boolean }) => {
     if (!title) hideLabel = true;
     return (
         <div className={`mb-${marginBottom} w-${width}`}>
@@ -19,6 +19,7 @@ export const InlineFormSelect = ({ id, title, marginBottom = "0", items, hideLab
                 id={id}
                 name={id}
                 onChange={onChange}
+                required={required}
                 className={`${className} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}>
                 {
                     items.filter((item) => item.props.value !== "").map((item) => item)
@@ -39,7 +40,7 @@ export const InlineFilesField = ({ id, label, multiple, className, required }:
     )
 }
 
-export const InlineDateField = ({ id, className = "", placeholder = "", register = null }) => {
+export const InlineDateField = ({ id, className = "", placeholder = "", register = null, required = true }) => {
     return (
         <div className={`relative flex-grow ${className}`}>
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -52,6 +53,7 @@ export const InlineDateField = ({ id, className = "", placeholder = "", register
                 name={id}
                 type="text"
                 placeholder={placeholder}
+                required={required}
                 {...(register && register(id, { required: true }))}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
         </div>

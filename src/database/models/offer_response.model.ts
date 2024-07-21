@@ -8,6 +8,15 @@ export default class OfferResponse extends Post {
   @Column({ type: 'integer', default: 0 })
   price: number;
 
+  @Column({ type: 'integer', default: 0 })
+  vat: number;
+
+  @Column({ type: 'integer', default: 0 })
+  total_price: number;
+
+  @Column({ type: 'varchar', default: 'CASH' })
+  paymentMethod: string;
+
   @Column({ type: 'date', default: new Date() })
   deliveryDate: Date;
 
