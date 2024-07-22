@@ -9,7 +9,7 @@ import categoriesConfig from 'src/config/core/categories.config'
 // GLOBAL FOR THIS FILE
 const maxDescriptionLength = 30;
 
-const IncomingPosts = ({ offersIDs }) => {
+const IncomingPosts = ({ user, offersIDs }) => {
     const [offers, setOffers] = useState([]);
     const [offerName, setOfferName] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
@@ -33,7 +33,7 @@ const IncomingPosts = ({ offersIDs }) => {
     }
 
     return (
-        <SupplierLayout>
+        <SupplierLayout user={user}>
             <div className="flex flex-col mb-5">
                 <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">طلبات تسعير جديدة</h1>
                 <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة طلبات التسعير الجديدة</p>

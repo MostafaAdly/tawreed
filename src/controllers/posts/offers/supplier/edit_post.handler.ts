@@ -15,7 +15,7 @@ export default class OffersSupplierEditPostHandler extends OffersController {
           message: "Unauthorized.",
           error: true
         });
-      const offer = await OffersService.getOfferById({ id: parseInt(req.body.offerId), status: OfferStatus.New });
+      const offer = await OffersService.getOfferById({ id: parseInt(req.body.offerId), status: OfferStatus.New, relations: ['client'] });
       if (!offer)
         return InfraResponse.send(res, {
           statusCode: 401,

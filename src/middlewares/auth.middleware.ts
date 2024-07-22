@@ -38,7 +38,8 @@ export default class AuthenticationMiddleware {
     }
 
     private _isValidSession = (req: Request) => {
-        return req['session'].user;
+        const user = req['session'].user;
+        return user && (req.url.startsWith('/' + user.type.toLowerCase()) || req.url === '/');
     }
 
     static _destroySession = (req: Request) => {

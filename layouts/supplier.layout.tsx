@@ -5,16 +5,16 @@ import SidebarComponent, { SidebarNavBar } from '../components/main/sidebar.comp
 import DashboardBody from './dashboard.body';
 
 
-const SupplierLayout = ({ children }) => {
+const SupplierLayout = ({ children, user }) => {
     return (
         <>
-            <HeaderComponent />
+            <HeaderComponent user={user} />
             <SidebarComponent
                 upperSection={[
                     SidebarNavBar({ icon: 'home', text: 'طلبات تسعير واردة', url: '/supplier/posts/incoming' }),
                     SidebarNavBar({ icon: 'user', text: 'قيد التنفيذ', url: '/supplier/posts/in-progress' }),
-                    SidebarNavBar({ icon: 'cog', text: 'عروض مرسلة', url: '/supplier/posts/outgoing' }),
-                    SidebarNavBar({ icon: 'sign-out', text: 'المعاملات', url: '/supplier/posts/completed' }),
+                    // SidebarNavBar({ icon: 'cog', text: 'عروض مرسلة', url: '/supplier/posts/outgoing' }),
+                    SidebarNavBar({ icon: 'sign-out', text: 'المعاملات المكتملة', url: '/supplier/posts/completed' }),
                 ]}
                 bottomSection={[
                     SidebarNavBar({ icon: 'sign-out', text: 'تغير كلمة المرور', url: '/supplier/profile/change-password' }),

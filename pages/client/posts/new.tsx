@@ -8,6 +8,7 @@ import axios from 'axios';
 import { InlineFormField, InlineFormSelect } from 'components/forms/inline-form-field';
 import categoriesConfig from 'src/config/core/categories.config';
 import { InlineFilesField } from '../../../components/forms/inline-form-field';
+import { HiddenInfoField } from '../../../components/generic/ui/fields/info.component';
 
 const NewRFQ = ({ user }) => {
     const { register, handleSubmit } = useForm();
@@ -35,7 +36,7 @@ const NewRFQ = ({ user }) => {
     }
 
     return (
-        <ClientLayout>
+        <ClientLayout user={user}>
             <CardComponent>
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title='لقد تم ارسال الطلب بنجاح' button='الصفحة الرئيسية' href='/client' />
                 <div className='flex flex-col gap-y-5'>
@@ -46,9 +47,9 @@ const NewRFQ = ({ user }) => {
 
                     <form onSubmit={handleSubmit(onSubmit)} id='new-rfq'>
                         <div className="grid gap-6 mb-6 md:grid-cols-2">
-                            <InlineFormField id="name" type='text' title="إسم المنتج" placeholder="مسامير" value='مسامير' />
-                            <InlineFormField id="description" type='text' title="المواصفات" placeholder="حجم, لون, معدن, إلخ" value='عايز الحجم يكون كبير بس مش صغير اوي' />
-                            <InlineFormField id="quantity" type='text' title="الكمية" placeholder="22 قطعة" value='34 قطعة' />
+                            <InlineFormField id="name" type='text' title="إسم المنتج" placeholder="مسامير" />
+                            <InlineFormField id="description" type='text' title="المواصفات" placeholder="حجم, لون, معدن, إلخ" />
+                            <InlineFormField id="quantity" type='text' title="الكمية" placeholder="22 قطعة" />
                             {/* Dropdown menu */}
                             <InlineFormSelect id="industry" title="القسم" items={
                                 [...categoriesConfig].map((category) => <option key={category.name} value={category.name}>{category.name}</option>)
@@ -56,6 +57,7 @@ const NewRFQ = ({ user }) => {
                             {/* END OF DROPDOWN */}
                         </div>
                         <InlineFilesField required={true} id="files" multiple={true} label='إرفاق صور' />
+                        <HiddenInfoField id='clientId' value={user.id} />
                         <div className="center mt-10">
                             <button type="submit" className="w-[30%] text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">أرسل الطلب</button>
                         </div>

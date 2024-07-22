@@ -5,10 +5,10 @@ import SidebarComponent from '../components/main/sidebar.component';
 import DashboardBody from './dashboard.body';
 
 
-const ClientLayout = ({ children }) => {
+const ClientLayout = ({ children, user }) => {
     return (
         <>
-            <HeaderComponent />
+            <HeaderComponent user={user} />
             <SidebarComponent />
             <DashboardBody>{children}</DashboardBody>
         </>

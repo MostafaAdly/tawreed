@@ -5,20 +5,20 @@ import SidebarComponent, { SidebarNavBar } from '../components/main/sidebar.comp
 import DashboardBody from './dashboard.body';
 
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children, user }) => {
     return (
         <>
-            <HeaderComponent />
+            <HeaderComponent user={user} />
             <SidebarComponent
                 upperSection={[
                     SidebarNavBar({ icon: 'home', text: 'ادارة المستخدمين', url: '/admin/users' }),
-                    SidebarNavBar({ icon: 'home', text: 'ادارة الطلبات', url: '/admin/posts/requests' }),
+                    SidebarNavBar({ icon: 'home', text: 'ادارة الطلبات', url: '/admin/posts/orders' }),
                     SidebarNavBar({ icon: 'home', text: 'ادارة العروض', url: '/admin/posts/offers' }),
                     SidebarNavBar({ icon: 'home', text: 'ادارة المدفوعات', url: '/admin/' }),
                     SidebarNavBar({ icon: 'home', text: 'ادارة المحتوى', url: '/admin/' }),
                     SidebarNavBar({ icon: 'home', text: 'اعدادات النظام', url: '/admin/' }),
                     SidebarNavBar({ icon: 'home', text: 'دعم العملاء', url: '/admin/' }),
-                    SidebarNavBar({ icon: 'home', text: 'تسجيل الخروج', url: '/admin/' }),
+                    SidebarNavBar({ icon: 'home', text: 'تسجيل الخروج', url: '/logout' }),
                 ]}
                 bottomSection={[]}
             />

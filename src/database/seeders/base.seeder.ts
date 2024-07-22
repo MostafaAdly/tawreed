@@ -24,7 +24,9 @@ export default class BaseSeeder {
 
     seedDefaultSeeder = async () => {
         if (fs.readdirSync(__dirname).includes('_default.seeder.ts')) return;
-        await new DefaultSeeder().startSeeding();
+        const defaultSeeder = new DefaultSeeder();
+        await defaultSeeder.deleteAll();
+        await defaultSeeder.startSeeding();
     }
 
     seed = async () => {

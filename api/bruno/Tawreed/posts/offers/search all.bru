@@ -1,0 +1,15 @@
+meta {
+  name: search all
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{api_url}}/posts/offers?status=طلب جديد
+  body: none
+  auth: none
+}
+
+query {
+  status: طلب جديد
+}

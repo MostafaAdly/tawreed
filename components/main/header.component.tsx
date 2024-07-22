@@ -2,7 +2,7 @@
 import React from 'react';
 import { getAssetImage } from 'public/assets/utils/helpers';
 
-const HeaderComponent = ({ }) => {
+const HeaderComponent = ({ user }) => {
     return (
         <header className='fixed right-0 pr-[22%] left-0 w-auto h-[4em] bg-gray-200 z-100 pl-10 flex items-center justify-between z-50 shadow'>
             <h1 className='text-2xl font-bold w-fit h-full flex items-center'>الصفحة الرئيسية</h1>
@@ -22,14 +22,20 @@ const HeaderComponent = ({ }) => {
                 <div className="flex items-center gap-4">
                     <img className="w-10 h-10 rounded-full" src={getAssetImage('logo')} alt="" />
                     <div className="font-medium dark:text-white">
-                        <div>إسم المستخدم</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Joined in August 2014</div>
+                        <div>{user?.username}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">Joined in {formatDate(user.createdAt)}</div>
                     </div>
                 </div>
 
             </div>
         </header>
     );
+}
+
+const formatDate = (date) => {
+    return new Date(date).toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
+    });
 }
 
 export default HeaderComponent;

@@ -14,8 +14,8 @@ export default class SearchHandler extends OffersController {
       });
     },
     'POST': async (req: Request, res: Response) => {
-      const { offersIDs, relations } = req.body;
-      const offers = await OffersService.getOffersByIDs({ offersIDs, relations, secured: true });
+      const { offersIDs, relations, status } = req.body;
+      const offers = await OffersService.getOffersByIDs({ offersIDs, relations, status, secured: true });
       return InfraResponse.send(res, {
         statusCode: 200,
         message: `Found ${offers.length} offers.`,

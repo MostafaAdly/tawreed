@@ -6,6 +6,7 @@ import companySizeConfig from "src/config/core/company-size.config";
 import { faker } from "@faker-js/faker/locale/ar";
 import categoriesConfig from "src/config/core/categories.config";
 import Supplier from "../models/supplier.model";
+import Admin from "../models/admin.model";
 
 export default class DefaultSeeder implements EntitySeeder {
   init: () => {
@@ -24,6 +25,11 @@ export default class DefaultSeeder implements EntitySeeder {
       ...(await this.defaultSupplierData.method())
     });
     await defaultSupplier.save();
+    const defaultAdmin = await Admin.create({
+      email: this.defaultAdminData.email,
+      ...(await this.defaultAdminData.method())
+    });
+    await defaultAdmin.save();
   };
   seed = async (data: unknown, owner: any) => {
   };
@@ -32,9 +38,13 @@ export default class DefaultSeeder implements EntitySeeder {
     if (defaultClient)
       await defaultClient.remove();
 
-    const defaultSupplier = await Client.findOne({ where: { email: this.defaultSupplierData.email } });
-    if (defaultClient)
+    const defaultSupplier = await Supplier.findOne({ where: { email: this.defaultSupplierData.email } });
+    if (defaultSupplier)
       await defaultSupplier.remove();
+
+    const defaultAdmin = await Admin.findOne({ where: { email: this.defaultAdminData.email } });
+    if (defaultAdmin)
+      await defaultAdmin.remove();
 
   };
 
@@ -60,6 +70,22 @@ export default class DefaultSeeder implements EntitySeeder {
     method: async () => {
       return {
         username: "شركة الرخام",
+        hashed_password: await Helpers.hash("123123"),
+        phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
+        company: {
+          size: companySizeConfig[Helpers.random(companySizeConfig.length)].name,
+          address: faker.location.streetAddress(),
+          notes: faker.lorem.sentence(),
+          industry: categoriesConfig[Helpers.random(categoriesConfig.length)].name,
+        }
+      }
+    }
+  }
+  defaultAdminData = {
+    email: "admin@gmail.com".toLowerCase(),
+    method: async () => {
+      return {
+        username: "Super Admin",
         hashed_password: await Helpers.hash("123123"),
         phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
         company: {

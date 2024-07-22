@@ -12,10 +12,11 @@ export default class OfferResponseService extends BaseService {
 
   static createResponse = async ({ offer, supplier, data }: { offer: Offer, supplier: Supplier, data }) => {
     if (!offer || offer.status != OfferStatus.New) return null;
-    OffersService.changeToInProgress({ offer });
+    OffersService.changeToInProgress({ offer, supplier });
     const response = new OfferResponse();
     Object.assign(response, data);
     Object.assign(response, offer);
+    response.client = offer.client;
     response.offer = offer;
     response.supplier = supplier;
     return await response.save();

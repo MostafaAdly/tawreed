@@ -1,13 +1,11 @@
 import axios from 'axios'
-import SupplierLayout from 'layouts/supplier.layout'
+import ClientLayout from 'layouts/client.layout'
 import { GetServerSideProps } from 'next'
 import { getAPIURL, getSSProps } from 'public/assets/utils/helpers'
 import React, { useEffect, useState } from 'react'
 import { OfferStatus } from 'src/config/enums/offer_status.enum'
 
-const maxDescriptionLength = 50;
-
-const PostsCompleted = ({ user, offersIDs }) => {
+const ConfirmedPosts = ({ user, offersIDs }) => {
     const [offers, setOffers] = useState([]);
     const [offerName, setOfferName] = useState('');
 
@@ -15,13 +13,9 @@ const PostsCompleted = ({ user, offersIDs }) => {
         (async () => {
             try {
                 console.log(offersIDs)
-                const response = (await axios.post(getAPIURL('/posts/offers'),
-                    {
-                        offersIDs,
-                        status: OfferStatus.Confirmed,
-                        relations: ['client', 'offerResponse']
-                    })
-                ).data;
+                const response = (await axios.post(getAPIURL('/posts/offers'), {
+                    offersIDs, status: OfferStatus.Confirmed, relations: ['offerResponse']
+                })).data;
                 if (response?.data) {
                     setOffers(response.data);
                 }
@@ -29,13 +23,13 @@ const PostsCompleted = ({ user, offersIDs }) => {
                 console.error(error);
             }
         })();
-
     }, []);
+
     return (
-        <SupplierLayout user={user}>
+        <ClientLayout user={user}>
             <div className="flex flex-col mb-5">
-                <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">العروض الصادرة</h1>
-                <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض الصادرة منك</p>
+                <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">العروض الموافق عليها</h1>
+                <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض التي وافقت عليها</p>
             </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <div className="pb-4 bg-white dark:bg-gray-900">
@@ -62,13 +56,16 @@ const PostsCompleted = ({ user, offersIDs }) => {
                                 #
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
+                                الكود
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-bold">
                                 إسم السلعة
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                العميل
+                                الكمية
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                المواصفات
+                                القسم
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
                                 السعر
@@ -84,32 +81,37 @@ const PostsCompleted = ({ user, offersIDs }) => {
                     </tbody>
                 </table>
             </div>
-        </SupplierLayout>
+
+        </ClientLayout>
     )
 }
+
 const TableRow = ({ index, offer }) => {
-    console.log(offer)
     return (
         <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-slate-100 even:dark:bg-gray-800 border-b dark:border-gray-700">
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {index + 1}
+            </th>
+            <td className="px-6 py-4">
+                {offer.id}
             </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <td className="px-6 py-4">
                 {offer.name}
             </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {offer.client?.username}
+            <td className="px-6 py-4">
+                {offer.quantity}
             </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {(offer.description || '').substring(0, maxDescriptionLength) + (offer.description.length > maxDescriptionLength ? '...' : '')}
+            <td className="px-6 py-4">
+                {offer.industry}
             </td>
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {offer.offerResponse?.totalPrice}
+            <td className="px-6 py-4">
+                {offer.offerResponse.totalPrice}
             </td>
         </tr>
     )
 }
 
-export default PostsCompleted;
+
+export default ConfirmedPosts;
 
 export const getServerSideProps: GetServerSideProps = getSSProps

@@ -34,6 +34,16 @@ export default {
                                 handler: "create",
                                 dto: "new_offer",
                             }),
+                            new Route({
+                                path: '/confirm',
+                                method: HttpMethod.GET,
+                                handler: "confirm",
+                            }),
+                            new Route({
+                                path: '/reject',
+                                method: HttpMethod.GET,
+                                handler: "reject",
+                            }),
                             new Route({ // /api/v1/posts/offers
                                 path: '/',
                                 method: HttpMethod.GET,
@@ -122,11 +132,11 @@ export default {
                                 handler: "index",
                                 render: "admin/posts/_index",
                             }),
-                            new Route({ // /admin/posts/requests
-                                path: '/requests',
+                            new Route({ // /admin/posts/orders
+                                path: '/orders',
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "admin/posts/requests",
+                                render: "admin/posts/orders",
                             }),
                             new Route({ // /admin/posts/offers
                                 path: '/offers',
@@ -138,42 +148,90 @@ export default {
                     })
                 ]
             }),
+            // new Route({
+            //     path: "/client",
+            //     controller: "client_home",
+            //     routes: [
+            //         new Route({ // /client
+            //             path: "/",
+            //             method: HttpMethod.GET,
+            //             handler: "index",
+            //             render: "client/home/_index",
+            //         }),
+            //         new Route({ // /client/posts
+            //             path: "/posts",
+            //             routes: [
+            //                 new Route({
+            //                     path: "/new", // /client/posts/new
+            //                     method: HttpMethod.GET,
+            //                     handler: "index",
+            //                     render: "client/posts/new",
+            //                 }),
+            //                 new Route({ // /client/posts/incoming
+            //                     path: "/incoming",
+            //                     method: HttpMethod.GET,
+            //                     handler: "index",
+            //                 }),
+            //                 new Route({ // /client/posts/outgoing
+            //                     path: "/outgoing",
+            //                     method: HttpMethod.GET,
+            //                     handler: "index",
+            //                     render: "client/posts/outgoing",
+            //                 }),
+            //                 new Route({ // /client/posts/history
+            //                     path: "/history",
+            //                     method: HttpMethod.GET,
+            //                     handler: "index",
+            //                     render: "client/posts/history",
+            //                 }),
+            //             ]
+            //         })
+            //     ]
+            // }),
             new Route({
                 path: "/client",
-                controller: "client_home",
                 routes: [
                     new Route({ // /client
                         path: "/",
-                        method: HttpMethod.GET,
-                        handler: "index",
-                        render: "client/home/_index",
+                        controller: "client_home",
+                        routes: [
+                            new Route({
+                                path: "/",
+                                method: HttpMethod.GET,
+                                handler: "index",
+                                render: "client/home/_index",
+                            })
+                        ]
                     }),
-                    new Route({ // /client/posts
+                    new Route({
                         path: "/posts",
+                        controller: "client_offers",
                         routes: [
                             new Route({
                                 path: "/new", // /client/posts/new
                                 method: HttpMethod.GET,
-                                handler: "index",
                                 render: "client/posts/new",
+                            }),
+                            new Route({
+                                path: "/outgoing", // /client/posts/new
+                                method: HttpMethod.GET,
+                                handler: "outgoing",
                             }),
                             new Route({ // /client/posts/incoming
                                 path: "/incoming",
                                 method: HttpMethod.GET,
-                                handler: "index",
-                                render: "client/posts/incoming",
+                                handler: "incoming",
                             }),
-                            new Route({ // /client/posts/outgoing
-                                path: "/outgoing",
+                            new Route({ // /client/posts/confirmed
+                                path: "/confirmed",
+                                method: HttpMethod.GET,
+                                handler: "confirmed",
+                            }),
+                            new Route({ // /client/posts/completed
+                                path: "/completed",
                                 method: HttpMethod.GET,
                                 handler: "index",
-                                render: "client/posts/outgoing",
-                            }),
-                            new Route({ // /client/posts/history
-                                path: "/history",
-                                method: HttpMethod.GET,
-                                handler: "index",
-                                render: "client/posts/history",
+                                // render: "client/posts/completed",
                             }),
                         ]
                     })
@@ -213,23 +271,18 @@ export default {
                                 method: HttpMethod.GET,
                                 handler: "inProgress",
                             }),
-                            new Route({ // /supplier/posts/outgoing
-                                path: "/outgoing",
-                                method: HttpMethod.GET,
-                                handler: "index",
-                            }),
                             new Route({ // /supplier/posts/completed
                                 path: "/completed",
                                 method: HttpMethod.GET,
-                                handler: "index",
-                                render: "supplier/posts/completed",
+                                handler: "completed",
+                                // render: "supplier/posts/completed",
                             }),
-                            new Route({ // /supplier/posts/waiting
-                                path: "/waiting",
-                                method: HttpMethod.GET,
-                                handler: "index",
-                                render: "supplier/posts/waiting",
-                            }),
+                            // new Route({ // /supplier/posts/waiting
+                            //     path: "/waiting",
+                            //     method: HttpMethod.GET,
+                            //     handler: "index",
+                            //     render: "supplier/posts/waiting",
+                            // }),
                         ]
                     })
                 ]

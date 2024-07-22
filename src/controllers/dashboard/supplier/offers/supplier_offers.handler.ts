@@ -9,12 +9,13 @@ export default class SupplierOffersHandler extends SupplierOffersController {
 
   incoming = {
     'GET': async (req: Request, res: Response) => {
+      const user = await this.getCurrentUser(req);
       const offersIDs = (await OffersService.getOffers({ status: OfferStatus.New, select: ['id'] }))?.map(offer => offer.id);
       return InfraResponse.render({
         req,
         res,
         page: 'supplier/posts/incoming',
-        data: { offersIDs }
+        data: { offersIDs, user }
       });
     }
   };
@@ -45,16 +46,36 @@ export default class SupplierOffersHandler extends SupplierOffersController {
 
   inProgress = {
     'GET': async (req: Request, res: Response) => {
+      const user = await this.getCurrentUser(req);
       const offersIDs = (await OffersService.getOffers({
         status: OfferStatus.Pending,
         select: ['id'],
+        supplierId: user.id,
         relations: ['offerResponse']
       }))?.map(offer => offer.id);
       return InfraResponse.render({
         req,
         res,
         page: 'supplier/posts/in-progress',
-        data: { offersIDs }
+        data: { offersIDs, user }
+      });
+    }
+  }
+
+  completed = {
+    'GET': async (req: Request, res: Response) => {
+      const user = await this.getCurrentUser(req);
+      const offersIDs = (await OffersService.getOffers({
+        status: OfferStatus.Confirmed,
+        select: ['id'],
+        supplierId: user.id,
+        relations: ['offerResponse']
+      }))?.map(offer => offer.id);
+      return InfraResponse.render({
+        req,
+        res,
+        page: 'supplier/posts/completed',
+        data: { offersIDs, user }
       });
     }
   }

@@ -3,6 +3,7 @@ import BaseService from "./base.service";
 import Helpers from "src/utils/helpers";
 import { In } from "typeorm";
 import { OfferStatus } from "src/config/enums/offer_status.enum";
+import Supplier from "src/database/models/supplier.model";
 
 export default class OffersService extends BaseService {
 
@@ -36,6 +37,10 @@ export default class OffersService extends BaseService {
     ];
     if (status)
       where.filter(item => !item.status).forEach(item => item.status = status)
+    if (clientId)
+      where.filter(item => !item.client).forEach(item => item.client = { id: clientId })
+    if (supplierId)
+      where.filter(item => !item.supplier).forEach(item => item.supplier = { id: supplierId })
     if (!relations) relations = [];
     if (selectClient)
       relations.push('client');
@@ -47,24 +52,26 @@ export default class OffersService extends BaseService {
     return offers;
   }
 
-  static getOffersByIDs = async ({ offersIDs, select, relations, secured }: { offersIDs: string[], select?: object, relations?: string[], secured?: boolean }) => {
-    if (!offersIDs?.length) return [];
-    const offers = await Offer.find({ where: { id: In(offersIDs) }, select, relations });
-    if (secured && relations.includes('client'))
+  static getOffersByIDs = async ({ offersIDs, select, relations, status, secured }:
+    { offersIDs: string[], select?: object, relations?: string[], status: string, secured?: boolean }) => {
+    // if (!offersIDs?.length) return [];
+    const offers = await Offer.find({ where: (offersIDs && { id: In(offersIDs), status }) || { status }, select, relations });
+    if (secured && relations?.includes('client'))
       offers.map(offer => {
         delete offer.client?.hashed_password;
       });
     return offers;
   }
 
-  static changeToInProgressById = async ({ id }: { id: number }) => {
+  static changeToInProgressById = async ({ id, supplier }: { id: number, supplier: Supplier }) => {
     const offer = await Offer.findOne({ where: { id } });
-    return await this.changeToInProgress({ offer });
+    return await this.changeToInProgress({ offer, supplier });
   }
 
-  static changeToInProgress = async ({ offer }: { offer: Offer }) => {
+  static changeToInProgress = async ({ offer, supplier }: { offer: Offer, supplier: Supplier }) => {
     if (!offer) return null;
     offer.status = OfferStatus.Pending;
+    offer.supplier = supplier;
     await offer.save();
     return offer;
   }
@@ -73,6 +80,7 @@ export default class OffersService extends BaseService {
     if (!user) return null;
     const offer = new Offer();
     Object.assign(offer, data);
+    offer.status = OfferStatus.New;
     offer.client = user;
     await offer.save();
     delete offer.client;

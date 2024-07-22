@@ -3,26 +3,28 @@ import SupplierLayout from 'layouts/supplier.layout'
 import { GetServerSideProps } from 'next'
 import { getAPIURL, getSSProps } from 'public/assets/utils/helpers'
 import React, { useEffect, useState } from 'react'
+import { OfferStatus } from 'src/config/enums/offer_status.enum'
 
 const maxDescriptionLength = 50;
 
-const PostsHistory = ({ offersIDs }) => {
+const PostsInProgress = ({ user, offersIDs }) => {
     const [offers, setOffers] = useState([]);
     const [offerName, setOfferName] = useState('');
 
     useEffect(() => {
         (async () => {
             try {
+                console.log(offersIDs)
                 const response = (await axios.post(getAPIURL('/posts/offers'),
                     {
                         offersIDs,
+                        status: OfferStatus.Pending,
                         relations: ['client', 'offerResponse']
                     })
                 ).data;
                 if (response?.data) {
                     setOffers(response.data);
                 }
-                console.log(offers)
             } catch (error) {
                 console.error(error);
             }
@@ -31,7 +33,7 @@ const PostsHistory = ({ offersIDs }) => {
     }, []);
 
     return (
-        <SupplierLayout>
+        <SupplierLayout user={user}>
             <div className="flex flex-col mb-5">
                 <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">المعاملات قيد التنفيذ</h1>
                 <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض معاملاتك التي هي قيد التنفيذ</p>
@@ -72,7 +74,6 @@ const PostsHistory = ({ offersIDs }) => {
                             <th scope="col" className="px-6 py-3 font-bold">
                                 السعر
                             </th>
-                            <th scope="col" className="px-6 py-3 font-bold"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -112,7 +113,7 @@ const TableRow = ({ index, offer }) => {
     )
 }
 
-export default PostsHistory
+export default PostsInProgress;
 
 
 

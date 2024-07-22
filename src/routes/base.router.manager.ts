@@ -54,7 +54,7 @@ export default class RouterManager {
 
     private setupChildRouter = async (route: Route, count: number) => {
         const handlerConfig = this.controllerManager.getHandlerByRoute(route);
-        if (!handlerConfig) {
+        if (!route.render && !handlerConfig) {
             Logger.error(`Handler not found for route: ${route.path}`);
             return;
         }

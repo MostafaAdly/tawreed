@@ -30,7 +30,7 @@ const EditPost = ({ user, offer }) => {
     }
 
     return (
-        <SupplierLayout>
+        <SupplierLayout user={user}>
             <ClientData offer={offer} />
 
             <div className="block w-full p-6 mb-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">

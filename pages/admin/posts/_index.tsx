@@ -6,20 +6,20 @@ import CardComponent from 'components/generic/ui/card.component';
 import TitleComponent from 'components/generic/ui/title.component';
 
 
-const Index = () => {
+const Index = ({ user }) => {
 
     const links = [
         {
             title: 'الطلبات',
-            url: '/admin/posts/requests'
+            url: '/admin/posts/orders'
         },
         {
             title: 'العروض',
             url: '/admin/posts/offers'
-        }
+        },
     ]
     return (
-        <AdminLayout>
+        <AdminLayout user={user}>
             <CardComponent>
                 <TitleComponent title='إدارة الطلبات والعروض' marginBottom='10' />
                 <div className='flex flex-col gap-y-5'>

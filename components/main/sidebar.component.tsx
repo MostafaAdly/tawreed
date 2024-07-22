@@ -25,9 +25,10 @@ const NavSection = ({ children }: { children: ReactElement[] }) => {
 const SidebarComponent = ({ // Default values are for /client
     upperSection = [
         SidebarNavBar({ icon: 'home', text: 'طلب توريد جديد', url: '/client/posts/new' }),
-        SidebarNavBar({ icon: 'user', text: 'العروض الواردة', url: '/client/posts/incoming' }),
         SidebarNavBar({ icon: 'cog', text: 'العروض الصادرة', url: '/client/posts/outgoing' }),
-        SidebarNavBar({ icon: 'sign-out', text: 'المعاملات السابقة', url: '/client/posts/history' }),
+        SidebarNavBar({ icon: 'user', text: 'العروض الواردة', url: '/client/posts/incoming' }),
+        SidebarNavBar({ icon: 'user', text: 'العروض الموافق عليها', url: '/client/posts/confirmed' }),
+        // SidebarNavBar({ icon: 'sign-out', text: 'المعاملات السابقة', url: '/client/posts/history' }),
     ],
     bottomSection = [
         SidebarNavBar({ icon: 'home', text: 'من نحن', url: '/about' }),
@@ -48,7 +49,8 @@ const SidebarComponent = ({ // Default values are for /client
             className='bg-primary w-[20%] h-full fixed right-0 z-50 overflow-x-hidden pt-[20px] flex flex-col'>
             <div className='w-full h-20 center'>
                 <img
-                    className='flex justify-center mb-2 w-20 h-20'
+                    onClick={() => window.location.href = '/'}
+                    className='flex justify-center mb-2 w-20 h-20 cursor-pointer'
                     src={getAssetImage('grey-logo.png')} alt="Logo | Grey" />
             </div>
 
