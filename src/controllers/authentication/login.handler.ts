@@ -19,14 +19,6 @@ export default class LoginHandler extends AuthenticationController {
                     error: true
                 });
             }
-            const isPasswordValid = await this.checkPassword(user, password);
-            if (!isPasswordValid) {
-                return InfraResponse.send(res, {
-                    statusCode: 201,
-                    message: 'Invalid password',
-                    error: true
-                });
-            }
             const isAPersonaAccount = Object.keys(AccountType).map((key) => key.toLowerCase()).includes(user.type.toLowerCase());
             if (!isAPersonaAccount) {
                 return InfraResponse.send(res, {
@@ -35,6 +27,7 @@ export default class LoginHandler extends AuthenticationController {
                     error: true
                 });
             }
+            const isPasswordValid = await this.checkPassword(user, password);
             if (!isPasswordValid) {
                 return InfraResponse.send(res, {
                     statusCode: 201,

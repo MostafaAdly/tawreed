@@ -6,9 +6,9 @@ import CardComponent from 'components/generic/ui/card.component';
 import TitleComponent from 'components/generic/ui/title.component';
 
 
-const Index = () => {
+const Index = ({ user }) => {
     return (
-        <AdminLayout>
+        <AdminLayout user={user}>
             <CardComponent>
                 <TitleComponent marginBottom='10' title='إدارة العروض' />
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

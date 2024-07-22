@@ -14,7 +14,6 @@ const PostsInProgress = ({ user, offersIDs }) => {
     useEffect(() => {
         (async () => {
             try {
-                console.log(offersIDs)
                 const response = (await axios.post(getAPIURL('/posts/offers'),
                     {
                         offersIDs,
@@ -91,7 +90,6 @@ const PostsInProgress = ({ user, offersIDs }) => {
 }
 
 const TableRow = ({ index, offer }) => {
-    console.log(offer)
     return (
         <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-slate-100 even:dark:bg-gray-800 border-b dark:border-gray-700">
             <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

@@ -3,16 +3,15 @@ import next from 'next';
 import { NextServer } from 'next/dist/server/next';
 import Helpers from './utils/helpers';
 import path from 'path';
-import Logger from './utils/logger';
 export default class NextServerManager {
     private static nextServer: NextServer = next({ dev: !Helpers.isEnvProduction() });
 
     initNextServer = async (app: Application) => {
-        try {
-            await NextServerManager.nextServer.prepare()
-        } catch (error) {
-            Logger.warn("Cannot access internet, preparing local server.");
-        }
+        // try {
+        await NextServerManager.nextServer.prepare()
+        // } catch (error) {
+        //     Logger.warn("Cannot access internet, preparing local server.");
+        // }
     }
 
     setupWildcardRoute = (app: Application) => {

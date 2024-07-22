@@ -11,11 +11,13 @@ import { InlineFilesField } from '../../../components/forms/inline-form-field';
 import { HiddenInfoField } from '../../../components/generic/ui/fields/info.component';
 
 const NewRFQ = ({ user }) => {
-    const { register, handleSubmit } = useForm();
+    const {
+        // register, 
+        handleSubmit
+    } = useForm();
     const [openModal, setOpenModal] = useState(false);
 
     const onSubmit = async () => {
-        console.log(user)
         try {
             const response = (
                 await axios.post(

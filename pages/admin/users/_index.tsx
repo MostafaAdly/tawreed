@@ -38,7 +38,7 @@ const Index = ({ user }) => {
         },
     ]
     return (
-        <AdminLayout>
+        <AdminLayout user={user}>
             <h1 className='text-3xl font-bold mb-10'>إدارة المستخدمين</h1>
             <div className='flex flex-col gap-y-5'>
                 {links.map((link, index) => (

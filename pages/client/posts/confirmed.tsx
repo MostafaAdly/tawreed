@@ -12,7 +12,6 @@ const ConfirmedPosts = ({ user, offersIDs }) => {
     useEffect(() => {
         (async () => {
             try {
-                console.log(offersIDs)
                 const response = (await axios.post(getAPIURL('/posts/offers'), {
                     offersIDs, status: OfferStatus.Confirmed, relations: ['offerResponse']
                 })).data;

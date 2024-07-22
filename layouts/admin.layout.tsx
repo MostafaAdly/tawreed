@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { getSSProps } from '../public/assets/utils/helpers';
 import HeaderComponent from 'components/main/header.component';
 import SidebarComponent, { SidebarNavBar } from '../components/main/sidebar.component';
 import DashboardBody from './dashboard.body';
 
 
-const AdminLayout = ({ children, user }) => {
+const AdminLayout = ({ children, user }: { children: ReactElement | ReactElement[], user?}) => {
     return (
         <>
             <HeaderComponent user={user} />

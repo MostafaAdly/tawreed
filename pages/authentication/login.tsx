@@ -15,11 +15,16 @@ const LoginPage = ({ }) => {
             alert(`أكمل البيانات المطلوبة لتسجيل الدخول`);
             return;
         }
-        var response = (await axios.post(getAPIURL('/auth/login'), { email: form.email, password: form.password })).data;
-        if (response?.error)
-            return alert("إسم المستخدم أو كلمة المرور غير صحيحة");
-        if (response.redirect)
-            window.location.href = response.redirect;
+        try {
+            var response = (await axios.post(getAPIURL('/auth/login'), { email: form.email, password: form.password })).data;
+            if (response?.error)
+                return alert("إسم المستخدم أو كلمة المرور غير صحيحة");
+            if (response.redirect)
+                window.location.href = response.redirect;
+        } catch (error) {
+            console.log(error);
+            alert('حدث خطأ ما');
+        }
     }
 
     return (
