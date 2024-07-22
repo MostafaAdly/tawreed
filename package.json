@@ -8,6 +8,8 @@
 		"start:bun": "nodemon . -e ts --exec \"bun run index.ts -r tsconfig-paths/register\"",
 		"start": "nodemon . -e ts --exec \"ts-node -r tsconfig-paths/register index.ts\"",
 		"dev": "nodemon -e ts --exec \"ts-node -r tsconfig-paths/register index.ts --erase=true\"",
+		"seed-default": "nodemon -e ts --exec \"ts-node -r tsconfig-paths/register index.ts --seed-default=true\"",
+		"seed-default-erase": "nodemon -e ts --exec \"ts-node -r tsconfig-paths/register index.ts --seed-default=true --erase=true\"",
 		"migrate": "ts-node -r tsconfig-paths/register index.ts --migrate",
 		"run": "ts-node -r tsconfig-paths/register main.ts --startup",
 		"build": "tsc",
