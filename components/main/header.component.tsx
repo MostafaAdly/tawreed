@@ -23,7 +23,7 @@ const HeaderComponent = ({ user }) => {
                     <img className="w-10 h-10 rounded-full" src={getAssetImage('logo')} alt="" />
                     <div className="font-medium dark:text-white">
                         <div>{user?.username}</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Joined in {formatDate(user.createdAt)}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">Joined in {formatDate(user?.createdAt)}</div>
                     </div>
                 </div>
 
