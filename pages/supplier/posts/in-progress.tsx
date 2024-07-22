@@ -4,18 +4,25 @@ import { GetServerSideProps } from 'next'
 import { getAPIURL, getSSProps } from 'public/assets/utils/helpers'
 import React, { useEffect, useState } from 'react'
 
+const maxDescriptionLength = 50;
+
 const PostsHistory = ({ offersIDs }) => {
     const [offers, setOffers] = useState([]);
     const [offerName, setOfferName] = useState('');
-    const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
             try {
-                const response = (await axios.post(getAPIURL('/posts/offers'), { offersIDs })).data;
+                const response = (await axios.post(getAPIURL('/posts/offers'),
+                    {
+                        offersIDs,
+                        relations: ['client', 'offerResponse']
+                    })
+                ).data;
                 if (response?.data) {
                     setOffers(response.data);
                 }
+                console.log(offers)
             } catch (error) {
                 console.error(error);
             }
@@ -23,14 +30,11 @@ const PostsHistory = ({ offersIDs }) => {
 
     }, []);
 
-    const onCategoryChange = ({ target }) => {
-        setCategoryFilter(target.value);
-    }
     return (
         <SupplierLayout>
             <div className="flex flex-col mb-5">
-                <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">المعاملات السابقة</h1>
-                <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض معاملاتك السابقة مع الموردين</p>
+                <h1 className="text-3xl font-bold text-gray-700 dark:text-gray-200">المعاملات قيد التنفيذ</h1>
+                <p className="text-gray-500 dark:text-gray-400">هنا يمكنك مشاهدة العروض معاملاتك التي هي قيد التنفيذ</p>
             </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <div className="pb-4 bg-white dark:bg-gray-900">
@@ -42,29 +46,41 @@ const PostsHistory = ({ offersIDs }) => {
                             </svg>
                         </div>
                         <input
-                            type="text" id="table-search" className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="أبحث" />
+                            type="text"
+                            id="table-search"
+                            onChange={({ target }) => setOfferName(target.value.toLowerCase())}
+                            placeholder="أبحث"
+                            className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
                     </div>
                 </div>
                 <table className="w-full text-[18px] text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-[18px] text-gray-700 uppercase bg-slate-200 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3 font-bold">
+                                #
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-bold">
                                 إسم السلعة
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                المورد
+                                العميل
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
-                                الكمية
+                                المواصفات
                             </th>
                             <th scope="col" className="px-6 py-3 font-bold">
                                 السعر
                             </th>
+                            <th scope="col" className="px-6 py-3 font-bold"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <TableRow name='بطيخ' supplier='ابطخ' quantity='123' price='321' />
+                        {
+                            offers
+                                .filter(offer => (offer.name || '').toLowerCase().includes(offerName))
+                                .map((offer, index) => <TableRow key={index} index={index} offer={offer} />)
+                        }
                     </tbody>
                 </table>
             </div>
@@ -73,20 +89,24 @@ const PostsHistory = ({ offersIDs }) => {
     )
 }
 
-const TableRow = ({ name, supplier, quantity, price }) => {
+const TableRow = ({ index, offer }) => {
+    console.log(offer)
     return (
         <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-slate-100 even:dark:bg-gray-800 border-b dark:border-gray-700">
-            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {name}
-            </th>
-            <td className="px-6 py-4">
-                {supplier}
+            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {index + 1}
             </td>
-            <td className="px-6 py-4">
-                {quantity}
+            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {offer.name}
             </td>
-            <td className="px-6 py-4">
-                {price}
+            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {offer.client?.username}
+            </td>
+            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {(offer.description || '').substring(0, maxDescriptionLength) + (offer.description.length > maxDescriptionLength ? '...' : '')}
+            </td>
+            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {offer.offerResponse?.totalPrice}
             </td>
         </tr>
     )

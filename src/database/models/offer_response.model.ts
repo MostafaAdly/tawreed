@@ -6,13 +6,13 @@ import Offer from "./offer.model";
 export default class OfferResponse extends Post {
 
   @Column({ type: 'integer', default: 0 })
-  price: number;
+  price: string;
 
   @Column({ type: 'integer', default: 0 })
-  vat: number;
+  vat: string;
 
   @Column({ type: 'integer', default: 0 })
-  total_price: number;
+  totalPrice: string;
 
   @Column({ type: 'varchar', default: 'CASH' })
   paymentTerms: string;
@@ -20,10 +20,10 @@ export default class OfferResponse extends Post {
   @Column({ type: 'varchar', default: 'CASH' })
   paymentMethod: string;
 
-  @Column({ type: 'date', default: new Date() })
+  @Column({ type: 'varchar', default: new Date() })
   startDate: Date;
 
-  @Column({ type: 'date', default: new Date() })
+  @Column({ type: 'varchar', default: new Date() })
   endDate: Date;
 
   @Column({ type: 'text', nullable: false })

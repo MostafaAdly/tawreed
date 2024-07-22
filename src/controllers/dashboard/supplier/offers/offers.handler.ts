@@ -32,7 +32,7 @@ export default class SupplierOffersHandler extends SupplierOffersController {
       const id = parseInt(offerId);
       const offer = (await OffersService.getOfferById({ id, status: OfferStatus.New, relations: ['client'] }));
       if (!offer) {
-        return InfraResponse.render({ req, res, page: '/supplier/posts/incoming' })
+        return InfraResponse.redirect(res, '/supplier/posts/incoming');
       }
       return InfraResponse.render({
         req,
@@ -45,7 +45,11 @@ export default class SupplierOffersHandler extends SupplierOffersController {
 
   inProgress = {
     'GET': async (req: Request, res: Response) => {
-      const offersIDs = (await OffersService.getOffers({ select: ['id'] }))?.map(offer => offer.id);
+      const offersIDs = (await OffersService.getOffers({
+        status: OfferStatus.Pending,
+        select: ['id'],
+        relations: ['offerResponse']
+      }))?.map(offer => offer.id);
       return InfraResponse.render({
         req,
         res,

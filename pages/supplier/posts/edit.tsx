@@ -17,9 +17,7 @@ const EditPost = ({ user, offer }) => {
         if (!offer?.id) return;
         const data = getFormData(form.target.id);
         try {
-            console.log(offer)
             const response = (await axios.put(getAPIURL(`/posts/offers`), data)).data;
-            console.log(response)
             if (response?.error)
                 return alert(`Error: ${response.message}`);
             window.location.href = '/supplier/posts/in-progress';
@@ -86,7 +84,7 @@ const ClientData = ({ offer }) => {
                         },
                         {
                             title: "العميل",
-                            value: offer.client.username
+                            value: offer.client?.username
                         },
                         {
                             title: "الكمية",

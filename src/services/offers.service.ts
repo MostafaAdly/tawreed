@@ -2,6 +2,7 @@ import Offer from "src/database/models/offer.model";
 import BaseService from "./base.service";
 import Helpers from "src/utils/helpers";
 import { In } from "typeorm";
+import { OfferStatus } from "src/config/enums/offer_status.enum";
 
 export default class OffersService extends BaseService {
 
@@ -13,7 +14,7 @@ export default class OffersService extends BaseService {
     return offer;
   }
 
-  static getOffers = async ({ id, clientId, supplierId, name, industry, selectClient, select, status }:
+  static getOffers = async ({ id, clientId, supplierId, name, industry, selectClient, select, status, relations = [] }:
     {
       id?: number | string,
       clientId?: string,
@@ -22,7 +23,8 @@ export default class OffersService extends BaseService {
       industry?: string,
       selectClient?: boolean,
       select?: object,
-      status?: string
+      status?: string,
+      relations?: string[]
     }) => {
     const where = [
       { id: Helpers.toInt(id as string, null) },
@@ -34,7 +36,9 @@ export default class OffersService extends BaseService {
     ];
     if (status)
       where.filter(item => !item.status).forEach(item => item.status = status)
-    const relations = selectClient ? ['client'] : [];
+    if (!relations) relations = [];
+    if (selectClient)
+      relations.push('client');
     const offers = await Offer.find({ where, relations, select })
     if (selectClient)
       offers.forEach(offer => {
@@ -51,6 +55,18 @@ export default class OffersService extends BaseService {
         delete offer.client?.hashed_password;
       });
     return offers;
+  }
+
+  static changeToInProgressById = async ({ id }: { id: number }) => {
+    const offer = await Offer.findOne({ where: { id } });
+    return await this.changeToInProgress({ offer });
+  }
+
+  static changeToInProgress = async ({ offer }: { offer: Offer }) => {
+    if (!offer) return null;
+    offer.status = OfferStatus.Pending;
+    await offer.save();
+    return offer;
   }
 
   static createOffer = async (user, data) => {
