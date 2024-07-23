@@ -38,7 +38,7 @@ export default class RouterManager {
     }
 
     private setupParentRouter = async (parentRoute: Route, count: number) => {
-        Logger.log(` ${'-'.repeat(count - 1)}> Parent: ${colors.cyan(parentRoute.path)}, Method: ${parentRoute.method}`)
+        Logger.log(` ${'-'.repeat(count - 1)}> Parent: ${colors.cyan(parentRoute.path)}`)
         count++;
         for (let childRoute of parentRoute.routes) {
             childRoute.middlewares = [...childRoute.middlewares, ...parentRoute.middlewares]
@@ -55,10 +55,10 @@ export default class RouterManager {
     private setupChildRouter = async (route: Route, count: number) => {
         const handlerConfig = this.controllerManager.getHandlerByRoute(route);
         if (!route.render && !handlerConfig) {
-            Logger.error(`Handler not found for route: ${route.path}`);
+            Logger.error(`Handler '${route.handler}' not found for route: ${route.path}`);
             return;
         }
-        Logger.log(` ${'-'.repeat(count)} Route: ${colors.green(route.path)}, Method: ${route.method}`)
+        Logger.log(` ${'-'.repeat(count)} Route: ${colors.green(route.path)}, Method: ${route.method['yellow']}, Handler: ${route.handler}`)
         const handler = (route.render ? this.renderHandler.index : handlerConfig)[route.method]
         if (!handler) {
             Logger.error(`Method ${route.method} not found in handler for route: ${route.path}`);

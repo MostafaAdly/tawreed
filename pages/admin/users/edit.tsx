@@ -7,7 +7,7 @@ import NewSupplierForm from 'components/forms/new-supplier.form';
 import { AccountType } from 'src/config/enums/account.enum';
 import axios from 'axios'
 
-const EditUser = () => {
+const EditUser = ({ user }) => {
 	const [users, setUsers] = useState([]);
 	const emailRef = React.useRef(null);
 	const phoneRef = React.useRef(null);
@@ -29,7 +29,7 @@ const EditUser = () => {
 	}
 
 	return (
-		<AdminLayout>
+		<AdminLayout user={user}>
 			<h1 className='text-3xl font-bold mb-10'>تحرير مستخدم</h1>
 
 			<form onSubmit={(f) => f.preventDefault()} className="block w-full p-6 mb-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">

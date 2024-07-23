@@ -5,7 +5,7 @@ import SidebarComponent, { SidebarNavBar } from '../components/main/sidebar.comp
 import DashboardBody from './dashboard.body';
 
 
-const AdminLayout = ({ children, user }: { children: ReactElement | ReactElement[], user?}) => {
+const AdminLayout = ({ children, user }: { children: ReactElement | ReactElement[], user }) => {
     return (
         <>
             <HeaderComponent user={user} />

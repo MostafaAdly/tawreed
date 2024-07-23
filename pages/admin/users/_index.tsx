@@ -5,12 +5,8 @@ import React from 'react';
 const Index = ({ user }) => {
     const links = [
         {
-            title: 'إضافة مستخدم جديد (عميل)',
-            url: '/admin/users/new-client'
-        },
-        {
-            title: 'إضافة مستخدم جديد (مورد)',
-            url: '/admin/users/new-supplier'
+            title: 'إضافة مستخدم جديد',
+            url: '/admin/users/new'
         },
         {
             title: 'تحرير المستخدم',

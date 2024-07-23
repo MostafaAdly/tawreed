@@ -71,10 +71,30 @@ export default {
                 middlewares: ['authenticateJWT'],
                 routes: [
                     new Route({
-                        path: '/edit',
+                        path: '/',
                         method: HttpMethod.GET,
                         handler: "search",
-                    })
+                    }),
+                    // new Route({
+                    //     path: '/create',
+                    //     controller: 'users_api',
+                    //     routes: [
+                    new Route({
+                        path: '/create/client',
+                        method: HttpMethod.POST,
+                        handler: 'createClient',
+                        skipMiddlewares: ["authenticateJWT"], // TEMPORARY: REMOVE THIS LINE
+                        dto: 'new_user_client'
+                    }),
+                    new Route({
+                        path: '/create/supplier',
+                        method: HttpMethod.POST,
+                        handler: 'createSupplier',
+                        skipMiddlewares: ["authenticateJWT"], // TEMPORARY: REMOVE THIS LINE
+                        dto: 'new_user_supplier'
+                    }),
+                    //     ]
+                    // })
                 ]
             }),
             new Route({
@@ -115,7 +135,7 @@ export default {
                                 handler: "index",
                                 render: "admin/users/_index",
                             }),
-                            new Route({ // /admin/users/new-client
+                            new Route({ // /admin/users/new
                                 path: '/new',
                                 method: HttpMethod.GET,
                                 handler: "index",

@@ -1,0 +1,41 @@
+meta {
+  name: create client
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{api_url}}/users/create/supplier
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "companyName": "test",
+    "username": "test",
+    "email": "tes2t",
+    "password": "test",
+    "companySize": "test",
+    "companyAddress": "test",
+    "notes": "test",
+    "phone": "0110123123",
+    "industry": "test"
+  }
+}
+
+body:form-urlencoded {
+  username: test
+  companyName: test
+}
+
+body:multipart-form {
+  companyName: test
+  email: test
+  password: test
+  companySize: test
+  phone: test
+  companyAddress: test
+  notes: test
+  username: test
+}

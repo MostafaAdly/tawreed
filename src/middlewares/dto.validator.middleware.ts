@@ -12,6 +12,7 @@ export default class DTOValidatorMiddleware {
       return InfraResponse.send(res, {
         statusCode: 400,
         message: `Invalid body: ${errors.join(', ')}`,
+        error: true
       });
     }
     next();

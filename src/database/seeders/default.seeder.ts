@@ -52,7 +52,8 @@ export default class DefaultSeeder implements EntitySeeder {
     email: "client@gmail.com".toLowerCase(),
     method: async () => {
       return {
-        username: "الاميرة للسراميك",
+        username: "amera_ceramic",
+        companyName: "الاميرة للسراميك",
         hashed_password: await Helpers.hash("123123"),
         phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
         company: {
@@ -70,6 +71,7 @@ export default class DefaultSeeder implements EntitySeeder {
     method: async () => {
       return {
         username: "شركة الرخام",
+        companyName: "ro5am_company",
         hashed_password: await Helpers.hash("123123"),
         phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
         company: {
@@ -86,6 +88,7 @@ export default class DefaultSeeder implements EntitySeeder {
     method: async () => {
       return {
         username: "Super Admin",
+        companyName: "Tawreed",
         hashed_password: await Helpers.hash("123123"),
         phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
         company: {
