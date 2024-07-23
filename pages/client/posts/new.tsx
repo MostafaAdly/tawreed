@@ -49,11 +49,11 @@ const NewRFQ = ({ user }) => {
 
                     <form onSubmit={handleSubmit(onSubmit)} id='new-rfq'>
                         <div className="grid gap-6 mb-6 md:grid-cols-2">
-                            <InlineFormField id="name" type='text' title="إسم المنتج" placeholder="مسامير" />
-                            <InlineFormField id="description" type='text' title="المواصفات" placeholder="حجم, لون, معدن, إلخ" />
-                            <InlineFormField id="quantity" type='text' title="الكمية" placeholder="22 قطعة" />
+                            <InlineFormField id="name" type='text' title="إسم المنتج" placeholder="مسامير" required={true} />
+                            <InlineFormField id="description" type='text' title="المواصفات" placeholder="حجم, لون, معدن, إلخ" required={true} />
+                            <InlineFormField id="quantity" type='text' title="الكمية" placeholder="22 قطعة" required={true} />
                             {/* Dropdown menu */}
-                            <InlineFormSelect id="industry" title="القسم" items={
+                            <InlineFormSelect id="industry" title="القسم" required={true} items={
                                 [...categoriesConfig].map((category) => <option key={category.name} value={category.name}>{category.name}</option>)
                             } />
                             {/* END OF DROPDOWN */}
