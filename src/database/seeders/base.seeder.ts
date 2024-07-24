@@ -14,12 +14,12 @@ export default class BaseSeeder {
         .map((file) => new (require(`./${file}`).default));
 
     init = async () => {
-        Logger.log("Seeding database.");
-        if (!Helpers.isEnvProduction() && Validators.validateCommandArgument("erase", 'true')) {
-            await this.erase();
+        if (!Helpers.isEnvProduction()) {
+            Logger.log("Seeding database.");
+            if (Validators.validateCommandArgument("erase", 'true')) await this.erase();
+            await this.seedDefaultSeeder();
+            await this.seed();
         }
-        await this.seedDefaultSeeder();
-        await this.seed();
     }
 
     seedDefaultSeeder = async () => {
