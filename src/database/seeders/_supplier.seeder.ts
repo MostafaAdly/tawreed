@@ -30,11 +30,11 @@ export default class SupplierSeeder implements EntitySeeder {
         username: "مصنع الرخام والسراميك",
         hashed_password: await Helpers.hash("123123"),
         phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
+        industry: categoriesConfig[Helpers.random(categoriesConfig.length)].name,
         company: {
           size: companySizeConfig[Helpers.random(companySizeConfig.length)].name,
           address: faker.location.streetAddress(),
           notes: faker.lorem.sentence(),
-          industry: categoriesConfig[Helpers.random(categoriesConfig.length)].name,
         }
       }
     ];
@@ -44,11 +44,11 @@ export default class SupplierSeeder implements EntitySeeder {
         username: faker.internet.userName(),
         hashed_password: await Helpers.hash("123123"),
         phone: parsePhoneNumber(`01${Helpers.fakePhoneNumber()}`, 'EG').number,
+        industry: categoriesConfig[Helpers.random(categoriesConfig.length)].name,
         company: {
           size: companySizeConfig[Helpers.random(companySizeConfig.length)].name,
           address: faker.location.streetAddress(),
           notes: faker.lorem.sentence(),
-          industry: categoriesConfig[Helpers.random(categoriesConfig.length)].name,
         }
       });
     list.forEach(async (data) => this.seed(data));

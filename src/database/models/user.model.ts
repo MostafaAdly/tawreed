@@ -26,7 +26,7 @@ export default class User extends BaseModel {
     phone: string
 
     @Column({ type: 'jsonb', default: JSON.stringify({ size: companySizeConfig[0].name }) })
-    company: { size: string, address?: string, notes?: string, industry?: string };
+    company: { size: string, address?: string, notes?: string };
 
     @Column('jsonb', { default: {} })
     metadata: object = {};

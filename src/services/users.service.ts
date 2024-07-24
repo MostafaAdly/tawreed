@@ -52,11 +52,11 @@ export default class UsersService extends BaseService {
                 email: data.email.toLowerCase(),
                 hashed_password: await Helpers.hash(data.password),
                 phone: data.phone,
+                industry: data.industry,
                 company: {
                     address: data.companyAddress,
                     size: data.companySize,
                     notes: data.notes,
-                    industry: data.industry
                 },
                 metadata: {},
             }

@@ -4,11 +4,12 @@ import InfraResponse from "src/controllers/base/response";
 import OfferResponseService from "src/services/offer_response.service";
 import OffersService from "src/services/offers.service";
 import { OfferStatus } from "src/config/enums/offer_status.enum";
+import Supplier from "src/database/models/supplier.model";
 
 export default class OffersSupplierEditPostHandler extends OffersController {
   edit = {
     'PUT': async (req: Request, res: Response) => {
-      const supplier = await this.getCurrentUser(req);
+      const supplier = await this.getCurrentUser(req) as Supplier;
       if (!supplier || req.body.supplierId != supplier.id)
         return InfraResponse.send(res, {
           statusCode: 401,

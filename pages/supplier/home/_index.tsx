@@ -12,12 +12,12 @@ const Index = ({ user }) => {
                 {
                     title: 'طلبات تسعير جديدة',
                     url: '/supplier/posts/incoming',
-                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.New}`))).data?.data?.length || 0
+                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.New}&industry=${user.industry}`))).data?.data?.length || 0
                 },
                 {
                     title: 'قيد التنفيذ',
                     url: '/supplier/posts/in-progress',
-                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Pending}`))).data?.data?.length || 0
+                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Pending}&industry=${user.industry}`))).data?.data?.length || 0
                 },
                 // {
                 //     title: 'عروض مرسلة',
@@ -26,12 +26,12 @@ const Index = ({ user }) => {
                 {
                     title: 'المعاملات قيد التوصيل',
                     url: '/supplier/posts/in-delivery',
-                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Confirmed}`))).data?.data?.length || 0
+                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Confirmed}&industry=${user.industry}`))).data?.data?.length || 0
                 },
                 {
                     title: 'المعاملات المكتملة',
                     url: '/supplier/posts/completed',
-                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Shipped}`))).data?.data?.length || 0
+                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Shipped}&industry=${user.industry}`))).data?.data?.length || 0
                 },
                 // {
                 //     title: 'معاملات لم يتم استلام النقد',

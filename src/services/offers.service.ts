@@ -35,15 +35,12 @@ export default class OffersService extends BaseService {
       { industry },
       { status }
     ];
-    if (status)
-      where.filter(item => !item.status).forEach(item => item.status = status)
-    if (clientId)
-      where.filter(item => !item.client).forEach(item => item.client = { id: clientId })
-    if (supplierId)
-      where.filter(item => !item.supplier).forEach(item => item.supplier = { id: supplierId })
+    if (status) where.filter(item => !item.status).forEach(item => item.status = status)
+    if (industry) where.filter(item => !item.industry).forEach(item => item.industry = industry)
+    if (clientId) where.filter(item => !item.client).forEach(item => item.client = { id: clientId })
+    if (supplierId) where.filter(item => !item.supplier).forEach(item => item.supplier = { id: supplierId })
     if (!relations) relations = [];
-    if (selectClient)
-      relations.push('client');
+    if (selectClient) relations.push('client');
     const offers = await Offer.find({ where, relations, select })
     if (selectClient)
       offers.forEach(offer => {

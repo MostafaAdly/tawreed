@@ -5,7 +5,6 @@ import Client from "../models/client.model";
 import { faker } from "@faker-js/faker/locale/ar";
 import { parsePhoneNumber } from "libphonenumber-js";
 import companySizeConfig from "src/config/core/company-size.config";
-import categoriesConfig from "src/config/core/categories.config";
 
 export default class ClientSeeder implements EntitySeeder {
     init = async () => {
@@ -33,7 +32,6 @@ export default class ClientSeeder implements EntitySeeder {
                     size: companySizeConfig[Helpers.random(companySizeConfig.length)].name,
                     address: faker.location.streetAddress(),
                     notes: faker.lorem.sentence(),
-                    industry: categoriesConfig[Helpers.random(categoriesConfig.length)].name,
                 }
             }
         ];
@@ -47,7 +45,6 @@ export default class ClientSeeder implements EntitySeeder {
                     size: companySizeConfig[Helpers.random(companySizeConfig.length)].name,
                     address: faker.location.streetAddress(),
                     notes: faker.lorem.sentence(),
-                    industry: categoriesConfig[Helpers.random(categoriesConfig.length)].name,
                 }
             });
         list.forEach((data) => this.seed(data));

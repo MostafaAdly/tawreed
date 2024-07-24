@@ -19,7 +19,7 @@ const NewSupplierForm = ({ user, formAction }: { user?, formAction?: string }) =
 					<InlineFormField id="confirm_password" type='text' title="تأكيد كلمة المرور" placeholder="********" required={true} />
 					<InlineFormSelect id="industry" title="القسم" required={true} items={
 						[
-							{ name: _("company").industry },
+							{ name: _('industry') },
 							...categoriesConfig.filter(category => category.name != _("category"))
 						]
 							.map((category, index) => <option key={index} value={category.name}>{category.name}</option>)

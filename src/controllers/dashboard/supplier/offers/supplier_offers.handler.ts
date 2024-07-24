@@ -10,7 +10,7 @@ export default class SupplierOffersHandler extends SupplierOffersController {
   incoming = {
     'GET': async (req: Request, res: Response) => {
       const user = await this.getCurrentUser(req);
-      const offersIDs = (await OffersService.getOffers({ status: OfferStatus.New, select: ['id'] }))?.map(offer => offer.id);
+      const offersIDs = (await OffersService.getOffers({ status: OfferStatus.New, industry: user['industry'], select: ['id'] }))?.map(offer => offer.id);
       return InfraResponse.render({
         req,
         res,
