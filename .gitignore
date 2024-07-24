@@ -7,3 +7,5 @@ project.me
 src/database/local/storage/*
 templates
 @/
+
+database backups/
