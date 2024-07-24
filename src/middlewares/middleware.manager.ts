@@ -3,7 +3,6 @@ import fs from 'fs';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import Helpers from "src/utils/helpers";
 
 export default class MiddlewareManager {
   middlewares: { [key: string]: RequestHandler } = {};
@@ -19,7 +18,8 @@ export default class MiddlewareManager {
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
-      cookie: { secure: Helpers.isEnvProduction() }
+      cookie: { secure: false }
+      // cookie: { secure: Helpers.isEnvProduction() }
     }));
   }
 

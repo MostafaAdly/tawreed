@@ -11,7 +11,7 @@ export default function Document() {
         <script src="https://kit.fontawesome.com/e6c13277a1.js" crossOrigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
       </Head>
-      <body>
+      <body className='bg-[#fefefe]'>
         <Main />
         <NextScript />
         <Scripts />
