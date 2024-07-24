@@ -139,7 +139,7 @@ const TableRow = ({ index, order, performAction }) => {
                 {order.quantity}
             </td>
             <td className="px-6 py-4">
-                {order.offerResponse.totalPrice}
+                {order.offerResponse?.totalPrice}
             </td>
             <td className="px-6 py-4">
                 {order.client.username}
