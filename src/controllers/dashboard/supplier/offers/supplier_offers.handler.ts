@@ -84,7 +84,7 @@ export default class SupplierOffersHandler extends SupplierOffersController {
     'GET': async (req: Request, res: Response) => {
       const user = await this.getCurrentUser(req);
       const offersIDs = (await OffersService.getOffers({
-        status: OfferStatus.Confirmed,
+        status: OfferStatus.Shipped,
         select: ['id'],
         supplierId: user.id,
         relations: ['offerResponse']

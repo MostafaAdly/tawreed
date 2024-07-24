@@ -13,7 +13,7 @@ const SupplierLayout = ({ children, user }) => {
                 upperSection={[
                     SidebarNavBar({ icon: 'home', text: 'طلبات تسعير واردة', url: '/supplier/posts/incoming' }),
                     SidebarNavBar({ icon: 'user', text: 'قيد التنفيذ', url: '/supplier/posts/in-progress' }),
-                    // SidebarNavBar({ icon: 'cog', text: 'عروض مرسلة', url: '/supplier/posts/outgoing' }),
+                    SidebarNavBar({ icon: 'cog', text: 'عمليات قيد التوصيل', url: '/supplier/posts/in-delivery' }),
                     SidebarNavBar({ icon: 'sign-out', text: 'المعاملات المكتملة', url: '/supplier/posts/completed' }),
                 ]}
                 bottomSection={[

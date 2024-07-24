@@ -3,7 +3,6 @@ import SupplierLayout from 'layouts/supplier.layout'
 import { GetServerSideProps } from 'next'
 import { getAPIURL, getSSProps } from 'public/assets/utils/helpers'
 import React, { useEffect, useState } from 'react'
-import { OfferStatus } from 'src/config/enums/offer_status.enum'
 
 const maxDescriptionLength = 50;
 
@@ -17,7 +16,6 @@ const PostsCompleted = ({ user, offersIDs }) => {
                 const response = (await axios.post(getAPIURL('/posts/offers'),
                     {
                         offersIDs,
-                        status: OfferStatus.Confirmed,
                         relations: ['client', 'offerResponse']
                     })
                 ).data;
