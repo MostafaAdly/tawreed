@@ -1,8 +1,8 @@
 export enum OfferStatus {
   New = "طلب جديد",
-  Operated = 'تم التنفيذ',
   Pending = 'قيد الإنتظار',
   Confirmed = 'مؤكد',
+  Shipped = 'تم التوصيل',
   Rejected = 'مرفوض',
   Cancelled = 'ملغى',
 }

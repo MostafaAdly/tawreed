@@ -28,6 +28,7 @@ const SidebarComponent = ({ // Default values are for /client
         SidebarNavBar({ icon: 'cog', text: 'العروض الصادرة', url: '/client/posts/outgoing' }),
         SidebarNavBar({ icon: 'user', text: 'العروض الواردة', url: '/client/posts/incoming' }),
         SidebarNavBar({ icon: 'user', text: 'العروض الموافق عليها', url: '/client/posts/confirmed' }),
+        SidebarNavBar({ icon: 'user', text: 'العمليات المكتملة', url: '/client/posts/completed' }),
         // SidebarNavBar({ icon: 'sign-out', text: 'المعاملات السابقة', url: '/client/posts/history' }),
     ],
     bottomSection = [

@@ -1,18 +1,19 @@
 import AdminLayout from 'layouts/admin.layout';
 import { GetServerSideProps } from 'next';
 import { getAPIURL, getSSProps } from 'public/assets/utils/helpers';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { InlineFormSelect } from '../../../components/forms/inline-form-field';
 import CardComponent from 'components/generic/ui/card.component';
 import TitleComponent from 'components/generic/ui/title.component';
 import axios from 'axios';
-import categoriesConfig from 'src/config/core/categories.config';
+import { OfferStatus } from 'src/config/enums/offer_status.enum';
 
 
 const Index = ({ user }) => {
     const [offers, setOffers] = useState([]);
     const [offerName, setOfferName] = useState('');
-    const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+    const [statusFilter, setStatusFilter] = useState<string | null>('');
+    const statusFilterRef = useRef();
 
     useEffect(() => {
         (async () => {
@@ -28,14 +29,32 @@ const Index = ({ user }) => {
 
     }, []);
 
-    const onCategoryChange = ({ target }) => {
-        setCategoryFilter(target.value);
+    const performAction = (offerId) => {
+        return async (status) => {
+            try {
+                const response = (await axios.post(getAPIURL(`/posts/offers/status`), { offerId, status })).data;
+                if (response?.error) return console.error(response);
+                setOffers(offers.map(offer => offer.id == offerId ? { ...offer, status } : offer));
+                return alert('تم تغيير حالة الطلب بنجاح');
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
+
+    const clearFilter = () => {
+        setStatusFilter('');
+        if (statusFilterRef?.current) statusFilterRef.current['value'] = '' as never;
+    }
+
+    const onStatusFilterChange = ({ target }) => {
+        setStatusFilter(target.value);
     }
 
     return (
         <AdminLayout user={user}>
             <CardComponent>
-                <TitleComponent marginBottom='10' title='إدارة الطلبات' />
+                <TitleComponent marginBottom='10' title={`إدارة الطلبات (${offers.length})`} />
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div className="pb-4 bg-white dark:bg-gray-900">
                         <label htmlFor="table-search" className="sr-only">Search</label>
@@ -53,10 +72,10 @@ const Index = ({ user }) => {
                                     placeholder="أبحث"
                                     className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 />
-                                <InlineFormSelect id='filter' className='w-10 h-auto' items={
-                                    categoriesConfig.map((category) => <option key={category.name} value={category.name}>{category.name}</option>)
-                                } hideLabel onChange={onCategoryChange} />
-                                <button onClick={() => setCategoryFilter(null)} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">أمسح التصفية</button>
+                                <InlineFormSelect id='filter' fref={statusFilterRef} className='w-10 h-auto' items={
+                                    ['', ...Object.keys(OfferStatus)].map((status, index) => <option key={index} value={OfferStatus[status]}>{OfferStatus[status]}</option>)
+                                } hideLabel onChange={onStatusFilterChange} />
+                                <button onClick={clearFilter} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">أمسح التصفية</button>
                             </div>
                         </div>
                     </div>
@@ -85,14 +104,15 @@ const Index = ({ user }) => {
                                     إسم المورد
                                 </th>
                                 <th scope="col" className="px-6 py-3 font-bold">حالة الطلب</th>
+                                <th scope="col" className="px-6 py-3 font-bold"></th>
                             </tr>
                         </thead>
                         <tbody>
                             {
                                 offers
-                                    .filter(offer => !categoryFilter || offer.industry == categoryFilter)
+                                    .filter(offer => statusFilter == '' || (offer.status == statusFilter))
                                     .filter(offer => (offer.name || '').toLowerCase().includes(offerName))
-                                    .map((offer, index) => <TableRow key={index} index={index} order={offer} />)
+                                    .map((offer, index) => <TableRow key={index} index={index} order={offer} performAction={performAction(offer.id)} />)
                             }
                         </tbody>
                     </table>
@@ -103,7 +123,7 @@ const Index = ({ user }) => {
 }
 
 
-const TableRow = ({ index, order }) => {
+const TableRow = ({ index, order, performAction }) => {
     return (
         <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-slate-100 even:dark:bg-gray-800 border-b dark:border-gray-700">
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -129,6 +149,11 @@ const TableRow = ({ index, order }) => {
             </td>
             <td className="px-6 py-4">
                 {order.status}
+            </td>
+            <td className="px-3 py-3 center flex-col gap-y-2">
+                <button onClick={() => performAction(OfferStatus.Shipped)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">تم التوصيل</button>
+                <button onClick={() => performAction(OfferStatus.Rejected)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">تم الرفض</button>
+                <button onClick={() => performAction(OfferStatus.Cancelled)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">تم الإلغاء</button>
             </td>
             {/* <td className="px-3 py-4 flex gap-x-6 center">
                 <InlineFormSelect id={index} key={index} marginBottom='0' width='[100%]' items={

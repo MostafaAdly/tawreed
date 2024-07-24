@@ -52,6 +52,14 @@ export default class OffersService extends BaseService {
     return offers;
   }
 
+  static changeStatus = async ({ offerId, status }: { offerId: number, status: OfferStatus }) => {
+    const offer = await Offer.findOne({ where: { id: offerId } });
+    if (!offer) return null;
+    offer.status = status;
+    await offer.save();
+    return offer;
+  }
+
   static getOffersByIDs = async ({ offersIDs, select, relations, status, secured }:
     { offersIDs: string[], select?: object, relations?: string[], status: string, secured?: boolean }) => {
     // if (!offersIDs?.length) return [];

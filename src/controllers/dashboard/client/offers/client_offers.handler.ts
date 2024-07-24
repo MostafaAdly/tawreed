@@ -49,4 +49,21 @@ export default class ClientOffersHandler extends SupplierOffersController {
       });
     }
   }
+  completed = {
+    'GET': async (req: Request, res: Response) => {
+      const user = await this.getCurrentUser(req);
+      const offersIDs = (await OffersService.getOffers({
+        status: OfferStatus.Shipped,
+        select: ['id'],
+        clientId: user.id,
+        relations: ['offerResponse']
+      }))?.map(offer => offer.id);
+      return InfraResponse.render({
+        req,
+        res,
+        page: 'client/posts/completed',
+        data: { offersIDs, user }
+      });
+    }
+  }
 }

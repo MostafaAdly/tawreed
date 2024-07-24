@@ -60,10 +60,15 @@ export default {
                                 handler: "edit",
                                 dto: "new_offer_response",
                             }),
+                            new Route({
+                                path: '/status',
+                                method: HttpMethod.POST,
+                                handler: "changeStatus",
+                                dto: "change_status",
+                            })
                         ]
                     }),
                 ]
-
             }),
             new Route({ // /api/v1/users/edit
                 path: "/users",
@@ -250,7 +255,7 @@ export default {
                             new Route({ // /client/posts/completed
                                 path: "/completed",
                                 method: HttpMethod.GET,
-                                handler: "index",
+                                handler: "completed",
                                 // render: "client/posts/completed",
                             }),
                         ]
@@ -290,6 +295,11 @@ export default {
                                 path: "/in-progress",
                                 method: HttpMethod.GET,
                                 handler: "inProgress",
+                            }),
+                            new Route({ // /supplier/posts/in-delivery
+                                path: "/in-delivery",
+                                method: HttpMethod.GET,
+                                handler: "inDelivery",
                             }),
                             new Route({ // /supplier/posts/completed
                                 path: "/completed",

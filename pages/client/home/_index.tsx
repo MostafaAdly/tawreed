@@ -20,6 +20,10 @@ const Index = ({ user }) => {
             title: 'العروض الموافق عليها',
             url: '/client/posts/confirmed'
         },
+        {
+            title: 'العمليات المكتملة',
+            url: '/client/posts/completed'
+        },
         // {
         //     title: 'المعاملات السابقة',
         //     url: '/client/posts/history'

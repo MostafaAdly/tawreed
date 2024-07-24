@@ -62,6 +62,24 @@ export default class SupplierOffersHandler extends SupplierOffersController {
     }
   }
 
+  inDelivery = {
+    'GET': async (req: Request, res: Response) => {
+      const user = await this.getCurrentUser(req);
+      const offersIDs = (await OffersService.getOffers({
+        status: OfferStatus.Confirmed,
+        select: ['id'],
+        supplierId: user.id,
+        relations: ['offerResponse']
+      }))?.map(offer => offer.id);
+      return InfraResponse.render({
+        req,
+        res,
+        page: 'supplier/posts/in-delivery',
+        data: { offersIDs, user }
+      });
+    }
+  }
+
   completed = {
     'GET': async (req: Request, res: Response) => {
       const user = await this.getCurrentUser(req);

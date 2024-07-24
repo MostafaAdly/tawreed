@@ -24,9 +24,14 @@ const Index = ({ user }) => {
                 //     url: '/supplier/posts/outgoing'
                 // },
                 {
+                    title: 'المعاملات قيد التوصيل',
+                    url: '/supplier/posts/in-delivery',
+                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Confirmed}`))).data?.data?.length || 0
+                },
+                {
                     title: 'المعاملات المكتملة',
                     url: '/supplier/posts/completed',
-                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Confirmed}`))).data?.data?.length || 0
+                    amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Shipped}`))).data?.data?.length || 0
                 },
                 // {
                 //     title: 'معاملات لم يتم استلام النقد',
