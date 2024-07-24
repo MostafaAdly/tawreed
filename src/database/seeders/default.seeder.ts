@@ -13,6 +13,20 @@ export default class DefaultSeeder implements EntitySeeder {
 
   };
   checkIfTableIsEmpty: () => Promise<boolean>;
+  deleteAdmin = async () => {
+    const defaultAdmin = await Admin.findOne({ where: { email: this.defaultAdminData.email } });
+    if (defaultAdmin)
+      await defaultAdmin.remove();
+  }
+  seedAdmin = async () => {
+    await this.deleteAdmin();
+    const defaultAdmin = await Admin.create({
+      email: this.defaultAdminData.email,
+      ...(await this.defaultAdminData.method())
+    });
+    await defaultAdmin.save();
+
+  }
   startSeeding = async () => {
     const defaultClient = await Client.create({
       email: this.defaultClientData.email,
@@ -25,11 +39,6 @@ export default class DefaultSeeder implements EntitySeeder {
       ...(await this.defaultSupplierData.method())
     });
     await defaultSupplier.save();
-    const defaultAdmin = await Admin.create({
-      email: this.defaultAdminData.email,
-      ...(await this.defaultAdminData.method())
-    });
-    await defaultAdmin.save();
   };
   seed = async (data: unknown, owner: any) => {
   };
@@ -41,11 +50,6 @@ export default class DefaultSeeder implements EntitySeeder {
     const defaultSupplier = await Supplier.findOne({ where: { email: this.defaultSupplierData.email } });
     if (defaultSupplier)
       await defaultSupplier.remove();
-
-    const defaultAdmin = await Admin.findOne({ where: { email: this.defaultAdminData.email } });
-    if (defaultAdmin)
-      await defaultAdmin.remove();
-
   };
 
   defaultClientData = {

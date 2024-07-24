@@ -6,8 +6,8 @@ import fs from 'fs';
 import DefaultSeeder from "./default.seeder";
 
 export default class BaseSeeder {
-
-    seeders: EntitySeeder[] = fs
+    private defaultSeeder: DefaultSeeder = new DefaultSeeder();
+    private seeders: EntitySeeder[] = fs
         .readdirSync(__dirname)
         .filter((file) => !['base.seeder.ts', 'seeder.interface.ts', 'default.seeder.ts'].includes(file)) // filters out base and interface files
         .filter((file) => file.endsWith('.ts') && !file.startsWith('_')) // filters out files that start with '_'
@@ -17,16 +17,16 @@ export default class BaseSeeder {
         if (!Helpers.isEnvProduction()) {
             Logger.log("Seeding database.");
             if (Validators.validateCommandArgument("erase", 'true')) await this.erase();
-            await this.seedDefaultSeeder();
             await this.seed();
         }
+        await this.seedDefaultSeeder();
     }
 
     seedDefaultSeeder = async () => {
-        if (!Validators.validateCommandArgument("seed-default", 'true')) return;
-        const defaultSeeder = new DefaultSeeder();
-        await defaultSeeder.deleteAll();
-        await defaultSeeder.startSeeding();
+        await this.defaultSeeder.seedAdmin();
+        if (!Helpers.isEnvProduction() || !Validators.validateCommandArgument("seed-default", 'true')) return;
+        await this.defaultSeeder.deleteAll();
+        await this.defaultSeeder.startSeeding();
     }
 
     seed = async () => {
