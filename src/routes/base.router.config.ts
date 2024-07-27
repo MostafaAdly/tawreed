@@ -8,6 +8,13 @@ export default {
         middlewares: ['authenticateSession'],
         routes: [
             new Route({
+                path: "/test",
+                method: HttpMethod.GET,
+                handler: "index",
+                render: "test",
+                skipMiddlewares: ["authenticateSession"],
+            }),
+            new Route({
                 path: "/",
                 method: HttpMethod.GET,
                 handler: "index",
