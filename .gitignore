@@ -9,3 +9,5 @@ templates
 @/
 
 database backups/
+
+test/
