@@ -19,7 +19,7 @@ const PostsInProgress = ({ user, offersIDs }) => {
                     {
                         offersIDs,
                         status: OfferStatus.Pending,
-                        relations: ['client', 'offerResponse']
+                        relations: ['client', 'offerResponse', 'supplier']
                     })
                 ).data;
                 if (response?.data) {
