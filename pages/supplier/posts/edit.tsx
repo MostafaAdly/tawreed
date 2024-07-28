@@ -1,12 +1,13 @@
 import SupplierLayout from 'layouts/supplier.layout';
 import { GetServerSideProps } from 'next';
-import { getAPIURL, getFormData, getSSProps } from 'public/assets/utils/helpers';
+import { getAPIURL, getFormData, getSSProps, toDate } from 'public/assets/utils/helpers';
 import React from 'react';
 import { HiddenInfoField, InfoFields } from '../../../components/generic/ui/fields/info.component';
 import { InlineDateField, InlineFormField } from 'components/forms/inline-form-field';
 import { InlineFormSelect, InlineFilesField } from '../../../components/forms/inline-form-field';
 import Terms from 'components/generic/terms.component';
 import axios from 'axios';
+import { DeliveryDate } from 'src/config/core/delivery-date.config';
 
 
 
@@ -45,12 +46,12 @@ const EditPost = ({ user, offer }) => {
                         <InlineFormField id="paymentsTerms" title="شروط الدفع" placeholder="" required={true} />
                         <InlineFormField id="comment" title="أضف تعليق" placeholder="يرجى أخذ الحذر مع هذا المنتج" required={true} />
                         <div id="date-range-picker" date-rangepicker={"true"} className="flex items-center justify-between gap-x-4">
-                            <span className="text-gray-500">من</span>
-                            <InlineDateField id="startDate" placeholder="تاريخ بداية التسليم" required={true} />
-                            <span className="text-gray-500">إلى</span>
-                            <InlineDateField id="endDate" placeholder="تاريخ نهاية التسليم" required={true} />
+                            {/* <span className="text-gray-500">تاريخ التوصيل</span>
+                            <InlineDateField id="startDate" placeholder={toDate(new Date().getTime() + (81400 * 2 * 1000))} required={true} /> */}
+                            <InlineFormSelect id='deliveryDate' title='تاريخ التسليم' required={true} items={
+                                Object.values(DeliveryDate).map((item, index) => <option key={index} value={item}>{item}</option>)
+                            } />
                         </div>
-
                         <InlineFormSelect id='paymentMethod' title='طريقة الدفع' required={true} items={
                             [
                                 { id: "CASH", value: "كاش" },

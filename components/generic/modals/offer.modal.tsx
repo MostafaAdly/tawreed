@@ -2,6 +2,7 @@ import { InfoFields } from "components/generic/ui/fields/info.component";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import { Button, Dialog } from '@headlessui/react'
+import { toDate } from "public/assets/utils/helpers";
 
 type Offer = {
   id: number;
@@ -16,7 +17,7 @@ type Offer = {
     vat: string;
     totalPrice: string;
     comment: string;
-    startDate: string;
+    deliveryDate: string;
     createdAt: string;
   }
   client: Client;
@@ -186,7 +187,7 @@ const OfferData = ({ offer }: { offer: Offer }) => {
                 },
                 {
                   title: "تاريخ التوصيل",
-                  value: toDate(response.startDate)
+                  value: response.deliveryDate
                 },
                 {
                   title: "تاريخ الرد",
@@ -274,8 +275,6 @@ const OfferSupplierData = ({ supplier }: { supplier: Supplier }) => {
 }
 
 export default OfferModal;
-
-const toDate = (date) => new Date(date).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {

@@ -20,11 +20,8 @@ export default class OfferResponse extends Post {
   @Column({ type: 'varchar', default: 'CASH' })
   paymentMethod: string;
 
-  @Column({ type: 'varchar', default: new Date() })
-  startDate: Date;
-
-  @Column({ type: 'varchar', default: new Date() })
-  endDate: Date;
+  @Column({ type: 'varchar' })
+  deliveryDate: Date;
 
   @Column({ type: 'text', nullable: false })
   comment: string;

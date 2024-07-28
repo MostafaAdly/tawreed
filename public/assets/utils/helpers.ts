@@ -37,3 +37,5 @@ export const isSupplierUser = (user) => {
 export const getFormData = (formId): FormData => {
     return new FormData(document.getElementById(formId) as HTMLFormElement);
 }
+
+export const toDate = (date) => new Date(date).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });

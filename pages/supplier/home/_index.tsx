@@ -19,10 +19,6 @@ const Index = ({ user }) => {
                     url: '/supplier/posts/in-progress',
                     amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Pending}&industry=${user.industry}`))).data?.data?.length || 0
                 },
-                // {
-                //     title: 'عروض مرسلة',
-                //     url: '/supplier/posts/outgoing'
-                // },
                 {
                     title: 'المعاملات قيد التوصيل',
                     url: '/supplier/posts/in-delivery',
@@ -33,10 +29,6 @@ const Index = ({ user }) => {
                     url: '/supplier/posts/completed',
                     amount: (await axios.get(getAPIURL(`/posts/offers?status=${OfferStatus.Shipped}&industry=${user.industry}`))).data?.data?.length || 0
                 },
-                // {
-                //     title: 'معاملات لم يتم استلام النقد',
-                //     url: '/supplier/posts/waiting'
-                // }
             ]);
         })();
     }, []);
