@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, TableInheritance } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, TableInheritance, UpdateDateColumn } from "typeorm";
 import User from "./user.model";
 
 @Entity()
@@ -31,4 +31,10 @@ export default class Post extends BaseEntity {
 
   @ManyToOne(() => User, user => user.posts)
   supplier: User;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

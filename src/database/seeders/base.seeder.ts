@@ -24,7 +24,7 @@ export default class BaseSeeder {
 
     seedDefaultSeeder = async () => {
         await this.defaultSeeder.seedAdmin();
-        if (!Helpers.isEnvProduction() || !Validators.validateCommandArgument("seed-default", 'true')) return;
+        if (Helpers.isEnvProduction() || !Validators.validateCommandArgument("seed-default", 'true')) return;
         await this.defaultSeeder.deleteAll();
         await this.defaultSeeder.startSeeding();
     }

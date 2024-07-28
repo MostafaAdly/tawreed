@@ -1,4 +1,5 @@
 import axios from 'axios'
+import OfferModal from 'components/generic/modals/offer.modal'
 import ClientLayout from 'layouts/client.layout'
 import { GetServerSideProps } from 'next'
 import { getAPIURL, getSSProps } from 'public/assets/utils/helpers'
@@ -69,6 +70,8 @@ const PostsCompleted = ({ user, offersIDs }) => {
                             <th scope="col" className="px-6 py-3 font-bold">
                                 السعر
                             </th>
+                            <th scope="col" className="px-6 py-3 font-bold">
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,6 +108,9 @@ const TableRow = ({ index, offer }) => {
             </td>
             <td className="px-6 py-4">
                 {offer.offerResponse.totalPrice}
+            </td>
+            <td className="px-6 py-4">
+                <OfferModal offer={offer} buttonStyle='font-medium text-blue-600 dark:text-blue-500 hover:underline' />
             </td>
         </tr>
     )

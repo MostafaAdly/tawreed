@@ -1,4 +1,5 @@
 import axios from 'axios'
+import OfferModal from 'components/generic/modals/offer.modal'
 import ClientLayout from 'layouts/client.layout'
 import { GetServerSideProps } from 'next'
 import { getAPIURL, getSSProps } from 'public/assets/utils/helpers'
@@ -13,7 +14,7 @@ const IncomingPosts = ({ user, offersIDs }) => {
         (async () => {
             try {
                 const response = (await axios.post(getAPIURL('/posts/offers'), {
-                    offersIDs, relations: ['supplier', 'offerResponse'], status: OfferStatus.Pending
+                    offersIDs, relations: ['supplier', 'offerResponse', 'client'], status: OfferStatus.Pending
                 })).data;
                 if (response?.data) {
                     setOffers(response.data);
@@ -83,7 +84,7 @@ const IncomingPosts = ({ user, offersIDs }) => {
                             <th scope="col" className="px-6 py-3 font-bold">
                                 السعر
                             </th>
-                            <th scope="col" className="px-6 py-3 font-bold"></th>
+                            <th scope="col" className="px-1 py-3 font-bold"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,9 +104,9 @@ const IncomingPosts = ({ user, offersIDs }) => {
 const TableRow = ({ index, offer, handleOffer }) => {
     return (
         <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-slate-100 even:dark:bg-gray-800 border-b dark:border-gray-700">
-            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {index + 1}
-            </th>
+            </td>
             <td className="px-6 py-4">
                 {offer.id}
             </td>
@@ -118,7 +119,8 @@ const TableRow = ({ index, offer, handleOffer }) => {
             <td className="px-6 py-4">
                 {offer.offerResponse.totalPrice}
             </td>
-            <td className="px-3 py-4 flex gap-x-6 center">
+            <td className="px-3 py-4 gap-x-3 w-full center">
+                <OfferModal offer={offer} buttonStyle='font-medium text-blue-600 dark:text-blue-500 hover:underline' />
                 <button onClick={() => handleOffer(offer, 1)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">موافقة</button>
                 <button onClick={() => handleOffer(offer, 0)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">رفض</button>
             </td>
