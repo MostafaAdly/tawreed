@@ -15,8 +15,8 @@ const NewClientForm = ({ user, formAction }: { user?, formAction?: string }) => 
           <InlineFormField id="username" type='text' title="إسم المستخدم" placeholder="مثال: ica_for_ceramic" value={_("username")} required={true} />
           <InlineFormField id="companyName" type='text' title="إسم الشركة" placeholder="مثال: شركة" value={_("companyName")} required={true} />
           <InlineFormField id="email" type='text' title="البريد الإلكتروني" placeholder="example@email.com" value={_("email")} required={true} />
-          <InlineFormField id="password" type='text' title="كلمة المرور" placeholder="********" required={true} />
-          <InlineFormField id="confirm_password" type='text' title="تأكيد كلمة المرور" placeholder="********" required={true} />
+          <InlineFormField id="password" type='password' title="كلمة المرور" placeholder="********" required={true} />
+          <InlineFormField id="confirm_password" type='password' title="تأكيد كلمة المرور" placeholder="********" required={true} />
           <InlineFormSelect id="companySize" title="حجم الشركة" required={true} items={
             [
               { name: _("company", {}).size },
