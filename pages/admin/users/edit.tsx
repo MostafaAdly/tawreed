@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getAPIURL, getSSProps, isClientUser, isSupplierUser } from 'public/assets/utils/helpers';
+import { getAPIURL, getFormFields, getSSProps, isClientUser, isSupplierUser } from 'public/assets/utils/helpers';
 import { GetServerSideProps } from 'next';
 import AdminLayout from 'layouts/admin.layout';
 import NewClientForm from '../../../components/forms/new-client.form';
@@ -16,6 +16,28 @@ const EditUser = ({ user }) => {
 		try {
 			let response = (await axios.get(getAPIURL(`/users?${prompt}`))).data;
 			if (!response.error) setUsers(response.data);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	const onSaveClick = async () => {
+		try {
+			const data = getFormFields('edit-user-form');
+			const response = (await axios.post(getAPIURL(`/users/edit`), data)).data;
+			if (!response || response?.error) return alert(`حدث خطأ ما`);
+			return alert(`تم تعديل ال${AccountType[data['type'].toUpperCase()]} بنجاح`);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	const onDeleteClick = async () => {
+		try {
+			const data = getFormFields('edit-user-form');
+			const response = (await axios.post(getAPIURL(`/users/delete`), { id: data['id'] })).data;
+			if (!response || response?.error) return alert(`حدث خطأ ما`);
+			return alert(`تم حذف ${data['username']} بنجاح`);
 		} catch (error) {
 			console.error(error);
 		}
@@ -103,14 +125,27 @@ const EditUser = ({ user }) => {
 			}
 			{
 				(isClientUser(getUser()) || isSupplierUser(getUser())) && (
-					<div className="block w-full p-6 mb-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+					<form
+						id='edit-user-form'
+						className="block w-full p-6 mb-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+					>
 						<h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">النوع: {AccountType[getUser().type.toUpperCase()]}</h5>
 						{/* LOADING FORM */}
 						{
 							isClientUser(getUser()) ? <NewClientForm formAction={getAPIURL('/users/edit')} user={getUser()} />
 								: (isSupplierUser(getUser()) ? <NewSupplierForm formAction={getAPIURL('/users/edit')} user={getUser()} /> : null)
 						}
-					</div >
+						<button
+							onClick={onSaveClick}
+							className="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							حفظ
+						</button>
+						<button
+							onClick={onDeleteClick}
+							className="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+							حذف
+						</button>
+					</form >
 				)
 			}
 		</AdminLayout >
