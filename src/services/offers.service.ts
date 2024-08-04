@@ -4,6 +4,7 @@ import Helpers from "src/utils/helpers";
 import { In } from "typeorm";
 import { OfferStatus } from "src/config/enums/offer_status.enum";
 import Supplier from "src/database/models/supplier.model";
+import categoriesConfig from "src/config/core/categories.config";
 
 export default class OffersService extends BaseService {
 
@@ -35,8 +36,10 @@ export default class OffersService extends BaseService {
       { industry },
       { status }
     ];
+    const category = categoriesConfig.find(c => c.name == industry);
+    if (industry && !category) return [];
     if (status) where.filter(item => !item.status).forEach(item => item.status = status)
-    if (industry) where.filter(item => !item.industry).forEach(item => item.industry = industry)
+    if (industry && !category.global) where.filter(item => !item.industry).forEach(item => item.industry = industry)
     if (clientId) where.filter(item => !item.client).forEach(item => item.client = { id: clientId })
     if (supplierId) where.filter(item => !item.supplier).forEach(item => item.supplier = { id: supplierId })
     if (!relations) relations = [];
