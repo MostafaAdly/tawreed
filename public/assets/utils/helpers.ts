@@ -38,8 +38,9 @@ export const getFormData = (formId): FormData => {
     return new FormData(document.getElementById(formId) as HTMLFormElement);
 }
 
-export const getFormFields = (formId): {} => {
-    return getFormData(formId).entries().reduce((acc, [key, value]) => { acc[key] = value; return acc; }, {});
+export const getFormFields = (formId): object => {
+    const form = getFormData(formId);
+    return form ? Array.from(form.entries()).reduce((acc, [key, value]) => Object.assign(acc, { [key]: value }), {}) : null;
 }
 
 export const toDate = (date) => new Date(date).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
