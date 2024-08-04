@@ -73,6 +73,7 @@
 		"sonner": "^1.5.0",
 		"tailwind-merge": "^2.4.0",
 		"tailwindcss-animate": "^1.0.7",
+		"tawreed": "file:",
 		"ts-node": "^10.9.2",
 		"typeorm": "^0.3.20"
 	}
